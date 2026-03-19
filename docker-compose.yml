@@ -1,0 +1,138 @@
+version: "3.9"
+
+# ==========================================================
+# ATTI Media Server - Infra MVP (Docker Compose)
+# ----------------------------------------------------------
+# Objetivo: subir tudo localmente com um único comando:
+#   docker-compose up --build
+#
+# Serviços:
+# - atti-media-server (FastAPI)
+# - redis (broker + cache)
+# - celery-worker (processamento assíncrono)
+# - postgres (opcional, via profile "with-postgres")
+# - logrotate (rotaciona logs em /var/log/atti)
+# ==========================================================
+
+services:
+  redis:
+    # Usamos Valkey (fork open-source do Redis) - licença Apache 2.0, compatível com Redis.
+    # Mantemos o nome do serviço "redis" para compatibilidade com libs/URLs.
+    image: valkey/valkey:7-alpine
+    container_name: atti-redis
+    command: ["valkey-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+
+  atti-media-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atti-media-server
+    env_file:
+      - .env
+    environment:
+      # Defaults seguros para ambiente local
+      ATTI_ENV: ${ATTI_ENV:-local}
+      ATTI_LOG_LEVEL: ${ATTI_LOG_LEVEL:-INFO}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      ATTI_MODELS_DIR: ${ATTI_MODELS_DIR:-/models}
+      ATTI_LOG_DIR: ${ATTI_LOG_DIR:-/var/log/atti}
+      # Postgres é opcional (profile). Se não subir, apenas não use.
+      DATABASE_URL: ${DATABASE_URL:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      # Persistência de modelos (evita re-download)
+      - models-cache:${ATTI_MODELS_DIR:-/models}
+      # Logs em arquivo para rotação
+      - logs-data:${ATTI_LOG_DIR:-/var/log/atti}
+    command: ["bash", "-lc", "uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atti-celery-worker
+    env_file:
+      - .env
+    environment:
+      ATTI_ENV: ${ATTI_ENV:-local}
+      ATTI_LOG_LEVEL: ${ATTI_LOG_LEVEL:-INFO}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      ATTI_MODELS_DIR: ${ATTI_MODELS_DIR:-/models}
+      ATTI_LOG_DIR: ${ATTI_LOG_DIR:-/var/log/atti}
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - models-cache:${ATTI_MODELS_DIR:-/models}
+      - logs-data:${ATTI_LOG_DIR:-/var/log/atti}
+    # Ajuste -Q (fila) e -c (concorrência) conforme sua máquina
+    command:
+      [
+        "bash",
+        "-lc",
+        "celery -A atti_celery.worker.celery_app worker -l ${ATTI_LOG_LEVEL:-INFO} -Q media,tts -c ${CELERY_CONCURRENCY:-2}"
+      ]
+
+  # Postgres é opcional para logging/auditoria. Habilite com:
+  # docker-compose --profile with-postgres up
+  postgres:
+    image: postgres:16-alpine
+    container_name: atti-postgres
+    profiles: ["with-postgres"]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-atti}
+      POSTGRES_USER: ${POSTGRES_USER:-atti}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-atti}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  # Rotação de logs simples (MVP): roda logrotate periodicamente.
+  # Compartilha o volume logs-data com API e worker.
+  logrotate:
+    image: alpine:3.20
+    container_name: atti-logrotate
+    depends_on:
+      - atti-media-server
+      - celery-worker
+    volumes:
+      - logs-data:/var/log/atti
+      - ./logrotate/atti:/etc/logrotate.d/atti:ro
+    entrypoint: ["/bin/sh", "-lc"]
+    command: |
+      apk add --no-cache logrotate tzdata >/dev/null && \
+      echo "[logrotate] iniciado" && \
+      # Executa a cada 60s (ajuste se quiser)
+      while true; do \
+        /usr/sbin/logrotate -v /etc/logrotate.d/atti || true; \
+        sleep 60; \
+      done
+
+volumes:
+  redis-data:
+  postgres-data:
+  models-cache:
+  logs-data:
