@@ -1,99 +1,48 @@
-# syntax=docker/dockerfile:1
+# ─────────────────────────────────────────────────────────────
+# Humanos Digitais TTS — Dockerfile
+# Engine: Edge-TTS (custo zero, sem GPU necessária)
+# Base: Python 3.11-slim (~120MB)
+# ─────────────────────────────────────────────────────────────
 
-# ==========================================================
-# Dockerfile (multi-stage) - ATTI Media Server
-# ----------------------------------------------------------
-# - Otimizado para builds rápidos (cache de deps)
-# - Suporta projetos com requirements.txt OU pyproject.toml
-# - Cria usuário não-root
-# ==========================================================
+FROM python:3.11-slim
 
-ARG PYTHON_VERSION=3.11
+LABEL maintainer="humanosdigitais.com.br"
+LABEL description="TTS API para 15 avatares PT-BR — edge-tts, custo zero"
+LABEL version="2.0.0"
 
-# ---------- Stage 1: builder (instala dependências) ----------
-FROM python:${PYTHON_VERSION}-slim AS builder
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
-
-WORKDIR /build
-
-# Dependências de compilação (mantidas só no builder)
+# Dependências do sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      build-essential \
-      gcc \
-      git \
-      curl \
+    ffmpeg \
+    curl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# (1) Copiamos SOMENTE manifests primeiro para maximizar cache
-#     - Se você usa Poetry, mantenha pyproject.toml + poetry.lock
-#     - Se você usa pip, mantenha requirements*.txt
-COPY pyproject.toml poetry.lock* requirements*.txt* ./
-
-# Criamos um venv "portável" para copiar no runtime
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Instalador (pip) e deps
-RUN pip install --upgrade pip wheel setuptools
-
-# Instala dependências com fallback:
-# - Se existir requirements.txt -> usa pip
-# - Se existir pyproject.toml com Poetry -> instala via pip (PEP517) ou Poetry (opcional)
-# Observação: aqui evitamos depender do Poetry por padrão para simplificar.
-RUN if [ -f requirements.txt ]; then \
-      pip install -r requirements.txt; \
-    elif [ -f pyproject.toml ]; then \
-      pip install .; \
-    else \
-      echo "ERRO: Nenhum requirements.txt ou pyproject.toml encontrado" && exit 1; \
-    fi
-
-# ---------- Stage 2: runtime ----------
-FROM python:${PYTHON_VERSION}-slim AS runtime
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-# Usuário não-root
-RUN useradd -m -u 10001 appuser
-
-# Diretórios padrão (modelos + logs)
-RUN mkdir -p /models /var/log/atti && chown -R appuser:appuser /models /var/log/atti
-
+# Diretório de trabalho
 WORKDIR /app
 
-# Copia venv do builder
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Instalar dependências Python primeiro (layer cache)
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Copia o código da aplicação
-# Importante: este Dockerfile assume que, no seu repositório, existe app/main.py
-COPY . /app
+# Copiar código
+COPY main.py .
 
-# ----------------------------------------------------------
-# IMPORTANTE: evitar colisão de nome entre:
-# - pacote oficial "celery" (pip)
-# - diretório local "./celery" deste repo
-#
-# Se o diretório local se chamar "celery" na raiz do projeto,
-# o import do Celery pode quebrar (shadowing).
-# Para o MVP, renomeamos no container para "atti_celery".
-# ----------------------------------------------------------
-RUN if [ -d /app/celery ]; then mv /app/celery /app/atti_celery; fi
-
-# Ajuste permissões (somente o necessário)
-RUN chown -R appuser:appuser /app
-
+# Criar usuário não-root para segurança
+RUN useradd --create-home --shell /bin/bash appuser && \
+    chown -R appuser:appuser /app
 USER appuser
 
+# Porta
 EXPOSE 8000
 
-# Healthcheck simples (opcional) - depende de um endpoint /health (se existir)
-# Se não existir, remova/ajuste.
-HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()" || exit 1
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
 
-# O comando final é definido no docker-compose (uvicorn/celery)
+# Iniciar servidor (2 workers para Render free tier)
+CMD ["uvicorn", "main:app", \
+     "--host", "0.0.0.0", \
+     "--port", "8000", \
+     "--workers", "2", \
+     "--access-log"]
