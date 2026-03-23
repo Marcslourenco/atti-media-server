@@ -22,21 +22,21 @@ app.add_middleware(
 
 # Voice mapping: avatar_id → (edge-tts voice, rate, pitch)
 VOICES = {
-    "sofia":    ("pt-BR-FranciscaNeural", "+0%",  "+5"),
-    "rafael":   ("pt-BR-AntonioNeural",   "-5%",  "-5"),
-    "clara":    ("pt-BR-FranciscaNeural", "+0%",  "+0"),
-    "lucas":    ("pt-BR-AntonioNeural",   "+5%",  "+5"),
-    "amanda":   ("pt-BR-FranciscaNeural", "+0%",  "+5"),
-    "fernanda": ("pt-BR-FranciscaNeural", "-5%",  "+0"),
-    "marina":   ("pt-BR-FranciscaNeural", "+5%",  "+5"),
-    "roberto":  ("pt-BR-AntonioNeural",   "+0%",  "-5"),
-    "luisa":    ("pt-BR-FranciscaNeural", "-10%", "-5"),
-    "lais":     ("pt-BR-FranciscaNeural", "-5%",  "+0"),
-    "paula":    ("pt-BR-FranciscaNeural", "+0%",  "+5"),
-    "bruno":    ("pt-BR-AntonioNeural",   "+20%", "+10"),
-    "giovana":  ("pt-BR-FranciscaNeural", "+15%", "+10"),
-    "marcos":   ("pt-BR-AntonioNeural",   "+10%", "+5"),
-    "carol":    ("pt-BR-FranciscaNeural", "+15%", "+10"),
+    "sofia":    ("pt-BR-FranciscaNeural", "+0%",  "+5%"),
+    "rafael":   ("pt-BR-AntonioNeural",   "-5%",  "-5%"),
+    "clara":    ("pt-BR-FranciscaNeural", "+0%",  "+0%"),
+    "lucas":    ("pt-BR-AntonioNeural",   "+5%",  "+5%"),
+    "amanda":   ("pt-BR-FranciscaNeural", "+0%",  "+5%"),
+    "fernanda": ("pt-BR-FranciscaNeural", "-5%",  "+0%"),
+    "marina":   ("pt-BR-FranciscaNeural", "+5%",  "+5%"),
+    "roberto":  ("pt-BR-AntonioNeural",   "+0%",  "-5%"),
+    "luisa":    ("pt-BR-FranciscaNeural", "-10%", "-5%"),
+    "lais":     ("pt-BR-FranciscaNeural", "-5%",  "+0%"),
+    "paula":    ("pt-BR-FranciscaNeural", "+0%",  "+5%"),
+    "bruno":    ("pt-BR-AntonioNeural",   "+20%", "+10%"),
+    "giovana":  ("pt-BR-FranciscaNeural", "+15%", "+10%"),
+    "marcos":   ("pt-BR-AntonioNeural",   "+10%", "+5%"),
+    "carol":    ("pt-BR-FranciscaNeural", "+15%", "+10%"),
 }
 
 class SpeakRequest(BaseModel):
