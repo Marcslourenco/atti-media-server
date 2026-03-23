@@ -80,7 +80,7 @@ async def speak(req: SpeakRequest):
 
         avatar_id = req.avatar_id.lower().strip()
         cfg = VOICES.get(avatar_id, VOICES["sofia"])
-        voice, rate, pitch = cfg
+        voice, rate
 
         # Clean text (remove emojis that cause TTS issues)
         import re
@@ -95,7 +95,7 @@ async def speak(req: SpeakRequest):
         # Generate audio
         buf = io.BytesIO()
         communicate = edge_tts.Communicate(
-            text_clean, voice, rate=rate, pitch=pitch
+            text_clean, voice, rate=rate
         )
 
         async for chunk in communicate.stream():
