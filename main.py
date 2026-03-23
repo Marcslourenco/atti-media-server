@@ -16,13 +16,10 @@ import os
 import time
 from typing import Any, Dict, List, Optional
 
-import nest_asyncio
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
-
-nest_asyncio.apply()
 
 # ---------------------------------------------------------------------------
 # Logging
