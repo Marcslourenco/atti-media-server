@@ -8,6 +8,7 @@ import tempfile
 import logging
 from typing import Dict, List
 
+import os
 import edge_tts
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -265,4 +266,17 @@ async def generic_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={"status": "error", "detail": f"Erro interno não tratado: {exc}"},
+    )
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    logger.info(f"Starting server on port {port}")
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=port,
+        reload=False,
+        log_level="info"
     )
