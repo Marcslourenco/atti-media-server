@@ -1,4 +1,18 @@
-fastapi==0.116.1
-uvicorn[standard]==0.35.0
+# =============================================================================
+# requirements_expandido_v7.txt  |  Humanos Digitais v7.0
+# Complemento final: tradução gratuita + i18n PT-BR/EN/ES + viseme_sync real
+# =============================================================================
+
+fastapi==0.115.11
+uvicorn==0.34.0
 edge-tts==7.2.3
-pydantic==2.11.7
+pydantic==2.10.6
+chromadb>=0.5.23
+sentence-transformers>=3.3.0
+numpy>=1.26.0
+python-dotenv>=1.0.0
+langdetect>=1.0.9
+librosa>=0.10.0
+scipy>=1.10.0
+requests>=2.32.0
+deep-translator>=1.11.4
