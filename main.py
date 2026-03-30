@@ -34,7 +34,7 @@ except ImportError:
     logger.warning("i18n_engine não encontrado")
 
 try:
-    from src.avatar.viseme_sync import viseme_sync
+    from viseme_sync import viseme_sync
     logger.info("viseme_sync carregado com sucesso")
 except ImportError:
     viseme_sync = None
