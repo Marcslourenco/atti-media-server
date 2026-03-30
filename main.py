@@ -1136,3 +1136,9 @@ async def tts_only(payload: dict):
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error("Erro não tratado: %s", exc, exc_info=True)
     return JSONResponse(status_code=500, content={"error": str(exc)})
+
+if __name__ == "__main__":
+    import os
+    port = int(os.getenv("PORT", 5000))
+    print(f"🚀 Starting server on port {port}...")
+    uvicorn.run(app, host="0.0.0.0", port=port)

@@ -1,23 +1,24 @@
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PORT=8000
-
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ffmpeg curl \
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./
+# Copiar requirements
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main.py ./
-COPY i18n_engine.py ./
-COPY src/avatar/viseme_sync.py ./viseme_sync.py
+# Copiar todos os arquivos Python necessários
+COPY main.py .
+COPY i18n_engine.py .
+COPY viseme_sync.py .
 COPY src/ ./src/
 
-EXPOSE 8000
+# Expor porta
+EXPOSE 5000
 
-CMD python main.py
+# Comando para rodar
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
