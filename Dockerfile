@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar todos os arquivos Python necessários
 COPY main.py .
 COPY i18n_engine.py .
-COPY viseme_sync.py .
+COPY src/avatar/viseme_sync.py ./viseme_sync.py
 COPY src/ ./src/
 
 # Expor porta
