@@ -27,14 +27,16 @@ class TranslationRequest(BaseModel):
 
 # Importações dos módulos
 try:
-    from i18n_engine import i18n_engine
+    from i18n_engine import I18nEngine
+    i18n_engine = I18nEngine()
     logger.info("i18n_engine carregado com sucesso")
 except Exception as e:
     logger.error(f"Erro ao importar i18n_engine: {e}", exc_info=True)
     i18n_engine = None
 
 try:
-    from viseme_sync import viseme_sync
+    from src.avatar.viseme_sync import VisemeSyncEngine
+    viseme_sync = VisemeSyncEngine(fps=30)
     logger.info("viseme_sync carregado com sucesso")
 except Exception as e:
     logger.error(f"Erro ao importar viseme_sync: {e}", exc_info=True)
