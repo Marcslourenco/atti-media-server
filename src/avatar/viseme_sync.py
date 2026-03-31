@@ -271,7 +271,7 @@ class VisemeSyncEngine:
         """
         import edge_tts
         import base64
-        import tempfile
+        import io
         
         # Definir voz baseada no idioma
         voices = {
@@ -282,15 +282,20 @@ class VisemeSyncEngine:
         voice = voices.get(language, "pt-BR-FranciscaNeural")
         
         try:
-            # Gerar áudio com Edge-TTS
-            communicate = edge_tts.Communicate(text, voice)
+            # Gerar áudio com Edge-TTS (usando io.BytesIO como no commit dc2395a)
+            buf = io.BytesIO()
+            communicate = edge_tts.Communicate(text, voice, rate="+0%", pitch="+0Hz")
             
-            audio_chunks = []
             async for chunk in communicate.stream():
                 if chunk["type"] == "audio":
-                    audio_chunks.append(chunk["data"])
+                    buf.write(chunk["data"])
             
-            audio_data = b"".join(audio_chunks)
+            audio_data = buf.getvalue()
+            
+            if not audio_data:
+                logger.warning(f"Edge-TTS não retornou áudio para: {text[:50]}")
+                return {"audio": None, "visemes": []}
+            
             audio_b64 = base64.b64encode(audio_data).decode("utf-8")
             
             # Gerar visemes simulados (baseado no texto)
