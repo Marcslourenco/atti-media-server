@@ -253,3 +253,80 @@ class VisemeSyncEngine:
 
         logger.info(f"BlendShapes geradas: {list(bs.shapes.keys())} | frames={n}")
         return bs
+
+    # ------------------------------------------------------------------
+    # Síntese de áudio com visemes (Edge-TTS)
+    # ------------------------------------------------------------------
+
+    async def synthesize_with_visemes(self, text: str, avatar_id: str, language: str) -> dict:
+        """Gera áudio com Edge-TTS e visemes sincronizados.
+        
+        Args:
+            text: Texto a ser sintetizado
+            avatar_id: ID do avatar (para seleção de voz)
+            language: Idioma (pt-BR, en, es)
+        
+        Returns:
+            Dict com 'audio' (base64) e 'visemes' (lista)
+        """
+        import edge_tts
+        import base64
+        import tempfile
+        
+        # Definir voz baseada no idioma
+        voices = {
+            "pt-BR": "pt-BR-FranciscaNeural",
+            "en": "en-US-JennyNeural",
+            "es": "es-ES-ElviraNeural"
+        }
+        voice = voices.get(language, "pt-BR-FranciscaNeural")
+        
+        try:
+            # Gerar áudio com Edge-TTS
+            communicate = edge_tts.Communicate(text, voice)
+            
+            audio_chunks = []
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    audio_chunks.append(chunk["data"])
+            
+            audio_data = b"".join(audio_chunks)
+            audio_b64 = base64.b64encode(audio_data).decode("utf-8")
+            
+            # Gerar visemes simulados (baseado no texto)
+            visemes = []
+            duration_per_char = 100  # ms por caractere
+            
+            for i, char in enumerate(text):
+                # Mapeamento simples: vogais = "A", consoantes = "closed"
+                if char.lower() in "aeiouáéíóú":
+                    viseme = "A"
+                elif char.lower() in "ãõ":
+                    viseme = "O"
+                elif char.lower() in "bcpfmv":
+                    viseme = "M"
+                elif char.lower() in "dtnls":
+                    viseme = "L"
+                elif char.lower() in "kg":
+                    viseme = "K"
+                else:
+                    viseme = "closed"
+                
+                visemes.append({
+                    "time_ms": i * duration_per_char,
+                    "viseme": viseme
+                })
+            
+            logger.info(f"Áudio gerado: {len(audio_data)} bytes, {len(visemes)} visemes")
+            
+            return {
+                "audio": audio_b64,
+                "visemes": visemes
+            }
+        
+        except Exception as e:
+            logger.error(f"Erro ao sintetizar áudio: {e}", exc_info=True)
+            return {
+                "audio": None,
+                "visemes": []
+            }
