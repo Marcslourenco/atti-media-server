@@ -133,33 +133,28 @@ async def avatar_speak(request: SpeakRequest):
     
     logger.info(f"Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
     
-    # Gerar áudio e visemes
-    audio_data = None
-    visemes = []
-    
-    logger.info(f"🔍 DIAGNÓSTICO - text original: {text}")
-    
-    if viseme_sync:
-        try:
-            logger.info(f"🔍 DIAGNÓSTICO - Gerando áudio com texto: {text}")
-            result = await viseme_sync.synthesize_with_visemes(text, avatar_id, language)
-            if result:
-                audio_data = result.get("audio")
-                visemes = result.get("visemes", [])
-                logger.info(f"Visemes gerados: {len(visemes)} frames")
-        except Exception as e:
-            logger.error(f"Erro ao gerar áudio/visemes: {e}")
-    
-    # Gerar resposta com RAG
+    # 1️⃣ PRIMEIRO: Processar RAG para obter resposta inteligente
     response_text = text
     if rag_engine:
         try:
             response_text = rag_engine.generate_response(text, avatar_id, language)
-            logger.info(f"🔍 DIAGNÓSTICO - response_text (RAG): {response_text}")
-            logger.info(f"Resposta RAG gerada: '{response_text[:100]}'")
+            logger.info(f"Resposta RAG: '{response_text[:100]}...'")
         except Exception as e:
-            logger.warning(f"Erro ao gerar resposta com RAG: {e}, usando eco")
-            response_text = text
+            logger.warning(f"Erro no RAG: {e}")
+    
+    # 2️⃣ DEPOIS: Gerar áudio e visemes com a resposta inteligente
+    audio_data = None
+    visemes = []
+    if viseme_sync:
+        try:
+            logger.info(f"Gerando áudio com resposta: {response_text[:100]}")
+            result = await viseme_sync.synthesize_with_visemes(response_text, avatar_id, language)
+            if result:
+                audio_data = result.get("audio")
+                visemes = result.get("visemes", [])
+                logger.info(f"Áudio gerado: {len(audio_data) if audio_data else 0} bytes, {len(visemes)} visemes")
+        except Exception as e:
+            logger.error(f"Erro ao gerar áudio: {e}")
     
     logger.info(f"🔍 DIAGNÓSTICO - Retornando: audio={bool(audio_data)}, visemes={len(visemes)}, response='{response_text[:50]}'")
     
