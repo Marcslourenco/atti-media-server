@@ -29,16 +29,16 @@ class TranslationRequest(BaseModel):
 try:
     from i18n_engine import i18n_engine
     logger.info("i18n_engine carregado com sucesso")
-except ImportError:
+except Exception as e:
+    logger.error(f"Erro ao importar i18n_engine: {e}", exc_info=True)
     i18n_engine = None
-    logger.warning("i18n_engine não encontrado")
 
 try:
     from viseme_sync import viseme_sync
     logger.info("viseme_sync carregado com sucesso")
-except ImportError:
+except Exception as e:
+    logger.error(f"Erro ao importar viseme_sync: {e}", exc_info=True)
     viseme_sync = None
-    logger.warning("viseme_sync não encontrado")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
