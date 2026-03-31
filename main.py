@@ -137,8 +137,11 @@ async def avatar_speak(request: SpeakRequest):
     audio_data = None
     visemes = []
     
+    logger.info(f"🔍 DIAGNÓSTICO - text original: {text}")
+    
     if viseme_sync:
         try:
+            logger.info(f"🔍 DIAGNÓSTICO - Gerando áudio com texto: {text}")
             result = await viseme_sync.synthesize_with_visemes(text, avatar_id, language)
             if result:
                 audio_data = result.get("audio")
@@ -152,10 +155,13 @@ async def avatar_speak(request: SpeakRequest):
     if rag_engine:
         try:
             response_text = rag_engine.generate_response(text, avatar_id, language)
+            logger.info(f"🔍 DIAGNÓSTICO - response_text (RAG): {response_text}")
             logger.info(f"Resposta RAG gerada: '{response_text[:100]}'")
         except Exception as e:
             logger.warning(f"Erro ao gerar resposta com RAG: {e}, usando eco")
             response_text = text
+    
+    logger.info(f"🔍 DIAGNÓSTICO - Retornando: audio={bool(audio_data)}, visemes={len(visemes)}, response='{response_text[:50]}'")
     
     return {
         "success": True,
