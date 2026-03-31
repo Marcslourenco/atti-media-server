@@ -16,6 +16,7 @@ COPY main.py .
 COPY i18n_engine.py .
 COPY src/avatar/viseme_sync.py ./viseme_sync.py
 COPY src/ ./src/
+COPY knowledge/ ./knowledge/
 
 # Expor porta
 EXPOSE 5000
