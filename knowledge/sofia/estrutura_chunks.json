@@ -1,0 +1,384 @@
+{
+  "config": {
+    "estrategia": {
+      "chunk_size_recomendado": 420,
+      "overlap_recomendado": 60,
+      "top_k_recomendado": 4,
+      "fallback_sem_contexto": "Se a recuperação vier fraca, responder de forma curta, transparente e pedir apenas o contexto mínimo necessário para continuar.",
+      "justificativa": "Para FAQ comercial em voz, chunks médios preservam contexto sem gerar resposta longa demais. Overlap ~14% ajuda em bordas sem duplicar demais."
+    },
+    "separacao_por_area": [
+      "saúde",
+      "automotivo",
+      "governo",
+      "comercial",
+      "institucional"
+    ]
+  },
+  "chunks": [
+    {
+      "chunk_id": "ch_001",
+      "source_id": "health_01",
+      "setor": "saúde",
+      "categoria": "técnico",
+      "intencao": "descoberta",
+      "text": "Pergunta: Como um humano digital pode ajudar na triagem inicial em saúde?\nCategoria: técnico\nIntenção: descoberta\nResposta base: Ele pode fazer a primeira coleta de contexto com linguagem simples, entender sintomas relatados, organizar prioridade de atendimento e encaminhar o paciente para o fluxo correto. O ganho maior está em reduzir espera, padronizar perguntas sensíveis e manter disponibilidade 24 horas. Na prática, isso funciona bem para orientações iniciais, confirmação de dados, preparo para consulta e encaminhamento seguro, sempre respeitando limites clínicos e transferindo casos críticos para equipe humana.\nGatilho comercial: Redução de fila + atendimento 24/7 + melhor experiência inicial.\nFollow-up: Quer que eu te mostre um fluxo de triagem com escalonamento para humano?",
+      "length_chars": 791,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_002",
+      "source_id": "health_02",
+      "setor": "saúde",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "text": "Pergunta: Dá para integrar com agenda, CRM ou prontuário?\nCategoria: técnico\nIntenção: dúvida\nResposta base: Sim, desde que o sistema atual tenha API, webhook ou uma camada intermediária de integração. O caminho mais comum é o avatar consultar horários, registrar intenção, capturar dados autorizados e devolver a ação para o sistema existente. O benefício é preservar o stack atual e adicionar uma camada conversacional por cima, sem precisar reconstruir a operação do zero.\nGatilho comercial: Implantação incremental sobre sistemas existentes.\nFollow-up: Se quiser, eu posso listar o mínimo técnico necessário para essa integração.",
+      "length_chars": 633,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_003",
+      "source_id": "health_03",
+      "setor": "saúde",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "text": "Pergunta: O atendimento pode funcionar 24 horas por dia?\nCategoria: comercial\nIntenção: compra\nResposta base: Pode, e esse costuma ser um dos ganhos mais percebidos. O humano digital mantém a mesma qualidade de acolhimento fora do horário comercial, consegue responder dúvidas recorrentes, orientar preparo, coletar intenção e encaminhar urgências. Isso evita perda de contato, melhora disponibilidade percebida e reduz sobrecarga da equipe em horários de pico.\nGatilho comercial: Disponibilidade contínua e redução de contatos perdidos.\nFollow-up: Quer que eu te mostre o que faz sentido automatizar e o que deve seguir com humano?",
+      "length_chars": 632,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_004",
+      "source_id": "health_04",
+      "setor": "saúde",
+      "categoria": "institucional",
+      "intencao": "objeção",
+      "text": "Pergunta: Como fica LGPD e privacidade dos dados?\nCategoria: institucional\nIntenção: objeção\nResposta base: A arquitetura deve seguir minimização de dados, consentimento quando necessário, registro de finalidade, controle de acesso e criptografia em trânsito e em repouso. O mais importante é desenhar o avatar para coletar apenas o que realmente precisa em cada etapa. Em projetos maduros, também vale separar dados sensíveis da camada de conversa e registrar auditoria dos eventos críticos.\nGatilho comercial: Confiabilidade institucional e viabilidade para setores regulados.\nFollow-up: Se fizer sentido, eu organizo um checklist prático de LGPD para a implantação.",
+      "length_chars": 668,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "alto",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_005",
+      "source_id": "health_05",
+      "setor": "saúde",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "text": "Pergunta: Esse avatar substitui a equipe humana?\nCategoria: comercial\nIntenção: objeção\nResposta base: Não. O papel mais inteligente é complementar a equipe, absorvendo atendimento repetitivo, triagem, orientação e captação inicial. Quando a situação exige empatia clínica, decisão médica ou negociação delicada, o melhor fluxo é escalar para um profissional. O resultado costuma ser uma equipe mais focada em casos de maior valor humano e operacional.\nGatilho comercial: Reposiciona a solução como ganho de eficiência e não ameaça interna.\nFollow-up: Quer que eu te mostre um modelo híbrido entre avatar e atendimento humano?",
+      "length_chars": 626,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_006",
+      "source_id": "auto_01",
+      "setor": "automotivo",
+      "categoria": "comercial",
+      "intencao": "descoberta",
+      "text": "Pergunta: Como o avatar ajuda a gerar leads no setor automotivo?\nCategoria: comercial\nIntenção: descoberta\nResposta base: Ele pode abordar visitantes em páginas de veículo, entender interesse, comparar versões, qualificar intenção de compra e conduzir para test-drive, proposta ou atendimento humano. O ganho real é transformar tráfego frio em conversa orientada, sem depender de formulário seco. Em muitos casos, o visitante fala mais com voz do que preencheria num formulário tradicional.\nGatilho comercial: Mais conversão de tráfego em lead qualificado.\nFollow-up: Se quiser, eu simulo um fluxo de showroom digital com agendamento de test-drive.",
+      "length_chars": 648,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_007",
+      "source_id": "auto_02",
+      "setor": "automotivo",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "text": "Pergunta: Ele consegue comparar versões e responder dúvidas sobre veículos?\nCategoria: técnico\nIntenção: dúvida\nResposta base: Consegue, desde que a base de conhecimento esteja bem estruturada com versões, motorização, itens de série, diferenciais e regras de comparação. A experiência fica melhor quando o avatar organiza a resposta por perfil de uso, por exemplo cidade, estrada, frota ou família. Assim a conversa deixa de ser catálogo falado e passa a ser orientação de compra.\nGatilho comercial: Venda consultiva em vez de resposta estática de catálogo.\nFollow-up: Quer que eu te mostre como montar a base de conhecimento por modelo e versão?",
+      "length_chars": 647,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_008",
+      "source_id": "auto_03",
+      "setor": "automotivo",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "text": "Pergunta: Dá para agendar test-drive pelo avatar?\nCategoria: comercial\nIntenção: compra\nResposta base: Dá, e essa costuma ser uma das automações mais valiosas. O avatar pode confirmar interesse, captar unidade de preferência, filtrar modelo, sugerir horários e enviar o lead pronto para o sistema ou time comercial. O benefício é encurtar o caminho entre intenção e ação, reduzindo abandono no meio do processo.\nGatilho comercial: Curto caminho para resultado comercial mensurável.\nFollow-up: Se quiser, eu desenho um fluxo simples de agendamento integrado ao CRM ou agenda da loja.",
+      "length_chars": 582,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_009",
+      "source_id": "auto_04",
+      "setor": "automotivo",
+      "categoria": "suporte",
+      "intencao": "descoberta",
+      "text": "Pergunta: O avatar pode ajudar no pós-venda e manutenção?\nCategoria: suporte\nIntenção: descoberta\nResposta base: Pode sim. Ele funciona bem para orientações recorrentes, revisão, lembretes, preparo para manutenção, status básico e triagem de demandas antes da oficina ou central humana. Isso melhora experiência do cliente e reduz carga no atendimento convencional, principalmente em dúvidas repetidas e agendamentos operacionais.\nGatilho comercial: Expansão de uso além da captação de lead.\nFollow-up: Quer que eu separe um fluxo de venda e outro de pós-venda para você comparar?",
+      "length_chars": 580,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_010",
+      "source_id": "auto_05",
+      "setor": "automotivo",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "text": "Pergunta: Como isso conversa com o CRM da concessionária?\nCategoria: técnico\nIntenção: dúvida\nResposta base: A integração ideal registra intenção, estágio da conversa, veículo de interesse, faixa de compra, unidade e próxima ação sugerida. Em vez de jogar apenas nome e telefone no CRM, o avatar pode enviar contexto comercial já enriquecido. Isso melhora follow-up, priorização e aproveitamento do lead pela equipe.\nGatilho comercial: Lead scoring e qualificação melhor para o time de vendas.\nFollow-up: Se fizer sentido, eu te passo um payload mínimo recomendado para CRM.",
+      "length_chars": 574,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "alto",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_011",
+      "source_id": "gov_01",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "descoberta",
+      "text": "Pergunta: Como um humano digital pode orientar serviços públicos?\nCategoria: institucional\nIntenção: descoberta\nResposta base: Ele pode atuar como guia de serviços, explicando documentos, etapas, elegibilidade, prazos e canais corretos para cada demanda. O benefício está em reduzir desencontro de informação e tornar o acesso mais simples para o cidadão. Na prática, ele funciona muito bem em portais, totens e centrais de orientação com linguagem acessível.\nGatilho comercial: Melhora experiência do cidadão e reduz volume de dúvidas repetidas.\nFollow-up: Quer que eu te mostre um exemplo de fluxo para emissão, agendamento ou protocolo?",
+      "length_chars": 639,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_012",
+      "source_id": "gov_02",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "text": "Pergunta: Isso ajuda em acessibilidade e inclusão digital?\nCategoria: institucional\nIntenção: dúvida\nResposta base: Ajuda bastante quando o projeto prioriza voz, linguagem simples, múltiplos idiomas e roteiros curtos. Para muitas pessoas, falar e ouvir é mais fácil do que ler um portal extenso. O avatar pode reduzir barreira cognitiva e orientar passo a passo, o que é especialmente valioso em serviços com alto volume e baixa familiaridade digital.\nGatilho comercial: Valor público + experiência inclusiva.\nFollow-up: Se quiser, eu listo recursos mínimos de acessibilidade para esse tipo de implantação.",
+      "length_chars": 606,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_013",
+      "source_id": "gov_03",
+      "setor": "governo",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "text": "Pergunta: O avatar pode atender fora do horário e reduzir fila?\nCategoria: comercial\nIntenção: compra\nResposta base: Pode, especialmente como primeira camada de orientação. Ele consegue esclarecer requisitos, coletar intenção, encaminhar para o canal certo e preparar a solicitação antes do atendimento humano. Isso reduz fila improdutiva, melhora previsibilidade e evita que o cidadão comece o processo sem informação suficiente.\nGatilho comercial: Eficiência operacional com manutenção do serviço atual.\nFollow-up: Quer que eu monte um fluxo com triagem automática e transbordo para atendente?",
+      "length_chars": 595,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_014",
+      "source_id": "gov_04",
+      "setor": "governo",
+      "categoria": "técnico",
+      "intencao": "objeção",
+      "text": "Pergunta: Como garantir transparência e segurança das respostas?\nCategoria: técnico\nIntenção: objeção\nResposta base: O ideal é trabalhar com RAG sobre base oficial, versionamento de conteúdo, logs de consulta, limites de escopo e encaminhamento quando houver ambiguidade. Em vez de deixar o modelo responder livremente, a camada cognitiva consulta fontes aprovadas e monta a resposta dentro de faixas seguras. Isso aumenta confiabilidade e facilita governança.\nGatilho comercial: Governança forte para aprovação institucional.\nFollow-up: Se fizer sentido, eu organizo um padrão de resposta com fonte e nível de confiança.",
+      "length_chars": 621,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "alto",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_015",
+      "source_id": "gov_05",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "text": "Pergunta: Onde esse avatar pode ser usado: site, totem ou WhatsApp?\nCategoria: institucional\nIntenção: dúvida\nResposta base: Ele pode atuar em vários pontos, mas a escolha ideal depende do tipo de jornada. Portal funciona bem para orientação ampla, totem ajuda atendimento presencial assistido e canais de mensagem servem continuidade. O melhor desenho costuma combinar presença onde o cidadão já está, mantendo a mesma inteligência por trás.\nGatilho comercial: Escalabilidade multicanal sem reconstrução total.\nFollow-up: Quer que eu te proponha uma ordem de implantação por canal?",
+      "length_chars": 582,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_016",
+      "source_id": "comm_01",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "text": "Pergunta: Quanto custa implantar um avatar como a Sofia?\nCategoria: comercial\nIntenção: compra\nResposta base: O investimento varia conforme número de fluxos, integrações, volume de atendimento, qualidade do avatar, voz e governança desejada. A forma mais saudável de tratar preço é olhar pacote de implantação mais operação contínua e comparar isso com ganho em conversão, redução de fila e disponibilidade. Em vez de perguntar só quanto custa, vale olhar quanto da sua demanda atual ele consegue absorver com qualidade.\nGatilho comercial: Conduz do preço para valor e escopo.\nFollow-up: Se quiser, eu posso te ajudar a estimar uma faixa com base no seu caso prioritário.",
+      "length_chars": 671,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_017",
+      "source_id": "comm_02",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "descoberta",
+      "text": "Pergunta: Qual é o ROI mais comum desse tipo de projeto?\nCategoria: comercial\nIntenção: descoberta\nResposta base: O ROI costuma aparecer em quatro frentes: aumento de conversão, redução de abandono, ganho de eficiência operacional e disponibilidade estendida sem ampliar time na mesma proporção. Em operações comerciais, também pesa a qualidade do lead que chega ao vendedor. O retorno fica mais visível quando o projeto começa por um fluxo com volume alto e gargalo claro.\nGatilho comercial: Mostra valor financeiro e operacional.\nFollow-up: Quer que eu te ajude a calcular um ROI inicial com premissas simples?",
+      "length_chars": 612,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_018",
+      "source_id": "comm_03",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "dúvida",
+      "text": "Pergunta: Quanto tempo leva para colocar em produção?\nCategoria: comercial\nIntenção: dúvida\nResposta base: Depende da complexidade, mas um piloto focado em um caso de uso costuma ser muito mais rápido do que um projeto amplo logo de saída. Quando a base de conhecimento está organizada e as integrações são objetivas, o caminho de validação acelera bastante. A recomendação mais segura é começar enxuto, medir resultado e expandir em ondas.\nGatilho comercial: Venda por piloto com menor atrito.\nFollow-up: Se quiser, eu te proponho um roadmap em 3 fases sem mexer na estrutura atual.",
+      "length_chars": 583,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_019",
+      "source_id": "comm_04",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "text": "Pergunta: Como provar valor antes de um rollout maior?\nCategoria: comercial\nIntenção: objeção\nResposta base: O melhor caminho é escolher um caso de uso com dor clara, como captação, triagem ou suporte recorrente, definir métricas simples e rodar um piloto comparável. Assim vocês medem volume atendido, taxa de conclusão, encaminhamento útil, conversão e percepção do usuário. Prova de valor boa é pequena o suficiente para começar rápido e forte o suficiente para mostrar impacto real.\nGatilho comercial: Facilita venda incremental e redução de risco.\nFollow-up: Quer que eu te monte um desenho de POC com métricas de sucesso?",
+      "length_chars": 627,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_020",
+      "source_id": "comm_05",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "text": "Pergunta: Isso não vai soar robótico demais para o cliente?\nCategoria: comercial\nIntenção: objeção\nResposta base: Só soa robótico quando a experiência é tratada como TTS sem inteligência conversacional. Quando existe contexto, variação de linguagem, cadência adequada e objetivo claro, a percepção muda bastante. A chave está em evitar respostas genéricas, lembrar o que o cliente disse e falar como consultora, não como FAQ recitado.\nGatilho comercial: Reposiciona objeção como problema de desenho, não de conceito.\nFollow-up: Se quiser, eu posso te mostrar as regras que evitam repetição e resposta mecânica.",
+      "length_chars": 610,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_021",
+      "source_id": "comm_06",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "text": "Pergunta: Vale a pena oferecer uma demo guiada pela Sofia?\nCategoria: comercial\nIntenção: compra\nResposta base: Vale, porque a demo guiada faz duas coisas ao mesmo tempo: apresenta a proposta e já demonstra a própria experiência conversacional. Quando a Sofia conduz a conversa, qualifica necessidade e mostra um caso prático, a venda fica mais tangível. É uma forma elegante de vender a solução usando a própria solução.\nGatilho comercial: Acelera percepção de valor e diferenciação comercial.\nFollow-up: Quer que eu esboce um roteiro de demo consultiva em 5 minutos?",
+      "length_chars": 568,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_022",
+      "source_id": "inst_01",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "descoberta",
+      "text": "Pergunta: O que exatamente é um humano digital conversacional?\nCategoria: institucional\nIntenção: descoberta\nResposta base: É uma interface conversacional com presença visual e voz, pensada para interagir de forma mais humana do que um chatbot tradicional. A combinação de avatar, linguagem natural, contexto e objetivo de negócio permite orientar, vender, atender e encaminhar ações. Em resumo, é a camada de relacionamento conversacional com cara, voz e comportamento de marca.\nGatilho comercial: Educa o mercado e prepara terreno comercial.\nFollow-up: Se quiser, eu também posso comparar isso com chatbot, voicebot e assistente virtual tradicional.",
+      "length_chars": 651,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_023",
+      "source_id": "inst_02",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "text": "Pergunta: Qual é a diferença entre humano digital e chatbot?\nCategoria: institucional\nIntenção: dúvida\nResposta base: O chatbot costuma ser centrado em texto e navegação por mensagens. Já o humano digital adiciona voz, presença, ritmo, expressividade e uma percepção maior de acolhimento. Mas a diferença relevante não é só visual: quando bem implementado, ele mantém contexto, conduz a jornada e entrega uma experiência mais próxima de uma conversa guiada.\nGatilho comercial: Diferencia produto e reforça valor premium.\nFollow-up: Quer que eu te mostre em quais jornadas o humano digital faz mais sentido do que chatbot puro?",
+      "length_chars": 626,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "baixo",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_024",
+      "source_id": "inst_03",
+      "setor": "institucional",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "text": "Pergunta: A Sofia pode responder só por voz, sem texto na tela?\nCategoria: técnico\nIntenção: dúvida\nResposta base: Pode, e isso inclusive reforça uma experiência mais próxima de interação humana quando o caso de uso pede fluidez e presença. Nesse formato, vale ajustar tamanho das respostas, pausas, sinais de continuidade e fallback para garantir clareza. O segredo é desenhar a resposta para ser ouvida, não lida.\nGatilho comercial: Alinha diretamente com a proposta de experiência da Sofia.\nFollow-up: Se quiser, eu te passo um padrão de escrita próprio para voz-only.",
+      "length_chars": 571,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_025",
+      "source_id": "inst_04",
+      "setor": "institucional",
+      "categoria": "técnico",
+      "intencao": "objeção",
+      "text": "Pergunta: Ela consegue manter contexto de conversa de verdade?\nCategoria: técnico\nIntenção: objeção\nResposta base: Consegue, desde que a arquitetura mantenha memória de sessão, intenção atual, entidades capturadas e sinais de estágio da jornada. Sem essa camada, a conversa vira pergunta-resposta solta. Com contexto, a Sofia consegue retomar assunto, evitar repetição, aprofundar sem começar do zero e parecer muito mais natural.\nGatilho comercial: Resolve a principal dor atual do projeto.\nFollow-up: Quer que eu te mostre quais estados mínimos precisam ser salvos por sessão?",
+      "length_chars": 578,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "alto",
+        "emocao": "friendly"
+      }
+    },
+    {
+      "chunk_id": "ch_026",
+      "source_id": "inst_05",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "compra",
+      "text": "Pergunta: Dá para adaptar a Sofia ao tom da nossa marca?\nCategoria: institucional\nIntenção: compra\nResposta base: Dá, e isso é uma parte central do projeto. Tom de voz, abertura, forma de explicar, profundidade técnica, nível de energia e abordagem comercial podem ser calibrados por prompt, regras e dataset. O ideal é a Sofia soar como extensão coerente da marca, e não como um assistente genérico trocado de roupa.\nGatilho comercial: Reforça branding e aderência comercial.\nFollow-up: Se fizer sentido, eu posso te mostrar um framework simples de calibragem de tom de marca.",
+      "length_chars": 577,
+      "metadata": {
+        "tom": "consultivo",
+        "nivel_tecnico": "medio",
+        "emocao": "friendly"
+      }
+    }
+  ]
+}
