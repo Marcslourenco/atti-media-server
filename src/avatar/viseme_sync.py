@@ -273,13 +273,49 @@ class VisemeSyncEngine:
         import base64
         import io
         
-        # Definir voz baseada no idioma
-        voices = {
-            "pt-BR": "pt-BR-FranciscaNeural",
-            "en": "en-US-JennyNeural",
-            "es": "es-ES-ElviraNeural"
+        # Definir voz baseada no avatar_id e idioma
+        avatar_voices = {
+            "pt-BR": {
+                "sofia": "pt-BR-FranciscaNeural",      # Feminina
+                "lucas": "pt-BR-AntonioNeural",       # Masculino
+                "clara": "pt-BR-FranciscaNeural",      # Feminina
+                "amanda": "pt-BR-FranciscaNeural",     # Feminina
+                "fernanda": "pt-BR-FranciscaNeural",   # Feminina
+                "marina": "pt-BR-FranciscaNeural",     # Feminina
+                "roberto": "pt-BR-AntonioNeural",      # Masculino
+                "luisa": "pt-BR-FranciscaNeural",      # Feminina
+                "lais": "pt-BR-FranciscaNeural",       # Feminina
+                "paula": "pt-BR-FranciscaNeural",      # Feminina
+                "bruno": "pt-BR-AntonioNeural",        # Masculino
+                "giovana": "pt-BR-FranciscaNeural",    # Feminina
+                "marcos": "pt-BR-AntonioNeural",       # Masculino
+                "carol": "pt-BR-FranciscaNeural",      # Feminina
+                "rafael": "pt-BR-AntonioNeural",       # Masculino
+            },
+            "en": {
+                "sofia": "en-US-JennyNeural",
+                "lucas": "en-US-GuyNeural",
+                "rafael": "en-US-GuyNeural",
+            },
+            "es": {
+                "sofia": "es-ES-ElviraNeural",
+                "lucas": "es-ES-AlvaroNeural",
+                "rafael": "es-ES-AlvaroNeural",
+            }
         }
-        voice = voices.get(language, "pt-BR-FranciscaNeural")
+        
+        # Obter voz do avatar, com fallback para idioma
+        voice = avatar_voices.get(language, {}).get(avatar_id.lower(), None)
+        if not voice:
+            # Fallback para voz padrão do idioma
+            default_voices = {
+                "pt-BR": "pt-BR-FranciscaNeural",
+                "en": "en-US-JennyNeural",
+                "es": "es-ES-ElviraNeural"
+            }
+            voice = default_voices.get(language, "pt-BR-FranciscaNeural")
+        
+        logger.info(f"Voz selecionada para {avatar_id} ({language}): {voice}")
         
         try:
             # Gerar áudio com Edge-TTS (usando io.BytesIO como no commit dc2395a)

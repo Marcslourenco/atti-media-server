@@ -42,6 +42,14 @@ except Exception as e:
     logger.error(f"Erro ao importar viseme_sync: {e}", exc_info=True)
     viseme_sync = None
 
+try:
+    from src.rag_engine import rag_engine
+    logger.info("RAG engine carregado com sucesso")
+except Exception as e:
+    logger.error(f"Erro ao importar RAG engine: {e}", exc_info=True)
+    rag_engine = None
+    viseme_sync = None
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Iniciando humanos-digitais-tts-rag-llm v{BACKEND_VERSION}")
@@ -139,17 +147,26 @@ async def avatar_speak(request: SpeakRequest):
         except Exception as e:
             logger.error(f"Erro ao gerar áudio/visemes: {e}")
     
+    # Gerar resposta com RAG
+    response_text = text
+    if rag_engine:
+        try:
+            response_text = rag_engine.generate_response(text, avatar_id, language)
+            logger.info(f"Resposta RAG gerada: '{response_text[:100]}'")
+        except Exception as e:
+            logger.warning(f"Erro ao gerar resposta com RAG: {e}, usando eco")
+            response_text = text
+    
     return {
         "success": True,
-        "text_response": text,
+        "text_response": response_text,
         "audio_data": audio_data,
         "visemes": visemes,
         "language": language,
         "avatar_id": avatar_id,
         "supported_languages": app.state.supported_languages
     }
-
-@app.post("/api/tts")
+@app.post("/api/tts"))
 async def tts_only(request: TTSRequest):
     """Endpoint apenas para TTS (sem visemes)."""
     text = request.text.strip()
