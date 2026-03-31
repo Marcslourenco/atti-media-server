@@ -166,7 +166,7 @@ async def avatar_speak(request: SpeakRequest):
         "avatar_id": avatar_id,
         "supported_languages": app.state.supported_languages
     }
-@app.post("/api/tts"))
+@app.post("/api/tts")
 async def tts_only(request: TTSRequest):
     """Endpoint apenas para TTS (sem visemes)."""
     text = request.text.strip()
