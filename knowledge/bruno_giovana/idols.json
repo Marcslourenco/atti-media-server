@@ -1,0 +1,112 @@
+[
+  {
+    "id": "IDL-0001",
+    "source_type": "historical",
+    "nome": "Raí",
+    "nome_completo": "Raí Souza Vieira de Oliveira",
+    "posicao": "Meia",
+    "periodo_no_clube": "1988–1994",
+    "titulos": ["Campeonato Brasileiro 1991", "Campeonato Brasileiro 1992", "Copa Libertadores 1992", "Copa Libertadores 1993", "Copa Intercontinental 1992", "Copa Intercontinental 1993"],
+    "estatisticas_relevantes": "Capitão da equipe tricampeã. Artilheiro e líder técnico do elenco campeão.",
+    "legado": "Símbolo máximo da era mais gloriosa do clube. Seu número 10 foi aposentado simbolicamente. Irmão de Sócrates."
+  },
+  {
+    "id": "IDL-0002",
+    "source_type": "historical",
+    "nome": "Cafu",
+    "nome_completo": "Marcos Evangelista de Morais",
+    "posicao": "Lateral-direito",
+    "periodo_no_clube": "1990–1994 e 1995–1997",
+    "titulos": ["Copa Libertadores 1992", "Copa Libertadores 1993", "Copa Intercontinental 1992", "Copa Intercontinental 1993"],
+    "estatisticas_relevantes": "Lateral mais veloz de sua geração. Considerado o melhor lateral-direito do mundo nos anos 1990.",
+    "legado": "Revelado pelo São Paulo, tornou-se ídolo mundial. Bicampeão do mundo com o clube."
+  },
+  {
+    "id": "IDL-0003",
+    "source_type": "historical",
+    "nome": "Müller",
+    "nome_completo": "Luís Roberto Müller",
+    "posicao": "Atacante",
+    "periodo_no_clube": "1985–1993 e 1997–1999",
+    "titulos": ["Campeonato Brasileiro 1987", "Campeonato Brasileiro 1991", "Copa Libertadores 1992", "Copa Intercontinental 1992"],
+    "estatisticas_relevantes": "Um dos maiores artilheiros da história do clube.",
+    "legado": "Ídolo da torcida na era dos Mundiais, artilheiro histórico e símbolo da geração vencedora."
+  },
+  {
+    "id": "IDL-0004",
+    "source_type": "historical",
+    "nome": "Toninho Cerezo",
+    "nome_completo": "Antônio Carlos Cerezo",
+    "posicao": "Volante / Meia",
+    "periodo_no_clube": "1992–1994",
+    "titulos": ["Copa Libertadores 1992", "Copa Libertadores 1993", "Copa Intercontinental 1992", "Copa Intercontinental 1993"],
+    "estatisticas_relevantes": "Experiência e qualidade técnica fundamentais nas conquistas continentais e mundiais.",
+    "legado": "Ídolo do Atlético Mineiro que se consagrou no São Paulo na reta final da carreira."
+  },
+  {
+    "id": "IDL-0005",
+    "source_type": "historical",
+    "nome": "Rogério Ceni",
+    "nome_completo": "Rogério Ceni",
+    "posicao": "Goleiro",
+    "periodo_no_clube": "1990–2015",
+    "titulos": ["Campeonato Brasileiro 2006", "Campeonato Brasileiro 2007", "Campeonato Brasileiro 2008", "Copa Libertadores 2005", "Copa do Mundo de Clubes FIFA 2005", "Copa do Brasil 1992", "Campeonato Paulista (múltiplos)"],
+    "estatisticas_relevantes": "Mais de 1.200 jogos pelo clube. Maior artilheiro goleiro da história do futebol mundial com mais de 130 gols (cobranças de falta e pênaltis). Único jogador com mais de 1000 jogos pelo SPFC.",
+    "legado": "Maior ídolo da história do São Paulo Futebol Clube. Símbolo de lealdade, técnica e dedicação. Ícone mundial pelo número de gols como goleiro."
+  },
+  {
+    "id": "IDL-0006",
+    "source_type": "historical",
+    "nome": "Leonardo",
+    "nome_completo": "Leonardo Nascimento de Araújo",
+    "posicao": "Lateral-esquerdo / Meia",
+    "periodo_no_clube": "1990–1993",
+    "titulos": ["Copa Libertadores 1992", "Copa Libertadores 1993", "Copa Intercontinental 1992"],
+    "estatisticas_relevantes": "Jogador técnico e versátil que integrou a equipe campeã.",
+    "legado": "Parte essencial da geração dourada de Telê Santana."
+  },
+  {
+    "id": "IDL-0007",
+    "source_type": "historical",
+    "nome": "Telê Santana",
+    "nome_completo": "Telê Santana da Silva",
+    "posicao": "Técnico",
+    "periodo_no_clube": "1990–1996",
+    "titulos": ["Campeonato Brasileiro 1991", "Campeonato Brasileiro 1992", "Copa Libertadores 1992", "Copa Libertadores 1993", "Copa Intercontinental 1992", "Copa Intercontinental 1993"],
+    "estatisticas_relevantes": "Único técnico a conquistar dois títulos mundiais consecutivos com o mesmo clube.",
+    "legado": "O maior treinador da história do São Paulo FC. Transformou o clube em potência mundial. Faleceu em 21/03/2006."
+  },
+  {
+    "id": "IDL-0008",
+    "source_type": "historical",
+    "nome": "Amoroso",
+    "nome_completo": "Marcelo Amoroso",
+    "posicao": "Atacante",
+    "periodo_no_clube": "1995–1997",
+    "titulos": ["Campeonato Paulista 1998 (não foi campeão neste período específico)"],
+    "estatisticas_relevantes": "Artilheiro e ídolo da torcida nos anos 1990.",
+    "legado": "Grande ídolo da torcida tricolor dos anos 1990."
+  },
+  {
+    "id": "IDL-0009",
+    "source_type": "historical",
+    "nome": "Mineiro",
+    "nome_completo": "Edson Aparecido da Silva",
+    "posicao": "Volante",
+    "periodo_no_clube": "2000–2007",
+    "titulos": ["Copa Libertadores 2005", "Copa do Mundo de Clubes FIFA 2005", "Campeonato Brasileiro 2006", "Campeonato Brasileiro 2007"],
+    "estatisticas_relevantes": "Autor do gol do título mundial em 2005 contra o Liverpool.",
+    "legado": "Herói do tricampeonato mundial. O gol contra o Liverpool o eternizou na história do clube."
+  },
+  {
+    "id": "IDL-0010",
+    "source_type": "historical",
+    "nome": "Cicinho",
+    "nome_completo": "José Cicinho",
+    "posicao": "Lateral-direito",
+    "periodo_no_clube": "2003–2006",
+    "titulos": ["Copa Libertadores 2005", "Copa do Mundo de Clubes FIFA 2005", "Campeonato Brasileiro 2006"],
+    "estatisticas_relevantes": "Lateral veloz e ofensivo, herdeiro da tradição de Cafu na posição.",
+    "legado": "Parte da geração campeã mundial de 2005."
+  }
+]

@@ -1,0 +1,833 @@
+{
+  "segmento": "Energia Solar Fotovoltaica",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA empresariais atuantes no setor de energia solar fotovoltaica no Brasil. Cobre tipos de sistemas, economia, payback, financiamento, incentivos fiscais, fluxos de atendimento, objeções e simulações de conversa orientadas à conversão e fidelização de clientes.",
+  "nucleo_conhecimento": {
+    "contexto_mercado": [
+      "O Brasil encerrou 2024 com mais de 50 GW de capacidade instalada em energia solar fotovoltaica, representando aproximadamente 21% da matriz elétrica nacional, segundo a ABSOLAR.",
+      "A geração distribuída (GD) ultrapassou 2,6 milhões de instalações ativas em todo o país, abrangendo residências, comércios, indústrias, agronegócio e poder público.",
+      "O setor projeta crescimento de 25% em 2025, com expectativa de expansão superior a 300% até 2030, impulsionado pela queda nos preços dos equipamentos e ampliação das linhas de crédito.",
+      "O Brasil é um dos países com maior incidência solar do mundo, com irradiação média de 4,5 a 6,5 kWh/m²/dia, tornando o território altamente favorável à geração fotovoltaica.",
+      "O Marco Legal da Geração Distribuída (Lei 14.300/2022) regulamentou o setor, criando regras de transição para novos sistemas que incluem a cobrança parcial pelo uso da rede (Fio B), implantada de forma gradual de 2023 a 2029.",
+      "As tarifas de energia elétrica no Brasil seguem tendência de alta histórica, com reajustes anuais médios acima da inflação, tornando o investimento em geração própria cada vez mais atrativo.",
+      "O financiamento para energia solar cresceu 41% no segundo trimestre de 2024 em comparação ao mesmo período de 2023, segundo levantamento do Meu Financiamento Solar.",
+      "As principais regiões com maior volume de instalações são Sudeste, Sul e Nordeste. São Paulo lidera em volume absoluto, enquanto o Nordeste se destaca pela irradiação solar.",
+      "O mercado é composto por integradores locais, distribuidores nacionais, fabricantes e fintechs de crédito solar, criando um ecossistema robusto de comercialização e instalação.",
+      "A inclusão da energia solar no Programa Minha Casa Minha Vida (Lei 14.620/2023) democratizou ainda mais o acesso a sistemas fotovoltaicos para famílias de baixa renda.",
+      "Grandes fabricantes como LONGi, JA Solar, Risen, Canadian Solar e Trina Solar respondem por aproximadamente 85% do mercado global de painéis, com presença forte no Brasil.",
+      "Empresas como Aldo Solar, Portal Solar, BYD Energy, WEG e Intelbras figuram entre os principais distribuidores e fabricantes de equipamentos solares no mercado brasileiro.",
+      "A ABSOLAR (Associação Brasileira de Energia Solar Fotovoltaica) é o principal órgão representativo do setor, atuando na regulamentação, dados e advocacy junto ao governo federal.",
+      "O setor gerou mais de 1,5 milhão de empregos diretos e indiretos desde 2012, consolidando-se como relevante vetor de desenvolvimento econômico nacional."
+    ],
+    "problemas_comuns": [
+      "Alto custo inicial de instalação, que pode variar de R$ 12.000 a mais de R$ 500.000 dependendo do porte do sistema.",
+      "Desconhecimento técnico do consumidor sobre tipos de sistema, dimensionamento correto e equipamentos adequados ao perfil de consumo.",
+      "Dificuldade de acesso ao crédito para pessoas físicas de baixa renda ou autônomos sem comprovação de renda formal.",
+      "Burocracia no processo de homologação junto às distribuidoras de energia, com prazos que variam de 30 a 180 dias conforme a concessionária.",
+      "Qualidade variável dos integradores no mercado, com presença de empresas sem certificação técnica, gerando instalações inadequadas.",
+      "Falta de padronização nos processos de financiamento entre as diferentes instituições financeiras.",
+      "Desinformação sobre o Marco Legal da Geração Distribuída e o impacto da cobrança do Fio B nos cálculos de retorno.",
+      "Dificuldades técnicas em imóveis com telhados de orientação norte desfavorável, sombreamento por árvores ou estruturas vizinhas.",
+      "Ausência de cultura de manutenção preventiva, levando à perda de eficiência do sistema ao longo do tempo.",
+      "Falta de integração entre sistema fotovoltaico e sistemas de armazenamento (baterias), limitando a independência energética noturna.",
+      "Inadimplência e abandono de projetos por integradores pequenos sem estrutura de pós-venda.",
+      "Oscilação cambial que impacta o preço dos equipamentos importados, especialmente inversores e módulos.",
+      "Excesso de promessas de economia por parte de vendedores sem o correto dimensionamento técnico.",
+      "Desafios logísticos para instalação em zonas rurais e regiões remotas, com alto custo de deslocamento e mão de obra.",
+      "Resistência de condomínios e síndicos à aprovação de instalação em coberturas e áreas comuns."
+    ],
+    "objeções_clientes": [
+      {
+        "objecao": "É muito caro para mim agora.",
+        "resposta": "Entendo sua preocupação. Hoje existem linhas de financiamento com parcelas que, na maioria dos casos, ficam abaixo do valor que você já paga na conta de luz. Na prática, você troca uma despesa fixa por um investimento que se paga em 3 a 5 anos e ainda gera retorno por mais de 20 anos."
+      },
+      {
+        "objecao": "Não sei se a minha casa é adequada.",
+        "resposta": "A maioria dos imóveis residenciais no Brasil tem condições ideais para a instalação. Fazemos uma visita técnica gratuita para avaliar seu telhado, orientação solar, sombreamento e consumo. Só recomendamos o projeto se for viável financeiramente para você."
+      },
+      {
+        "objecao": "Ouvi dizer que mudou a lei e agora não compensa mais.",
+        "resposta": "Houve mudanças sim com o Marco Legal de 2022. Para sistemas instalados a partir de 2023, existe uma cobrança pelo uso da rede chamada Fio B, que será implementada gradualmente até 2029. Mesmo assim, a economia média ainda supera 80% na conta de luz, e o payback médio em 2025 está em torno de 3 a 4 anos."
+      },
+      {
+        "objecao": "Tenho medo de ser enganado por uma empresa ruim.",
+        "resposta": "É um cuidado legítimo. Por isso trabalhamos com certificação técnica pela ABSOLAR, equipamentos com garantias do fabricante de 10 a 25 anos e contrato transparente com SLA de pós-venda. Nosso histórico de instalações e avaliações de clientes está disponível para consulta."
+      },
+      {
+        "objecao": "E se o sistema não gerar o que prometeram?",
+        "resposta": "Todo projeto é dimensionado com base no histórico de consumo e nas condições locais de irradiação. Fornecemos uma projeção de geração mensal e monitoramento em tempo real pelo aplicativo. Se houver desvio significativo, nossa equipe técnica investiga e corrige."
+      },
+      {
+        "objecao": "Estou alugando o imóvel, não vale a pena.",
+        "resposta": "Para inquilinos, existe a modalidade de geração compartilhada e assinatura de energia solar, onde você recebe os créditos na sua conta sem precisar instalar nada. Já para proprietários que alugam, a instalação valoriza o imóvel em até 8% e pode ser um diferencial competitivo para locação."
+      },
+      {
+        "objecao": "E quando ficar nublado ou chover, como fico sem energia?",
+        "resposta": "O sistema conectado à rede (on-grid) mantém você ligado à distribuidora como fonte de backup. Nos dias nublados, os painéis ainda geram energia, só em menor quantidade. Você nunca fica sem luz. Para quem quer independência total, existe a opção com baterias de armazenamento."
+      },
+      {
+        "objecao": "Já tenho uma proposta mais barata de outro fornecedor.",
+        "resposta": "Preço menor pode significar equipamentos de menor eficiência, sem garantia ou instalação inadequada. Peço que compare marcas, garantias, certificações e o suporte pós-venda. Posso fazer uma análise comparativa da proposta para identificar possíveis diferenças que justifiquem o custo."
+      },
+      {
+        "objecao": "Vou esperar a tecnologia melhorar e os preços caírem mais.",
+        "resposta": "Essa é uma decisão que muitas pessoas tomam há 5 anos, perdendo em média R$ 500 a R$ 1.500 por mês em contas de luz que poderiam ser evitadas. Os preços dos equipamentos já caíram mais de 90% na última década. O melhor momento para instalar era ontem; o segundo melhor é hoje."
+      },
+      {
+        "objecao": "Meu condomínio não permite a instalação.",
+        "resposta": "A Lei Federal 14.300/2022 e alterações no Código Civil garantem ao condômino o direito de instalar sistemas fotovoltaicos em área de uso exclusivo, como varandas e coberturas privativas. Para áreas comuns, é necessária aprovação em assembleia. Podemos orientar sobre os passos legais."
+      }
+    ],
+    "argumentos_venda": [
+      "Economia média de 80 a 95% na conta de luz já no primeiro mês após a ativação do sistema.",
+      "Payback médio de 3 a 4 anos para residências e de 1,9 a 3,5 anos para sistemas comerciais e industriais.",
+      "Vida útil dos módulos fotovoltaicos de 25 a 30 anos, com garantia de desempenho mínimo de 80% ao final do período.",
+      "Taxa Interna de Retorno (TIR) superior a 18% ao ano com capital próprio, superando a maioria dos investimentos de renda fixa.",
+      "Valorização do imóvel em até 8% com a instalação de um sistema fotovoltaico.",
+      "Proteção contra reajustes tarifários futuros, garantindo previsibilidade nos custos de energia.",
+      "Parcelas de financiamento que frequentemente equivalem ou são menores que a conta de luz atual.",
+      "Monitoramento remoto em tempo real via aplicativo, com alertas de desempenho.",
+      "Contribuição ambiental: cada kWp instalado evita a emissão de aproximadamente 0,6 tonelada de CO₂ por ano.",
+      "Disponibilidade de financiamento por BNDES, Caixa Econômica, BNB, Banco do Brasil, BV e fintechs especializadas.",
+      "Isenção de ICMS sobre a energia gerada em diversos estados brasileiros.",
+      "Isenção de PIS/COFINS sobre a energia gerada por unidade geradora desde 2015.",
+      "Sistema de compensação de créditos permite que o excedente gerado seja utilizado em outros meses.",
+      "Manutenção de baixíssimo custo: limpeza semestral dos módulos e inspeção anual do inversor.",
+      "Possibilidade de expansão futura do sistema com adição de módulos conforme crescimento do consumo."
+    ]
+  },
+  "areas_tecnicas": [
+    {
+      "area": "Tipos de Sistema",
+      "detalhes": {
+        "on_grid": {
+          "descricao": "Sistema conectado à rede elétrica da concessionária. É o mais comum no Brasil. Quando o sistema gera mais energia do que o consumido, o excedente é injetado na rede e contabilizado como créditos a abater em faturas futuras.",
+          "componentes": ["Módulos fotovoltaicos", "Inversor grid-tie", "Estrutura de fixação", "String box (proteção CC)", "Medidor bidirecional", "Cabeamento e conectores"],
+          "vantagens": ["Menor custo inicial", "Sem necessidade de baterias", "Créditos de energia válidos por 60 meses"],
+          "desvantagens": ["Não funciona durante falta de energia (blackout) na maioria dos modelos", "Sujeito às regras da concessionária"],
+          "perfil_ideal": "Residências, comércios e indústrias conectadas à rede com consumo constante"
+        },
+        "off_grid": {
+          "descricao": "Sistema isolado da rede, com armazenamento em baterias. Funciona de forma autônoma, sem depender da distribuidora de energia.",
+          "componentes": ["Módulos fotovoltaicos", "Inversor/carregador", "Banco de baterias (chumbo-ácido ou lítio)", "Controlador de carga", "Estrutura de fixação"],
+          "vantagens": ["Total independência energética", "Ideal para locais sem rede elétrica"],
+          "desvantagens": ["Alto custo pelas baterias", "Vida útil limitada das baterias (3 a 10 anos)", "Necessidade de dimensionamento preciso"],
+          "perfil_ideal": "Chácaras, sítios, comunidades remotas, sistemas de bombeamento rural"
+        },
+        "hibrido": {
+          "descricao": "Combina conexão à rede com armazenamento em baterias. Permite uso noturno da energia armazenada e funcionamento como backup em caso de falta de energia.",
+          "componentes": ["Módulos fotovoltaicos", "Inversor híbrido", "Banco de baterias de lítio", "Estrutura de fixação", "Medidor bidirecional"],
+          "vantagens": ["Autonomia noturna", "Backup em blackout", "Maior aproveitamento da energia gerada"],
+          "desvantagens": ["Maior custo de instalação", "Manutenção de baterias"],
+          "perfil_ideal": "Residências de alto consumo, clínicas, data centers, locais com instabilidade de rede"
+        },
+        "geracao_distribuida_compartilhada": {
+          "descricao": "Modalidade em que a usina geradora está em local diferente das unidades consumidoras. Os créditos são distribuídos entre as unidades cadastradas no sistema ANEEL.",
+          "exemplos": ["Condomínios com central fotovoltaica", "Cooperativas de energia", "Fazendas solares com assinatura de energia"],
+          "vantagens": ["Sem necessidade de espaço próprio para instalação", "Acesso para inquilinos e apartamentos"],
+          "desvantagens": ["Depende de administrador da usina", "TIR ligeiramente menor"],
+          "perfil_ideal": "Apartamentos, inquilinos, empresas sem telhado disponível"
+        }
+      }
+    },
+    {
+      "area": "Dimensionamento de Sistema",
+      "detalhes": {
+        "passo_a_passo": [
+          "1. Levantamento do consumo médio mensal em kWh (últimas 12 faturas)",
+          "2. Verificação da irradiação solar média do município (banco de dados INPE/CRESESB)",
+          "3. Cálculo da potência necessária: Consumo ÷ (Irradiação × 30 × Fator de Eficiência ~0,80)",
+          "4. Definição do número de módulos: Potência total ÷ Potência do módulo escolhido",
+          "5. Seleção do inversor compatível com a geração do campo fotovoltaico",
+          "6. Verificação da área disponível no telhado: cada kWp exige aproximadamente 6 m²",
+          "7. Análise de orientação e sombreamento do telhado",
+          "8. Elaboração do projeto elétrico e memorial descritivo"
+        ],
+        "referencia_custos_2025": {
+          "residencial_300kwh_mes": "R$ 12.000 a R$ 20.000 instalado (sistema ~3 kWp)",
+          "comercial_pequeno": "R$ 38.000 a R$ 80.000 (sistema ~10 a 30 kWp)",
+          "comercial_medio": "R$ 80.000 a R$ 250.000 (sistema ~30 a 100 kWp)",
+          "industrial": "R$ 250.000 a R$ 1.500.000+ (sistema acima de 100 kWp)"
+        }
+      }
+    },
+    {
+      "area": "Economia e Payback",
+      "detalhes": {
+        "economia_media_residencial": "Redução de 80 a 95% na conta de luz, restando apenas a tarifa mínima de disponibilidade (R$ 30 a R$ 60/mês para sistemas bifásicos)",
+        "payback_medio_2025": {
+          "residencial": "3,0 a 4,5 anos com financiamento; 2,5 a 3,5 anos com capital próprio",
+          "comercial": "1,9 a 3,5 anos",
+          "industrial": "2,0 a 4,0 anos"
+        },
+        "retorno_investimento": {
+          "TIR_capital_proprio": "Acima de 18% ao ano",
+          "TIR_financiado": "Retorno menor, mas positivo; sistema pago em 5 anos com geração gratuita por mais 20 anos",
+          "ROI_25_anos": "Superior a 900% sobre o valor investido com capital próprio"
+        },
+        "formula_payback": "Payback (anos) = Investimento Total (R$) ÷ Economia Anual (R$)",
+        "exemplo_calculo": {
+          "consumo_mensal": "350 kWh/mês",
+          "fatura_atual": "R$ 380/mês",
+          "fatura_apos_solar": "R$ 40/mês (tarifa mínima)",
+          "economia_mensal": "R$ 340/mês",
+          "economia_anual": "R$ 4.080/ano",
+          "investimento": "R$ 18.000",
+          "payback": "4,4 anos",
+          "retorno_25_anos": "R$ 102.000 em economia acumulada"
+        }
+      }
+    },
+    {
+      "area": "Financiamento",
+      "detalhes": {
+        "principais_linhas": [
+          {
+            "banco": "BNDES - Finem e Finame",
+            "descricao": "Financiamento de equipamentos fotovoltaicos com TJLP ou TLP. Disponível para pessoas jurídicas e projetos de médio e grande porte.",
+            "caracteristicas": "Prazo de até 120 meses, juros a partir de 7% a.a."
+          },
+          {
+            "banco": "Caixa Econômica Federal",
+            "descricao": "Linha de crédito habitacional com possibilidade de incluir sistema solar no financiamento imobiliário.",
+            "caracteristicas": "Prazos longos, parcelas integradas ao financiamento do imóvel"
+          },
+          {
+            "banco": "Banco do Brasil",
+            "descricao": "Linhas para pessoa física e jurídica, incluindo Pronaf Solar para produtores rurais.",
+            "caracteristicas": "Prazo de até 96 meses, taxas a partir de 1,5% a.m."
+          },
+          {
+            "banco": "BNB - Banco do Nordeste (FNE Sol)",
+            "descricao": "Linha especial para a região Nordeste com condições diferenciadas para pessoa física.",
+            "caracteristicas": "Prazo de até 120 meses, carência de até 24 meses, juros subsidiados"
+          },
+          {
+            "banco": "Banco BV",
+            "descricao": "Financiamento 100% digital para sistemas residenciais e comerciais.",
+            "caracteristicas": "Prazo de até 60 meses, aprovação em 24h, sem garantia real"
+          },
+          {
+            "banco": "Santander, Bradesco, Itaú e outros privados",
+            "descricao": "Crédito pessoal ou consignado adaptado para energia solar.",
+            "caracteristicas": "Prazo de 12 a 84 meses, taxas variáveis conforme perfil do cliente"
+          },
+          {
+            "banco": "Fintechs especializadas (Solfácil, Mérito Solar, Meu Financiamento Solar)",
+            "descricao": "Plataformas digitais 100% focadas em energia solar, com processo simplificado e integração com integradores.",
+            "caracteristicas": "Prazo de 12 a 84 meses, aprovação em até 2 horas, sem burocracia"
+          }
+        ],
+        "documentacao_tipica": ["RG e CPF", "Comprovante de renda dos últimos 3 meses", "Comprovante de residência", "3 últimas contas de luz", "Proposta técnica do integrador", "Nota fiscal dos equipamentos"],
+        "dicas_aprovacao": [
+          "Apresentar o projeto completo com estimativa de payback ao banco",
+          "Demonstrar que a parcela equivale ou é menor que a conta de luz atual",
+          "Buscar fintechs especializadas em caso de recusa nos bancos tradicionais",
+          "Avaliar uso de FGTS para pessoa física em imóvel de residência"
+        ]
+      }
+    },
+    {
+      "area": "Incentivos Fiscais",
+      "detalhes": {
+        "federal": [
+          {
+            "incentivo": "Isenção de PIS/COFINS",
+            "base_legal": "Lei 13.169/2015",
+            "descricao": "Energia elétrica gerada em sistemas de geração distribuída está isenta de PIS e COFINS sobre a parcela de energia compensada.",
+            "beneficio": "Redução de até 9,25% no custo da energia compensada"
+          },
+          {
+            "incentivo": "Redução do IPI",
+            "base_legal": "Decreto 7.212/2010 e posteriores",
+            "descricao": "Módulos fotovoltaicos fabricados no Brasil têm alíquota de IPI reduzida a 0%.",
+            "beneficio": "Redução do custo de aquisição de equipamentos nacionais"
+          },
+          {
+            "incentivo": "Debêntures Incentivadas de GD",
+            "base_legal": "Decreto 11.964/2024",
+            "descricao": "Instrumento de captação de recursos para projetos de geração distribuída com benefícios fiscais para investidores.",
+            "beneficio": "Facilita o funding para projetos de médio e grande porte"
+          },
+          {
+            "incentivo": "Minha Casa Minha Vida Solar",
+            "base_legal": "Lei 14.620/2023",
+            "descricao": "Inclusão de sistemas fotovoltaicos no financiamento do programa habitacional federal.",
+            "beneficio": "Acesso a famílias de baixa renda com condições subsidiadas"
+          }
+        ],
+        "estadual": [
+          {
+            "incentivo": "Isenção de ICMS sobre energia compensada",
+            "base_legal": "Convênio ICMS 16/2015 do CONFAZ",
+            "descricao": "Estados signatários do convênio isental o ICMS incidente sobre a energia elétrica compensada em sistemas de geração distribuída.",
+            "estados_vigentes": "Maioria dos estados brasileiros, com variações; verificar adesão do estado do cliente",
+            "beneficio": "Redução de 12 a 30% no custo da energia compensada, conforme alíquota estadual"
+          },
+          {
+            "incentivo": "Isenção de ICMS na compra de equipamentos",
+            "descricao": "Alguns estados concedem isenção ou redução de ICMS na aquisição de módulos, inversores e demais componentes fotovoltaicos.",
+            "estados_destaque": "Minas Gerais (até 5 MW), Bahia, Ceará, Pernambuco — verificar legislação estadual vigente"
+          }
+        ],
+        "municipal": [
+          {
+            "incentivo": "IPTU Verde / Desconto em IPTU",
+            "descricao": "Municípios como Salvador (IPTU Amarelo), Curitiba e outros oferecem desconto no IPTU para imóveis com sistemas fotovoltaicos instalados.",
+            "beneficio": "Redução de 5 a 20% no valor do IPTU anual"
+          }
+        ],
+        "observacoes": [
+          "Incentivos estaduais e municipais variam e podem ser alterados a qualquer momento. Recomenda-se consultar a legislação vigente do estado/município do cliente.",
+          "O Marco Legal (Lei 14.300/2022) garantiu segurança jurídica ao setor com regras de transição claras para o Fio B até 2029.",
+          "Sistemas instalados antes de 7 de janeiro de 2023 têm isenção total do Fio B durante toda a vida útil do sistema."
+        ]
+      }
+    },
+    {
+      "area": "Processo de Homologação",
+      "detalhes": {
+        "etapas": [
+          "1. Elaboração do projeto elétrico pelo engenheiro responsável",
+          "2. Protocolo do pedido de acesso na distribuidora (portal ANEEL/distribuidora)",
+          "3. Análise da distribuidora (prazo regulatório: 30 dias para micro, 60 dias para minigeração)",
+          "4. Aprovação ou exigências técnicas adicionais",
+          "5. Instalação dos equipamentos",
+          "6. Vistoria e instalação do medidor bidirecional pela distribuidora",
+          "7. Ativação do sistema e emissão do parecer de acesso"
+        ],
+        "prazo_medio": "30 a 90 dias dependendo da distribuidora e complexidade do projeto",
+        "responsabilidades": {
+          "integrador": "Projeto, instalação, documentação técnica e protocolo",
+          "distribuidora": "Análise técnica, vistoria e troca do medidor",
+          "cliente": "Assinatura de documentos e autorização de acesso"
+        }
+      }
+    },
+    {
+      "area": "Manutenção e Monitoramento",
+      "detalhes": {
+        "limpeza_modulos": "Semestral (ou conforme nível de sujidade local); usar água e sabão neutro, evitar produtos abrasivos",
+        "inspecao_eletrica": "Anual: verificação de conexões, cabos, string box e inversor",
+        "monitoramento": "Via aplicativo do inversor (Growatt, SolarEdge, Fronius, ABB, WEG) com dados em tempo real",
+        "vida_util_componentes": {
+          "modulos": "25 a 30 anos (garantia de desempenho ≥80% em 25 anos)",
+          "inversor_string": "10 a 15 anos (garantia de 5 a 12 anos)",
+          "baterias_chumbo": "3 a 5 anos",
+          "baterias_litio": "8 a 15 anos",
+          "estrutura": "25 a 30 anos"
+        },
+        "custo_manutencao_anual": "R$ 200 a R$ 500 para sistemas residenciais; R$ 500 a R$ 2.000 para comerciais"
+      }
+    }
+  ],
+  "fluxos_conversa": [
+    {
+      "nome": "Atendimento Inicial - Lead Inbound",
+      "descricao": "Fluxo para primeiro contato de um cliente interessado que chegou via site, WhatsApp ou indicação.",
+      "etapas": [
+        "1. Saudação e identificação do agente e empresa",
+        "2. Coleta do nome e localização do cliente",
+        "3. Pergunta sobre perfil: residencial, comercial, rural ou industrial",
+        "4. Solicitação da última conta de luz (valor em R$ e consumo em kWh)",
+        "5. Apresentação de simulação preliminar de economia e payback",
+        "6. Explicação das opções: à vista, financiado ou assinatura solar",
+        "7. Agendamento de visita técnica gratuita ou envio de proposta",
+        "8. Registro no CRM e definição do próximo follow-up"
+      ]
+    },
+    {
+      "nome": "Qualificação de Lead - Comercial",
+      "descricao": "Fluxo para empresas e estabelecimentos comerciais.",
+      "etapas": [
+        "1. Coleta do CNPJ e dados da empresa",
+        "2. Análise das contas de luz dos últimos 12 meses",
+        "3. Verificação do tipo de conexão: monofásico, bifásico, trifásico ou alta tensão",
+        "4. Identificação de horário de pico de consumo",
+        "5. Verificação da disponibilidade de área de telhado ou terreno",
+        "6. Simulação de retorno financeiro com diferentes cenários de financiamento",
+        "7. Apresentação de proposta técnica e comercial detalhada",
+        "8. Negociação e fechamento"
+      ]
+    },
+    {
+      "nome": "Tratamento de Objeção - Preço",
+      "descricao": "Fluxo quando o cliente recusa pela questão financeira.",
+      "etapas": [
+        "1. Validar a preocupação do cliente com empatia",
+        "2. Apresentar simulação de financiamento com parcelas mensais",
+        "3. Comparar valor da parcela com o valor atual da conta de luz",
+        "4. Demonstrar o ROI ao longo de 25 anos",
+        "5. Apresentar incentivos fiscais disponíveis na região",
+        "6. Oferecer alternativa de assinatura de energia solar sem investimento inicial",
+        "7. Propor parcelamento ampliado (até 84 meses) com fintech parceira"
+      ]
+    },
+    {
+      "nome": "Pós-Venda e Ativação",
+      "descricao": "Fluxo após fechamento do contrato até a ativação do sistema.",
+      "etapas": [
+        "1. Confirmação do pedido e prazo de entrega dos equipamentos",
+        "2. Agendamento da instalação com equipe técnica",
+        "3. Comunicação sobre o processo de homologação junto à distribuidora",
+        "4. Atualização do cliente sobre status do processo (prazo médio 30-90 dias)",
+        "5. Confirmação da vistoria da distribuidora",
+        "6. Ativação do sistema e tutorial de uso do aplicativo de monitoramento",
+        "7. Envio de relatório de geração do primeiro mês",
+        "8. Check-in de satisfação após 3 meses de operação"
+      ]
+    },
+    {
+      "nome": "Suporte Técnico - Queda de Geração",
+      "descricao": "Fluxo quando cliente reporta queda na geração do sistema.",
+      "etapas": [
+        "1. Coleta de dados: data do problema, porcentagem de queda, alarmes no inversor",
+        "2. Verificação remota via portal de monitoramento",
+        "3. Diagnóstico inicial: clima, sujeira nos módulos, falha no inversor ou problema na rede",
+        "4. Orientação para limpeza dos módulos se for caso de sujidade",
+        "5. Reset remoto do inversor se aplicável",
+        "6. Agendamento de visita técnica presencial se o problema persistir",
+        "7. Emissão de ordem de serviço com prazo de resolução",
+        "8. Comunicação do resultado ao cliente e fechamento do ticket"
+      ]
+    }
+  ],
+  "gatilhos_emocionais": [
+    {
+      "gatilho": "Medo de perder dinheiro",
+      "aplicacao": "Mostrar quanto o cliente perde mensalmente mantendo a conta de luz atual. Ex: 'Você já investiu R$ 4.560 em energia nos últimos 12 meses. Com solar, esse valor seria quase zero.'"
+    },
+    {
+      "gatilho": "Senso de urgência",
+      "aplicacao": "Informar que sistemas instalados antes de datas de transição do Fio B têm vantagens regulatórias. 'Quanto antes você instalar, mais tempo aproveitará as condições atuais da regulação.'"
+    },
+    {
+      "gatilho": "Valorização patrimonial",
+      "aplicacao": "Destacar que a instalação valoriza o imóvel em até 8%, sendo um investimento duplo: economia + patrimônio."
+    },
+    {
+      "gatilho": "Pertencimento e responsabilidade ambiental",
+      "aplicacao": "O cliente passa a fazer parte de um movimento nacional de mais de 2,6 milhões de brasileiros que já geraram sua própria energia limpa."
+    },
+    {
+      "gatilho": "Segurança e previsibilidade",
+      "aplicacao": "Enquanto a tarifa elétrica só aumenta, quem tem solar garante energia quase de graça por mais de 20 anos. 'Você se protege de reajustes para sempre.'"
+    },
+    {
+      "gatilho": "Prova social",
+      "aplicacao": "Compartilhar cases de clientes similares (mesmo perfil de consumo, região, tipo de imóvel) com resultados reais de economia."
+    },
+    {
+      "gatilho": "Autoridade e confiança",
+      "aplicacao": "Apresentar certificações técnicas, parcerias com fabricantes, volume de instalações e tempo de mercado da empresa como diferenciais."
+    },
+    {
+      "gatilho": "Facilidade e comodidade",
+      "aplicacao": "Enfatizar que a empresa cuida de todo o processo: projeto, documentação, instalação, homologação e pós-venda. O cliente não precisa fazer nada."
+    }
+  ],
+  "cenarios_simulacao": [
+    {
+      "cenario": "Família Residencial - Classe Média",
+      "perfil": {
+        "tipo": "Residência unifamiliar",
+        "localizacao": "São Paulo - SP",
+        "consumo_mensal": "400 kWh",
+        "fatura_atual": "R$ 450/mês",
+        "situacao_financeira": "Prefere financiar"
+      },
+      "solucao_recomendada": {
+        "tipo_sistema": "On-grid, trifásico",
+        "potencia": "4 kWp",
+        "modulos": "8 módulos de 500 Wp",
+        "inversor": "Inversor string 4 kW",
+        "geracao_estimada": "480 kWh/mês",
+        "custo_total": "R$ 16.000",
+        "financiamento": "60 parcelas de R$ 340/mês",
+        "fatura_apos_solar": "R$ 50/mês (tarifa mínima)",
+        "economia_mensal": "R$ 400/mês",
+        "payback_financiado": "4,5 anos",
+        "economia_25_anos": "R$ 120.000"
+      },
+      "script_venda": "Cristina, com base no seu consumo de 400 kWh e fatura de R$ 450 por mês, calculamos um sistema de 4 kWp que geraria praticamente toda sua energia. A parcela do financiamento seria de R$ 340 por mês — isso é R$ 110 menos do que você já paga hoje. Em menos de 5 anos o sistema está pago, e depois disso você tem mais de 20 anos com energia quase de graça."
+    },
+    {
+      "cenario": "Pequeno Comércio - Padaria",
+      "perfil": {
+        "tipo": "Estabelecimento comercial",
+        "localizacao": "Belo Horizonte - MG",
+        "consumo_mensal": "2.000 kWh",
+        "fatura_atual": "R$ 2.200/mês",
+        "situacao_financeira": "Tem capital próprio"
+      },
+      "solucao_recomendada": {
+        "tipo_sistema": "On-grid, trifásico",
+        "potencia": "18 kWp",
+        "modulos": "36 módulos de 500 Wp",
+        "inversor": "Inversor string trifásico 20 kW",
+        "geracao_estimada": "2.160 kWh/mês",
+        "custo_total": "R$ 58.000",
+        "fatura_apos_solar": "R$ 200/mês",
+        "economia_mensal": "R$ 2.000/mês",
+        "payback": "2,4 anos",
+        "economia_25_anos": "R$ 600.000"
+      },
+      "script_venda": "Seu João, o senhor gasta R$ 2.200 por mês com energia — o equivalente a R$ 26.400 por ano. Com um sistema de 18 kWp, que cabe no telhado da padaria, essa conta cai para menos de R$ 200. O investimento se paga em menos de 2 anos e meio. Nos próximos 22 anos, o senhor vai economizar mais de meio milhão de reais — dinheiro que fica no caixa da sua empresa."
+    },
+    {
+      "cenario": "Produtor Rural - Pivô de Irrigação",
+      "perfil": {
+        "tipo": "Propriedade rural",
+        "localizacao": "Goiás",
+        "consumo_mensal": "15.000 kWh",
+        "fatura_atual": "R$ 12.000/mês",
+        "situacao_financeira": "Quer financiar via Pronaf"
+      },
+      "solucao_recomendada": {
+        "tipo_sistema": "On-grid com proteção contra surtos",
+        "potencia": "120 kWp",
+        "geracao_estimada": "17.000 kWh/mês",
+        "custo_total": "R$ 360.000",
+        "financiamento": "Via Pronaf Solar, 96 parcelas com carência de 12 meses",
+        "fatura_apos_solar": "R$ 800/mês",
+        "economia_mensal": "R$ 11.200/mês",
+        "payback": "2,7 anos",
+        "economia_25_anos": "R$ 3.360.000"
+      },
+      "script_venda": "Seu Valter, com um sistema de 120 kWp, toda a energia do pivô e da granja seria gerada pelo sol. O Pronaf Solar permite parcelar em 96 meses com carência, e a economia mensal de R$ 11.200 começa no primeiro mês. Em menos de 3 anos o sistema está pago e o senhor tem mais de R$ 3 milhões de economia até o fim da vida útil."
+    },
+    {
+      "cenario": "Condomínio Residencial - Geração Compartilhada",
+      "perfil": {
+        "tipo": "Condomínio com 80 apartamentos",
+        "localizacao": "Rio de Janeiro - RJ",
+        "consumo_mensal_areas_comuns": "8.000 kWh",
+        "fatura_atual_areas_comuns": "R$ 7.500/mês"
+      },
+      "solucao_recomendada": {
+        "tipo_sistema": "On-grid para áreas comuns com geração compartilhada opcional para unidades",
+        "potencia": "60 kWp",
+        "geracao_estimada": "7.200 kWh/mês",
+        "custo_total": "R$ 180.000 (rateio: R$ 2.250/apt)",
+        "economia_mensal_areas_comuns": "R$ 6.500/mês",
+        "reducao_taxa_condominio": "R$ 81/apt/mês",
+        "payback": "2,3 anos"
+      },
+      "script_venda": "Com apenas R$ 2.250 por apartamento, o condomínio instala um sistema que reduz a taxa de condomínio em R$ 81 por mês. Em menos de 3 anos, esse valor está de volta. E a valorização dos imóveis? Os apartamentos com solar ficam mais competitivos no mercado."
+    }
+  ],
+  "faq_estruturado": [
+    {
+      "id": 1,
+      "pergunta": "O que é energia solar fotovoltaica?",
+      "resposta": "É a conversão direta da radiação solar em eletricidade por meio de células fotovoltaicas presentes nos módulos solares. O efeito fotovoltaico foi descoberto em 1839 e hoje é a tecnologia mais acessível para geração de energia renovável no Brasil."
+    },
+    {
+      "id": 2,
+      "pergunta": "Como funciona o sistema conectado à rede (on-grid)?",
+      "resposta": "Os módulos captam a energia solar e a enviam para o inversor, que converte a corrente contínua em corrente alternada (igual à da rede elétrica). A energia é consumida imediatamente; o excedente é injetado na rede e contabilizado como créditos pelo sistema de compensação da ANEEL."
+    },
+    {
+      "id": 3,
+      "pergunta": "Quanto posso economizar na conta de luz?",
+      "resposta": "Um sistema bem dimensionado reduz a conta de luz em 80 a 95%, deixando apenas a tarifa mínima de disponibilidade (em torno de R$ 30 a R$ 60/mês para residências). Clientes com contas de R$ 400/mês costumam ficar com faturas de R$ 40 a R$ 60 após a instalação."
+    },
+    {
+      "id": 4,
+      "pergunta": "Em quanto tempo o investimento se paga?",
+      "resposta": "O payback médio em 2025 é de 3 a 4 anos para sistemas residenciais e de 1,9 a 3,5 anos para sistemas comerciais. Com capital próprio, o retorno é mais rápido. A vida útil do sistema é de 25 anos, garantindo décadas de energia praticamente gratuita após o payback."
+    },
+    {
+      "id": 5,
+      "pergunta": "Qual é o custo médio de instalação?",
+      "resposta": "Para residências com consumo de cerca de 300 kWh/mês, o investimento fica entre R$ 12.000 e R$ 20.000. Para comércios, de R$ 38.000 a R$ 250.000. Instalações industriais podem superar R$ 500.000. Os valores incluem equipamentos e mão de obra."
+    },
+    {
+      "id": 6,
+      "pergunta": "O sistema funciona em dias nublados?",
+      "resposta": "Sim, mas com geração reduzida. Os módulos fotovoltaicos geram energia a partir da luz difusa, não apenas da luz solar direta. Em dias nublados, a produção pode ser de 10 a 40% da geração nominal. O sistema on-grid usa a rede como complemento nesses períodos."
+    },
+    {
+      "id": 7,
+      "pergunta": "O que acontece com a energia que sobra?",
+      "resposta": "O excedente é injetado na rede elétrica e convertido em créditos de energia, que podem ser usados em até 60 meses para abater faturas futuras. Esses créditos podem ser utilizados na mesma unidade consumidora ou redistribuídos para outras unidades cadastradas no CPF ou CNPJ do titular."
+    },
+    {
+      "id": 8,
+      "pergunta": "Posso financiar a instalação?",
+      "resposta": "Sim. Existem diversas linhas de crédito disponíveis: BNDES, Caixa, Banco do Brasil, BNB (FNE Sol), Santander, BV e fintechs especializadas como Solfácil e Mérito Solar. Os prazos variam de 12 a 120 meses e as parcelas frequentemente são menores que a conta de luz atual."
+    },
+    {
+      "id": 9,
+      "pergunta": "Precisa de manutenção? Como é feita?",
+      "resposta": "A manutenção é simples e de baixo custo. Recomenda-se limpeza dos módulos a cada 6 meses e inspeção elétrica anual. O monitoramento é feito em tempo real pelo aplicativo do inversor. O custo médio de manutenção anual para sistemas residenciais é de R$ 200 a R$ 500."
+    },
+    {
+      "id": 10,
+      "pergunta": "Quais são os incentivos fiscais disponíveis?",
+      "resposta": "No âmbito federal, há isenção de PIS/COFINS sobre a energia compensada (Lei 13.169/2015). Na maioria dos estados, há isenção de ICMS sobre a energia compensada (Convênio ICMS 16/2015). Alguns municípios oferecem desconto no IPTU. Produtores rurais têm acesso ao Pronaf Solar com condições especiais."
+    },
+    {
+      "id": 11,
+      "pergunta": "Qual a diferença entre microgeração e minigeração distribuída?",
+      "resposta": "Microgeração é para sistemas de até 75 kW de potência instalada. Minigeração é para sistemas entre 75 kW e 5 MW. As regras de compensação de créditos e os processos de homologação têm algumas diferenças, mas os incentivos fiscais são os mesmos."
+    },
+    {
+      "id": 12,
+      "pergunta": "Minha casa valoriza com a instalação solar?",
+      "resposta": "Sim. Estudos no mercado imobiliário brasileiro indicam valorização de 5 a 8% no preço do imóvel com sistema solar instalado. O fator de destaque no anúncio 'energia solar própria' é um diferencial competitivo na venda e locação."
+    },
+    {
+      "id": 13,
+      "pergunta": "Quanto tempo demora a instalação?",
+      "resposta": "A instalação física de um sistema residencial leva de 1 a 3 dias. O processo de homologação junto à distribuidora, que precede a ativação oficial, leva de 30 a 90 dias dependendo da concessionária local."
+    },
+    {
+      "id": 14,
+      "pergunta": "O que é o Marco Legal da Geração Distribuída (Lei 14.300/2022)?",
+      "resposta": "É a legislação que regulamentou o setor de geração distribuída no Brasil, garantindo segurança jurídica para consumidores e empresas. Ela estabeleceu regras de transição para a cobrança gradual do Fio B (taxa pelo uso da rede), que será plenamente implementada até 2029 para sistemas instalados a partir de 7 de janeiro de 2023."
+    },
+    {
+      "id": 15,
+      "pergunta": "O que é o Fio B e quanto impacta minha economia?",
+      "resposta": "O Fio B é a tarifa pelo uso da infraestrutura de distribuição de energia elétrica. Para sistemas instalados após janeiro de 2023, essa taxa é cobrada sobre a energia compensada de forma gradual. Em 2025, representa aproximadamente 45% do custo de transmissão. Mesmo com essa taxa, a economia media ainda supera 80% da conta de luz."
+    },
+    {
+      "id": 16,
+      "pergunta": "Posso instalar em apartamento ou só em casa?",
+      "resposta": "Em apartamento, é possível instalar em área de uso exclusivo (como varanda ou cobertura privativa) conforme a legislação vigente. Para áreas comuns do condomínio, é necessária aprovação em assembleia. Inquilinos e condôminos sem espaço podem aderir a sistemas de geração compartilhada ou assinatura de energia solar."
+    },
+    {
+      "id": 17,
+      "pergunta": "Qual é a garantia dos equipamentos?",
+      "resposta": "Módulos fotovoltaicos têm garantia de produto de 10 a 15 anos e garantia de desempenho de 25 a 30 anos (mínimo 80% da geração nominal ao final do período). Inversores têm garantia de 5 a 12 anos dependendo do fabricante e modelo. As estruturas têm garantia de 10 a 25 anos."
+    },
+    {
+      "id": 18,
+      "pergunta": "Quais são as melhores marcas de módulos solares?",
+      "resposta": "Os maiores fabricantes de módulos do mundo, com forte presença no Brasil, incluem LONGi, JA Solar, Risen, Canadian Solar, Trina Solar, BYD e Jinko Solar. Esses fabricantes respondem por cerca de 85% do mercado global. O ideal é consultar o integrador sobre disponibilidade e certificações no Brasil."
+    },
+    {
+      "id": 19,
+      "pergunta": "O que é um inversor solar e qual a sua importância?",
+      "resposta": "O inversor é o cérebro do sistema fotovoltaico. Ele converte a corrente contínua (CC) gerada pelos módulos em corrente alternada (CA) utilizável nos aparelhos elétricos. Também controla a operação do sistema, protege contra falhas e fornece dados de monitoramento. Marcas confiáveis incluem Growatt, Fronius, SolarEdge, Deye, ABB e WEG."
+    },
+    {
+      "id": 20,
+      "pergunta": "O que é um sistema híbrido com bateria?",
+      "resposta": "É um sistema que combina painéis solares, inversor híbrido e banco de baterias (geralmente de lítio). Durante o dia, a energia solar abastece os aparelhos e carrega as baterias. À noite, a energia armazenada é consumida. Em caso de falta de energia na rede, o sistema funciona como nobreak."
+    },
+    {
+      "id": 21,
+      "pergunta": "Qual é o consumo mínimo para compensar a instalação?",
+      "resposta": "Segundo a ABSOLAR, o investimento já é vantajoso para quem paga a partir de R$ 250/mês de luz. Quanto maior a conta de luz, mais rápido o payback e maior a rentabilidade do investimento."
+    },
+    {
+      "id": 22,
+      "pergunta": "Posso instalar solar e ainda ficar no mercado livre de energia?",
+      "resposta": "Sim. Empresas no mercado livre de energia elétrica podem instalar sistemas fotovoltaicos para reduzir a demanda contratada e os custos de energia ativa. A combinação de mercado livre + solar pode maximizar a economia para médias e grandes empresas."
+    },
+    {
+      "id": 23,
+      "pergunta": "O que é geração distribuída compartilhada?",
+      "resposta": "É quando a usina geradora fica em local diferente das unidades consumidoras beneficiadas. Os créditos gerados são distribuídos entre unidades cadastradas no mesmo CPF ou CNPJ. Permite que inquilinos, moradores de apartamentos e empresas com múltiplas filiais aproveitem a geração solar sem instalar nada no próprio telhado."
+    },
+    {
+      "id": 24,
+      "pergunta": "Como é feito o monitoramento do sistema?",
+      "resposta": "A maioria dos inversores possui portal web e aplicativo para smartphone que mostram dados em tempo real: geração atual, geração histórica, consumo da rede, créditos acumulados e alertas de falha. Marcas como Growatt, Fronius e SolarEdge têm plataformas de monitoramento robustas e intuitivas."
+    },
+    {
+      "id": 25,
+      "pergunta": "O que acontece com o sistema em caso de queda de energia?",
+      "resposta": "Sistemas on-grid convencionais desligam automaticamente por segurança para proteger os trabalhadores da distribuidora. Sistemas híbridos com baterias continuam funcionando como nobreak. Existem também inversores on-grid com função off-grid, que permitem alimentar cargas prioritárias durante o blackout."
+    },
+    {
+      "id": 26,
+      "pergunta": "Posso instalar solar no telhado de eternit ou telha cerâmica?",
+      "resposta": "Sim. Existem estruturas de fixação compatíveis com praticamente todos os tipos de cobertura: telha cerâmica, metálica, fibrocimento (eternit), laje, solo e até fachada. O integrador fará a avaliação estrutural do telhado para indicar a melhor solução de fixação."
+    },
+    {
+      "id": 27,
+      "pergunta": "Qual é a área de telhado necessária?",
+      "resposta": "Cada kWp de potência instalada requer aproximadamente 5 a 7 m² de área útil de telhado (depende da eficiência dos módulos). Um sistema residencial típico de 4 kWp ocupa entre 20 e 28 m². O ideal é contar com telhado orientado para o norte (no hemisfério sul) com inclinação entre 15° e 30°."
+    },
+    {
+      "id": 28,
+      "pergunta": "Como o sol afeta a geração ao longo das estações?",
+      "resposta": "No verão, com dias mais longos e alta irradiância, a geração é maior. No inverno, com dias menores, a geração cai. O dimensionamento do sistema considera a média anual de irradiação da região para garantir que o atendimento ao consumo seja equilibrado ao longo de todos os meses."
+    },
+    {
+      "id": 29,
+      "pergunta": "Quais documentos preciso para instalar?",
+      "resposta": "Para instalação residencial: conta de luz recente, RG, CPF, comprovante de propriedade do imóvel e, se financiado, comprovante de renda. O integrador cuidará de toda a documentação técnica junto à distribuidora."
+    },
+    {
+      "id": 30,
+      "pergunta": "O Pronaf Solar se aplica a quem?",
+      "resposta": "O Pronaf Solar é destinado a agricultores familiares enquadrados no Programa Nacional de Fortalecimento da Agricultura Familiar. Oferece condições especiais de taxa de juros, prazo e carência para aquisição e instalação de sistemas fotovoltaicos em propriedades rurais."
+    },
+    {
+      "id": 31,
+      "pergunta": "O sistema desvaloriza com o tempo?",
+      "resposta": "Os módulos fotovoltaicos têm uma taxa de degradação de aproximadamente 0,5% ao ano, ou seja, após 25 anos ainda estarão gerando no mínimo 80% da potência nominal conforme garantia dos fabricantes. O sistema não se torna obsoleto tecnologicamente de forma brusca."
+    },
+    {
+      "id": 32,
+      "pergunta": "Posso vender energia para a distribuidora?",
+      "resposta": "No atual marco regulatório, o modelo vigente é de compensação de créditos, não de venda direta de energia. O excedente injetado na rede gera créditos para abater na próxima fatura, mas não há pagamento financeiro pela energia injetada para os sistemas de geração distribuída convencional."
+    },
+    {
+      "id": 33,
+      "pergunta": "O sistema precisa de seguro?",
+      "resposta": "Não é obrigatório, mas é recomendado. O seguro residencial cobre danos aos módulos por queda de granizo, ventos fortes e outros sinistros. Alguns integradores oferecem seguro específico para sistemas fotovoltaicos como parte do contrato de instalação."
+    },
+    {
+      "id": 34,
+      "pergunta": "O que é o FNE Sol do Banco do Nordeste?",
+      "resposta": "É uma linha de crédito do Banco do Nordeste exclusiva para a região Nordeste, voltada para pessoa física e jurídica que deseja instalar sistemas fotovoltaicos. Oferece prazos de até 120 meses, carência de até 24 meses e juros subsidiados pelo Fundo Constitucional do Nordeste."
+    },
+    {
+      "id": 35,
+      "pergunta": "Posso instalar sistemas maiores do que meu consumo para gerar créditos?",
+      "resposta": "A regulação permite instalar sistemas com até 20% de capacidade acima do consumo médio da unidade. Exceder muito esse percentual pode ser questionado pela distribuidora no processo de aprovação do projeto."
+    },
+    {
+      "id": 36,
+      "pergunta": "O que é o sistema de autoconsumo remoto?",
+      "resposta": "É quando o sistema gerador está em localidade diferente do(s) consumidor(es), mas ambos pertencem ao mesmo CPF/CNPJ e estão na área de concessão da mesma distribuidora. Muito usado por empresas com vários estabelecimentos ou pessoas com segunda residência."
+    },
+    {
+      "id": 37,
+      "pergunta": "Como saber se o integrador é confiável?",
+      "resposta": "Verifique se a empresa possui certificação pela ABSOLAR ou pelo SENAI Solar, se tem engenheiro responsável registrado no CREA, tempo de mercado, avaliações no Google, exemplos de instalações anteriores, contratos com garantias claras e suporte pós-venda estruturado."
+    },
+    {
+      "id": 38,
+      "pergunta": "O que cobre a garantia do instalador?",
+      "resposta": "A garantia do instalador (integrador) cobre a mão de obra e a montagem do sistema, tipicamente de 1 a 5 anos. Os equipamentos têm garantias dos fabricantes. É essencial que o contrato especifique claramente o que é coberto pela garantia de instalação versus a de equipamento."
+    },
+    {
+      "id": 39,
+      "pergunta": "Posso transferir o sistema se mudar de imóvel?",
+      "resposta": "Tecnicamente sim, mas o processo envolve desmontagem, transporte, nova instalação e novo processo de homologação, o que implica custo adicional. Em geral, é mais vantajoso deixar o sistema no imóvel (como valorização patrimonial) e instalar um novo na nova residência."
+    },
+    {
+      "id": 40,
+      "pergunta": "Como funciona o IPTU Verde?",
+      "resposta": "O IPTU Verde ou IPTU Solar é um benefício municipal que concede desconto no Imposto Predial e Territorial Urbano para imóveis com sistemas fotovoltaicos instalados. O percentual de desconto varia por município, mas costuma ficar entre 5% e 20%. Exemplos: Salvador (IPTU Amarelo) e Curitiba."
+    },
+    {
+      "id": 41,
+      "pergunta": "Qual é a diferença entre módulos monocristalinos e policristalinos?",
+      "resposta": "Módulos monocristalinos têm maior eficiência (20 a 23%) e melhor desempenho em alta temperatura e baixa luminosidade, mas custam um pouco mais. Os policristalinos têm eficiência ligeiramente inferior (15 a 18%) e custo menor. Atualmente o mercado tende para módulos monocristalinos, inclusive a tecnologia PERC e TOPCon."
+    },
+    {
+      "id": 42,
+      "pergunta": "O que são módulos bifaciais?",
+      "resposta": "São módulos que captam luz solar tanto pela face frontal quanto pela face traseira (por reflexo do solo ou superfícies adjacentes). Podem gerar até 15 a 30% a mais de energia em relação aos módulos convencionais, sendo ideais para instalações elevadas ou sobre superfícies claras e reflexivas."
+    },
+    {
+      "id": 43,
+      "pergunta": "Posso instalar baterias depois, num segundo momento?",
+      "resposta": "Sim, se o inversor for do tipo híbrido ou compatível com a adição de baterias. Se o sistema foi instalado com inversor convencional (on-grid), pode ser necessário substituir o inversor por um modelo híbrido para integrar baterias. É importante planejar isso desde o início para economizar na futura expansão."
+    },
+    {
+      "id": 44,
+      "pergunta": "O sistema solar reduz o consumo da rede à noite?",
+      "resposta": "Sem baterias, não. Sistemas on-grid convencionais dependem da rede à noite e em períodos sem geração. Com baterias (sistema híbrido), a energia gerada e armazenada durante o dia pode ser consumida à noite, reduzindo drasticamente o consumo da rede fora do período solar."
+    },
+    {
+      "id": 45,
+      "pergunta": "Existe algum risco de descarga elétrica ou incêndio?",
+      "resposta": "Quando instalado por profissionais certificados, o risco é mínimo. O sistema inclui dispositivos de proteção como disjuntores, fusíveis, DPS (dispositivo de proteção contra surtos) e aterramento adequado. A qualidade dos materiais e a correta instalação são fundamentais para a segurança do sistema."
+    },
+    {
+      "id": 46,
+      "pergunta": "O que é o string box?",
+      "resposta": "A string box (ou caixa de junção CC) é um componente de proteção elétrica que concentra as conexões dos strings de módulos fotovoltaicos. Contém fusíveis, disjuntores e dispositivos de proteção contra surtos para a parte de corrente contínua do sistema."
+    },
+    {
+      "id": 47,
+      "pergunta": "Posso instalar em telhado de amianto (fibrocimento com amianto)?",
+      "resposta": "Não é recomendado. O amianto é material perigoso e o perfurar para fixação das estruturas pode liberar fibras cancerígenas. Recomenda-se substituir as telhas por alternativas seguras antes da instalação solar."
+    },
+    {
+      "id": 48,
+      "pergunta": "O que é a tarifa de disponibilidade e sempre precisarei pagar?",
+      "resposta": "A tarifa de disponibilidade é o valor mínimo cobrado pela distribuidora para manter a conexão à rede elétrica, independentemente do consumo. Para residências bifásicas, gira em torno de R$ 35 a R$ 60/mês. Mesmo com sistema solar, essa tarifa continua sendo cobrada."
+    },
+    {
+      "id": 49,
+      "pergunta": "A geração solar é afetada pela temperatura?",
+      "resposta": "Sim. Módulos fotovoltaicos perdem eficiência quando a temperatura aumenta. A temperatura ideal de operação é em torno de 25°C; acima disso, a geração cai aproximadamente 0,4% por grau Celsius adicional. Por isso, uma boa ventilação na estrutura de fixação é importante."
+    },
+    {
+      "id": 50,
+      "pergunta": "O que acontece com o sistema após 25 anos?",
+      "resposta": "Os módulos fotovoltaicos geralmente ainda estão operacionais após 25 anos, mas com desempenho reduzido para cerca de 80% da capacidade original. O inversor provavelmente precisará ser trocado pelo menos uma vez nesse período. Os módulos podem ser descartados por empresas especializadas em reciclagem de painéis solares, um setor em crescimento no Brasil."
+    },
+    {
+      "id": 51,
+      "pergunta": "Qual a diferença entre potência de pico (kWp) e geração mensal (kWh)?",
+      "resposta": "kWp (quilowatt-pico) é a potência máxima do sistema em condições ideais de laboratório. kWh (quilowatt-hora) é a energia efetivamente gerada e consumida. Um sistema de 4 kWp em São Paulo, com irradiação média de 4,5 horas-pico/dia, gera aproximadamente 480 kWh/mês (4 × 4,5 × 30 × 0,80 de eficiência)."
+    },
+    {
+      "id": 52,
+      "pergunta": "Como calcular a geração esperada do meu sistema?",
+      "resposta": "Fórmula simplificada: Geração mensal (kWh) = Potência do sistema (kWp) × Horas-pico solar diárias × 30 dias × Fator de eficiência (0,75 a 0,85). As horas-pico solar variam por município e são encontradas no banco de dados do CRESESB (INPE)."
+    },
+    {
+      "id": 53,
+      "pergunta": "Energia solar é regulamentada no Brasil?",
+      "resposta": "Sim. A ANEEL (Agência Nacional de Energia Elétrica) regula o setor por meio de resoluções normativas, sendo a principal a REN 1.059/2023, que substituiu a histórica REN 482/2012. O Marco Legal da Geração Distribuída (Lei 14.300/2022) é a legislação federal que ampara todo o setor."
+    },
+    {
+      "id": 54,
+      "pergunta": "Existe algum risco de a regulação mudar e prejudicar meu investimento?",
+      "resposta": "O Marco Legal de 2022 trouxe justamente a segurança jurídica para o setor, com regras estáveis e prazos de transição definidos até 2029. Sistemas instalados antes de 2023 têm direitos adquiridos. A consolidação do setor no mercado e o lobby da ABSOLAR tornam mudanças drásticas improváveis no médio prazo."
+    },
+    {
+      "id": 55,
+      "pergunta": "Como funciona a assinatura de energia solar?",
+      "resposta": "O cliente assina um contrato com uma empresa que possui ou conecta usinas solares. A empresa aloca créditos de energia na conta de luz do cliente, que paga uma tarifa menor do que a da distribuidora, sem precisar instalar nada. Funciona como uma 'locação' de geração solar. Empresas como Origo Energia e outras operam nesse modelo no Brasil."
+    }
+  ],
+  "cross_knowledge": [
+    {
+      "segmento_relacionado": "Financiamento e Crédito",
+      "relevancia": "Alta. O sucesso na conversão de clientes depende fortemente da capacidade do agente de apresentar e simular opções de financiamento. Conhecimento em juros, parcelas, prazos e elegibilidade de crédito é essencial.",
+      "pontos_de_integracao": ["Simuladores de financiamento", "Análise de crédito básica", "Comparação entre linhas de crédito", "Cálculo de parcela vs economia"]
+    },
+    {
+      "segmento_relacionado": "Construção Civil e Engenharia",
+      "relevancia": "Média-Alta. A viabilidade técnica da instalação depende das condições estruturais do imóvel. Conhecimento básico em tipos de telhado, cargas estruturais e normas de instalação elétrica é útil.",
+      "pontos_de_integracao": ["Tipos de cobertura e compatibilidade", "Normas ABNT para instalações elétricas", "Resistência de estruturas de suporte"]
+    },
+    {
+      "segmento_relacionado": "Sustentabilidade e ESG",
+      "relevancia": "Média. Empresas com metas ESG têm forte motivação para adotar energia solar como ação de descarbonização. Conhecimento sobre créditos de carbono e relatórios de sustentabilidade agrega valor na venda B2B.",
+      "pontos_de_integracao": ["Cálculo de redução de CO₂", "Certificações ambientais", "Relatórios GRI e TCFD"]
+    },
+    {
+      "segmento_relacionado": "Agronegócio",
+      "relevancia": "Alta. O setor rural é um dos maiores consumidores de energia no Brasil e se beneficia enormemente do solar, especialmente em sistemas de bombeamento e câmeras frias. Pronaf Solar é um produto específico para esse público.",
+      "pontos_de_integracao": ["Pronaf Solar", "Sistemas de bombeamento solar", "Eletrificação rural off-grid", "Plano Safra"]
+    },
+    {
+      "segmento_relacionado": "Mercado Imobiliário",
+      "relevancia": "Média. A valorização do imóvel com solar é argumento de venda relevante tanto para proprietários residenciais quanto para incorporadoras e construtoras que buscam diferenciação.",
+      "pontos_de_integracao": ["Valorização patrimonial", "Laudos de avaliação imobiliária", "Condomínios com GD", "Construtoras e incorporadoras"]
+    },
+    {
+      "segmento_relacionado": "Eficiência Energética",
+      "relevancia": "Alta. Combinar solar com medidas de eficiência energética (LED, inverter, isolamento térmico) maximiza a economia e pode reduzir o tamanho do sistema necessário, otimizando o investimento.",
+      "pontos_de_integracao": ["Retrofit de iluminação", "Equipamentos eficientes", "Gestão de demanda", "Diagnóstico energético"]
+    },
+    {
+      "segmento_relacionado": "Veículos Elétricos",
+      "relevancia": "Crescente. O carregamento doméstico de veículos elétricos aumenta significativamente o consumo residencial, tornando o solar ainda mais atrativo para proprietários de EVs.",
+      "pontos_de_integracao": ["Wallbox e EVSE doméstico", "Dimensionamento ampliado para carga de EV", "Integração solar + EV + bateria"]
+    }
+  ]
+}

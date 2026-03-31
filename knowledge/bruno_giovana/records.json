@@ -1,0 +1,98 @@
+{
+  "id": "REC-PACKAGE-001",
+  "source_type": "public_record",
+  "maiores_artilheiros_historicos": [
+    {
+      "id": "REC-ART-001",
+      "source_type": "public_record",
+      "nome": "Serginho Chulapa",
+      "gols": 228,
+      "periodo": "1978–1989",
+      "nota": "Maior artilheiro da história do São Paulo FC."
+    },
+    {
+      "id": "REC-ART-002",
+      "source_type": "public_record",
+      "nome": "Müller",
+      "gols_estimados": 170,
+      "periodo": "1985–1999 (em dois períodos)",
+      "nota": "Um dos maiores artilheiros históricos do clube."
+    },
+    {
+      "id": "REC-ART-003",
+      "source_type": "public_record",
+      "nome": "Rogério Ceni",
+      "gols": 131,
+      "periodo": "1990–2015",
+      "nota": "Maior artilheiro goleiro da história do futebol mundial. Todos os gols em cobranças de falta e pênaltis."
+    }
+  ],
+  "recordes_de_jogos": [
+    {
+      "id": "REC-JOG-001",
+      "source_type": "public_record",
+      "nome": "Rogério Ceni",
+      "jogos": 1237,
+      "periodo": "1990–2015",
+      "nota": "Maior número de partidas jogadas por um único jogador na história do clube. Recorde histórico."
+    },
+    {
+      "id": "REC-JOG-002",
+      "source_type": "historical",
+      "nome": "Tarcísio Burgnich",
+      "nota": "Dados não disponíveis com precisão para posição seguinte sem risco de erro."
+    }
+  ],
+  "recordes_historicos": [
+    {
+      "id": "REC-HIS-001",
+      "titulo": "Único clube brasileiro tricampeão mundial de clubes",
+      "descricao": "O São Paulo é o único clube do Brasil a ter três títulos mundiais (1992, 1993 e 2005).",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-HIS-002",
+      "titulo": "Único clube a vencer dois Mundiais Intercontinentais consecutivos",
+      "descricao": "Em 1992 e 1993, o São Paulo conquistou o título mundial de forma consecutiva, feito inédito para clubes sul-americanos.",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-HIS-003",
+      "titulo": "Tricampeonato Brasileiro Consecutivo (2006-2007-2008)",
+      "descricao": "O São Paulo é o único clube a conquistar o Campeonato Brasileiro três vezes seguidas nesse período moderno da competição.",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-HIS-004",
+      "titulo": "Rogério Ceni — Goleiro artilheiro",
+      "descricao": "Com mais de 130 gols em competições oficiais, Rogério Ceni é reconhecido como o goleiro com mais gols na história do futebol mundial.",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-HIS-005",
+      "titulo": "Morumbi — Maior estádio particular do mundo",
+      "descricao": "Por décadas, o Estádio do Morumbi foi o maior estádio de propriedade privada de um clube de futebol no mundo.",
+      "source_type": "historical"
+    }
+  ],
+  "recordes_internacionais": [
+    {
+      "id": "REC-INT-001",
+      "titulo": "Derrotas sobre gigantes europeus em Mundiais",
+      "descricao": "O São Paulo é o único clube brasileiro a vencer Barcelona (1992) e AC Milan (1993) em finais de Copa Intercontinental.",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-INT-002",
+      "titulo": "Único clube brasileiro campeão da Copa do Mundo de Clubes FIFA",
+      "descricao": "Em 2005, o São Paulo foi o único clube brasileiro a conquistar o título da Copa do Mundo de Clubes FIFA em sua era moderna.",
+      "source_type": "public_record"
+    },
+    {
+      "id": "REC-INT-003",
+      "titulo": "Três Libertadores",
+      "descricao": "O São Paulo conta com três títulos da Copa Libertadores da América (1992, 1993, 2005), tornando-o um dos maiores vencedores do continente.",
+      "source_type": "public_record"
+    }
+  ]
+}

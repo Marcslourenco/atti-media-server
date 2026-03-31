@@ -1,0 +1,1169 @@
+{
+  "segmento": "Universidade Privada",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA atuantes em instituições de ensino superior privadas no mercado brasileiro. Cobre captação e matrícula de alunos, cursos de graduação e pós-graduação, modalidades presencial/EAD/híbrida, bolsas e programas de financiamento (ProUni, FIES, Pravaler, bolsa ENEM), grade curricular, formas de ingresso, retenção e reengajamento de alunos, LGPD na educação e FAQ com 53 perguntas. Referenciado nas práticas das principais IES privadas do Brasil: Unopar/Cogna, Estácio/Yduqs, PUC-RS, Mackenzie, PUC-SP, Unisinos, UNIP, Kroton/Anhanguera, Ânima Educação, Cruzeiro do Sul Educacional e SER Educacional.",
+
+  "nucleo_conhecimento": {
+
+    "contexto_mercado": [
+      {
+        "id": "CM001",
+        "titulo": "Panorama do ensino superior privado no Brasil",
+        "conteudo": "O Brasil tem o maior sistema de ensino superior privado da América Latina. Segundo o Censo da Educação Superior (INEP 2023), existem mais de 2.600 IES privadas no país, respondendo por cerca de 78% das matrículas de ensino superior — aproximadamente 6,7 milhões de alunos. Os grandes grupos educacionais de capital aberto dominam o setor: Cogna (Anhanguera, Unopar — 1,1 milhão de alunos), Yduqs (Estácio, IBMEC — 700 mil alunos), Ânima Educação (Una, Unibrasil, HSM, Milton Wyatt — 350 mil alunos), Cruzeiro do Sul Educacional (200 mil alunos) e SER Educacional (170 mil alunos). O mercado movimenta mais de R$ 60 bilhões por ano em mensalidades e financiamentos públicos e privados."
+      },
+      {
+        "id": "CM002",
+        "titulo": "Perfil dos principais grupos e IES privadas",
+        "conteudo": "Cogna Educação (COGN3): maior grupo educacional do Brasil, com marcas Anhanguera, Unopar, Unime, Unic, Uniderp e Editoras Ática/Scipione. Atende +24 milhões de alunos direta e indiretamente. Yduqs (YDUQ3): controladora da Estácio, IBMEC, Wyden e UniRedentor. Ânima Educação (ANIM3): porfolílio com Una (MG), HSM, Milton Wyatt e outras. Kroton: unidade da Cogna focada em ensino híbrido e digital. SER Educacional (SEER3): com foco no Norte e Nordeste, marcas UNINASSAU, UNIVERITAS. Cruzeiro do Sul Educacional (CSED3): Universidade Cruzeiro do Sul, Unicsul, Faculdade Anhanguera de Campinas. PUC-RS, PUC-SP, Mackenzie, Unisinos: IES confessionais/comunitárias de alta reputação acadêmica e pesquisa, concorrendo por alunos de perfil mais exigente. UNIP: maior universidade privada presencial do Brasil em número de alunos."
+      },
+      {
+        "id": "CM003",
+        "titulo": "Modalidades de ensino no ensino superior privado",
+        "conteudo": "Presencial: aulas 100% no campus, com infraestrutura física completa (laboratórios, biblioteca, quadras). EAD (Educação a Distância): aulas em ambiente virtual com polos de apoio presencial para provas e práticas obrigatórias. Regulamentado pelo MEC (Decreto 9.057/2017). Semipresencial/Híbrido: combinação de aulas online com encontros presenciais semanais ou quinzenais. Formato em expansão acelerada pós-pandemia. Bimodal: mesma turma com alunos presenciais e online simultaneamente. O EAD representa hoje mais de 62% das matrículas de graduação no setor privado (INEP 2023), crescimento impulsionado por custo menor e flexibilidade de horários."
+      },
+      {
+        "id": "CM004",
+        "titulo": "Regulação e avaliação do MEC — conceitos e IGC",
+        "conteudo": "O Ministério da Educação (MEC) regula as IES pelo SINAES (Sistema Nacional de Avaliação da Educação Superior). Os principais indicadores são: ENADE (Exame Nacional de Desempenho dos Estudantes) — avaliação trienal por área do conhecimento, nota de 1 a 5; CPC (Conceito Preliminar de Curso) — avaliação de cursos; IGC (Índice Geral de Cursos) — nota geral da instituição de 1 a 5; e CI (Conceito Institucional) — avaliação in loco pela comissão do MEC. Cursos com CPC ou CC abaixo de 3 estão sujeitos a supervisão especial. A nota do ENADE é usada como argumento de qualidade na captação de alunos — IES com nota 4 ou 5 têm forte vantagem competitiva."
+      },
+      {
+        "id": "CM005",
+        "titulo": "Principais formas de ingresso nas IES privadas",
+        "conteudo": "ENEM (Exame Nacional do Ensino Médio): resultado usado diretamente para ingresso, com ou sem desconto de bolsa. É a principal porta de entrada no setor privado. Vestibular próprio: prova aplicada pela própria IES, presencial ou online. Transferência externa: alunos de outras IES transferem com aproveitamento de disciplinas. Segunda graduação: portadores de diploma de nível superior. Reingresso: ex-alunos que abandonaram o curso. Vestibular social/comunitário: ingresso facilitado com foco em inclusão. Portaria MEC 2.117/2019 permitiu ampliar a oferta de EAD, facilitando a expansão de polos e cursos digitais."
+      },
+      {
+        "id": "CM006",
+        "titulo": "Programas de bolsas e financiamento estudantil",
+        "conteudo": "ProUni (Programa Universidade para Todos): bolsas integrais (renda familiar bruta per capita até 1,5 salário mínimo) e parciais de 50% (até 3 salários mínimos). Exige nota mínima de 450 pontos no ENEM e não ter zerado a redação. Gerido pelo MEC. FIES (Fundo de Financiamento Estudantil): financiamento público para até 50% da mensalidade em IES participantes, com juros de 3,4% ao ano. FIES Social cobre 100% para renda per capita até meio salário mínimo. Pravaler (antigo Ideal Invest): financiamento privado de até 100% da mensalidade, com parceria com diversas IES. Bolsa ENEM própria das IES: desconto variável (30% a 100%) conforme nota no ENEM, sem necessidade de cadastro federal. Parcelamento interno: IES oferecem parcelamento de mensalidades atrasadas e acordo financeiro."
+      },
+      {
+        "id": "CM007",
+        "titulo": "Pós-graduação no setor privado: lato e stricto sensu",
+        "conteudo": "Lato sensu: especialização (mínimo 360 horas) e MBA (sem regulamentação específica do MEC, são especializações com foco em gestão). Não exige defesa de dissertação. Pós pode ser feita em IES mesmo sem credenciamento para mestrado. Stricto sensu: mestrado (acadêmico ou profissional) e doutorado, regulamentados pela CAPES, que avalia programas de 1 a 7. Nota 3 é o mínimo para funcionamento; notas 6 e 7 são para programas de excelência internacional. MBA no Brasil: termo usado comercialmente para especializações em gestão — não equivale ao MBA internacional. Os principais ofertantes de MBA são: FGV, Insper, BSP, Fundação Dom Cabral, Saint Paul e programas das grandes IES privadas."
+      },
+      {
+        "id": "CM008",
+        "titulo": "Captação de alunos: o funil de conversão no ensino superior",
+        "conteudo": "O processo de captação de alunos segue um funil claro: Atração (geração de leads via campanhas digitais, ENEM, feiras de profissões, parcerias com escolas do ensino médio); Interesse (contato inbound — WhatsApp, chat, formulários); Consideração (atendimento personalizado, visita ao campus, simulação de bolsa); Decisão (proposta de mensalidade, bolsa e financiamento); Matrícula (documentação, contrato, pagamento da primeira mensalidade); Retenção (qualidade do ensino, acolhimento, mentoria, empregabilidade). O período crítico de captação são os vestibulares de janeiro (maior volume) e julho (segundo semestre). A inadimplência e a evasão (churn) são os maiores desafios financeiros do setor."
+      },
+      {
+        "id": "CM009",
+        "titulo": "Tendências do ensino superior privado 2025-2026",
+        "conteudo": "Microcrédenciais e cursos de curta duração (nano cursos, trilhas de aprendizagem) complementando a graduação. Inteligência artificial na educação: tutores virtuais, correção automatizada, personalização do percurso. Lifelong learning: adultos que retornam à educação ao longo da vida (faixa etária 30-50 anos cresce nas matrículas EAD). Internacionalização: dupla diplomação, intercâmbio e cursos em parceria com universidades estrangeiras. Educação corporativa: IES oferecendo treinamento in company para empresas (B2B). Empregabilidade como diferencial: parcerias com plataformas de emprego (LinkedIn, Infojobs, Emprega.AI), estágio curricular e extracurricular como serviço. Gamificação e aprendizagem ativa nos ambientes virtuais."
+      }
+    ],
+
+    "problemas_comuns": [
+      {
+        "id": "PC001",
+        "problema": "Candidato com dúvida sobre qual curso escolher",
+        "descricao": "Muitos candidatos chegam sem clareza sobre a área de atuação desejada e precisam de orientação vocacional antes de decidir pelo curso.",
+        "solucao_sugerida": "Aplicar perguntas de qualificação: áreas de interesse, perfil profissional desejado, experiência prévia de trabalho. Apresentar mapa de carreiras associado a cada curso (ex.: Administração → gestor de empresas, consultor, empreendedor). Oferecer teste vocacional disponível no portal ou no WhatsApp. Não pressionar pela decisão imediata — orientar bem aumenta a retenção."
+      },
+      {
+        "id": "PC002",
+        "problema": "Candidato desistiu por não conseguir bolsa ou financiamento",
+        "descricao": "Candidato interessado no curso não conseguiu ProUni ou FIES e acredita que não tem condição de pagar a mensalidade.",
+        "solucao_sugerida": "Apresentar todas as alternativas antes de encerrar a conversa: bolsa ENEM própria da IES (não depende do governo), Pravaler com parcelas pequenas, desconto para pagamento antecipado, parcelamento da matrícula, cursos em modalidade EAD com mensalidade até 70% menor. Calcular o valor real da parcela para o candidato — muitas vezes é menor do que ele imagina."
+      },
+      {
+        "id": "PC003",
+        "problema": "Aluno com dificuldade para conciliar trabalho e estudos",
+        "descricao": "Adulto trabalhador que quer estudar mas tem medo de não conseguir conciliar com a rotina profissional e familiar.",
+        "solucao_sugerida": "Apresentar as vantagens do EAD e do modelo semipresencial: aulas gravadas disponíveis 24h, acesso pelo celular, flexibilidade de horário, apenas provas presenciais. Mostrar dados reais: a maioria dos alunos EAD da IES trabalha durante o dia e estuda à noite ou nos fins de semana. Exemplificar com casos de alunos que concluíram o curso nessa situação."
+      },
+      {
+        "id": "PC004",
+        "problema": "Dúvida sobre reconhecimento do diploma EAD pelo mercado",
+        "descricao": "Candidato questiona se o diploma EAD é aceito pelo mercado de trabalho e tem o mesmo valor jurídico do diploma presencial.",
+        "solucao_sugerida": "Esclarecer com segurança: por lei (Decreto 9.057/2017 e LDB), o diploma de curso EAD autorizado pelo MEC tem exatamente o mesmo valor jurídico que o presencial. O diploma não menciona a modalidade (presencial ou EAD). Apresentar dados de empregabilidade dos formandos EAD da IES. Destacar que grandes empresas e concursos públicos aceitam diplomas EAD de IES regulamentadas pelo MEC."
+      },
+      {
+        "id": "PC005",
+        "problema": "Candidato com documentação incompleta para matrícula",
+        "descricao": "O candidato quer se matricular mas não tem todos os documentos exigidos (histórico escolar, certidão de nascimento, RG) disponíveis no momento.",
+        "solucao_sugerida": "Orientar sobre o processo de matrícula condicionada: muitas IES permitem iniciar as aulas com parte da documentação pendente, desde que seja entregue dentro de prazo determinado (geralmente 30 a 60 dias). Informar os documentos obrigatórios para cada situação (conclusão do ensino médio, transferência, segunda graduação). Oferecer assistência na orientação sobre como obter cada documento."
+      },
+      {
+        "id": "PC006",
+        "problema": "Aluno com mensalidade atrasada ameaçando evadir",
+        "descricao": "Aluno com 2 ou mais mensalidades atrasadas que está pensando em trancar ou abandonar o curso por dificuldade financeira.",
+        "solucao_sugerida": "Contato proativo antes que o aluno abandone: oferecer acordo de parcelamento da dívida, orientar sobre possibilidade de aderir ao Pravaler para quitar e parcelar as próximas mensalidades, verificar elegibilidade para FIES ou ProUni renovação, e em último caso orientar sobre trancamento de matrícula (que preserva o vínculo sem perda das disciplinas cursadas). O custo de manter um aluno é sempre menor que o de captar um novo."
+      },
+      {
+        "id": "PC007",
+        "problema": "Aluno insatisfeito com a qualidade do ensino ou dos professores",
+        "descricao": "Aluno reclama de professores despreparados, material desatualizado ou aulas entediantes, ameaçando transferência para outra IES.",
+        "solucao_sugerida": "Registrar a reclamação formalmente pela ouvidoria e garantir retorno em prazo definido (geralmente 10 dias úteis). Acionar a coordenação do curso para investigação. Apresentar ao aluno as formas de avaliação do corpo docente disponíveis. Se necessário, encaminhar para o coordenador do curso para conversa direta. Não minimizar a reclamação — alunos que reclamam formalmente têm maior chance de ser retidos."
+      },
+      {
+        "id": "PC008",
+        "problema": "Candidato de outra IES querendo transferência com aproveitamento de disciplinas",
+        "descricao": "Candidato já cursou parte da graduação em outra universidade e quer saber quantas disciplinas serão aproveitadas na nova IES.",
+        "solucao_sugerida": "Explicar o processo de transferência externa: o candidato entrega o histórico escolar e as ementas das disciplinas cursadas. A coordenação pedagógica analisa as equivalências conforme a grade curricular da IES. O resultado é comunicado antes da matrícula. Destacar que o aproveitamento pode reduzir significativamente o tempo de conclusão e o custo total do curso."
+      },
+      {
+        "id": "PC009",
+        "problema": "Dúvida sobre estágio obrigatório e não obrigatório",
+        "descricao": "Aluno não sabe como funciona o estágio curricular obrigatório, como encontrar vagas e se pode fazer estágio não obrigatório simultaneamente.",
+        "solucao_sugerida": "Explicar a Lei de Estágios (Lei 11.788/2008): estágio obrigatório é exigência curricular sem remuneração mínima definida (mas muitas empresas pagam bolsa voluntária); estágio não obrigatório pode ser remunerado e realizado a qualquer momento do curso. A IES tem setor de estágios ou parceria com plataformas como Vagas.com, Emprega.AI, CIEE, IEL. Orientar o aluno a cadastrar currículo nesses portais e acessar o banco de vagas da IES."
+      },
+      {
+        "id": "PC010",
+        "problema": "Ex-aluno evadido querendo retornar ao curso",
+        "descricao": "Ex-aluno que abandonou o curso anos atrás quer retomar os estudos e não sabe se pode aproveitar as disciplinas cursadas.",
+        "solucao_sugerida": "Apresentar as opções de reingresso: rematrícula (se o vínculo ainda estiver ativo dentro do prazo máximo de trancamento), reingresso por nova seleção com aproveitamento de disciplinas dentro do prazo de prescrição (geralmente 5 anos), ou ingresso em nova turma com análise de equivalências do histórico anterior. Muitas IES têm programas 'Volte a Estudar' com condições especiais de bolsa para ex-alunos que retornam."
+      }
+    ],
+
+    "objeções_clientes": [
+      {
+        "id": "OB001",
+        "objecao": "A mensalidade é muito cara para o meu orçamento",
+        "categoria": "Preço",
+        "resposta_recomendada": "Entendo sua preocupação. Antes de desistir, vamos explorar todas as opções: a bolsa pela nota do ENEM pode reduzir em até 50% a mensalidade sem precisar comprovar renda. Para cursos EAD, a mensalidade pode ser até 70% menor que o presencial. E o Pravaler oferece financiamento com parcelas que cabem em qualquer bolso. Você chegou a simular a bolsa pelo ENEM? Posso fazer a simulação agora com sua nota."
+      },
+      {
+        "id": "OB002",
+        "objecao": "Prefiro uma universidade pública — é gratuita",
+        "categoria": "Concorrência com IES públicas",
+        "resposta_recomendada": "Respeito totalmente esse objetivo. Se você vai tentar o ENEM/SISU para uma federal ou estadual, faz sentido. O que posso destacar é que nossa universidade permite que você comece agora, sem ficar preso a apenas dois processos seletivos por ano, com horários mais flexíveis e possibilidade de EAD. Muitos alunos optam pela IES privada para não adiar 1 a 3 anos de carreira enquanto tentam a pública. A formação pode começar hoje."
+      },
+      {
+        "id": "OB003",
+        "objecao": "Já tentei faculdade antes e não consegui terminar",
+        "categoria": "Experiência negativa anterior",
+        "resposta_recomendada": "Obrigado por compartilhar isso. O que aconteceu naquela época pode ter mudado bastante. Hoje temos apoio de tutores, acompanhamento acadêmico individualizado, modelos EAD muito mais flexíveis e programas de suporte financeiro. Muitos dos nossos alunos passaram pela mesma situação e concluíram o curso na segunda tentativa. O que impediu você da primeira vez? Dependendo da resposta, posso indicar o modelo que se encaixa melhor para você hoje."
+      },
+      {
+        "id": "OB004",
+        "objecao": "Não sei se o mercado valoriza o curso dessa universidade",
+        "categoria": "Reputação e empregabilidade",
+        "resposta_recomendada": "Ótima pergunta. Nossa nota no MEC é [X] — isso é indicador oficial de qualidade reconhecido pelo governo. Além disso, [X]% dos nossos formandos no curso de [área] estão empregados em até 6 meses após a conclusão. Temos parcerias com [empresas parceiras] para estágio e colocação profissional. Posso mostrar o ranking do nosso curso no ENADE?"
+      },
+      {
+        "id": "OB005",
+        "objecao": "Tenho medo de não conseguir acompanhar as aulas, faz muito tempo que não estudo",
+        "categoria": "Autoconfiança do candidato",
+        "resposta_recomendada": "Esse sentimento é muito comum, especialmente em quem está voltando aos estudos depois de anos. O que posso garantir é que o nosso método foi pensado exatamente para esse perfil: aulas explicativas com linguagem acessível, tutores disponíveis por chat e videoconferência, material de nivelamento em português e matemática antes do início das aulas, e comunidade de colegas na mesma situação. Você não vai estar sozinho(a) nessa jornada."
+      },
+      {
+        "id": "OB006",
+        "objecao": "Quero fazer só uma pós-graduação, não preciso de graduação",
+        "categoria": "Curso errado para o perfil",
+        "resposta_recomendada": "Entendido. Para a pós-graduação lato sensu (especialização ou MBA) não é necessária nova seleção — basta ter diploma de graduação em qualquer área. Posso apresentar os cursos de pós e MBA que temos disponíveis. Qual área você quer se especializar? Gestão, saúde, tecnologia, direito, educação? Com essa informação preparo as opções mais adequadas para você."
+      },
+      {
+        "id": "OB007",
+        "objecao": "O polo EAD fica longe de minha casa",
+        "categoria": "Localização",
+        "resposta_recomendada": "Para a maioria dos cursos EAD, o acesso ao polo presencial é necessário apenas para provas e atividades práticas obrigatórias — não há necessidade de frequência semanal. Em muitos casos, as provas são realizadas apenas 2 a 4 vezes por semestre. Você pode verificar quantas vezes por semestre precisaria ir ao polo e avaliar se é viável. Posso verificar se existe algum polo mais próximo da sua residência ou trabalho."
+      },
+      {
+        "id": "OB008",
+        "objecao": "Não quero fazer vestibular — tenho o ENEM de anos atrás",
+        "categoria": "Forma de ingresso",
+        "resposta_recomendada": "Ótima notícia: aceitamos o ENEM de qualquer edição, sem prazo de validade para ingresso. Além disso, você pode se inscrever pelo vestibular online, que pode ser feito em casa em menos de 30 minutos, sem necessidade de comparecer à instituição. Se quiser, podemos fazer a inscrição agora mesmo pelo WhatsApp com sua nota do ENEM e verificar qual bolsa você tem direito."
+      },
+      {
+        "id": "OB009",
+        "objecao": "Estou esperando o resultado do ProUni para decidir",
+        "categoria": "Timing de decisão",
+        "resposta_recomendada": "Faz sentido. O ProUni é uma excelente oportunidade. O que sugiro é: faça sua pré-matrícula aqui agora (sem custo ou compromisso) para garantir sua vaga e o valor da mensalidade que está disponível hoje. Se você conseguir o ProUni em outra IES, é só cancelar sem custo. Assim você não corre o risco de perder a vaga aqui caso o ProUni não saia como esperado."
+      },
+      {
+        "id": "OB010",
+        "objecao": "Não tenho nota do ENEM suficiente para bolsa",
+        "categoria": "Bolsa e financiamento",
+        "resposta_recomendada": "Mesmo com nota mais baixa no ENEM, existem outras portas: financiamento via Pravaler sem exigência de nota mínima, bolsas institucionais por mérito ou por perfil socioeconômico que não dependem do ENEM, e cursos com mensalidades já mais acessíveis especialmente no EAD. Além disso, o vestibular online da nossa IES tem bolsas por desempenho independentes do ENEM. Quer que eu verifique todas as opções para o seu perfil?"
+      },
+      {
+        "id": "OB011",
+        "objecao": "Ouvi falar que o diploma dessa faculdade não vale nada",
+        "categoria": "Reputação / desinformação",
+        "resposta_recomendada": "Entendo a preocupação e é importante verificar. O que define o valor legal de um diploma é o credenciamento pelo MEC — e somos reconhecidos e avaliados com nota [X] pelo Ministério da Educação. Qualquer afirmação de que 'o diploma não vale' precisa ser verificada: o que a lei garante é que diplomas de cursos autorizados pelo MEC têm validade em todo o território nacional. Posso enviar agora nosso código de credenciamento no e-MEC para você confirmar?"
+      },
+      {
+        "id": "OB012",
+        "objecao": "O curso que quero não está disponível no polo mais próximo",
+        "categoria": "Disponibilidade de curso",
+        "resposta_recomendada": "Dependendo do curso, a versão EAD ou semipresencial pode estar disponível sem necessidade do polo presencial para as aulas regulares. Vou verificar se há essa opção para o curso que você quer. Outra alternativa é verificar se a grade curricular de um curso afim, disponível no polo próximo, atende seu objetivo de carreira — às vezes existe mais de um caminho para a mesma profissão."
+      }
+    ],
+
+    "argumentos_venda": [
+      {
+        "id": "AV001",
+        "argumento": "Nota do MEC e qualidade comprovada",
+        "descricao": "A avaliação do MEC pelo SINAES (ENADE, CPC, IGC) é o indicador oficial e imparcial de qualidade. IES com nota 4 ou 5 no ENADE e IGC acima de 3 têm diferencial concreto para apresentar ao candidato. A nota do ENADE também influencia diretamente o acesso a bolsas do ProUni e FIES.",
+        "quando_usar": "Quando o candidato questiona a qualidade da instituição ou compara com concorrentes."
+      },
+      {
+        "id": "AV002",
+        "argumento": "Flexibilidade do modelo EAD e semipresencial",
+        "descricao": "O EAD permite estudar no próprio ritmo, em qualquer dispositivo (celular, tablet, computador), a qualquer hora. Ideal para quem trabalha, tem filhos ou mora distante de um campus. A mensalidade é significativamente menor que o presencial, com diploma de igual valor jurídico.",
+        "quando_usar": "Para candidatos adultos que trabalham, para cidades sem campus presencial próximo e para candidatos com restrição orçamentária."
+      },
+      {
+        "id": "AV003",
+        "argumento": "Programa de bolsas robusto e acesso à formação superior",
+        "descricao": "A IES tem mais de [X] bolsas disponíveis por semestre, combinando ProUni, FIES, bolsa ENEM e bolsas institucionais. Apresentar casos concretos: 'alunos com nota [X] no ENEM têm direito a [Y]% de desconto, pagando apenas R$ [Z] por mês'. Tornar o valor tangível e acessível.",
+        "quando_usar": "Para candidatos com preocupação financeira ou que acreditam que a faculdade está fora do seu orçamento."
+      },
+      {
+        "id": "AV004",
+        "argumento": "Empregabilidade e conexão com o mercado de trabalho",
+        "descricao": "Apresentar dados concretos de empregabilidade dos formandos, parcerias com empresas para estágio e emprego, eventos de networking, feiras de carreiras, plataformas de emprego integradas ao portal do aluno e programas de mentoria com profissionais do setor.",
+        "quando_usar": "Para candidatos que questionam o retorno financeiro do investimento na faculdade."
+      },
+      {
+        "id": "AV005",
+        "argumento": "Infraestrutura e tecnologia de ponta",
+        "descricao": "Para presencial: laboratórios modernos, biblioteca digital e física, clínicas-escola, centros de simulação, espaços de coworking para startups estudantis. Para EAD: plataforma intuitiva com aulas em vídeo HD, biblioteca digital com acesso 24h, app para celular, tutores acessíveis por chat e fórum.",
+        "quando_usar": "Para candidatos que valorizam estrutura física ou digital, especialmente para cursos de saúde, engenharia e TI."
+      },
+      {
+        "id": "AV006",
+        "argumento": "Corpo docente qualificado e corpo clínico/científico",
+        "descricao": "Destacar o percentual de mestres e doutores no corpo docente, professores com experiência de mercado ativa (não apenas acadêmicos), coordenadores de curso com reconhecimento nacional, e IES com grupos de pesquisa e extensão que enriquecem o aprendizado.",
+        "quando_usar": "Para candidatos que querem mais que um diploma — querem aprendizado real e conexão com profissionais experientes."
+      },
+      {
+        "id": "AV007",
+        "argumento": "Início imediato e sem burocracia",
+        "descricao": "A IES privada tem processos seletivos contínuos — não há necessidade de esperar o SISU ou processo seletivo único. O candidato pode se matricular hoje e começar as aulas em dias. Vestibular online em 30 minutos, simulação de bolsa em tempo real, matrícula digital sem sair de casa.",
+        "quando_usar": "Para candidatos que querem começar logo ou que perderam o prazo do processo seletivo de IES públicas."
+      },
+      {
+        "id": "AV008",
+        "argumento": "Comunidade, extensão e experiência universitária completa",
+        "descricao": "A universidade é mais do que sala de aula: empresa júnior, ligas acadêmicas, projetos de extensão comunitária, intercâmbio nacional e internacional, grupos de iniciação científica, eventos culturais, grêmio estudantil. A vivência universitária forma líderes e amplia redes de relacionamento.",
+        "quando_usar": "Para candidatos jovens (18-24 anos) que valorizam a experiência universitária além da formação técnica."
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "id": "AT001",
+      "area": "Grandes Áreas de Graduação e Principais Cursos",
+      "areas": [
+        {
+          "grande_area": "Ciências Humanas e Sociais Aplicadas",
+          "cursos_principais": [
+            "Administração (bacharelado, 4 anos) — um dos cursos com maior número de matrículas no Brasil; forma gestores para empresas públicas e privadas",
+            "Direito (bacharelado, 5 anos) — exige aprovação na OAB após formatura para exercer advocacia; alta demanda e forte presença no EAD",
+            "Ciências Contábeis (bacharelado, 4 anos) — habilitação para CFC; contador, auditor, controller",
+            "Pedagogia (licenciatura, 4 anos) — habilitação para docência na educação infantil e anos iniciais; forte no EAD",
+            "Psicologia (bacharelado/licenciatura, 5 anos) — requer estágio clínico; supervisão do CRP; curso obrigatoriamente presencial",
+            "Serviço Social (bacharelado, 4 anos) — CRESS; assistente social",
+            "Gestão de Recursos Humanos (tecnólogo, 2 anos) — profissional de RH"
+          ],
+          "observacoes": "Administração, Direito e Pedagogia são os 3 cursos com maior número de matrículas no ensino superior privado brasileiro."
+        },
+        {
+          "grande_area": "Ciências da Saúde",
+          "cursos_principais": [
+            "Medicina (bacharelado, 6 anos) — exige residência médica para especialização; CRM; nota mínima no ENEM para ingresso; alta demanda e vagas limitadas",
+            "Enfermagem (bacharelado, 4 anos) — COREN; maior campo de trabalho na saúde após medicina",
+            "Odontologia (bacharelado, 5 anos) — CRO; clínica-escola obrigatória",
+            "Farmácia (bacharelado, 5 anos) — CRF; genericamente, análises clínicas, farmácia hospitalar",
+            "Fisioterapia (bacharelado, 5 anos) — CREFITO; crescimento com envelhecimento da população",
+            "Nutrição (bacharelado, 4 anos) — CFN; nutrição clínica, esportiva, coletiva",
+            "Biomedicina (bacharelado, 4 anos) — CFBM; análises clínicas, pesquisa, estética",
+            "Estética e Cosmética (tecnólogo, 2 anos) — um dos tecnólogos em maior crescimento"
+          ],
+          "observacoes": "Cursos de saúde exigem estrutura específica (laboratórios clínicos, clínicas-escola, hospitais conveniados) e não podem ser 100% EAD conforme regulamentação do MEC e conselhos de classe."
+        },
+        {
+          "grande_area": "Engenharias e Tecnologia",
+          "cursos_principais": [
+            "Engenharia Civil (bacharelado, 5 anos) — CREA; construção civil, infraestrutura, incorporação imobiliária",
+            "Engenharia Elétrica (bacharelado, 5 anos) — CREA; automação, energia, eletrônica",
+            "Engenharia Mecânica (bacharelado, 5 anos) — CREA; manufatura, automotivo, máquinas",
+            "Engenharia de Produção (bacharelado, 5 anos) — CREA; gestão industrial, supply chain, qualidade",
+            "Ciência da Computação (bacharelado, 4 anos) — desenvolvimento, IA, segurança da informação",
+            "Sistemas de Informação (bacharelado, 4 anos) — TI corporativa, ERP, análise de sistemas",
+            "Análise e Desenvolvimento de Sistemas (tecnólogo, 2 anos) — um dos tecnólogos com melhor empregabilidade",
+            "Engenharia de Software (bacharelado, 4-5 anos) — desenvolvimento ágil, DevOps, arquitetura de software"
+          ],
+          "observacoes": "Engenharias têm alto custo de infraestrutura (laboratórios, equipamentos) e maior dificuldade de implementação em EAD — parte das disciplinas exige presencialidade. TI tem forte demanda do mercado com alta empregabilidade."
+        },
+        {
+          "grande_area": "Comunicação, Artes e Design",
+          "cursos_principais": [
+            "Comunicação Social — Jornalismo (bacharelado, 4 anos) — MTB",
+            "Publicidade e Propaganda (bacharelado, 4 anos) — CENP, agências",
+            "Design Gráfico (bacharelado/tecnólogo) — identidade visual, UX/UI",
+            "Cinema e Audiovisual (bacharelado, 4 anos) — produção audiovisual, streaming",
+            "Relações Públicas (bacharelado, 4 anos) — CONFERP",
+            "Design de Moda (bacharelado/tecnólogo) — indústria têxtil, moda editorial"
+          ],
+          "observacoes": "Cursos criativos exigem portfólio e laboratórios de produção. Forte presença nas IES de grande reputação como Mackenzie, ESPM, e PUC-SP."
+        },
+        {
+          "grande_area": "Educação e Licenciaturas",
+          "cursos_principais": [
+            "Pedagogia (licenciatura, 4 anos) — docência, gestão escolar",
+            "Letras — Português/Inglês (licenciatura, 4 anos) — professor de línguas",
+            "História (licenciatura, 4 anos) — docência, patrimônio cultural",
+            "Geografia (licenciatura, 4 anos) — docência, geoprocessamento",
+            "Matemática (licenciatura, 4 anos) — docência, mais demanda que oferta",
+            "Educação Física (licenciatura/bacharelado, 4 anos) — CREF; docência e personal trainer"
+          ],
+          "observacoes": "Licenciaturas têm forte adesão ao EAD e ao ProUni. O PIBID (Programa Institucional de Bolsas de Iniciação à Docência) é diferencial para IES que o oferecem."
+        },
+        {
+          "grande_area": "Gestão e Negócios (Tecnólogos)",
+          "cursos_principais": [
+            "Gestão Comercial (2 anos) — vendas, comercial B2B",
+            "Gestão de RH (2 anos) — recrutamento, T&D, folha de pagamento",
+            "Logística (2 anos) — supply chain, armazém, transporte",
+            "Marketing (2 anos) — marketing digital, brand, conteúdo",
+            "Gestão Financeira (2 anos) — análise financeira, tesouraria",
+            "Gestão Pública (2 anos) — concursos públicos, gestão governamental"
+          ],
+          "observacoes": "Tecnólogos têm duração de 2 anos, são mais acessíveis em preço e têm forte aceitação no mercado para cargos técnico-operacionais. São regulamentados pelo MEC e habilitam para pós-graduação."
+        }
+      ]
+    },
+    {
+      "id": "AT002",
+      "area": "Pós-Graduação: Especialização, MBA, Mestrado e Doutorado",
+      "modalidades": [
+        {
+          "tipo": "Especialização Lato Sensu",
+          "duracao": "12 a 24 meses (mínimo 360 horas)",
+          "requisito": "Diploma de graduação em qualquer área",
+          "caracteristicas": "Aprofundamento em área específica. Não exige dissertação — geralmente conclui com monografia ou trabalho de conclusão. Pode ser feita em IES sem mestrado. Alta oferta em EAD. Áreas mais procuradas: Educação Especial, Psicopedagogia, Saúde Pública, Finanças, Direito, Gestão de Pessoas.",
+          "exemplos_ies": ["Unopar/Cogna", "Estácio", "Uninterp", "Cruzeiro do Sul", "PUC Minas"]
+        },
+        {
+          "tipo": "MBA (Master in Business Administration)",
+          "duracao": "12 a 24 meses (360-600 horas)",
+          "requisito": "Diploma de graduação + experiência profissional recomendada",
+          "caracteristicas": "Especialização em gestão com enfoque em mercado. Não é stricto sensu — é juridicamente uma especialização no Brasil. Professores com forte perfil de mercado. Formato presencial, EAD ou híbrido. Renomados: FGV, Insper, BSP, Fundação Dom Cabral. IES privadas oferecem MBAs mais acessíveis com bom custo-benefício.",
+          "exemplos_ies": ["FGV", "Insper", "Saint Paul", "BSP", "Unisinos", "Mackenzie", "PUC-SP", "Estácio"]
+        },
+        {
+          "tipo": "Mestrado Acadêmico",
+          "duracao": "24 meses",
+          "requisito": "Graduação + processo seletivo (prova de idioma, projeto de pesquisa, entrevista)",
+          "caracteristicas": "Formação de pesquisadores. Exige dissertação e defesa perante banca. Avaliado pela CAPES (nota 3 a 7). Bolsas da CAPES e CNPq disponíveis. Obrigatório para docência em pós-graduação stricto sensu.",
+          "exemplos_ies": ["PUC-RS", "Unisinos", "Mackenzie", "PUC-SP", "IBMEC"]
+        },
+        {
+          "tipo": "Mestrado Profissional",
+          "duracao": "24 meses",
+          "requisito": "Graduação + experiência profissional + processo seletivo",
+          "caracteristicas": "Voltado para profissionais de mercado que querem pesquisa aplicada. Resultado: produto técnico (manual, relatório, produto tecnológico) ou dissertação aplicada. Mais flexível de frequência que o acadêmico.",
+          "exemplos_ies": ["FGV", "Insper", "PUC-RS", "Unisinos", "Estácio"]
+        },
+        {
+          "tipo": "Doutorado",
+          "duracao": "48 meses",
+          "requisito": "Mestrado + processo seletivo rigoroso",
+          "caracteristicas": "Nível máximo da formação acadêmica. Exige tese original com contribuição inédita ao conhecimento. Financiado majoritariamente por bolsas CAPES/CNPq. Formação de professores universitários e pesquisadores sêniores.",
+          "exemplos_ies": ["PUC-RS", "Unisinos", "Mackenzie", "PUC-SP"]
+        }
+      ]
+    },
+    {
+      "id": "AT003",
+      "area": "Programas de Bolsas e Financiamento — Detalhamento",
+      "programas": [
+        {
+          "programa": "ProUni — Programa Universidade para Todos",
+          "tipo": "Bolsa governamental",
+          "quem_pode": "Estudantes que prestaram o ENEM com nota mínima de 450 pontos (sem zerar a redação), renda familiar bruta per capita de até 1,5 SM para bolsa integral ou 3 SM para bolsa parcial de 50%, sem diploma de ensino superior.",
+          "processo": "Inscrição no Portal ProUni (prouni.mec.gov.br) em dois processos anuais: janeiro (1ª e 2ª chamadas) e julho (3ª chamada). Seleção por nota do ENEM. Após aprovação: matrícula na IES com apresentação de documentos.",
+          "bolsas_disponiveis": "Bolsa Integral (100%) e Bolsa Parcial (50%). PCD, professores da rede pública e autodeclarados indígenas, pretos e pardos têm cotas.",
+          "ies_participantes": ["Estácio", "Anhanguera", "Unopar", "Unip", "Cruzeiro do Sul", "PUC-SP", "Mackenzie", "Unisinos"]
+        },
+        {
+          "programa": "FIES — Fundo de Financiamento Estudantil",
+          "tipo": "Financiamento governamental",
+          "quem_pode": "Candidatos com renda familiar bruta de até 3 salários mínimos por pessoa e nota no ENEM acima de 450 pontos (sem zerar a redação). FIES Social: renda per capita até 0,5 SM, financia 100%.",
+          "processo": "Inscrição no Portal FIES (fies.mec.gov.br) após o ingresso na IES. Financiamento de até 50% do valor da mensalidade. Carência durante o curso. Amortização começa após 18 meses da formatura, com até 3x o prazo do curso para pagar, a 3,4% ao ano.",
+          "pontos_atencao": "FIES tem limitação de vagas e saldo devedor ao final é relevante. O aluno deve manter o Certificado de Regularidade Semestral (CRS) com aprovação em pelo menos 75% das disciplinas.",
+          "ies_participantes": ["Maioria das IES privadas credenciadas pelo MEC"]
+        },
+        {
+          "programa": "Bolsa ENEM Própria das IES",
+          "tipo": "Bolsa institucional",
+          "quem_pode": "Qualquer candidato com nota no ENEM, sem exigência de renda mínima.",
+          "processo": "Candidato informa a nota do ENEM no ato da inscrição. A IES aplica sua tabela de desconto. Percentual varia por instituição e curso. Sem necessidade de cadastro em sistema federal.",
+          "percentuais_comuns": "Nota 500-599: 30-40% de desconto; Nota 600-699: 40-50%; Nota 700+: 50-70%. Algumas IES oferecem até 100% para notas muito altas em cursos específicos.",
+          "vantagens": "Processo simples, sem burocracia governamental, resultado imediato, qualquer candidato com ENEM pode simular."
+        },
+        {
+          "programa": "Pravaler (Financiamento Privado)",
+          "tipo": "Financiamento privado",
+          "quem_pode": "Alunos de IES parceiras, sem exigência de nota mínima no ENEM.",
+          "processo": "Solicitação pelo app ou site do Pravaler. Análise de crédito em minutos. Financiamento de 50% a 100% da mensalidade. Pagamento apenas da parcela do financiamento durante o curso (pequena). Quitação do restante após a formatura.",
+          "taxas": "Juros mensais entre 1,5% e 2,5% dependendo do perfil. É uma dívida privada — não tem os benefícios de prazo e taxa do FIES, mas tem aprovação mais rápida e menos burocracia.",
+          "ies_parceiras": ["Mackenzie", "Unisinos", "Cruzeiro do Sul", "Estácio", "Anhanguera", "dezenas de IES em todo o Brasil"]
+        },
+        {
+          "programa": "Bolsas Institucionais e Programas Próprios",
+          "tipo": "Bolsas da própria IES",
+          "exemplos": [
+            "Bolsa Social: desconto para alunos de baixa renda comprovada via CadÚnico ou declaração de renda",
+            "Bolsa de Mérito Acadêmico: desconto por desempenho nas disciplinas (para renovação)",
+            "Bolsa Funcionário: desconto para colaboradores e dependentes da IES",
+            "Bolsa de Transferência: desconto especial para alunos vindos de outras IES",
+            "Bolsa Convênio Empresa: desconto para funcionários de empresas parceiras",
+            "Bolsa PCD (Pessoa com Deficiência): desconto ou isenção para PCDs",
+            "Bolsa Professor: desconto para docentes da rede pública de ensino"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AT004",
+      "area": "Grade Curricular — Estrutura e Componentes",
+      "componentes": [
+        {
+          "componente": "Disciplinas Obrigatórias",
+          "descricao": "Conjunto de disciplinas que formam o núcleo do curso, definidas pelo Projeto Pedagógico do Curso (PPC) e pelas Diretrizes Curriculares Nacionais (DCNs) do MEC. São obrigatórias para todos os alunos do curso."
+        },
+        {
+          "componente": "Disciplinas Optativas/Eletivas",
+          "descricao": "Disciplinas de livre escolha dentro de um cardápio oferecido pela IES. Permitem ao aluno personalizar seu percurso formativo de acordo com áreas de interesse."
+        },
+        {
+          "componente": "Atividades Complementares (ACs)",
+          "descricao": "Horas de atividades extracurriculares que complementam a formação: participação em eventos, cursos livres, monitoria, iniciação científica, extensão, voluntariado. A carga horária mínima é definida pelo PPC (geralmente 100 a 200 horas)."
+        },
+        {
+          "componente": "Estágio Curricular Supervisionado",
+          "descricao": "Obrigatório na maioria dos cursos (especialmente saúde, licenciaturas e engenharias). Realizado em empresas, hospitais, escolas ou outros campos de prática. Supervisionado por professor orientador da IES e supervisor da concedente."
+        },
+        {
+          "componente": "TCC — Trabalho de Conclusão de Curso",
+          "descricao": "Monografia, artigo científico, projeto ou produto tecnológico apresentado ao final do curso. Orientado por professor da IES. Obrigatório na maioria dos bacharelados. Tecnólogos podem ter TCC simplificado ou substituto."
+        },
+        {
+          "componente": "Componentes de Extensão",
+          "descricao": "A Resolução CNE/CES 07/2018 exige que 10% da carga horária dos cursos de graduação seja dedicada a atividades de extensão universitária (projetos, eventos, cursos, prestação de serviços à comunidade)."
+        },
+        {
+          "componente": "Avaliação e Sistema de Notas",
+          "descricao": "A maioria das IES privadas usa escala de 0 a 10 (nota mínima de aprovação: 5 ou 6 dependendo da IES). No EAD, avaliações são online (questionários, fóruns, atividades) + provas presenciais no polo. Faltas no EAD são contabilizadas por participação nas atividades assíncronas."
+        }
+      ]
+    },
+    {
+      "id": "AT005",
+      "area": "Formas de Ingresso — Detalhamento",
+      "formas": [
+        {
+          "forma": "ENEM",
+          "como_funciona": "Candidato usa a nota de qualquer edição do ENEM como critério de seleção. Sem prazo de validade. Processo: informa nota na inscrição → IES avalia → oferece bolsa conforme tabela → candidato confirma matrícula. Mais simples e rápido que vestibular próprio."
+        },
+        {
+          "forma": "Vestibular Online",
+          "como_funciona": "Prova realizada digitalmente pelo candidato em casa ou no celular. Geralmente entre 10 e 30 questões de múltipla escolha + redação opcional. Resultado em poucas horas. Sem custo de inscrição em muitas IES. Disponível 24h para facilitar acesso."
+        },
+        {
+          "forma": "SISU",
+          "como_funciona": "Sistema de Seleção Unificada do MEC — as notas do ENEM são usadas para concorrer a vagas em IES públicas e algumas privadas participantes. IES privadas participam do SISU em menor número. O resultado do SISU pode ser usado para ingresso nas IES privadas participantes."
+        },
+        {
+          "forma": "Transferência Externa",
+          "como_funciona": "Aluno de outra IES transfere o vínculo acadêmico. Processo: entrega histórico escolar + ementas → coordenação analisa equivalências → aluno é informado das disciplinas aproveitadas → matrícula na série adequada. Prazo para solicitação geralmente coincide com o início dos semestres."
+        },
+        {
+          "forma": "Segunda Graduação",
+          "como_funciona": "Portador de diploma de ensino superior ingressa em novo curso. Podem ter aproveitamento de disciplinas comuns entre os cursos. Processo similar à transferência externa. Candidatos de segunda graduação frequentemente têm descontos especiais em algumas IES."
+        },
+        {
+          "forma": "Reingresso",
+          "como_funciona": "Ex-aluno que trancou ou abandonou o curso antes de concluir. Pode requerer rematrícula se ainda dentro do prazo de vínculo ativo, ou novo processo seletivo com análise de aproveitamento. Programas 'Volte a Estudar' têm condições especiais para esse público."
+        },
+        {
+          "forma": "Processo Seletivo para Portadores de Necessidades Especiais",
+          "como_funciona": "IES devem garantir acessibilidade no processo seletivo: prova ampliada, intérprete de Libras, tempo adicional. Cotas para PCDs no ProUni e em programas institucionais. A LBI (Lei 13.146/2015) garante o direito à educação inclusiva."
+        }
+      ]
+    },
+    {
+      "id": "AT006",
+      "area": "Captação de Alunos — Estratégias e Canais",
+      "canais": [
+        {
+          "canal": "WhatsApp e Atendimento Conversacional",
+          "descricao": "Principal canal de captação no setor privado brasileiro. Candidatos preferem iniciar contato pelo WhatsApp pela conveniência e informalidade. Deve oferecer: simulação de bolsa em tempo real, link direto de inscrição, tiragem de dúvidas sobre cursos e modalidades, agendamento de visita ao campus e envio de documentos."
+        },
+        {
+          "canal": "Campanhas Digitais (Google, Meta, TikTok)",
+          "descricao": "Campanhas pagas segmentadas por idade, localização, interesses e comportamento de busca. Google Ads para captar candidatos em fase de decisão (busca por 'faculdade de administração', 'EAD barato'). Meta/Instagram para geração de awareness e remarketing. TikTok crescente para público 18-24 anos."
+        },
+        {
+          "canal": "Feiras de Profissões e Escolas do Ensino Médio",
+          "descricao": "Presença nas feiras de profissões das escolas de ensino médio nas cidades de abrangência do campus. Palestras sobre mercado de trabalho e orientação vocacional. Parcerias com colégios para visitas ao campus, aumentando o awareness de candidatos pré-vestibulando."
+        },
+        {
+          "canal": "Portal e-MEC e Comparadores",
+          "descricao": "O portal e-MEC (emec.mec.gov.br) é onde candidatos verificam credenciamento e notas de IES e cursos. Comparadores como Quero Bolsa, Educa Mais Brasil e Buscador FIES geram leads qualificados — candidatos ativamente buscando cursos com bolsas."
+        },
+        {
+          "canal": "Indicação de Alunos (Referral)",
+          "descricao": "Programa de indicação onde alunos atuais indicam amigos e familiares e recebem benefícios (desconto na mensalidade, créditos no portal). Um dos canais de menor custo e maior conversão — candidato indicado chega com maior confiança na IES."
+        },
+        {
+          "canal": "Eventos de Open Day e Tour Virtual",
+          "descricao": "Dia aberto para candidatos visitarem o campus, conhecerem laboratórios, conversar com alunos e professores. Também em formato virtual (live no YouTube ou Instagram). Aumenta a conexão emocional do candidato com a IES antes da matrícula."
+        }
+      ],
+      "metricas_captacao": {
+        "CPL": "Custo por Lead — valor investido em marketing por contato gerado",
+        "CPM": "Custo por Matrícula — total do investimento de captação dividido pelo número de matrículas efetivadas",
+        "taxa_conversao": "Percentual de leads que se tornam matrículas efetivas (média do setor: 3-7%)",
+        "tempo_ciclo": "Tempo médio entre o primeiro contato e a matrícula (meta: menos de 72 horas)",
+        "NPS_captacao": "Satisfação do candidato com o processo de inscrição e atendimento"
+      }
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "id": "FC001",
+      "nome": "Fluxo de Primeiro Contato — Captação de Candidato",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção e identificação da necessidade",
+          "mensagem": "Olá! 😊 Seja bem-vindo(a) à [Nome da IES]! Sou [Nome], consultor(a) de matrículas. Estou aqui para ajudá-lo(a) a dar o primeiro passo na sua carreira. Você está pesquisando para iniciar um curso agora, ou ainda está na fase de descobrir qual área se encaixa melhor?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Qualificação do perfil",
+          "mensagem": "Ótimo! Para indicar as melhores opções, me conta um pouco sobre você: Qual curso ou área está pensando? Prefere presencial, EAD ou semipresencial? Tem nota do ENEM? (Não é obrigatório, mas pode abrir portas para bolsas!) E em qual cidade/estado você está?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação do curso e modalidade",
+          "mensagem": "Perfeito! Temos o curso de [Curso] disponível em [modalidades]. Deixa eu te contar os pontos mais importantes: duração de [X anos], ENADE nota [X], mercado de trabalho com [dados de empregabilidade], mensalidade a partir de R$ [X]. Tem alguma dessas informações que quer explorar mais?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Simulação de bolsa",
+          "mensagem": "Agora a parte mais interessante: com sua nota [X] no ENEM, você tem direito a [X]% de desconto pela nossa Bolsa ENEM! A mensalidade cairia de R$ [X] para R$ [Y]. Além disso, dependendo da sua renda, você pode se candidatar ao ProUni ou ao Pravaler. Quer que eu simule todos os cenários para você?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Convite para matrícula ou próximo passo",
+          "mensagem": "Você pode confirmar sua inscrição agora mesmo, aqui pelo WhatsApp, em menos de 5 minutos — sem sair de casa, sem fila, sem burocracia. Vou enviar o link do vestibular online. É uma prova rápida e o resultado sai na hora. As aulas começam em [data]. Quer garantir sua vaga?"
+        }
+      ]
+    },
+    {
+      "id": "FC002",
+      "nome": "Fluxo de Simulação de Bolsa ENEM",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Solicitação da nota do ENEM",
+          "mensagem": "Para simular sua bolsa, preciso da sua nota do ENEM. Você tem o resultado em mãos? Pode ser de qualquer edição — não tem prazo de validade para ingresso aqui."
+        },
+        {
+          "etapa": 2,
+          "acao": "Cálculo e apresentação da bolsa",
+          "mensagem": "Com sua nota de [X pontos], você tem direito à nossa Bolsa ENEM de [Y]% de desconto no curso de [Curso]. Isso significa: mensalidade cheia: R$ [X] | com desconto: R$ [Y]/mês. Para [X] semestres de curso, você economizaria R$ [Z] no total. Essa bolsa é renovada todo semestre com aprovação em pelo menos [X]% das disciplinas."
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação de alternativas adicionais",
+          "mensagem": "Além da Bolsa ENEM, você também pode combinar com: ✅ Pravaler — paga apenas uma fração agora e quita o restante depois de formado ✅ ProUni — se sua renda for até 3 SM per capita ✅ FIES — financiamento federal com juros de 3,4% ao ano. Qual dessas alternativas te interessa explorar?"
+        }
+      ]
+    },
+    {
+      "id": "FC003",
+      "nome": "Fluxo de Retenção — Aluno com Mensalidade Atrasada",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Abordagem proativa empática",
+          "mensagem": "Olá, [Nome]! Aqui é [Nome], da [IES]. Estamos entrando em contato porque identificamos que sua mensalidade de [mês] está em aberto e não queremos que uma situação financeira temporária interrompa sua formação. Tudo bem com você?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Oferta de soluções financeiras",
+          "mensagem": "Entendo, e estamos aqui para ajudar. Temos algumas opções para você regularizar sua situação sem precisar parar de estudar: 1️⃣ Parcelamento da dívida: dividir o valor atrasado em até [X] parcelas no boleto. 2️⃣ Pravaler: ele quita o débito e você passa a pagar uma parcela menor durante o curso. 3️⃣ Bolsa emergencial: verifique se você se encaixa nos critérios da nossa bolsa social. Qual dessas opções se encaixa melhor na sua realidade agora?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Alternativa de trancamento",
+          "mensagem": "Se no momento nenhuma opção financeira é viável, o trancamento de matrícula preserva seu histórico de disciplinas aprovadas por até [X semestres]. Quando você quiser retomar, é só nos contatar — tudo que você já conquistou aqui fica guardado. Mas antes de decidir, que tal conversarmos com nosso setor financeiro para esgotar todas as alternativas?"
+        }
+      ]
+    },
+    {
+      "id": "FC004",
+      "nome": "Fluxo de Atendimento para Pós-Graduação (Especialização/MBA)",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Identificação do perfil e objetivo",
+          "mensagem": "Olá! 😊 Estou aqui para ajudá-lo(a) a encontrar a pós-graduação ideal. Me conta: você quer se especializar em qual área? Está buscando crescimento na sua empresa atual, transição de carreira ou qualificação para docência? E qual é o seu grau de graduação atual?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Apresentação das opções adequadas",
+          "mensagem": "Baseado no seu perfil, tenho duas opções que se encaixam muito bem: 1️⃣ [Especialização em X] — 18 meses, foco em [área], ênfase [prática/teórica], disponível em [EAD/presencial/híbrido], mensalidade R$ [X]. 2️⃣ [MBA em Y] — 14 meses, módulos com professores de mercado, networking com executivos, mensalidade R$ [Y]. O que prioriza mais: prazo, preço, modalidade ou nome da certificação?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Processo de inscrição simplificado",
+          "mensagem": "Ótimo! Para a pós-graduação, o processo é bem simples: não há vestibular. Basta enviar: cópia do diploma de graduação, histórico acadêmico e documento de identidade. Posso enviar o link de inscrição agora e você já garante sua vaga para a turma que começa em [data]. As vagas são limitadas — essa turma já tem [X] confirmados. Quer garantir a sua?"
+        }
+      ]
+    },
+    {
+      "id": "FC005",
+      "nome": "Fluxo de Transferência Externa",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Coleta de informações sobre o histórico",
+          "mensagem": "Que bom que está considerando continuar sua graduação aqui! Para verificar o aproveitamento das suas disciplinas, preciso de algumas informações: Qual curso você está fazendo atualmente e em qual IES? Quantos semestres já concluiu? E quais disciplinas você já cursou? Você pode me enviar o histórico escolar por aqui mesmo."
+        },
+        {
+          "etapa": 2,
+          "acao": "Orientação sobre o processo",
+          "mensagem": "Com o seu histórico, nossa coordenação pedagógica faz a análise de equivalências em até [X dias úteis]. Eles comparam as ementas das disciplinas que você cursou com as da nossa grade e aprovam o aproveitamento das matérias equivalentes. Isso pode reduzir o tempo restante do curso. Quer que eu já encaminhe para análise?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação dos benefícios e oferta de bolsa",
+          "mensagem": "Além do aproveitamento de disciplinas, temos uma condição especial para transferidos: [bolsa de X% para quem transfere]. Com essa bolsa, a mensalidade fica em R$ [X]. Vou enviar o formulário de solicitação de transferência — é digital e leva menos de 10 minutos. Posso mandar o link agora?"
+        }
+      ]
+    },
+    {
+      "id": "FC006",
+      "nome": "Fluxo de Orientação para ProUni",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Verificação de elegibilidade",
+          "mensagem": "Para verificar se você tem perfil para o ProUni, me responde rápido: Qual sua nota no ENEM (redação inclusa, sem zero)? Qual a renda bruta mensal total da sua família? Quantas pessoas moram e dependem dessa renda na sua casa? Com isso já consigo verificar a elegibilidade."
+        },
+        {
+          "etapa": 2,
+          "acao": "Resultado da verificação e próximo passo",
+          "mensagem": "✅ Ótima notícia! Pelo seu perfil, você tem elegibilidade para o ProUni [integral/parcial de 50%]. O processo seletivo abre em [data] no portal prouni.mec.gov.br. Você vai precisar se inscrever lá com o número do ENEM. Se aprovado, traga os documentos comprobatórios de renda aqui na IES para confirmar a matrícula. Quer que eu te oriente sobre os documentos necessários?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Plano B caso não consiga ProUni",
+          "mensagem": "Enquanto aguarda o ProUni, recomendo que você garanta uma pré-matrícula aqui com a nossa bolsa ENEM — sem custo para pré-reservar. Se você conseguir o ProUni, pode cancelar sem nenhum custo. Assim você não perde a vaga caso o ProUni não saia na chamada que esperava. Faz sentido?"
+        }
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "id": "GE001",
+      "gatilho": "Ascensão social e transformação de vida",
+      "descricao": "Para muitos candidatos — especialmente de primeira geração na família — a faculdade representa uma mudança de vida real, com impacto financeiro, de status e de autoestima.",
+      "como_ativar": "Mostrar dados reais de aumento salarial de graduados versus não graduados. Compartilhar histórias de alunos que mudaram de vida após o diploma. Conectar o curso ao sonho específico do candidato ('você disse que quer ser enfermeira — vamos tornar isso realidade').",
+      "frases_gatilho": [
+        "Ser o primeiro da família a ter diploma universitário é um legado que ninguém tira de você.",
+        "Com esse diploma, as portas que estavam fechadas vão se abrir.",
+        "A diferença salarial entre quem tem e quem não tem diploma é, em média, 85% ao longo da carreira."
+      ]
+    },
+    {
+      "id": "GE002",
+      "gatilho": "Medo de ficar para trás no mercado de trabalho",
+      "descricao": "O candidato percebe que colegas de trabalho estão sendo promovidos, que vagas melhores exigem graduação, ou que sua área está sendo afetada pela tecnologia.",
+      "como_ativar": "Usar dados do mercado de trabalho para mostrar que a exigência por qualificação só cresce. Apresentar o curso como investimento na empregabilidade. Mostrar que adiar mais é perder posições competitivas.",
+      "frases_gatilho": [
+        "Cada ano sem diploma é um ano de diferença salarial acumulada.",
+        "O mercado não espera — enquanto você adia, outros estão se qualificando.",
+        "Daqui a 4 anos, você pode estar no mesmo lugar ou com um diploma abrindo novas portas."
+      ]
+    },
+    {
+      "id": "GE003",
+      "gatilho": "Orgulho dos filhos e família",
+      "descricao": "Muitos adultos que retornam ao ensino superior fazem isso pela família — querem ser exemplo para os filhos ou realizar um sonho adiado em nome de responsabilidades.",
+      "como_ativar": "Reconhecer a dedicação do candidato que concilia família e estudos. Mostrar que o modelo EAD foi feito para quem tem essas responsabilidades. Conectar o diploma ao orgulho da família.",
+      "frases_gatilho": [
+        "Imagine a cara do seu filho quando você contar que está fazendo faculdade.",
+        "Muitos dos nossos melhores alunos têm filhos, trabalham e ainda conseguem se formar.",
+        "Você é prova de que nunca é tarde demais para se orgulhar de si mesmo."
+      ]
+    },
+    {
+      "id": "GE004",
+      "gatilho": "Urgência de prazo e oportunidade limitada",
+      "descricao": "Processo seletivo com prazo, turma com vagas limitadas, ou bolsa disponível apenas até determinada data criam urgência legítima.",
+      "como_ativar": "Comunicar os prazos reais de matrícula e início das aulas. Informar quando a turma está quase completa. Destacar que a bolsa ou o valor atual só são válidos até determinada data. Usar urgência real — nunca criar falsa escassez.",
+      "frases_gatilho": [
+        "Esta turma tem apenas [X] vagas disponíveis — [Y] já foram preenchidas essa semana.",
+        "A bolsa de [X]% está disponível até [data]. Depois disso, sobe para a mensalidade cheia.",
+        "As aulas começam em [data] — daqui a [X dias]. Se você se inscrever agora, ainda entra na turma."
+      ]
+    },
+    {
+      "id": "GE005",
+      "gatilho": "Pertencimento e comunidade universitária",
+      "descricao": "A experiência universitária — amigos, colegas de profissão, networking, eventos — tem valor emocional além da formação técnica.",
+      "como_ativar": "Para candidatos jovens: mostrar a vida universitária (eventos, grêmio, empresa júnior, intercâmbio). Para adultos no EAD: mostrar a comunidade virtual, grupos de WhatsApp por turma, fóruns ativos, eventos online.",
+      "frases_gatilho": [
+        "Na faculdade você não forma só um currículo — forma amizades e uma rede profissional para a vida toda.",
+        "Muitos dos nossos formandos dizem que os colegas de turma se tornaram os maiores aliados da carreira.",
+        "Você vai fazer parte de uma comunidade de [X mil] alunos e ex-alunos em todo o Brasil."
+      ]
+    },
+    {
+      "id": "GE006",
+      "gatilho": "Autoconhecimento e vocação realizada",
+      "descricao": "O candidato tem uma paixão ou vocação antiga que ainda não foi realizada profissionalmente. A faculdade é o caminho para alinhar vida profissional e pessoal.",
+      "como_ativar": "Escutar atentamente o que o candidato diz sobre seus sonhos e conectar o curso a esse propósito. Mostrar exemplos de profissionais formados que vivem da sua paixão.",
+      "frases_gatilho": [
+        "Você falou que sempre quis trabalhar com pessoas — a psicologia pode ser exatamente o que você buscou a vida toda.",
+        "Imagine acordar todo dia para trabalhar com algo que te apaixona desde criança.",
+        "A carreira mais feliz é aquela que coincide com o que você faria mesmo sem ser pago."
+      ]
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "id": "CS001",
+      "titulo": "Jovem de 19 anos indeciso entre cursos",
+      "contexto": "Lucas, 19 anos, acabou de terminar o ensino médio. Tem nota 580 no ENEM. Está indeciso entre Administração e Sistemas de Informação.",
+      "conversa": [
+        {
+          "papel": "Candidato",
+          "mensagem": "Oi! Terminei o colégio esse ano e quero fazer faculdade mas não sei entre Administração e Sistemas de Informação. Como eu decido?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Oi, Lucas! Que fase emocionante — e é ótimo que você está pesquisando agora. Essas são duas áreas muito diferentes no dia a dia, então vale entender um pouco mais o seu perfil. Me conta: você prefere lidar mais com pessoas, gestão e estratégia de negócios, ou prefere criar soluções tecnológicas, programar e resolver problemas técnicos?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "Gosto de tecnologia mas também me interesso por negócios. É difícil separar assim."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Ótima observação! Esse perfil híbrido tem uma opção perfeita: Sistemas de Informação é exatamente a intersecção entre tecnologia e negócios — você vai aprender a criar sistemas para empresas, entender processos de negócio e pensar em soluções digitais. O mercado está com altíssima demanda para esse perfil. Administração é mais ampla em gestão, mas se afasta da tecnologia. Quer que eu te explique a grade dos dois cursos lado a lado?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "Sim! E tem bolsa com minha nota do ENEM?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Tem sim! Com 580 pontos, você tem direito a 40% de desconto pela nossa Bolsa ENEM nos dois cursos. Sistemas de Informação fica em R$ [X]/mês e Administração em R$ [Y]/mês — ambos com esse desconto. No formato semipresencial você tem ainda mais flexibilidade. Quer que eu mande o link do vestibular online para você já garantir a vaga enquanto decide? Você faz a prova em 15 minutos e não perde as condições de hoje."
+        }
+      ]
+    },
+    {
+      "id": "CS002",
+      "titulo": "Adulta de 35 anos querendo voltar a estudar",
+      "contexto": "Mariana, 35 anos, trabalha como auxiliar de enfermagem há 8 anos. Quer fazer graduação em Enfermagem mas tem medo de não conciliar com trabalho e filhos.",
+      "conversa": [
+        {
+          "papel": "Candidato",
+          "mensagem": "Olá, tenho 35 anos, trabalho como técnica de enfermagem e quero fazer graduação em Enfermagem. Só que trabalho de segunda a sexta e tenho dois filhos. Isso é possível?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Mariana, você já está na área certa — isso é um diferencial enorme! E sim, é absolutamente possível. Nosso curso de Enfermagem tem turmas noturnas (das 19h às 22h) e também o modelo semipresencial, com aulas teóricas online e práticas presenciais apenas nos fins de semana. Muitas das nossas alunas são técnicas de enfermagem nessa mesma situação que você. Como você organiza melhor: noturno diário ou fins de semana?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "Fins de semana seria melhor. Quanto fica a mensalidade? Tenho ENEM de 2022 com nota 510."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Com nota 510, você tem 30% de Bolsa ENEM — a mensalidade sai de R$ [X] para R$ [Y]. Além disso, como técnica de enfermagem com experiência na área, existe a possibilidade de aproveitamento de até [X] disciplinas da sua formação técnica, o que pode reduzir o tempo do curso. Você também pode solicitar o FIES (financiamento federal a 3,4% ao ano) para não comprometer seu salário todo mês. Quer que eu simule o valor da parcela do FIES para você?"
+        }
+      ]
+    },
+    {
+      "id": "CS003",
+      "titulo": "Candidato que encontrou mensalidade mais barata em outra IES",
+      "contexto": "Pedro viu em outra faculdade EAD o curso de Direito por R$ 299/mês. Na IES atual, a mensalidade com bolsa é R$ 430.",
+      "conversa": [
+        {
+          "papel": "Candidato",
+          "mensagem": "Achei outra faculdade com Direito EAD por R$ 299 por mês. Por que eu pagaria mais aqui?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Ótima pergunta e justo você pesquisar! Vamos comparar de forma honesta. Primeira coisa: qual a nota do MEC desse curso de Direito no ENADE? Cursos de Direito EAD com mensalidades muito baixas às vezes têm nota 1 ou 2 no MEC, o que pode comprometer a aprovação na OAB. Nosso curso tem nota [X] no ENADE. Segundo ponto: o curso com nota baixa pode ter dificuldade na autorização de abertura de prova da OAB. Você já pesquisou o código deles no e-MEC?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "Não verifiquei isso. Como faço?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Acesse emec.mec.gov.br, busque pelo nome da IES e verifique a nota do curso de Direito. Se for abaixo de 3, é um sinal de alerta. Direito é um dos cursos mais regulados — a OAB tem o Provão e só aprova 20% dos candidatos em média. Fazer 5 anos e não conseguir exercer a profissão seria um prejuízo muito maior que os R$ 131/mês de diferença. Quando você verificar, me conta o resultado — vou ajudá-lo a interpretar."
+        }
+      ]
+    },
+    {
+      "id": "CS004",
+      "titulo": "Ex-aluno querendo reingresso após 4 anos",
+      "contexto": "Roberto abandonou o curso de Administração em 2021 no 3º semestre. Quer retomar.",
+      "conversa": [
+        {
+          "papel": "Candidato",
+          "mensagem": "Fiz 3 semestres de Administração aqui em 2020 e 2021 mas precisei parar por problemas financeiros. Posso voltar? O que perdi fica aproveitado?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Roberto, que bom que está voltando! Primeiro a boa notícia: disciplinas cursadas nos últimos 5 anos têm alta probabilidade de aproveitamento, pois a grade não mudou substancialmente. Você tem os 3 semestres no histórico e provavelmente vai conseguir reaproveitar a maioria das disciplinas. Para verificar exatamente, preciso analisar seu histórico — você tem o documento em mãos?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "Tenho sim, posso enviar aqui."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito, pode enviar! Enquanto analiso, quero te contar que temos o programa 'Volte a Estudar' com condições especiais para quem retoma: bolsa de [X]% por 2 semestres como incentivo de retorno. Você vai entrar já no semestre adequado ao seu histórico, sem precisar recomeçar do zero. Normalmente processamos isso em [X dias úteis]. Pode enviar o histórico agora?"
+        }
+      ]
+    },
+    {
+      "id": "CS005",
+      "titulo": "Profissional de RH buscando MBA",
+      "contexto": "Fernanda, 32 anos, gerente de RH há 5 anos, quer fazer MBA para crescer para diretoria.",
+      "conversa": [
+        {
+          "papel": "Candidato",
+          "mensagem": "Tenho 32 anos, sou gerente de RH e quero fazer um MBA para me posicionar para uma vaga de diretora. Qual vocês têm?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Fernanda, perfil perfeito para a transição que você busca! Temos duas opções que se encaixam: o MBA em Gestão de Pessoas e Lideranças — com módulos de gestão estratégica de capital humano, desenvolvimento organizacional e People Analytics — e o MBA em Gestão Executiva, que é mais amplo e prepara para cargos de diretoria geral. Qual deles soa mais próximo do que você precisa para esse próximo passo?"
+        },
+        {
+          "papel": "Candidato",
+          "mensagem": "O de Gestão de Pessoas parece mais focado. Tem formato híbrido? Não posso perder os sábados todos."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Sim! Temos o formato híbrido: aulas online assíncronas durante a semana — você acessa quando quiser — e encontros presenciais apenas uma vez por mês aos sábados, das 8h às 18h. São módulos intensivos com professores de mercado de grandes empresas. A turma seguinte começa em [data], são [X] vagas e já temos [Y] confirmados. A mensalidade é de R$ [X]. Quer que eu te envie a ementa completa?"
+        }
+      ]
+    }
+  ],
+
+  "faq_estruturado": [
+    {
+      "id": "FAQ001",
+      "pergunta": "O diploma EAD tem o mesmo valor que o presencial?",
+      "resposta": "Sim, por lei. O Decreto 9.057/2017 e a LDB (Lei 9.394/96) estabelecem que os diplomas de cursos de EAD autorizados pelo MEC têm exatamente o mesmo valor jurídico e acadêmico que os diplomas de cursos presenciais. O diploma não menciona a modalidade de ensino. Para concursos públicos, empregos e pós-graduação, o diploma EAD de IES credenciada pelo MEC é plenamente aceito."
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "Como funciona o ProUni e quem pode se inscrever?",
+      "resposta": "O ProUni (Programa Universidade para Todos) oferece bolsas de estudo integrais (100%) e parciais (50%) em IES privadas. Para bolsa integral, a renda familiar bruta per capita deve ser de até 1,5 salário mínimo. Para bolsa parcial de 50%, até 3 salários mínimos per capita. O candidato não pode ter diploma de ensino superior e deve ter feito o ENEM com nota mínima de 450 pontos, sem zerar a redação. As inscrições ocorrem pelo portal prouni.mec.gov.br em processos seletivos que ocorrem em janeiro e julho de cada ano."
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "O que é o FIES e como funciona?",
+      "resposta": "O FIES (Fundo de Financiamento Estudantil) é um programa do governo federal que financia parte das mensalidades em IES privadas participantes. Financia até 50% do valor da mensalidade, com taxa de juros de 3,4% ao ano. O FIES Social financia 100% para renda per capita de até meio salário mínimo. Durante o curso, o aluno paga apenas uma pequena taxa trimestral. Após 18 meses da formatura, começa a amortização da dívida em prazo equivalente a 3 vezes o período do financiamento. Para se inscrever: acesse fiesweb.mec.gov.br após ingressar na IES."
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "O que é a Bolsa ENEM das IES privadas?",
+      "resposta": "A Bolsa ENEM é um desconto na mensalidade oferecido pelas próprias IES privadas com base na nota do ENEM. Diferente do ProUni, não depende de renda mínima e pode ser usada por qualquer candidato com nota no ENEM. Cada IES tem sua própria tabela de descontos. O desconto geralmente varia de 30% a 70% conforme a nota. A bolsa pode ser combinada com o Pravaler (financiamento privado) para cobrir o valor restante da mensalidade."
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "O que é o Pravaler e como ele funciona?",
+      "resposta": "O Pravaler é o principal programa de financiamento privado para ensino superior no Brasil. Ele financia de 50% a 100% da mensalidade. Durante o curso, o aluno paga apenas uma pequena parcela do financiamento (a 'parcela de entrada'). O restante da dívida é pago após a formatura, em parcelas mensais por um período pré-acordado. A análise de crédito é feita em minutos pelo app ou site. As taxas de juros variam entre 1,5% e 2,5% ao mês. Não exige nota mínima no ENEM — o critério é análise de crédito."
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "Qual a diferença entre bacharelado, licenciatura e tecnólogo?",
+      "resposta": "Bacharelado: formação ampla e completa em uma área do conhecimento (4 a 6 anos). Habilita para exercício profissional e pós-graduação. Ex.: Medicina, Direito, Engenharia, Administração. Licenciatura: formação para docência na educação básica (4 anos). Obrigatória para ser professor nas redes pública e privada. Ex.: Pedagogia, Letras, Matemática, História. Tecnólogo: curso superior de tecnologia com formação técnica e prática em área específica (2 anos). Habilita para pós-graduação assim como o bacharelado. Ex.: Análise e Desenvolvimento de Sistemas, Gestão de RH, Logística."
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "Posso fazer pós-graduação com diploma de tecnólogo?",
+      "resposta": "Sim. O diploma de tecnólogo (curso superior de tecnologia) habilitado pelo MEC dá acesso à pós-graduação lato sensu (especializações e MBAs) assim como o bacharelado. Para pós-graduação stricto sensu (mestrado e doutorado), o acesso depende do programa e da avaliação da banca — alguns programas aceitam tecnólogos, outros exigem bacharelado na área. Verifique os requisitos do programa desejado."
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Qual a diferença entre especialização e MBA?",
+      "resposta": "No Brasil, ambos são juridicamente iguais: pós-graduação lato sensu com mínimo de 360 horas. A diferença é de posicionamento: especializações têm foco mais acadêmico e específico (ex.: Especialização em Psicopedagogia). MBA (Master in Business Administration) tem foco em gestão e liderança, com professores de mercado e ênfase prática. O título 'MBA' não é regulamentado pelo MEC como no exterior — é uma denominação comercial. Para o mercado, o nome da IES que oferece o MBA pesa mais do que o título em si."
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "Como funciona o ENADE e por que ele importa?",
+      "resposta": "O ENADE (Exame Nacional de Desempenho dos Estudantes) é uma avaliação obrigatória aplicada pelo MEC aos estudantes concluintes dos cursos de graduação. Ocorre a cada 3 anos por área do conhecimento. A nota do ENADE compõe o CPC (Conceito Preliminar do Curso) e o IGC (Índice Geral de Cursos), ambos de 1 a 5. Cursos com nota 4 ou 5 têm melhor reputação e podem participar do ProUni. Cursos com nota 1 estão sujeitos a supervisão do MEC. A nota do ENADE não afeta a formatura do aluno — participar é obrigatório, mas tirar nota baixa não impede a conclusão do curso."
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "Posso trabalhar enquanto faço o curso?",
+      "resposta": "Sim, a grande maioria dos alunos de IES privadas trabalha durante a graduação — especialmente no EAD e no noturno presencial. No EAD, os conteúdos estão disponíveis 24h para serem acessados no tempo do aluno. O presencial noturno funciona geralmente das 19h às 23h. Para cursos que exigem práticas obrigatórias (saúde, engenharia, licenciaturas), parte das atividades precisa ser realizada em dias e horários específicos — verifique o calendário do curso antes de matricular."
+    },
+    {
+      "id": "FAQ011",
+      "pergunta": "O que é o CPC e o IGC do MEC?",
+      "resposta": "CPC (Conceito Preliminar de Curso): avaliação de cada curso de graduação numa escala de 1 a 5, composta por nota do ENADE, IDD (Indicador de Diferença entre os Desempenhos Esperado e Observado), perfil do corpo docente e percepção do estudante. IGC (Índice Geral de Cursos): avaliação global da IES, calculado pela média ponderada dos CPCs dos cursos de graduação e notas dos programas de pós-graduação stricto sensu avaliados pela CAPES. São indicadores públicos consultáveis no portal e-MEC (emec.mec.gov.br)."
+    },
+    {
+      "id": "FAQ012",
+      "pergunta": "Quantas disciplinas posso aproveitar por transferência de outra IES?",
+      "resposta": "O aproveitamento de disciplinas (também chamado de equivalência ou dispensa) é analisado caso a caso pela coordenação pedagógica do curso. Para que uma disciplina seja aproveitada, geralmente exige-se: conteúdo equivalente (mínimo 75% de sobreposição das ementas), nota mínima aprovada (geralmente 5 ou 6 na IES de origem) e prazo de conclusão dentro do prazo estabelecido (geralmente disciplinas cursadas há mais de 5 anos podem não ser aproveitadas). O requerimento deve ser feito no início do semestre junto à secretaria acadêmica."
+    },
+    {
+      "id": "FAQ013",
+      "pergunta": "O que é o trancamento de matrícula?",
+      "resposta": "Trancamento de matrícula é a interrupção temporária do vínculo acadêmico sem cancelamento do curso. O aluno não paga mensalidades durante o período de trancamento, mas também não cursa disciplinas. O histórico de disciplinas aprovadas é preservado. O prazo máximo de trancamento varia por IES (geralmente 2 a 4 semestres consecutivos ou alternados). Após o prazo máximo, o vínculo é cancelado automaticamente. O pedido de trancamento deve ser feito dentro do calendário acadêmico."
+    },
+    {
+      "id": "FAQ014",
+      "pergunta": "O que é aproveitamento de conhecimentos e experiência profissional?",
+      "resposta": "Previsto na LDB (art. 41), é a possibilidade de o aluno ter disciplinas dispensadas com base em conhecimentos e competências adquiridos no trabalho. A IES analisa a experiência profissional documentada (carteira de trabalho, declarações de emprego, cursos anteriores) e pode dispensar disciplinas cuja competência seja demonstrada. É mais comum em cursos como Contabilidade, Administração e Tecnólogos. O processo é formalizado junto à coordenação do curso."
+    },
+    {
+      "id": "FAQ015",
+      "pergunta": "Como funciona o vestibular online?",
+      "resposta": "O vestibular online é uma prova digital realizada pelo candidato em qualquer dispositivo com internet (computador, tablet ou celular). Geralmente é composto de 20 a 30 questões de múltipla escolha sobre português, matemática e raciocínio lógico, mais uma redação opcional. A prova é realizada em casa, no próprio ritmo do candidato, e o resultado sai em poucas horas. Não há custo de inscrição na maioria das IES. O desempenho no vestibular pode influenciar o percentual de bolsa oferecido."
+    },
+    {
+      "id": "FAQ016",
+      "pergunta": "O que são atividades complementares e como cumpro a carga horária?",
+      "resposta": "Atividades Complementares (ACs) são horas extracurriculares obrigatórias que complementam a formação acadêmica. A carga horária mínima é definida pelo PPC de cada curso (geralmente 100 a 200 horas ao longo do curso). São aceitas atividades como: participação em eventos acadêmicos (palestras, congressos, feiras), cursos livres e workshops, monitoria e iniciação científica, projetos de extensão, voluntariado, publicações acadêmicas e participação em ligas e grupos estudantis. O registro é feito no portal acadêmico com documentação comprobatória."
+    },
+    {
+      "id": "FAQ017",
+      "pergunta": "Quais documentos preciso para fazer matrícula?",
+      "resposta": "Os documentos básicos para matrícula em cursos de graduação são: RG (Registro Geral) ou CNH; CPF; certidão de nascimento ou casamento; histórico escolar do ensino médio (ou diploma); comprovante de residência atualizado; foto 3x4 recente. Para candidatos que usaram o ENEM: página de confirmação da nota. Para ProUni: documentos comprobatórios de renda (contracheques, declaração de IR, etc.). Para transferência: histórico e ementas da IES anterior. Muitas IES permitem início do curso com parte dos documentos pendentes."
+    },
+    {
+      "id": "FAQ018",
+      "pergunta": "Qual a diferença entre estágio obrigatório e não obrigatório?",
+      "resposta": "Estágio obrigatório: previsto na grade curricular do curso, é requisito para a conclusão. Tem carga horária mínima definida pelo MEC por área (ex.: saúde, licenciaturas e engenharia têm altas cargas de estágio obrigatório). Pode ser remunerado ou não. Estágio não obrigatório: realizado voluntariamente pelo aluno a qualquer momento do curso, fora do cumprimento curricular. É sempre remunerado (bolsa-estágio) e pode acumular até 30h semanais. Ambos são regidos pela Lei de Estágios (Lei 11.788/2008) e exigem termo de compromisso assinado pela IES, empresa e aluno."
+    },
+    {
+      "id": "FAQ019",
+      "pergunta": "O que é o TCC e quais são os formatos aceitos?",
+      "resposta": "O TCC (Trabalho de Conclusão de Curso) é a produção acadêmica final exigida na maioria dos cursos de graduação. Os formatos aceitos variam por curso e IES: Monografia (trabalho escrito com revisão bibliográfica e análise crítica); Artigo Científico (publicável em periódico acadêmico); Projeto Técnico (plano de negócios, projeto de engenharia, produto tecnológico); Projeto de Intervenção (especialmente em licenciaturas e saúde). O TCC é orientado por um professor da IES e defendido perante banca avaliadora. Em cursos tecnólogos, pode ser substituído por outras atividades de conclusão."
+    },
+    {
+      "id": "FAQ020",
+      "pergunta": "Posso fazer intercâmbio durante a graduação?",
+      "resposta": "Sim. Muitas IES privadas têm programas de intercâmbio nacionais e internacionais. Os principais mecanismos são: Ciência sem Fronteiras (governo federal, para áreas STEM); programas de dupla diplomação com universidades estrangeiras parceiras; intercâmbio por empresas como EF, CUC, Au Pair; e acordos bilaterais entre IES. As disciplinas cursadas no exterior podem ser aproveitadas como equivalências ou atividades complementares. Para aproveitar ao máximo, o aluno deve validar o plano de estudos com a coordenação antes de partir."
+    },
+    {
+      "id": "FAQ021",
+      "pergunta": "O que é empresa júnior e como participar?",
+      "resposta": "Empresa Júnior é uma organização sem fins lucrativos gerida por estudantes de graduação sob orientação de professores, que oferece serviços profissionais a preços acessíveis ao mercado. É um espaço de aprendizagem prática, desenvolvimento de habilidades de gestão e empreendedorismo. A participação enriquece o currículo e desenvolve habilidades que o mercado valoriza. Estão presentes em IES de todo o Brasil e são reguladas pela lei 13.267/2016. Consulte a IES sobre as empresas juniores ativas por curso."
+    },
+    {
+      "id": "FAQ022",
+      "pergunta": "Qual a diferença entre polo EAD e campus presencial?",
+      "resposta": "Campus presencial: estrutura completa da IES com salas de aula, laboratórios, biblioteca física, quadras, restaurante e toda a infraestrutura para aulas presenciais diárias. Polo EAD (polo de apoio presencial): estrutura menor credenciada pelo MEC para dar suporte ao aluno EAD. Oferece laboratórios de informática, biblioteca, sala de videoconferência e local para realização de provas presenciais. No polo, o aluno não tem aulas regulares — essas ocorrem na plataforma online. A visita ao polo é necessária apenas para provas e práticas obrigatórias (geralmente 2 a 4 vezes por semestre)."
+    },
+    {
+      "id": "FAQ023",
+      "pergunta": "Como funciona a prova presencial no EAD?",
+      "resposta": "Nos cursos EAD, as provas presenciais são realizadas nos polos de apoio credenciados pelo MEC. Ocorrem geralmente ao final de cada período (semestral ou trimestral). O aluno deve comparecer ao polo no dia e horário agendados com documento de identidade. Em muitos cursos, são realizadas 2 provas presenciais por semestre. Algumas IES também realizam provas online com monitoramento por câmera (proctoring). A reprovação nas provas presenciais pode impedir a aprovação mesmo com bom desempenho nas atividades online."
+    },
+    {
+      "id": "FAQ024",
+      "pergunta": "O que é a CAPES e como ela avalia os programas de pós-graduação?",
+      "resposta": "A CAPES (Coordenação de Aperfeiçoamento de Pessoal de Nível Superior) é o órgão federal que avalia, regulamenta e fomenta os programas de pós-graduação stricto sensu (mestrado e doutorado). A avaliação é periódica (a cada 4 anos) e classifica os programas de 1 a 7: notas 1 e 2 indicam não recomendação; nota 3 é o mínimo para funcionamento; notas 4 e 5 são para programas consolidados; notas 6 e 7 são para programas de excelência com desempenho equivalente aos melhores do mundo. A nota da CAPES determina a quantidade de bolsas disponíveis para os alunos."
+    },
+    {
+      "id": "FAQ025",
+      "pergunta": "Como funciona o sistema de cotas nas IES privadas?",
+      "resposta": "As IES privadas não são obrigadas por lei a ter cotas raciais ou sociais (essas são obrigatórias nas IES públicas pela Lei 12.711/2012). No entanto, o ProUni tem reserva de vagas para autodeclarados pretos, pardos e indígenas proporcional à representação dessa população no estado. Algumas IES privadas adotam voluntariamente programas de ação afirmativa — cotas raciais, sociais ou para PCDs — em seus processos seletivos próprios. Verifique a política específica de cada IES."
+    },
+    {
+      "id": "FAQ026",
+      "pergunta": "Posso fazer a matrícula 100% online?",
+      "resposta": "Sim, a maioria das IES privadas permite matrícula 100% digital: inscrição pelo site ou app, envio de documentos por foto ou PDF, assinatura eletrônica do contrato, pagamento da taxa de matrícula por boleto ou cartão. Algumas IES exigem comparecimento presencial para ativação biométrica ou assinatura de contrato impresso. Para cursos que exigem visita ao polo (EAD), o primeiro acesso ao polo pode ser exigido para cadastro e orientação. Confirme o processo específico da IES escolhida."
+    },
+    {
+      "id": "FAQ027",
+      "pergunta": "O que é o e-MEC e como usar para verificar se uma IES é reconhecida?",
+      "resposta": "O e-MEC (emec.mec.gov.br) é o portal oficial do MEC que contém o cadastro de todas as IES e cursos autorizados no Brasil. Para verificar uma IES: acesse o portal, busque pelo nome da instituição ou CNPJ, e confira o status (Ativo, Em supervisão, Descredenciado), a nota do IGC e os cursos com suas respectivas notas de CPC e ENADE. Antes de se matricular em qualquer IES privada, essa verificação é fundamental. Curso sem registro ativo no e-MEC não emite diploma com validade nacional."
+    },
+    {
+      "id": "FAQ028",
+      "pergunta": "Como funciona a renovação de bolsas semestre a semestre?",
+      "resposta": "Bolsa ENEM própria da IES: geralmente renovada automaticamente a cada semestre, condicionada à aprovação em um percentual mínimo das disciplinas (ex.: 75%) e não ter mensalidades em atraso. ProUni: renovado semestralmente pelo portal prouni.mec.gov.br mediante Renovação de Bolsa, com apresentação de CRS (Certificado de Regularidade Semestral) que comprova frequência e aprovação em 75% das disciplinas. FIES: renovado pelo portal fiesweb.mec.gov.br com o CRS. Pravaler: contrato fixo, não exige renovação semestral."
+    },
+    {
+      "id": "FAQ029",
+      "pergunta": "O que acontece se eu reprovar em muitas disciplinas no EAD?",
+      "resposta": "No EAD, a reprovação em disciplinas tem as mesmas consequências que no presencial: o aluno precisa cursar novamente a disciplina (dependência) no semestre seguinte. Disciplinas reprovadas aumentam o tempo de conclusão do curso. Se o aluno reprovar em muitas disciplinas, pode perder o direito à renovação do ProUni ou do FIES (exigência de aprovação em 75% das disciplinas por semestre). Algumas IES têm limite de reprovações acumuladas que, se ultrapassado, leva ao cancelamento da matrícula. Tutores do EAD podem ajudar alunos com dificuldades antes da prova final."
+    },
+    {
+      "id": "FAQ030",
+      "pergunta": "Quais cursos não podem ser feitos 100% EAD?",
+      "resposta": "O MEC restringe a oferta 100% EAD em cursos que exigem práticas laboratoriais e clínicas intensivas. Cursos com restrições ou proibição total de EAD incluem: Medicina (só presencial), Odontologia, Farmácia, Fisioterapia, Enfermagem (práticas clínicas obrigatórias presenciais), Psicologia (estágio clínico presencial obrigatório), Arquitetura e Urbanismo, Educação Física (componentes práticos presenciais) e todas as Engenharias com ênfase em práticas laboratoriais. Nesses cursos, mesmo o modelo semipresencial tem carga horária presencial relevante regulamentada pelo MEC e pelos conselhos de classe."
+    },
+    {
+      "id": "FAQ031",
+      "pergunta": "O que é dupla diplomação?",
+      "resposta": "A dupla diplomação (ou duplo grau) é um programa em que o aluno cursa parte da graduação em uma IES brasileira e parte em uma universidade estrangeira parceira, obtendo ao final os diplomas das duas instituições. Exige bom desempenho acadêmico, proficiência no idioma do país parceiro e, geralmente, participação em processo seletivo interno. IES como PUC-RS, Unisinos, Mackenzie e outras confessionais têm convênios de dupla diplomação com universidades europeias e norte-americanas. É um diferencial competitivo significativo no currículo."
+    },
+    {
+      "id": "FAQ032",
+      "pergunta": "Como funciona o aproveitamento de disciplinas no vestibular de transferência?",
+      "resposta": "O aproveitamento é analisado disciplina por disciplina pela coordenação pedagógica da IES receptora. O aluno entrega: histórico escolar original com notas e carga horária de cada disciplina; ementas (conteúdos programáticos) das disciplinas cursadas, emitidas pela IES de origem. A coordenação compara cada disciplina com a equivalente na grade da IES receptora. O aproveitamento é concedido quando há correspondência de conteúdo de pelo menos 70-75%, nota mínima satisfatória e carga horária compatível. O resultado é comunicado antes ou no início do semestre."
+    },
+    {
+      "id": "FAQ033",
+      "pergunta": "Posso fazer duas graduações ao mesmo tempo?",
+      "resposta": "Não há impedimento legal para o aluno cursar duas graduações simultaneamente em IES distintas, desde que cumpra os requisitos de cada uma. Porém, é operacionalmente muito desafiador em função da carga horária e do custo. Uma alternativa é completar uma graduação e depois iniciar a segunda com aproveitamento de disciplinas equivalentes (segunda graduação), o que reduz o tempo e o custo. Para estudantes com tempo disponível, a dupla graduação em áreas complementares (ex.: Direito + Administração) é um diferencial valorizado pelo mercado."
+    },
+    {
+      "id": "FAQ034",
+      "pergunta": "O que é iniciação científica e como participar?",
+      "resposta": "Iniciação Científica (IC) é a participação do aluno de graduação em projetos de pesquisa orientados por professores da IES. É a porta de entrada para a carreira acadêmica e para o mestrado. O aluno desenvolve habilidades de pesquisa, produção científica e pensamento crítico. Pode ser remunerada (com bolsa do CNPq, FAPESP ou da própria IES) ou voluntária (PIBIC-V). Para participar: procure professores pesquisadores da sua área de interesse, verifique os editais da IES e das agências de fomento, e inscreva-se nos processos seletivos internos."
+    },
+    {
+      "id": "FAQ035",
+      "pergunta": "Como funciona a ouvidoria da IES?",
+      "resposta": "A ouvidoria é o canal oficial para alunos registrarem reclamações, sugestões, denúncias e elogios relacionados à IES. É obrigatória pelo MEC para IES credenciadas. O aluno pode registrar manifestações sobre: qualidade do ensino, conduta de professores ou funcionários, problemas na secretaria ou financeiro, condições de infraestrutura, entre outros. As manifestações devem ser respondidas dentro de prazo (geralmente 10 a 15 dias úteis). Respostas insatisfatórias podem ser escaladas ao MEC pelo e-MEC ou via e-Mec Ouvidoria."
+    },
+    {
+      "id": "FAQ036",
+      "pergunta": "O que é o CRS e por que ele é exigido para renovação do ProUni e FIES?",
+      "resposta": "O CRS (Certificado de Regularidade Semestral) é um documento emitido pela IES que comprova que o aluno foi aprovado em pelo menos 75% das disciplinas cursadas no semestre. É exigido para renovação semestral do ProUni e do FIES. Se o aluno não atingir os 75%, perde o direito à renovação da bolsa ou do financiamento no semestre seguinte. Em caso de perda por rendimento, existe a possibilidade de revisão mediante recurso com justificativa (doença, falecimento familiar, etc.). O prazo de solicitação do CRS e da renovação é gerenciado pelo portal do MEC."
+    },
+    {
+      "id": "FAQ037",
+      "pergunta": "O que é PIBID e quais cursos têm acesso?",
+      "resposta": "O PIBID (Programa Institucional de Bolsas de Iniciação à Docência) é um programa do MEC que oferece bolsas para alunos de licenciatura realizarem práticas de docência em escolas públicas. O objetivo é articular teoria e prática pedagógica desde o início da formação. Os bolsistas recebem R$ 400/mês do governo federal. O programa é um diferencial importante para quem cursará licenciaturas (Pedagogia, Letras, Matemática, Ciências, etc.) pois enriquece a formação prática e o currículo. Nem todas as IES privadas têm o PIBID — verifique se a IES é participante."
+    },
+    {
+      "id": "FAQ038",
+      "pergunta": "Quais cursos têm exame de suficiência ou prova do conselho de classe após o diploma?",
+      "resposta": "Alguns conselhos de classe exigem exame próprio para exercício da profissão, além do diploma: OAB (Ordem dos Advogados do Brasil) — obrigatório para advocacia, com aprovação histórica de cerca de 20% dos candidatos; CFC (Conselho Federal de Contabilidade) — Exame de Suficiência obrigatório para registro de contador; CREA (Engenharia) — requer registro após diploma, com exigência de ART; CRM (Medicina) — registro após residência (para especialidades) ou conclusão do internato. Planejamento para esses exames deve começar ainda na graduação."
+    },
+    {
+      "id": "FAQ039",
+      "pergunta": "Como funciona o curso de Medicina em IES privadas?",
+      "resposta": "Medicina é o curso mais regulado e de maior custo operacional no Brasil. Duração: 6 anos (12 semestres). Obriga internato (2 últimos anos em ambiente hospitalar com supervisão). Exige hospital escola conveniado, laboratórios de habilidades clínicas e simulação. A mensalidade varia de R$ 8.000 a R$ 12.000/mês nas IES privadas. O ingresso exige alta nota no ENEM ou vestibular próprio muito seletivo. Após a graduação, a Residência Médica (realizada pelo REVALIDA para estrangeiros e por concursos para brasileiros) é o caminho para especialização. O CRM é obrigatório para exercício."
+    },
+    {
+      "id": "FAQ040",
+      "pergunta": "O que é a extensão universitária e por que ela é obrigatória?",
+      "resposta": "A Resolução CNE/CES 07/2018 tornou obrigatório que 10% da carga horária dos cursos de graduação sejam dedicados a atividades de extensão — projetos e ações que conectam a universidade com a comunidade. As atividades de extensão incluem: prestação de serviços à comunidade, projetos de saúde nas periferias, eventos culturais, consultorias gratuitas para pequenos negócios, assessoria jurídica popular, entre outros. O aluno participa ativamente como agente de transformação social, e essas horas são contabilizadas na carga horária total do curso."
+    },
+    {
+      "id": "FAQ041",
+      "pergunta": "Como funciona o processo de colação de grau?",
+      "resposta": "A colação de grau é a cerimônia formal de conclusão do curso e entrega do diploma. O processo: o aluno conclui todas as disciplinas, estágio e TCC → solicita colação de grau à secretaria acadêmica → verifica pendências (financeiras, documentais) → participa da cerimônia (colação solene ou em gabinete). A data de colação de grau é o marco que determina o início da contagem de prazo para habilitação no conselho de classe (OAB, CRC, etc.). Colação em gabinete (individual) pode ser feita para quem não quer aguardar a cerimônia coletiva."
+    },
+    {
+      "id": "FAQ042",
+      "pergunta": "O que é o ENADE e sou obrigado a fazer?",
+      "resposta": "Sim, o ENADE é obrigatório para todos os alunos concluintes dos cursos avaliados naquele ano. A não participação sem justificativa gera uma anotação no histórico escolar e pode impedir a colação de grau e a emissão do diploma. O calendário do ENADE é definido pelo INEP/MEC e cada área é avaliada a cada 3 anos em ciclos rotativos. A prova abrange formação geral (10 questões) e componentes específicos do curso (30 questões). A nota individual do aluno não afeta sua aprovação no curso, mas compõe os indicadores de qualidade da IES."
+    },
+    {
+      "id": "FAQ043",
+      "pergunta": "Como é calculada a carga horária e o currículo mínimo?",
+      "resposta": "As Diretrizes Curriculares Nacionais (DCNs) do MEC estabelecem a carga horária mínima e os componentes obrigatórios de cada curso. Ex.: Administração — mínimo de 3.000 horas; Direito — 3.700 horas; Pedagogia — 3.200 horas; Enfermagem — 4.000 horas. As IES podem adicionar conteúdos além do mínimo. A carga horária inclui: disciplinas teóricas, práticas, estágio obrigatório, atividades complementares e componentes de extensão. O Projeto Pedagógico do Curso (PPC) detalha como a carga horária é distribuída e está disponível no portal da IES."
+    },
+    {
+      "id": "FAQ044",
+      "pergunta": "O que é segundo ciclo ou segunda licenciatura?",
+      "resposta": "A Segunda Licenciatura (também chamada de formação pedagógica) é um programa para portadores de diploma de bacharelado que querem obter habilitação para a docência. A carga horária é menor que a licenciatura completa (geralmente 800 a 1.400 horas), pois aproveita a formação do bacharelado. Muito procurado por bacharéis em Direito que querem dar aulas de Direito no técnico, ou engenheiros que querem lecionar no técnico de engenharia. Regulamentada pela Resolução CNE/CP 02/2015. Pode ser feita em formato EAD."
+    },
+    {
+      "id": "FAQ045",
+      "pergunta": "O que é o Quero Bolsa e como funciona?",
+      "resposta": "O Quero Bolsa (querobolsa.com.br) é uma plataforma comparadora de bolsas e financiamentos para o ensino superior privado. O candidato informa a nota do ENEM, curso desejado e cidade, e a plataforma apresenta as IES com ofertas de bolsas disponíveis, ordenadas por melhor custo-benefício. É um dos principais canais de geração de leads qualificados para as IES. Para o candidato, é uma forma eficiente de comparar opções antes de decidir. Outras plataformas similares: Educa Mais Brasil, Buscador FIES e Aqui tem Bolsa."
+    },
+    {
+      "id": "FAQ046",
+      "pergunta": "Quais são os principais grupos educacionais de capital aberto no Brasil?",
+      "resposta": "Os principais grupos do ensino superior privado listados na B3 (Bolsa de Valores brasileira) são: Cogna Educação (COGN3) — ex-Kroton, controladora de Anhanguera, Unopar e outras; Yduqs (YDUQ3) — controladora da Estácio, IBMEC e Wyden; Ânima Educação (ANIM3) — Una, Unibrasil, HSM e outras; Cruzeiro do Sul Educacional (CSED3) — Universidade Cruzeiro do Sul, Unicsul; SER Educacional (SEER3) — UNINASSAU e outras do Norte/Nordeste; Vitru (VTRU3) — UNIASSELVI; Ser em Ação (SERE3). A abertura de capital trouxe profissionalização, mas também pressão por resultado financeiro que impactou modelos pedagógicos."
+    },
+    {
+      "id": "FAQ047",
+      "pergunta": "Como funcionam os programas de monitoria?",
+      "resposta": "A monitoria acadêmica é uma atividade em que alunos com bom desempenho auxiliam colegas e professores nas disciplinas. O monitor recebe bolsa (geralmente R$ 300 a R$ 600/mês) ou créditos em atividades complementares. Benefícios para o monitor: aprofundamento do conteúdo, desenvolvimento didático, fortalecimento do currículo e acesso privilegiado a professores orientadores. Para participar: verifique os editais de monitoria publicados pela coordenação do curso, que ocorrem no início de cada semestre."
+    },
+    {
+      "id": "FAQ048",
+      "pergunta": "O que é People Analytics e quais cursos abordam esse tema?",
+      "resposta": "People Analytics é a aplicação de análise de dados para tomada de decisão em gestão de pessoas — recrutamento, retenção, clima, desempenho e planejamento de força de trabalho. É uma das habilidades mais demandadas pelo mercado de RH. Cursos que abordam o tema: Graduação em Gestão de RH (disciplinas de analytics e BI); MBA em Gestão de Pessoas (módulos específicos); especializações em People Analytics (IES como PUC-RS, ESPM, HSM). Ferramentas utilizadas: Power BI, Python para análise de dados, Tableau e plataformas de HRMS (SAP, Workday)."
+    },
+    {
+      "id": "FAQ049",
+      "pergunta": "O que são micro credenciais e nano cursos?",
+      "resposta": "Micro credenciais são certificações de curta duração que comprovam habilidades específicas do mercado de trabalho, sem necessidade de uma graduação completa. Nano cursos são cursos de poucas horas (5 a 40 horas) focados em competências muito específicas. Exemplos: Nano curso de Excel Avançado, Micro credencial em UX Writing, Trilha de Data Science. No Brasil, IES como Cogna/Unopar, Cruzeiro do Sul e Unisinos já oferecem essas formações digitais. Tendem a se integrar às grades curriculares como atividades complementares ou disciplinas de livre escolha."
+    },
+    {
+      "id": "FAQ050",
+      "pergunta": "Como funciona a política de LGPD nas IES para dados dos alunos?",
+      "resposta": "As IES coletam grande volume de dados pessoais dos alunos: dados de identificação, financeiros, acadêmicos, de saúde (em cursos da área) e comportamentais (plataformas digitais). Pela LGPD (Lei 13.709/2018), as IES devem: obter consentimento para uso dos dados além do contrato educacional; proteger os dados com medidas de segurança adequadas; nomear um DPO (Encarregado de Dados); notificar a ANPD em caso de incidentes; e garantir ao aluno o direito de acesso, correção, portabilidade e exclusão. Os dados acadêmicos (histórico, diplomas) têm base legal contratual e não exigem consentimento adicional."
+    },
+    {
+      "id": "FAQ051",
+      "pergunta": "Posso cancelar a matrícula e pedir reembolso da taxa paga?",
+      "resposta": "Depende do momento do cancelamento e do contrato firmado. O CDC e a Portaria MEC 1.051/2023 garantem ao aluno o direito de desistência e reembolso integral de valores pagos antes do início das aulas (exceto taxa de inscrição não-reembolsável prevista em contrato). Após o início das aulas, o reembolso é calculado proporcionalmente às aulas não cursadas. Para ProUni: cancelamento deve ser comunicado ao MEC para liberação da bolsa para outro candidato. Para FIES: procedimentos específicos no portal para encerramento do contrato."
+    },
+    {
+      "id": "FAQ052",
+      "pergunta": "O que é o Registro de Diploma e como funciona?",
+      "resposta": "O registro de diploma é o processo formal de validação e registro do diploma de graduação junto à Secretaria de Estado de Educação (ou IES credenciadora). Para cursos regulamentados por conselhos de classe (Medicina, Direito, Engenharia, etc.), o registro também é feito no respectivo conselho. O diploma sem registro não tem validade legal plena. O prazo para expedição e registro varia de 30 a 180 dias após a colação de grau, dependendo da IES e do estado. Algumas IES fazem o registro automaticamente; outras exigem requerimento do formando."
+    },
+    {
+      "id": "FAQ053",
+      "pergunta": "Quais IES privadas têm programas de stricto sensu reconhecidos?",
+      "resposta": "As principais IES privadas com programas de mestrado e doutorado avaliados com notas 5, 6 ou 7 pela CAPES incluem: PUC-RS (programa de Letras nota 7, entre outros de excelência); Unisinos — universidade jesuíta do RS com múltiplos programas nota 5 e 6; Mackenzie — programas em Direito, Administração e Educação nota 4 e 5; PUC-SP — programas em Psicologia, Comunicação e Educação; IBMEC — programas em Administração e Economia; FGV — referência em Administração e Economia com nota 6 e 7; Insper — foco em Economia, Administração e Engenharia. Consulte o banco de dados da CAPES (capes.gov.br/avaliacao) para verificar a nota atualizada de cada programa."
+    }
+  ],
+
+  "cross_knowledge": [
+    {
+      "id": "CK001",
+      "topico": "LGPD na educação",
+      "descricao": "Dados de alunos são dados pessoais e, em alguns casos, sensíveis (dados de saúde para cursos da área, dados de renda para bolsas). O agente deve saber explicar o que a IES coleta, para que usa, com quem compartilha (MEC, ProUni, FIES, Pravaler) e como o aluno pode exercer seus direitos. Formulários de matrícula e consentimento devem ser claros sobre cada finalidade de uso.",
+      "areas_relacionadas": ["Matrícula", "Programa fidelidade", "FIES", "ProUni", "Financeiro"]
+    },
+    {
+      "id": "CK002",
+      "topico": "CDC aplicado ao ensino superior privado",
+      "descricao": "O Código de Defesa do Consumidor aplica-se à relação aluno-IES. O aluno é consumidor e a IES é fornecedora de serviço educacional. Direitos garantidos: informação clara sobre mensalidade e reajuste (com 45 dias de antecedência), reajuste anual máximo regulado por lei, direito a receber diploma após quitação dos débitos, direito de acesso ao histórico escolar independentemente de pendências financeiras.",
+      "areas_relacionadas": ["Contratos", "Mensalidades", "Reajuste", "Cancelamento"]
+    },
+    {
+      "id": "CK003",
+      "topico": "Empregabilidade e mercado de trabalho",
+      "descricao": "O agente deve conhecer os dados de empregabilidade dos principais cursos para usar como argumento de captação. Saber diferenciar cursos com alta demanda (TI, saúde, engenharia) de cursos com mercado mais saturado. Apresentar as parcerias da IES com empresas para estágio e emprego como diferencial concreto.",
+      "areas_relacionadas": ["Captação", "Conversão", "Cursos", "Estágio"]
+    },
+    {
+      "id": "CK004",
+      "topico": "Educação inclusiva e acessibilidade",
+      "descricao": "A Lei Brasileira de Inclusão (Lei 13.146/2015) e o Decreto 7.611/2011 obrigam as IES a garantir acessibilidade plena: arquitetônica, comunicacional, metodológica e instrumental. O agente deve saber sobre o NAPNE (Núcleo de Atendimento a Pessoas com Necessidades Educacionais Especiais), intérpretes de Libras, materiais em Braille e adaptações metodológicas para alunos com deficiência ou transtornos de aprendizagem.",
+      "areas_relacionadas": ["PcD", "Acessibilidade", "NAPNE", "Inclusão"]
+    },
+    {
+      "id": "CK005",
+      "topico": "Evasão e retenção de alunos",
+      "descricao": "A evasão (dropout) é o maior desafio financeiro das IES privadas. O custo de reter um aluno é 5x menor que captar um novo. O agente deve identificar sinais precoces de evasão (atraso de mensalidade, queda de notas, faltas frequentes) e acionar os protocolos de retenção antes que o aluno abandone. Estratégias: contato proativo, suporte financeiro, tutoria acadêmica e programas de mentoria.",
+      "areas_relacionadas": ["Financeiro", "Acadêmico", "Retenção", "Inadimplência"]
+    },
+    {
+      "id": "CK006",
+      "topico": "Educação corporativa e B2B",
+      "descricao": "IES privadas cada vez mais oferecem educação corporativa: cursos in company, treinamentos customizados, trilhas de aprendizagem para empresas, programas de MBA executivo fechados para determinadas organizações. O agente deve saber identificar oportunidades de negócio B2B em contatos com colaboradores de empresas parceiras e encaminhar para a equipe comercial de educação corporativa.",
+      "areas_relacionadas": ["B2B", "Educação corporativa", "In company", "Parcerias"]
+    }
+  ]
+}

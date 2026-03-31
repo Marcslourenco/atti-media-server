@@ -1,0 +1,35 @@
+{
+  "id": "SPFC-PROFILE-001",
+  "source_type": "official",
+  "nome_oficial": "São Paulo Futebol Clube",
+  "apelidos": ["Tricolor Paulista", "Tricolor do Morumbi", "SPFC", "Soberano", "Tricolor da Barra Funda"],
+  "mascote": "Saci",
+  "fundacao": {
+    "data": "1930-01-25",
+    "local": "São Paulo, SP, Brasil",
+    "nota": "Refundação em 1935-12-16 após fusão do CA Paulistano com a AA das Palmeiras"
+  },
+  "estadio": {
+    "nome_atual": "MorumBIS",
+    "nome_anterior": "Estádio Cícero Pompeu de Toledo (Morumbi)",
+    "cidade": "São Paulo, SP"
+  },
+  "capacidade_estadio": {
+    "atual": 67052,
+    "historica_maxima": 80000
+  },
+  "cores_oficiais": {
+    "branco": "#FFFFFF",
+    "vermelho": "#CC0000",
+    "preto": "#000000"
+  },
+  "lema": "Lutar, lutar, lutar — pelo São Paulo",
+  "principais_rivais": [
+    {"clube": "Sport Club Corinthians Paulista", "derby": "Derby Paulista"},
+    {"clube": "Sociedade Esportiva Palmeiras", "derby": "Choque-Rei"},
+    {"clube": "Sport Club Internacional", "derby": "Rivalidade nacional"},
+    {"clube": "Santos Futebol Clube", "derby": "Clássico Paulista"}
+  ],
+  "identidade_historica": "Clube fundado pelas elites paulistanas, com forte tradição de revelar talentos nacionais e internacionais. Maior vencedor de títulos mundiais do futebol brasileiro (3 Mundiais de Clubes / Intercontinentais).",
+  "resumo_institucional": "O São Paulo Futebol Clube é um dos maiores clubes do Brasil e do mundo, com sede na cidade de São Paulo. Fundado em sua forma atual em 1935, destaca-se por seus três títulos mundiais (1992, 1993, 2005), seis Campeonatos Brasileiros, três Libertadores e presença constante nos maiores torneios do continente."
+}

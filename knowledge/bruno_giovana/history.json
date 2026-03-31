@@ -1,0 +1,98 @@
+[
+  {
+    "id": "HIS-0001",
+    "source_type": "historical",
+    "periodo": "1930–1935",
+    "titulo": "Fundação e Refundação",
+    "descricao": "O São Paulo FC foi fundado em 25 de janeiro de 1930. Em 1935, o clube foi refundado através da fusão do Club Athletico Paulistano com a Associação Athletica das Palmeiras, dando origem ao São Paulo Futebol Clube moderno em 16 de dezembro de 1935.",
+    "impacto_historico": "Estabelece a identidade tricolor e as bases organizacionais do clube moderno."
+  },
+  {
+    "id": "HIS-0002",
+    "source_type": "historical",
+    "periodo": "1943–1949",
+    "titulo": "Primeiros Títulos e Consolidação",
+    "descricao": "O São Paulo venceu o Campeonato Paulista de 1943, 1945, 1948 e 1949, consolidando-se como força do futebol estadual. O clube revelou jogadores importantes e começou a construir uma identidade competitiva.",
+    "impacto_historico": "Primeiros títulos relevantes fortalecem a identidade e torcida do clube."
+  },
+  {
+    "id": "HIS-0003",
+    "source_type": "historical",
+    "periodo": "1953–1957",
+    "titulo": "Era Dourada Estadual",
+    "descricao": "O São Paulo conquistou o Campeonato Paulista de 1953 e repetiu o feito em anos seguintes, tornando-se o clube dominante do estado nessa década. A base do clube foi consolidada com infraestrutura e planejamento.",
+    "impacto_historico": "Consolidação como potência do futebol paulistano e nacional."
+  },
+  {
+    "id": "HIS-0004",
+    "source_type": "historical",
+    "periodo": "1960",
+    "titulo": "Inauguração do Estádio do Morumbi",
+    "descricao": "Em 2 de outubro de 1960, foi inaugurado o Estádio Cícero Pompeu de Toledo, o Morumbi, maior estádio particular do mundo por décadas. A obra foi símbolo da ambição e grandeza do clube.",
+    "impacto_historico": "O Morumbi tornou-se símbolo do clube e palco de grandes jogos da história do futebol brasileiro."
+  },
+  {
+    "id": "HIS-0005",
+    "source_type": "historical",
+    "periodo": "1970s",
+    "titulo": "Dificuldades e Reestruturação",
+    "descricao": "O São Paulo atravessou um período de instabilidade em títulos nacionais, com raros destaques no Brasileiro. O clube manteve presença no Paulistão mas sofreu com a ascensão de rivais.",
+    "impacto_historico": "Período de aprendizado organizacional que antecedeu grandes investimentos nos anos 1980."
+  },
+  {
+    "id": "HIS-0006",
+    "source_type": "historical",
+    "periodo": "1980s",
+    "titulo": "Reestruturação Administrativa e Retorno à Elite",
+    "descricao": "Na década de 1980, o São Paulo investiu na profissionalização da gestão e na contratação de jogadores de qualidade. Títulos Paulistas foram conquistados e o clube voltou a ser protagonista nacional.",
+    "impacto_historico": "Base para o ciclo vencedor do início dos anos 1990."
+  },
+  {
+    "id": "HIS-0007",
+    "source_type": "historical",
+    "periodo": "1991–1998",
+    "titulo": "Tri-Mundial: A Era de Ouro de Telê Santana",
+    "descricao": "Sob o comando do técnico Telê Santana, o São Paulo alcançou a era mais gloriosa de sua história. Conquistou o Campeonato Brasileiro de 1991, a Copa Libertadores e o Campeonato Intercontinental em 1992 e 1993, tornando-se bicampeão mundial consecutivo. Em 1992 e 1993, derrotou o Barcelona (ESP) e o Milan (ITA) nas finais intercontinentais, respectivamente. Raí, Cafu, Toninho Cerezo e Müller foram destaques desse período.",
+    "impacto_historico": "O período mais glorioso do clube. Dois títulos mundiais consecutivos (1992, 1993) projetaram o SPFC ao patamar dos maiores clubes do mundo."
+  },
+  {
+    "id": "HIS-0008",
+    "source_type": "historical",
+    "periodo": "1999–2004",
+    "titulo": "Período de Transição e Crise",
+    "descricao": "Após a morte de Telê Santana em 2006 (com seu ciclo encerrado antes disso), o clube passou por instabilidade técnica e financeira. Títulos Paulistas foram conquistados mas os resultados nacionais e continentais foram abaixo do esperado.",
+    "impacto_historico": "Período de readaptação que levou o clube a buscar nova identidade competitiva."
+  },
+  {
+    "id": "HIS-0009",
+    "source_type": "historical",
+    "periodo": "2005",
+    "titulo": "Terceiro Mundial — Copa do Mundo de Clubes FIFA",
+    "descricao": "Em 2005, sob comando de Paulo Autuori, o São Paulo conquistou a Copa do Mundo de Clubes da FIFA no Japão, derrotando o Liverpool (ING) na final por 1 a 0, com gol de Mineiro. O clube sagrou-se tricampeão mundial, tornando-se o clube brasileiro com mais títulos mundiais.",
+    "impacto_historico": "Terceiro título mundial, único clube brasileiro tricampeão mundial de clubes até 2025."
+  },
+  {
+    "id": "HIS-0010",
+    "source_type": "historical",
+    "periodo": "2006–2012",
+    "titulo": "Brasileiros e Declínio Continental",
+    "descricao": "O São Paulo conquistou o Campeonato Brasileiro de 2006, 2007 e 2008, tornando-se tricampeão consecutivo. No entanto, os títulos continentais não vieram no período, e o clube começou a enfrentar dificuldades de gestão.",
+    "impacto_historico": "Tricampeonato Brasileiro (2006-2007-2008) é a maior sequência do clube no torneio nacional."
+  },
+  {
+    "id": "HIS-0011",
+    "source_type": "historical",
+    "periodo": "2013–2018",
+    "titulo": "Crise Financeira e Esportiva",
+    "descricao": "O São Paulo enfrentou grave crise financeira, com dívidas acumuladas e resultados esportivos abaixo do esperado. O clube flertou com o rebaixamento em algumas temporadas e passou por múltiplas trocas de técnicos.",
+    "impacto_historico": "Crise institucional que levou o clube a reformulações administrativas profundas."
+  },
+  {
+    "id": "HIS-0012",
+    "source_type": "historical",
+    "periodo": "2019–2023",
+    "titulo": "Recuperação e Copa do Brasil 2023",
+    "descricao": "O clube iniciou processo de recuperação financeira e esportiva. Em 2023, conquistou a Copa do Brasil, quebrando um jejum de títulos e retomando protagonismo nacional. O jovem Dorival Júnior foi protagonista da virada.",
+    "impacto_historico": "Fim de longo jejum de títulos nacionais e sinalização de recuperação institucional."
+  }
+]

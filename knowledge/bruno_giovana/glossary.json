@@ -1,0 +1,146 @@
+[
+  {
+    "id": "GLO-0001",
+    "source_type": "historical",
+    "termo": "Tricolor Paulista",
+    "categoria": "apelido_clube",
+    "definicao": "Apelido mais popular do São Paulo FC, referente às três cores do uniforme: branco, vermelho e preto.",
+    "uso": "Usado pela imprensa e torcida para se referir ao clube."
+  },
+  {
+    "id": "GLO-0002",
+    "source_type": "historical",
+    "termo": "Soberano",
+    "categoria": "apelido_clube",
+    "definicao": "Apelido conquistado após os bicampeonatos mundiais de 1992 e 1993, reforçando a supremacia do clube.",
+    "uso": "Utilizado especialmente por torcedores quando remetem à era de ouro."
+  },
+  {
+    "id": "GLO-0003",
+    "source_type": "historical",
+    "termo": "Morumbi",
+    "categoria": "estadio",
+    "definicao": "Nome popular do Estádio Cícero Pompeu de Toledo, hoje rebatizado MorumBIS. Símbolo máximo do clube.",
+    "uso": "Referência ao estádio e à identidade do clube."
+  },
+  {
+    "id": "GLO-0004",
+    "source_type": "historical",
+    "termo": "Choque-Rei",
+    "categoria": "derby",
+    "definicao": "Nome do clássico entre São Paulo FC e Sociedade Esportiva Palmeiras. Considerado um dos maiores derbies do futebol brasileiro.",
+    "uso": "Usado pela imprensa e torcedores para o clássico SPFC x Palmeiras."
+  },
+  {
+    "id": "GLO-0005",
+    "source_type": "historical",
+    "termo": "Derby Paulista",
+    "categoria": "derby",
+    "definicao": "Clássico entre São Paulo FC e Sport Club Corinthians Paulista. Um dos maiores jogos do futebol paulista.",
+    "uso": "Designação oficial e popular para SPFC x Corinthians."
+  },
+  {
+    "id": "GLO-0006",
+    "source_type": "historical",
+    "termo": "Era Telê",
+    "categoria": "periodo_historico",
+    "definicao": "Período de 1990 a 1996 em que Telê Santana treinou o São Paulo, caracterizado pelos dois bicampeonatos mundiais consecutivos (1992 e 1993) e dois títulos do Campeonato Brasileiro.",
+    "uso": "Referência à época mais gloriosa do clube."
+  },
+  {
+    "id": "GLO-0007",
+    "source_type": "historical",
+    "termo": "Saci",
+    "categoria": "mascote",
+    "definicao": "Mascote oficial do São Paulo FC, baseado no personagem folclórico brasileiro do Saci-Pererê, representado com boina vermelha.",
+    "uso": "Símbolo do clube em comunicações oficiais e eventos."
+  },
+  {
+    "id": "GLO-0008",
+    "source_type": "historical",
+    "termo": "Barra Funda",
+    "categoria": "identidade_historica",
+    "definicao": "Bairro de São Paulo onde o clube tem suas instalações administrativas históricas e CT (Centro de Treinamento).",
+    "uso": "Referência à sede histórica do clube (Tricolor da Barra Funda)."
+  },
+  {
+    "id": "GLO-0009",
+    "source_type": "historical",
+    "termo": "CT da Barra Funda",
+    "categoria": "instalacoes",
+    "definicao": "Centro de Treinamento oficial do São Paulo FC, localizado no bairro da Barra Funda, São Paulo.",
+    "uso": "Local de treinamento da equipe principal e categorias de base."
+  },
+  {
+    "id": "GLO-0010",
+    "source_type": "historical",
+    "termo": "Torcida Independente",
+    "categoria": "torcida_organizada",
+    "definicao": "Uma das maiores e mais tradicionais torcidas organizadas do São Paulo FC, fundada em 1972.",
+    "uso": "Principal torcida organizada do clube."
+  },
+  {
+    "id": "GLO-0011",
+    "source_type": "historical",
+    "termo": "Dragões da Real",
+    "categoria": "torcida_organizada",
+    "definicao": "Outra importante torcida organizada do São Paulo FC.",
+    "uso": "Torcida organizada reconhecida do clube."
+  },
+  {
+    "id": "GLO-0012",
+    "source_type": "historical",
+    "termo": "Intercontinental",
+    "categoria": "titulo",
+    "definicao": "Abreviação usada para se referir ao Campeonato Intercontinental, torneio que o São Paulo venceu em 1992 e 1993.",
+    "uso": "Referência rápida às conquistas mundiais da Era Telê."
+  },
+  {
+    "id": "GLO-0013",
+    "source_type": "historical",
+    "termo": "Tricampeão Mundial",
+    "categoria": "identidade",
+    "definicao": "Designação do São Paulo FC como detentor de três títulos mundiais de clubes (1992, 1993, 2005). É o único clube brasileiro com três títulos mundiais.",
+    "uso": "Identidade de orgulho da torcida tricolor."
+  },
+  {
+    "id": "GLO-0014",
+    "source_type": "historical",
+    "termo": "Paulistão",
+    "categoria": "competicao",
+    "definicao": "Nome popular do Campeonato Paulista de Futebol, maior competição estadual do Brasil e disputada anualmente.",
+    "uso": "Referência ao torneio estadual de maior prestígio do futebol paulista."
+  },
+  {
+    "id": "GLO-0015",
+    "source_type": "historical",
+    "termo": "Rebaixamento",
+    "categoria": "evento_historico",
+    "definicao": "Ameaças de queda para a Série B do Campeonato Brasileiro, especialmente em 2013 e 2014, que mobilizaram a torcida e a gestão do clube.",
+    "uso": "Referência a momentos de crise do clube na era recente."
+  },
+  {
+    "id": "GLO-0016",
+    "source_type": "historical",
+    "termo": "Lá vem o Tricolor",
+    "categoria": "expressao_torcida",
+    "definicao": "Expressão usada pela torcida e narradores ao ver o São Paulo em momentos de superação ou pressão em partidas.",
+    "uso": "Grito de incentivo e identificação da torcida tricolor."
+  },
+  {
+    "id": "GLO-0017",
+    "source_type": "historical",
+    "termo": "São Paulo, meu amor",
+    "categoria": "musica_torcida",
+    "definicao": "Hino popular entre os torcedores, entoado nas arquibancadas em momentos de celebração.",
+    "uso": "Cântico recorrente na torcida tricolor."
+  },
+  {
+    "id": "GLO-0018",
+    "source_type": "historical",
+    "termo": "Projeto Crias",
+    "categoria": "categorias_base",
+    "definicao": "Expressão popular para se referir aos jogadores revelados nas categorias de base do São Paulo FC, tradição histórica do clube.",
+    "uso": "Referência ao orgulho do clube em revelar jogadores para o futebol brasileiro e mundial."
+  }
+]

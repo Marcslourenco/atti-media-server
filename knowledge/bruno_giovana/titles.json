@@ -1,0 +1,290 @@
+[
+  {
+    "id": "TIT-0001",
+    "source_type": "public_record",
+    "competicao": "Campeonato Intercontinental / Copa Intercontinental",
+    "ano": "1992",
+    "tipo": "internacional",
+    "contexto": "Derrotou o FC Barcelona (ESP) por 2 a 1 em Tóquio, Japão. Primeiro título mundial do clube."
+  },
+  {
+    "id": "TIT-0002",
+    "source_type": "public_record",
+    "competicao": "Campeonato Intercontinental / Copa Intercontinental",
+    "ano": "1993",
+    "tipo": "internacional",
+    "contexto": "Derrotou o AC Milan (ITA) por 3 a 2 em Tóquio, Japão. Bicampeonato mundial consecutivo."
+  },
+  {
+    "id": "TIT-0003",
+    "source_type": "public_record",
+    "competicao": "Copa do Mundo de Clubes FIFA",
+    "ano": "2005",
+    "tipo": "internacional",
+    "contexto": "Derrotou o Liverpool FC (ING) por 1 a 0 no Japão. Gol de Mineiro. Tricampeão mundial."
+  },
+  {
+    "id": "TIT-0004",
+    "source_type": "public_record",
+    "competicao": "Copa Libertadores da América",
+    "ano": "1992",
+    "tipo": "internacional",
+    "contexto": "Primeiro título continental do São Paulo. Derrotou o Newell's Old Boys (ARG) na final."
+  },
+  {
+    "id": "TIT-0005",
+    "source_type": "public_record",
+    "competicao": "Copa Libertadores da América",
+    "ano": "1993",
+    "tipo": "internacional",
+    "contexto": "Segundo título continental. Derrotou o Universidad de Chile na final."
+  },
+  {
+    "id": "TIT-0006",
+    "source_type": "public_record",
+    "competicao": "Copa Libertadores da América",
+    "ano": "2005",
+    "tipo": "internacional",
+    "contexto": "Terceiro título continental. Derrotou o Athletico Paranaense na final."
+  },
+  {
+    "id": "TIT-0007",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "1977",
+    "tipo": "nacional",
+    "contexto": "Primeiro título do Campeonato Brasileiro do clube."
+  },
+  {
+    "id": "TIT-0008",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "1986",
+    "tipo": "nacional",
+    "contexto": "Segundo título nacional."
+  },
+  {
+    "id": "TIT-0009",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "1987",
+    "tipo": "nacional",
+    "contexto": "Conquista do título em formato especial (Copa União)."
+  },
+  {
+    "id": "TIT-0010",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "1991",
+    "tipo": "nacional",
+    "contexto": "Título que antecedeu a era mundial. Equipe de Telê Santana."
+  },
+  {
+    "id": "TIT-0011",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "1992",
+    "tipo": "nacional",
+    "contexto": "Bicampeonato nacional consecutivo."
+  },
+  {
+    "id": "TIT-0012",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "2006",
+    "tipo": "nacional",
+    "contexto": "Início do tricampeonato consecutivo."
+  },
+  {
+    "id": "TIT-0013",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "2007",
+    "tipo": "nacional",
+    "contexto": "Segundo título seguido no Brasileirão."
+  },
+  {
+    "id": "TIT-0014",
+    "source_type": "public_record",
+    "competicao": "Campeonato Brasileiro",
+    "ano": "2008",
+    "tipo": "nacional",
+    "contexto": "Tricampeonato brasileiro consecutivo (2006-2007-2008)."
+  },
+  {
+    "id": "TIT-0015",
+    "source_type": "public_record",
+    "competicao": "Copa do Brasil",
+    "ano": "1992",
+    "tipo": "nacional",
+    "contexto": "Primeiro título do clube na Copa do Brasil."
+  },
+  {
+    "id": "TIT-0016",
+    "source_type": "public_record",
+    "competicao": "Copa do Brasil",
+    "ano": "2023",
+    "tipo": "nacional",
+    "contexto": "Segundo título na Copa do Brasil, encerrando longo jejum de títulos nacionais."
+  },
+  {
+    "id": "TIT-0017",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1943",
+    "tipo": "estadual",
+    "contexto": "Primeiro Paulistão da era moderna do clube."
+  },
+  {
+    "id": "TIT-0018",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1945",
+    "tipo": "estadual",
+    "contexto": "Segundo título estadual."
+  },
+  {
+    "id": "TIT-0019",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1948",
+    "tipo": "estadual",
+    "contexto": "Terceiro título do Paulistão."
+  },
+  {
+    "id": "TIT-0020",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1949",
+    "tipo": "estadual",
+    "contexto": "Quarto título estadual."
+  },
+  {
+    "id": "TIT-0021",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1953",
+    "tipo": "estadual",
+    "contexto": "Continuidade da dominância estadual."
+  },
+  {
+    "id": "TIT-0022",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1957",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0023",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1970",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0024",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1971",
+    "tipo": "estadual",
+    "contexto": "Bicampeonato estadual consecutivo."
+  },
+  {
+    "id": "TIT-0025",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1975",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0026",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1980",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0027",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1987",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0028",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1992",
+    "tipo": "estadual",
+    "contexto": "Título estadual durante era mundial."
+  },
+  {
+    "id": "TIT-0029",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1998",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0030",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "1992",
+    "tipo": "estadual",
+    "contexto": "Título estadual."
+  },
+  {
+    "id": "TIT-0031",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "2005",
+    "tipo": "estadual",
+    "contexto": "Título estadual no ano do tricampeonato mundial."
+  },
+  {
+    "id": "TIT-0032",
+    "source_type": "public_record",
+    "competicao": "Campeonato Paulista",
+    "ano": "2021",
+    "tipo": "estadual",
+    "contexto": "Título estadual recente."
+  },
+  {
+    "id": "TIT-0033",
+    "source_type": "public_record",
+    "competicao": "Recopa Sul-Americana",
+    "ano": "1993",
+    "tipo": "internacional",
+    "contexto": "Título da Recopa Sul-Americana."
+  },
+  {
+    "id": "TIT-0034",
+    "source_type": "public_record",
+    "competicao": "Recopa Sul-Americana",
+    "ano": "1994",
+    "tipo": "internacional",
+    "contexto": "Segundo título da Recopa Sul-Americana."
+  },
+  {
+    "id": "TIT-0035",
+    "source_type": "public_record",
+    "competicao": "Copa CONMEBOL",
+    "ano": "1994",
+    "tipo": "internacional",
+    "contexto": "Título da Copa CONMEBOL (extinta)."
+  },
+  {
+    "id": "TIT-0036",
+    "source_type": "public_record",
+    "competicao": "Copa CONMEBOL",
+    "ano": "1996",
+    "tipo": "internacional",
+    "contexto": "Segundo título da Copa CONMEBOL."
+  }
+]

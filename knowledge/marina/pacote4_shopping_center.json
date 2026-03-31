@@ -1,0 +1,833 @@
+{
+  "segmento": "Shopping Center",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA empresariais atuando em shopping centers brasileiros. Cobre mix de lojas, eventos, aluguel de espaço, fluxo de visitantes e parcerias comerciais, com referências às melhores práticas dos principais shoppings do Brasil como Aricanduva, Morumbi Shopping, Cidade Jardim, BarraShopping, Iguatemi São Paulo, Pátio Batel e RioMar Fortaleza.",
+  "nucleo_conhecimento": {
+    "contexto_mercado": [
+      "O Brasil possui mais de 600 shoppings centers em operação, gerando aproximadamente R$ 220 bilhões em vendas anuais e empregando diretamente mais de 1 milhão de pessoas, conforme dados da ABRASCE (Associação Brasileira de Shopping Centers).",
+      "O modelo de shopping center no Brasil é altamente diversificado, abrangendo desde empreendimentos de bairro (até 15.000 m² de ABL) até super-regionais com mais de 100.000 m² de Área Bruta Locável, como o Aricanduva Shopping em São Paulo, que figura entre os maiores em tráfego de visitantes da América Latina.",
+      "A taxa de vacância média nos shoppings brasileiros gira em torno de 5% a 8%, com variações significativas por segmento e localização. Shoppings premium como Iguatemi São Paulo e Cidade Jardim mantêm vacância inferior a 2%, enquanto empreendimentos secundários podem superar 15%.",
+      "O e-commerce impulsionou a transformação dos shoppings brasileiros, forçando a reinvenção do mix com maior participação de serviços (saúde, beleza, educação, lazer), gastronomia e experiências imersivas, segmentos menos suscetíveis à concorrência digital.",
+      "A pandemia de COVID-19 entre 2020 e 2021 acelerou a adoção de tecnologias nos shoppings: aplicativos de navegação indoor, cashback, programas de fidelidade digitais e integração omnicanal tornaram-se diferenciais competitivos relevantes.",
+      "Shoppings de luxo como Cidade Jardim (São Paulo) e Iguatemi São Paulo concentram marcas nacionais e internacionais de alto padrão, com tíquete médio muito superior à média do setor, e servem como destino de lifestyle para públicos de alta renda.",
+      "Shoppings populares e de médio padrão, como o Aricanduva, apostam em alto volume de visitantes (superior a 25 milhões de visitas/ano), mix voltado ao consumo cotidiano e forte presença de âncoras de varejo de massa como Renner, C&A, Casas Bahia e Carrefour.",
+      "A expansão dos shoppings no interior do Brasil ganhou força a partir de 2010, com empreendimentos inaugurados em cidades médias como Ribeirão Preto, Campinas, Uberlândia, Fortaleza e Manaus. O RioMar Fortaleza é referência nesse movimento, consolidando-se como o maior shopping do Nordeste.",
+      "O Pátio Batel em Curitiba representa o modelo de shopping boutique, com arquitetura contemporânea, mix sofisticado, espaços de gastronomia premiados e forte identidade regional, sendo referência para o público AB1 paranaense.",
+      "A sustentabilidade tornou-se pauta central no setor: certificações LEED, programas de coleta seletiva, energia solar e políticas ESG são cada vez mais exigidos por lojistas âncoras e investidores institucionais que detêm cotas de fundos imobiliários (FIIs) de shopping.",
+      "Os fundos de investimento imobiliário (FIIs) de shopping representam importante fonte de capital para expansão e retrofit de empreendimentos, com papéis como XPML11, HSML11 e MALL11 sendo amplamente negociados na B3.",
+      "O conceito de 'terceiro lugar' — espaço entre a casa e o trabalho onde as pessoas socializam — é central na proposta de valor dos shoppings modernos, justificando investimentos em áreas de convivência, coworking, espaços culturais e entretenimento.",
+      "A gastronomia responde por 15% a 25% do ABL nos shoppings mais modernos, com praças de alimentação reinventadas, dark kitchens, restaurantes âncora e experiências culinárias como diferenciais de atração de fluxo.",
+      "O segmento de entretenimento cresce acima da média do setor, com cinemas Imax e 4DX, parques de diversão indoor (como Playcenter e Hopi Hari Express), boliches, laser tag, realidade virtual e espaços de escape room presentes nos principais shoppings.",
+      "A digitalização do relacionamento com o visitante passou a incluir aplicativos próprios com mapas interativos, programas de pontos, notificações de ofertas geolocalizadas, estacionamento inteligente e integração com meios de pagamento como Pix e carteiras digitais."
+    ],
+    "problemas_comuns": [
+      "Alta rotatividade de lojistas em unidades de menor porte (quiosques e lojas menores que 50 m²), gerando custos operacionais elevados para a administração com processos de locação, formatação e rescisão frequentes.",
+      "Dificuldade em equilibrar o mix de lojas após a saída de âncoras relevantes, que costumam arrastar tráfego e justificam a presença de satélites em suas proximidades.",
+      "Pressão dos lojistas por redução do aluguel nos meses de baixo movimento (janeiro e julho) e dificuldade em negociar contratos com cláusula de aluguel mínimo versus percentual sobre vendas.",
+      "Gestão de inadimplência nos períodos de crise econômica: shoppings precisam equilibrar a manutenção de lojistas estratégicos com o rigor necessário na cobrança para não prejudicar o fluxo de caixa do empreendimento.",
+      "Concorrência com o e-commerce afetando categorias como livrarias, eletrônicos, música e vestuário básico, forçando a readequação do mix e a substituição por serviços e experiências.",
+      "Custo elevado de marketing e eventos para geração de tráfego em períodos sazonais fora do pico (entre datas comemorativas), como fevereiro-março e agosto-setembro.",
+      "Dificuldade em mensurar o ROI de eventos e ações promocionais de maneira precisa, em especial quando há grande parte dos visitantes sem programa de fidelidade ativo.",
+      "Gestão de vagas de estacionamento em horários de pico, conflitos com usuários de transporte por aplicativo (Uber/99) e falta de integração com sistemas de mobilidade urbana.",
+      "Necessidade de modernização contínua da infraestrutura (fachadas, ambientação, banheiros, praças de alimentação) para manter a competitividade frente a empreendimentos mais novos.",
+      "Conflitos entre lojistas sobre horário de funcionamento, regras de visual merchandising, presença de ambulantes não autorizados nos corredores e concorrência desleal entre marcas similares.",
+      "Dificuldade de atração de lojistas de alta demanda (Apple, Zara, H&M, marcas de luxo) para shoppings de médio porte sem histórico de performance consolidado.",
+      "Gestão de crises de imagem nas redes sociais (ocorrências de segurança, falhas de infraestrutura, reclamações de atendimento), exigindo protocolos rápidos de comunicação e resposta.",
+      "Adaptação de empreendimentos mais antigos às normas ABNT de acessibilidade, segurança contra incêndio e eficiência energética, com custos elevados de retrofit.",
+      "Gestão da relação com a prefeitura, licenciamentos ambientais e restrições urbanísticas que impactam expansões, instalação de totens de sinalização externa e realização de eventos na área externa."
+    ],
+    "objeções_clientes": [
+      "O aluguel do shopping é muito mais caro do que um ponto comercial de rua — como eu sei que o investimento vai valer a pena?",
+      "Minha loja ainda não tem faturamento suficiente para pagar o mínimo garantido exigido no contrato.",
+      "Já tentei montar uma loja em shopping antes e não funcionou — o tráfego não era suficiente para o meu segmento.",
+      "Tenho medo de ficar preso num contrato longo sem flexibilidade caso o negócio não performe como esperado.",
+      "O condomínio e os fundos de promoção são custos adicionais que não consigo absorver no meu modelo de negócio.",
+      "Minha marca ainda não é conhecida o suficiente para competir com redes consolidadas dentro do shopping.",
+      "O perfil do público deste shopping não parece compatível com o que eu vendo.",
+      "Prefiro investir no meu e-commerce a abrir uma loja física em shopping — os custos fixos são menores.",
+      "A posição da loja que me oferecem tem baixo tráfego — fica num corredor secundário longe das âncoras.",
+      "Os eventos do shopping não parecem trazer público para o meu tipo de produto.",
+      "Não tenho estrutura para cumprir todos os requisitos de projeto arquitetônico e aprovação que o shopping exige.",
+      "Já ouvi que os shoppings favorecem as grandes redes em detrimento dos lojistas menores nas negociações.",
+      "Como posso ter certeza de que a administração do shopping vai de fato promover fluxo para a minha área?",
+      "O processo de aprovação de projeto e obras é muito burocrático e demorado para o meu cronograma de abertura.",
+      "Tenho receio de que minha loja seja colocada em área de reforma ou expansão sem aviso adequado.",
+      "Não quero pagar pelo fundo de promoção e não ter controle sobre como o dinheiro é gasto nas campanhas.",
+      "Os horários de funcionamento do shopping são incompatíveis com o perfil dos meus clientes.",
+      "Nunca trabalhei com contrato de locação comercial desta complexidade — preciso de um especialista jurídico.",
+      "Tenho um concorrente direto já instalado no mesmo corredor — isso vai canibalizar minhas vendas.",
+      "O prazo para montar o estande ou quiosque é curto e não consigo cumprir dentro do prazo estipulado."
+    ],
+    "argumentos_venda": [
+      "O shopping oferece fluxo de visitantes qualificados já no primeiro dia de operação — o lojista não precisa construir audiência do zero como faria num ponto de rua ou no digital.",
+      "A taxa de conversão de visitantes em compradores dentro do shopping é historicamente superior à de pontos isolados, pois o consumidor já está em modo de compra quando entra no empreendimento.",
+      "O custo do aluguel em shopping deve ser analisado como percentual do faturamento — em média, lojistas bem posicionados dedicam entre 8% e 12% da receita bruta ao aluguel, o que é competitivo frente ao custo de aquisição de clientes no digital.",
+      "A presença no shopping confere credibilidade imediata à marca, especialmente para negócios em fase de crescimento que buscam legitimidade junto ao consumidor.",
+      "O shopping investe sistematicamente em marketing, campanhas sazonais, eventos e comunicação — o lojista se beneficia de toda essa geração de tráfego sem precisar arcar com o custo integral.",
+      "A administração do shopping oferece suporte em dados de performance, benchmarking setorial e orientação sobre mix, funcionamento e visual merchandising — um ecossistema de conhecimento que o lojista não teria atuando isoladamente.",
+      "Contratos com cláusula de aluguel percentual sobre vendas protegem o lojista nos momentos de baixo desempenho — você paga proporcional ao que fatura.",
+      "A localização estratégica próxima a âncoras de alto tráfego (hipermercados, lojas de departamento, cinemas) garante visibilidade orgânica para lojas satélite mesmo sem investimento próprio em mídia.",
+      "O shopping gerencia toda a infraestrutura de segurança, limpeza, estacionamento e manutenção — reduzindo a carga operacional e de gestão do lojista.",
+      "A diversidade de formatos (loja de rua interna, quiosque, ilha, pop-up, loja efêmera) permite que diferentes tipos de negócios testem o canal físico com diferentes níveis de comprometimento financeiro.",
+      "Eventos temáticos, ativações de marca e áreas de convivência planejadas criam experiências que aumentam o tempo de permanência no shopping e, consequentemente, a probabilidade de compra nos estabelecimentos.",
+      "A parceria com o fundo de promoção garante participação em campanhas de datas comemorativas (Natal, Dia das Mães, Dia dos Namorados) com alcance de mídia que nenhum lojista individual conseguiria custear sozinho.",
+      "O shopping dispõe de dados analíticos de fluxo, perfil de visitante e desempenho por setor que auxiliam o lojista a tomar decisões estratégicas sobre sortimento, precificação e horário de pico.",
+      "A presença física no shopping complementa o canal digital — os consumidores usam a loja para experimentar produtos antes de comprar online (showrooming) e vice-versa (webrooming), aumentando a taxa de retenção da marca."
+    ]
+  },
+  "areas_tecnicas": [
+    {
+      "area": "Gestão de Mix de Lojas",
+      "descricao": "Processo de curadoria e equilíbrio das categorias comerciais presentes no shopping para maximizar a sinergia entre lojas, otimizar o fluxo de visitantes e garantir cobertura das necessidades do público-alvo.",
+      "conceitos_chave": [
+        "Âncoras: lojas de grande porte (acima de 1.500 m²) com capacidade de geração de fluxo independente, como Lojas Renner, Riachuelo, C&A, Casas Bahia, Leroy Merlin e redes de supermercado.",
+        "Megaâncoras: empreendimentos de entretenimento ou varejo de altíssimo impacto, como parques temáticos indoor, cinemas multiplex e hipermercados.",
+        "Lojas Satélite: estabelecimentos de menor porte (50 a 400 m²) posicionados nos corredores entre as âncoras, dependentes do tráfego gerado por elas.",
+        "Quiosques e Ilhas: espaços em área comum (mall), geralmente de 4 a 40 m², usados por marcas que desejam alta visibilidade com menor compromisso de área.",
+        "Mix Ideal: equilíbrio entre vestuário, calçados, acessórios, gastronomia, serviços, entretenimento, saúde e beleza, calculado com base no perfil socioeconômico do público e na área de influência primária do empreendimento.",
+        "Zoneamento: organização espacial das categorias no shopping para criar percursos de compra lógicos e estimular o cross-shopping entre lojas complementares."
+      ]
+    },
+    {
+      "area": "Locação e Contratos Comerciais",
+      "descricao": "Estrutura jurídica e financeira dos contratos de locação de espaços em shopping centers, regulados pela Lei nº 8.245/1991 (Lei do Inquilinato) com disposições específicas para shopping centers.",
+      "conceitos_chave": [
+        "Aluguel Mínimo: valor fixo mensal abaixo do qual o lojista não paga menos, independentemente do faturamento.",
+        "Aluguel Percentual: percentual aplicado sobre as vendas do lojista, geralmente entre 6% e 15% dependendo da categoria.",
+        "Aluguel Efetivo: o maior valor entre o aluguel mínimo e o aluguel percentual calculado sobre as vendas.",
+        "Fundo de Promoção e Propaganda (FPP): contribuição mensal obrigatória destinada às ações de marketing do shopping, geralmente entre 10% e 20% do aluguel mínimo.",
+        "Condomínio: rateio das despesas comuns do empreendimento (energia das áreas comuns, limpeza, segurança, manutenção), calculado proporcionalmente à área de cada loja.",
+        "Luvas: valor pago pelo lojista à administradora como prêmio pelo direito de instalação em determinada posição estratégica.",
+        "Res Sperata: indenização devida pelo lojista em caso de rescisão antecipada do contrato sem justa causa, calculada com base no tempo restante e no volume de investimentos realizados.",
+        "Prazo Contratual: contratos de shopping tipicamente têm prazo de 5 a 10 anos para lojas e 1 a 3 anos para quiosques, diferentemente de locações residenciais.",
+        "Revisional de Aluguel: mecanismo legal que permite a revisão do valor do aluguel a cada 3 anos, podendo ser solicitada por qualquer das partes."
+      ]
+    },
+    {
+      "area": "Marketing e Eventos",
+      "descricao": "Planejamento e execução de ações de comunicação, promoção e entretenimento para atração e retenção de visitantes, fortalecimento da marca do shopping e suporte ao desempenho dos lojistas.",
+      "conceitos_chave": [
+        "Calendário de Eventos: cronograma anual integrando datas comemorativas (Natal, Dia das Mães, Dia dos Namorados, Black Friday, Volta às Aulas), eventos culturais, shows, exposições e ativações de marca.",
+        "Ativação de Marca: ação patrocinada por um lojista ou parceiro externo com presença em área comum do shopping para geração de experiência e awareness.",
+        "Programa de Fidelidade: sistema de acúmulo de pontos e benefícios vinculados ao CPF do visitante, usados para mapear comportamento de compra e personalizar ofertas.",
+        "Mídia Indoor: rede de painéis digitais, totens interativos e displays de LED nas áreas comuns usados para comunicação interna e venda de espaço publicitário a lojistas e parceiros.",
+        "Co-marketing: ações promocionais desenvolvidas em parceria entre o shopping e marcas externas (bancos, operadoras de telefonia, seguradoras) para geração de tráfego qualificado.",
+        "Gestão de Redes Sociais: operação dos canais digitais do shopping (Instagram, Facebook, TikTok, YouTube) com produção de conteúdo editorial, cobertura de eventos e relacionamento com o público."
+      ]
+    },
+    {
+      "area": "Gestão de Fluxo e Operações",
+      "descricao": "Conjunto de práticas e tecnologias voltadas ao controle e otimização da circulação de visitantes, veículos e mercadorias dentro do empreendimento.",
+      "conceitos_chave": [
+        "Contador de Fluxo: sistema eletrônico (sensor infravermelho, câmera com visão computacional ou Wi-Fi tracking) instalado nas entradas para registro do número de visitantes por hora e por ponto de acesso.",
+        "Taxa de Conversão de Estacionamento: percentual de veículos estacionados em relação ao total de visitantes, indicador útil para dimensionamento de vagas e gestão de gargalos.",
+        "Mapa de Calor: visualização georreferenciada da concentração de visitantes por área do shopping ao longo do dia, usada para decisões de mix e posicionamento de quiosques.",
+        "Gestão de Filas: protocolos operacionais para controle de filas em entradas, praças de alimentação, banheiros e estacionamentos durante períodos de pico.",
+        "Horário de Funcionamento: o shopping define os horários de abertura e fechamento, e os lojistas são contratualmente obrigados a operar dentro desse período, podendo haver multa por descumprimento.",
+        "Segurança Patrimonial: equipe de vigilância, circuito fechado de câmeras (CFTV), controle de acesso a áreas restritas e protocolos de emergência (evacuação, resposta a ocorrências).",
+        "Logística de Recebimento: organização das docas e horários de entrega de mercadorias para evitar conflito com o horário de pico de visitantes e com o tráfego nas vias de acesso ao shopping."
+      ]
+    },
+    {
+      "area": "Projetos de Expansão e Retrofit",
+      "descricao": "Processos de ampliação de área bruta locável, modernização de infraestrutura física e atualização de conceito dos empreendimentos existentes.",
+      "conceitos_chave": [
+        "Retrofit: processo de renovação física e conceitual de shoppings mais antigos, envolvendo atualização de fachada, ambientação, iluminação, praças de alimentação e tecnologia.",
+        "Expansão de ABL: ampliação da Área Bruta Locável mediante incorporação de novas torres, andares ou extensão lateral do empreendimento, sujeita a aprovações municipais e estudos de impacto de vizinhança.",
+        "Estudo de Impacto de Vizinhança (EIV): documento técnico exigido pelos municípios para avaliar os efeitos de grandes empreendimentos no tráfego, infraestrutura urbana e qualidade de vida da população adjacente.",
+        "ABL (Área Bruta Locável): somatório das áreas destinadas à locação a lojistas, excluindo circulações, estacionamentos e áreas técnicas. Métrica central de dimensionamento e avaliação do empreendimento.",
+        "GLA (Gross Leasable Area): equivalente em inglês ao ABL, usado em comunicações com investidores internacionais e documentos de fundos imobiliários.",
+        "Certificação LEED: padrão internacional de sustentabilidade em edificações, que avalia eficiência energética, uso racional de água, qualidade do ar interno e gestão de resíduos."
+      ]
+    }
+  ],
+  "fluxos_conversa": [
+    {
+      "nome": "Atendimento a Lojista Interessado em Abrir Loja",
+      "descricao": "Fluxo de atendimento para prospectos que entram em contato com interesse em alugar espaço no shopping.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Identificação e Qualificação",
+          "descricao": "Identificar o tipo de negócio do prospecto, porte, experiência prévia com lojas em shopping e expectativa de investimento.",
+          "perguntas_guia": [
+            "Qual é o segmento do seu negócio? (Vestuário, gastronomia, serviços, saúde, beleza etc.)",
+            "Você já operou em shopping antes? Se sim, em qual empreendimento?",
+            "Está buscando loja, quiosque, espaço de alimentação ou tem formato em aberto?",
+            "Qual é o porte da operação — quantos funcionários e qual faturamento mensal estimado?"
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Apresentação do Empreendimento",
+          "descricao": "Apresentar os dados de fluxo, mix atual, diferenciais do empreendimento e perfil do público.",
+          "pontos_de_destaque": [
+            "Volume de visitantes mensal e anual.",
+            "Perfil socioeconômico e faixa etária predominante.",
+            "Presença de âncoras e megaâncoras que geram tráfego para a área de interesse.",
+            "Histórico de desempenho do setor onde a loja seria instalada.",
+            "Eventos planejados para o período e impacto esperado no fluxo."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Proposta Comercial",
+          "descricao": "Apresentar a proposta de locação com valores, condições e negociações possíveis.",
+          "elementos_proposta": [
+            "Área disponível e metragem.",
+            "Aluguel mínimo e percentual sobre vendas aplicável à categoria.",
+            "Condomínio estimado.",
+            "Fundo de Promoção.",
+            "Prazo contratual e condições de renovação.",
+            "Período de carência para obras e implantação.",
+            "Visita técnica ao espaço físico."
+          ]
+        },
+        {
+          "etapa": 4,
+          "nome": "Negociação e Objeções",
+          "descricao": "Tratar objeções do prospecto sobre preço, localização, prazo e burocracia de forma consultiva.",
+          "abordagem": "Apresentar casos de sucesso de lojistas similares no shopping, dados de performance do corredor, possibilidade de formatos flexíveis (pop-up, quiosque como teste antes de loja fixa) e condições especiais para início de operação."
+        },
+        {
+          "etapa": 5,
+          "nome": "Documentação e Aprovação",
+          "descricao": "Encaminhar checklist de documentação necessária para análise de crédito e aprovação jurídica do contrato.",
+          "documentos_tipicos": [
+            "CNPJ e contrato social da empresa.",
+            "Balanço patrimonial ou declaração de faturamento dos últimos 12 meses.",
+            "Documentos pessoais dos sócios (CPF, RG).",
+            "Certidões negativas de débitos fiscais e trabalhistas.",
+            "Projeto preliminar de loja para análise pela equipe de projetos do shopping."
+          ]
+        },
+        {
+          "etapa": 6,
+          "nome": "Assinatura e Onboarding",
+          "descricao": "Formalização do contrato, orientação sobre normas do shopping e acompanhamento das obras de implantação.",
+          "atividades": [
+            "Assinatura do contrato de locação.",
+            "Entrega do manual do lojista.",
+            "Apresentação da equipe de relacionamento e operações.",
+            "Aprovação do projeto arquitetônico pela gerência de projetos.",
+            "Acompanhamento do cronograma de obras.",
+            "Vistoria de entrega e abertura da loja."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Atendimento ao Visitante — Informações Gerais",
+      "descricao": "Fluxo de atendimento para visitantes que buscam informações sobre lojas, eventos, serviços e navegação no shopping.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Recepção e Identificação da Necessidade",
+          "mensagens_exemplo": [
+            "Olá! Seja bem-vindo ao [Nome do Shopping]. Como posso ajudar você hoje?",
+            "Bom dia! Estou aqui para ajudar com informações sobre lojas, eventos, estacionamento ou qualquer outra dúvida."
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Direcionamento por Categoria de Necessidade",
+          "categorias": [
+            "Localização de loja específica → Informar corredor, piso e indicações de percurso.",
+            "Verificação de funcionamento → Confirmar horário da loja consultando sistema atualizado.",
+            "Eventos e programação → Apresentar calendário de atividades do mês.",
+            "Estacionamento → Informar sobre tarifas, vagas disponíveis e acesso por entrada.",
+            "Serviços (fraldário, acessibilidade, achados e perdidos) → Indicar localização e funcionamento.",
+            "Reclamações e sugestões → Encaminhar para a central de relacionamento ou ouvidoria."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Resolução e Encerramento",
+          "descricao": "Confirmar se a necessidade foi atendida, oferecer informação complementar e encerrar com cordialidade.",
+          "mensagens_exemplo": [
+            "Fico feliz em poder ajudar! Aproveite sua visita.",
+            "Caso precise de mais alguma coisa durante sua estadia, é só me chamar."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Atendimento a Parceiro Comercial para Eventos e Ativações",
+      "descricao": "Fluxo para empresas externas (marcas, agências, produtoras) interessadas em realizar eventos, ativações de marca ou campanhas de co-marketing no shopping.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Briefing Inicial",
+          "perguntas_guia": [
+            "Qual é o objetivo da ação? (Lançamento de produto, geração de leads, aumento de awareness, promoção de vendas?)",
+            "Qual é o público-alvo da marca e como ele se relaciona com o perfil do shopping?",
+            "Quais datas ou períodos são de interesse?",
+            "Qual é o formato previsto? (Estande, palco, quiosque temporário, experiência imersiva, distribuição de amostras?)",
+            "Qual é o budget disponível para o projeto?"
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Apresentação de Espaços e Formatos",
+          "descricao": "Apresentar as opções de espaços disponíveis (praças, corredores centrais, áreas externas, estacionamentos), métricas de tráfego por espaço e pacotes de co-marketing.",
+          "diferenciais": [
+            "Dados de tráfego segmentados por período e área.",
+            "Possibilidade de integração com programa de fidelidade para captura de dados dos participantes.",
+            "Pacotes de mídia indoor (painéis digitais, totens, pilares) combinados com a ativação.",
+            "Suporte da equipe de operações do shopping para montagem, segurança e logística."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Proposta e Aprovação",
+          "descricao": "Formalizar proposta comercial com valores de locação do espaço, serviços incluídos, exigências operacionais e prazo de aprovação.",
+          "documentos_necessarios": [
+            "Briefing detalhado da ação.",
+            "Layout e projeto visual do estande ou ativação.",
+            "Plano de contingência para situações de risco (segurança, inflamáveis, estruturas elevadas).",
+            "Seguro de responsabilidade civil.",
+            "Aprovação prévia de brindes, amostras e mecânica promocional."
+          ]
+        }
+      ]
+    }
+  ],
+  "gatilhos_emocionais": [
+    {
+      "gatilho": "Segurança e Estabilidade",
+      "descricao": "Lojistas e parceiros valorizam a previsibilidade do fluxo e a solidez institucional do shopping como parceiro de negócios.",
+      "abordagem": "Destacar o histórico de ocupação plena, a longevidade do empreendimento, a estabilidade financeira do operador e os contratos de âncoras vigentes que garantem tráfego contínuo."
+    },
+    {
+      "gatilho": "Pertencimento e Prestígio",
+      "descricao": "A presença num shopping de referência eleva o status percebido da marca pelo consumidor.",
+      "abordagem": "Para shoppings premium como Iguatemi, Cidade Jardim e Pátio Batel, enfatizar o curadoria restrita do mix e o prestígio associado à vizinhança de marcas globais de luxo."
+    },
+    {
+      "gatilho": "Medo de Ficar de Fora (FOMO)",
+      "descricao": "O receio de que um concorrente ocupe um espaço estratégico antes é um motivador poderoso para tomada de decisão.",
+      "abordagem": "Comunicar com clareza a escassez de espaços disponíveis na categoria, sem apelos artificiais, e apresentar casos em que lojistas que hesitaram perderam oportunidades para concorrentes diretos."
+    },
+    {
+      "gatilho": "Crescimento e Realização",
+      "descricao": "Empreendedores associam a abertura de uma loja em shopping ao cumprimento de uma etapa relevante na jornada do negócio.",
+      "abordagem": "Enquadrar a proposta como um marco de consolidação da marca, ressaltando o suporte que o shopping oferece para que o lojista cresça com segurança."
+    },
+    {
+      "gatilho": "Confiança e Transparência",
+      "descricao": "Desconfiança em relação a cláusulas contratuais e taxas ocultas é uma das maiores barreiras de entrada.",
+      "abordagem": "Apresentar todos os componentes do custo total de ocupação de forma clara e proativa, comparando com benchmarks do setor para demonstrar competitividade."
+    },
+    {
+      "gatilho": "Aprovação Social",
+      "descricao": "Depoimentos e casos de sucesso de lojistas similares são altamente persuasivos.",
+      "abordagem": "Compartilhar histórias reais de lojistas que abriram no shopping e tiveram crescimento expressivo de faturamento, idealmente do mesmo segmento do prospecto."
+    },
+    {
+      "gatilho": "Praticidade e Simplicidade",
+      "descricao": "Processos burocrátciso desmotivam empreendedores com menos estrutura administrativa.",
+      "abordagem": "Oferecer uma jornada de onboarding simplificada, com um interlocutor dedicado, checklist claro de documentos e prazos realistas de aprovação e abertura."
+    }
+  ],
+  "cenarios_simulacao": [
+    {
+      "id": "SIM-001",
+      "titulo": "Prospecto de Vestuário Questionando o Custo",
+      "contexto": "Dono de uma marca regional de moda feminina com duas lojas de rua entra em contato interessado em abrir no shopping, mas demonstra resistência ao valor do aluguel.",
+      "interacao": [
+        {
+          "papel": "Lojista",
+          "mensagem": "Olha, eu adorei o shopping, o fluxo parece bom. Mas o aluguel que vocês me passaram é o dobro do que pago nas minhas lojas de rua. Não consigo enxergar como isso fecha."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo sua preocupação, e ela é muito legítima. Vamos comparar de forma mais justa: nas suas lojas de rua, qual é o investimento mensal em anúncios online, mídia local e ações de tráfego? Aqui no shopping, o fundo de promoção — que já está embutido no custo que você viu — financia campanhas que alcançam centenas de milhares de pessoas. Além disso, o fluxo já está na porta da sua loja todos os dias. A conta completa costuma ser mais favorável ao shopping do que parece à primeira vista."
+        },
+        {
+          "papel": "Lojista",
+          "mensagem": "Mas e se eu não performar? Fico preso num contrato longo pagando alto aluguel fixo."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Excelente ponto. Nosso contrato tem cláusula de aluguel percentual sobre as vendas — você só paga o mínimo se o percentual calculado sobre seu faturamento ficar abaixo dele. Ou seja, quanto mais você vender, mais o aluguel representa proporcionalmente, mas o mínimo existe justamente para garantir a viabilidade do empreendimento. E para reduzir o risco inicial, temos um período de carência durante as obras onde você ainda não paga aluguel. Posso te apresentar o detalhamento completo?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-002",
+      "titulo": "Visitante Buscando Informação sobre Evento de Natal",
+      "contexto": "Visitante entra em contato pelo chat do shopping perguntando sobre a programação de Natal.",
+      "interacao": [
+        {
+          "papel": "Visitante",
+          "mensagem": "Oi, queria saber se já tem programação de Natal no shopping e quando começa."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Olá! Que ótimo que você já está pensando no Natal! Nossa decoração temática inaugura no dia 15 de novembro, com uma cerimônia de acendimento das luzes às 18h na Praça Central — vai ter show ao vivo e distribuição de brindes para as primeiras 500 famílias presentes. Durante todo o período natalino, teremos apresentações de coral todas as sextas, sábados e domingos, além da tradicional Casa do Papai Noel para fotos com as crianças. Quer que eu te envie a programação completa por e-mail ou WhatsApp?"
+        },
+        {
+          "papel": "Visitante",
+          "mensagem": "Sim! Me manda no WhatsApp, por favor."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito! Me passa seu número e te envio agora o link com a programação completa e os detalhes de todos os eventos. Aproveito para te informar que você também pode acompanhar tudo pelo nosso Instagram e pelo app do shopping, onde é possível checar o horário de funcionamento das lojas em tempo real e usar o mapa interativo. Qual é o seu número?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-003",
+      "titulo": "Empresa Externa Interessada em Ativação de Marca",
+      "contexto": "Agência de marketing entra em contato em nome de uma montadora de automóveis para realizar uma ativação de lançamento de modelo elétrico.",
+      "interacao": [
+        {
+          "papel": "Agência",
+          "mensagem": "Bom dia! Somos a agência responsável pela conta de uma montadora e gostaríamos de realizar uma ativação de lançamento de um SUV elétrico. Precisamos de um espaço amplo, de preferência na entrada principal ou no piso térreo central, por cerca de 10 dias em novembro."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Bom dia! Que projeto interessante — carros elétricos têm gerado muito interesse do nosso público. Temos justamente o Átrio Central e a Praça de Eventos disponíveis no período que você mencionou. O Átrio Central tem 800 m² e visibilidade para os três pisos do shopping, com média de 18.000 pessoas passando por ele diariamente. Posso te enviar o media kit com dados de fluxo segmentado, o gabarito do espaço e as condições comerciais. Qual é o orçamento estimado disponível para o projeto? Assim já adianto quais pacotes de mídia indoor posso incluir na proposta."
+        },
+        {
+          "papel": "Agência",
+          "mensagem": "Nosso budget é de cerca de R$ 120.000 para toda a ativação, incluindo espaço e possível mídia."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito, é um orçamento muito viável para o que vocês precisam. Com esse valor, consigo formatar um pacote que inclui a locação do Átrio Central pelos 10 dias, um pacote de mídia indoor com 4 totens digitais e 8 painéis de led durante o período, além de menção na nossa comunicação oficial nas redes sociais e no app. O suporte operacional do shopping (segurança adicional para o veículo, acesso pelo dock e energia 220V) também estão incluídos. Posso preparar a proposta formal para você apresentar ao cliente ainda esta semana?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-004",
+      "titulo": "Lojista com Baixo Desempenho Ameaçando Rescisão",
+      "contexto": "Lojista de uma loja de eletrônicos satélite contata a administração reclamando de queda nas vendas e ameaçando rescindir o contrato.",
+      "interacao": [
+        {
+          "papel": "Lojista",
+          "mensagem": "Meu faturamento caiu 30% nos últimos três meses. Não aguento mais pagar o aluguel com esse desempenho. Tô pensando em fechar a loja."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Obrigado por falar diretamente conosco — é exatamente isso que precisamos para encontrar uma solução juntos. Antes de qualquer decisão, preciso entender melhor o que está acontecendo. A queda é específica a eletrônicos no seu segmento de preço, ou você está percebendo redução do fluxo geral na sua área? Analisando nossos dados, o corredor onde você está manteve fluxo estável — o que pode indicar um desafio de conversão que é tratável com ajustes de mix, visual ou promoção."
+        },
+        {
+          "papel": "Lojista",
+          "mensagem": "Meu vizinho de corredor também está reclamando. Acho que o problema é que o pessoal compra tudo online."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Essa pressão do e-commerce é real, especialmente em eletrônicos de commoditização. Mas temos lojistas do mesmo segmento performando bem quando ajustam a proposta para serviços e experiência — garantia estendida diferenciada, configuração e suporte técnico, troca e reparo, que o cliente não consegue no online. Posso agendar uma reunião com nossa equipe de desenvolvimento de lojistas para olhar junto com você os dados de conversão da sua loja e propor um plano de ação? Antes de falar em rescisão, quero ter certeza de que exploramos todas as alternativas."
+        }
+      ]
+    },
+    {
+      "id": "SIM-005",
+      "titulo": "Franqueado Avaliando Expansão para Novo Shopping",
+      "contexto": "Franqueado de uma rede de alimentação saudável com três unidades considera abrir no novo empreendimento que está sendo lançado.",
+      "interacao": [
+        {
+          "papel": "Franqueado",
+          "mensagem": "Tenho interesse no espaço de 120 m² na praça de alimentação, mas quero entender melhor o potencial de fluxo antes de fechar. Esse shopping é novo e não tem histórico."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Sua preocupação é completamente válida e mostra que você é um operador experiente. Vou ser transparente: por se tratar de um empreendimento novo, não há histórico interno de faturamento. Mas o que temos são estudos de área de influência com mais de 320.000 domicílios nas classes A e B a menos de 15 minutos de distância, três linhas de ônibus e acesso direto ao metrô, e contratos já assinados com âncoras de grande impacto como [Nome das Âncoras]. Posso te mostrar os estudos de feasibility e também te apresentar outros operadores do seu segmento que já assinaram — alimentação saudável é uma das categorias de maior crescimento em praças de alimentação atualmente."
+        },
+        {
+          "papel": "Franqueado",
+          "mensagem": "E se o fluxo no primeiro ano for abaixo do esperado?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Para esse cenário, temos uma condição especial para os primeiros lojistas âncora da praça de alimentação: aluguel progressivo, começando em 50% do valor contratual no primeiro semestre e chegando ao valor pleno no décimo terceiro mês. Isso te dá tempo de ramp-up sem pressão excessiva no caixa enquanto o shopping constrói seu fluxo. Quer que eu te apresente as condições completas formalizadas?"
+        }
+      ]
+    }
+  ],
+  "faq_estruturado": [
+    {
+      "id": "FAQ-001",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "Como é calculado o aluguel de uma loja em shopping?",
+      "resposta": "O aluguel em shopping é geralmente composto por duas partes: um valor mínimo mensal fixo (calculado sobre o m² da loja) e um percentual sobre as vendas brutas do lojista. O lojista paga sempre o maior valor entre os dois. A isso se somam o condomínio e o fundo de promoção, que compõem o custo total de ocupação (CTO)."
+    },
+    {
+      "id": "FAQ-002",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "O que é o fundo de promoção e de que forma os lojistas são beneficiados?",
+      "resposta": "O Fundo de Promoção e Propaganda (FPP) é uma contribuição mensal obrigatória de todos os lojistas, usada exclusivamente para financiar ações de marketing do shopping — campanhas em TV, rádio, redes sociais, eventos, decorações sazonais e programas de fidelidade. O benefício é indireto: o fundo gera fluxo de visitantes que aumenta as vendas de todos os lojistas."
+    },
+    {
+      "id": "FAQ-003",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "O que são 'luvas' no contexto de locação em shopping?",
+      "resposta": "Luvas são um valor pago pelo lojista à administradora como prêmio pelo direito de ocupar um espaço estratégico ou de alta demanda. Diferente do aluguel, as luvas são pagas uma única vez, geralmente no momento da assinatura do contrato. Nem todos os espaços cobram luvas — é mais comum em posições premium ou em shoppings com lista de espera por determinadas categorias."
+    },
+    {
+      "id": "FAQ-004",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "O que é Res Sperata e quando ela é cobrada?",
+      "resposta": "Res Sperata é a indenização devida pelo lojista à administradora em caso de rescisão antecipada e imotivada do contrato. O valor é calculado com base no tempo restante do contrato, no aluguel médio e, em alguns casos, nos investimentos realizados pelo shopping para preparar o espaço. É um mecanismo legal previsto na Lei do Inquilinato para shoppings."
+    },
+    {
+      "id": "FAQ-005",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "O aluguel pode ser revisado durante a vigência do contrato?",
+      "resposta": "Sim. A Lei do Inquilinato permite a revisão do aluguel a cada 3 anos mediante ação revisional judicial ou acordo entre as partes. Além disso, os contratos geralmente preveem reajuste anual pelo IGP-M ou IPCA. Em caso de grande discrepância entre o aluguel contratado e o de mercado, qualquer parte pode solicitar a revisão."
+    },
+    {
+      "id": "FAQ-006",
+      "categoria": "Aluguel e Custos",
+      "pergunta": "Qual é a diferença entre ABL e área privativa da loja?",
+      "resposta": "A Área Bruta Locável (ABL) é a área total objeto do contrato de locação, que inclui a área interna da loja. A área privativa é a área efetivamente exclusiva do lojista. Em alguns contratos, a ABL pode incluir uma fração de áreas de uso comum adjacentes. O aluguel é sempre calculado sobre a ABL contratada."
+    },
+    {
+      "id": "FAQ-007",
+      "categoria": "Contrato e Jurídico",
+      "pergunta": "Qual é a legislação que rege os contratos de shopping no Brasil?",
+      "resposta": "Os contratos de locação em shopping centers são regulados pela Lei nº 8.245/1991 (Lei do Inquilinato), com um capítulo específico para shoppings (artigos 52 a 57). Essa lei estabelece regras sobre renovação compulsória, rescisão, indenizações e obrigações das partes que diferem das locações residenciais e comerciais comuns."
+    },
+    {
+      "id": "FAQ-008",
+      "categoria": "Contrato e Jurídico",
+      "pergunta": "O lojista tem direito à renovação do contrato ao final do prazo?",
+      "resposta": "Sim, desde que cumpridos os requisitos da Lei do Inquilinato: o contrato deve ter prazo determinado de no mínimo 5 anos (ou soma de contratos consecutivos nesse prazo), a atividade deve estar sendo exercida pelo prazo mínimo de 3 anos ininterruptos e o lojista deve estar em dia com suas obrigações. A renovação pode ser negada em situações específicas previstas em lei, como necessidade de reformas ou uso próprio do imóvel."
+    },
+    {
+      "id": "FAQ-009",
+      "categoria": "Contrato e Jurídico",
+      "pergunta": "O shopping pode impedir um lojista de trabalhar com determinadas marcas ou produtos?",
+      "resposta": "Sim. Os contratos de shopping geralmente incluem cláusulas de exclusividade de categoria, que restringem a venda de determinados produtos por outros lojistas na mesma área e definem o escopo de atuação de cada lojista. Além disso, o shopping pode impor restrições de mix para manutenção da coerência do empreendimento."
+    },
+    {
+      "id": "FAQ-010",
+      "categoria": "Contrato e Jurídico",
+      "pergunta": "O lojista pode sublocar sua loja para terceiros?",
+      "resposta": "A sublocação em shoppings é geralmente vedada pelos contratos, diferentemente do que prevê a regra geral da Lei do Inquilinato. Para qualquer cessão do espaço ou sublocação, é necessária expressa autorização da administradora, que pode conceder ou negar de acordo com as políticas do empreendimento."
+    },
+    {
+      "id": "FAQ-011",
+      "categoria": "Operações e Funcionamento",
+      "pergunta": "O lojista é obrigado a cumprir o horário de funcionamento do shopping?",
+      "resposta": "Sim. O contrato de locação prevê a obrigatoriedade de funcionamento durante todos os horários de operação do shopping, inclusive feriados e horários especiais. O descumprimento pode resultar em multas contratuais. Situações excepcionais devem ser comunicadas previamente à administração."
+    },
+    {
+      "id": "FAQ-012",
+      "categoria": "Operações e Funcionamento",
+      "pergunta": "Como funciona o recebimento de mercadorias nas lojas do shopping?",
+      "resposta": "O recebimento é realizado exclusivamente pelas docas de serviço do shopping, em horários específicos definidos pela administração (geralmente fora do horário de pico de visitantes). Fornecedores devem ser previamente cadastrados no sistema da segurança e seguir as rotas internas de serviço para não transitarem pelas áreas comuns de visitantes com mercadorias."
+    },
+    {
+      "id": "FAQ-013",
+      "categoria": "Operações e Funcionamento",
+      "pergunta": "O shopping é responsável pela segurança das lojas durante o horário de funcionamento?",
+      "resposta": "O shopping mantém serviço de vigilância nas áreas comuns e controla os acessos. No entanto, a segurança do interior da loja, dos produtos e do caixa é responsabilidade do lojista. Muitos lojistas contratam sistemas de alarme e câmeras internas adicionais como complemento ao sistema de CFTV do shopping."
+    },
+    {
+      "id": "FAQ-014",
+      "categoria": "Operações e Funcionamento",
+      "pergunta": "O lojista paga por energia elétrica separadamente do condomínio?",
+      "resposta": "Sim. O condomínio cobre a energia das áreas comuns. O consumo de energia elétrica dentro da loja é medido por medidores individuais e cobrado diretamente do lojista pela administradora (que redistribui o custo da concessionária) ou faturado diretamente pela concessionária, conforme o modelo adotado em cada empreendimento."
+    },
+    {
+      "id": "FAQ-015",
+      "categoria": "Obras e Projetos",
+      "pergunta": "O lojista precisa seguir alguma norma específica para reformar ou decorar sua loja?",
+      "resposta": "Sim. Todo projeto de obras ou decoração (incluindo fachada, sinalização, vitrine e layout interno) deve ser submetido e aprovado pela gerência de projetos do shopping antes do início das obras. Os shoppings mantêm um Manual do Lojista com todas as diretrizes de arquitetura, materiais permitidos, requisitos de fachada e especificações técnicas obrigatórias."
+    },
+    {
+      "id": "FAQ-016",
+      "categoria": "Obras e Projetos",
+      "pergunta": "Quem é responsável pelo custo de adaptação do espaço antes da abertura da loja?",
+      "resposta": "O lojista é responsável pelos custos de obra de acordo com o projeto aprovado. O shopping entrega o espaço na condição 'shell and core' (estrutura bruta) ou com alguma infraestrutura mínima, dependendo do negociado. Em alguns casos, especialmente para lojistas estratégicos, o shopping oferece uma verba de obra (tenant improvement allowance) como incentivo para instalação."
+    },
+    {
+      "id": "FAQ-017",
+      "categoria": "Obras e Projetos",
+      "pergunta": "Quanto tempo em média leva para abrir uma loja após a assinatura do contrato?",
+      "resposta": "O prazo varia conforme o porte e a complexidade da loja. Em média, após a assinatura do contrato: 15 a 30 dias para aprovação do projeto pelo shopping; 30 a 90 dias para execução das obras (lojas menores são mais rápidas); 7 a 15 dias para vistoria e aprovação final. O total costuma girar entre 60 e 150 dias desde a assinatura até a abertura."
+    },
+    {
+      "id": "FAQ-018",
+      "categoria": "Marketing e Eventos",
+      "pergunta": "Como um lojista pode participar das campanhas de marketing do shopping?",
+      "resposta": "O lojista pode participar das campanhas sazonais (Natal, Dia das Mães etc.) através de ações conjuntas com o fundo de promoção, cedendo peças de comunicação ou participando de sorteios e promoções coletivas. Para ações específicas da marca, é possível contratar espaços de mídia indoor, patrocínio de eventos ou ativações nas áreas comuns diretamente com a equipe de marketing."
+    },
+    {
+      "id": "FAQ-019",
+      "categoria": "Marketing e Eventos",
+      "pergunta": "O shopping compartilha dados de fluxo e comportamento do visitante com os lojistas?",
+      "resposta": "Shoppings modernos como os citados como referência oferecem relatórios periódicos de fluxo por corredor, horário de pico, perfil demográfico e, em alguns casos, heatmaps de circulação. Esses dados são compartilhados com os lojistas como serviço de valor agregado, sem individualização por CPF por questões de privacidade (LGPD)."
+    },
+    {
+      "id": "FAQ-020",
+      "categoria": "Marketing e Eventos",
+      "pergunta": "O lojista pode realizar promoções próprias sem aprovação do shopping?",
+      "resposta": "Promoções realizadas dentro da loja geralmente não requerem aprovação prévia. No entanto, ações que envolvam circulação nas áreas comuns, distribuição de materiais fora da loja, uso de som ou estruturas externas precisam de autorização prévia da administração para não conflitarem com outras ativações ou com a comunicação oficial do shopping."
+    },
+    {
+      "id": "FAQ-021",
+      "categoria": "Estacionamento e Acessos",
+      "pergunta": "O shopping valida estacionamento para clientes?",
+      "resposta": "A validação de estacionamento é uma prática comum para estimular compras acima de determinado valor ou em categorias específicas. As políticas variam por shopping: alguns oferecem validação central gerenciada pelo programa de fidelidade, outros permitem que cada lojista emita seus próprios tickets de validação adquiridos da administração. Consulte a equipe de operações do shopping para o modelo vigente."
+    },
+    {
+      "id": "FAQ-022",
+      "categoria": "Estacionamento e Acessos",
+      "pergunta": "Há vagas específicas para funcionários dos lojistas?",
+      "resposta": "Sim. A maioria dos shoppings reserva um setor de estacionamento com tarifas especiais ou mensalidades para funcionários dos lojistas, geralmente em áreas mais afastadas das entradas principais para otimizar as vagas de rotatividade para visitantes. O cadastro é feito pela administração do shopping mediante apresentação do vínculo empregatício."
+    },
+    {
+      "id": "FAQ-023",
+      "categoria": "Serviços ao Visitante",
+      "pergunta": "Quais serviços de acessibilidade o shopping oferece?",
+      "resposta": "Os shoppings brasileiros de médio e grande porte são obrigados por lei a oferecer: rampas de acesso em todas as entradas, elevadores para todos os pisos, banheiros adaptados, vagas de estacionamento para PCD próximas às entradas, piso tátil nas circulações principais e, em muitos casos, carrinhos de rodas gratuitos disponíveis na recepção."
+    },
+    {
+      "id": "FAQ-024",
+      "categoria": "Serviços ao Visitante",
+      "pergunta": "O shopping tem fraldário? Onde fica localizado?",
+      "resposta": "Sim, shoppings de médio e grande porte mantêm fraldários equipados com trocadores, pias de altura adequada e espaço para amamentação. Geralmente ficam localizados próximos aos banheiros femininos em cada piso. Alguns shoppings como BarraShopping e Morumbi Shopping oferecem fraldários premium com estrutura diferenciada. A localização exata pode ser consultada nos mapas do shopping ou no app."
+    },
+    {
+      "id": "FAQ-025",
+      "categoria": "Serviços ao Visitante",
+      "pergunta": "Como funciona o serviço de achados e perdidos?",
+      "resposta": "Itens encontrados nas áreas comuns do shopping devem ser entregues à central de segurança ou à recepção. O visitante que perdeu algum objeto deve se dirigir à central de atendimento ao cliente, onde há um registro de itens entregues. A guarda dos objetos segue um prazo determinado (geralmente 30 a 90 dias), após o qual são destinados a doações ou descarte conforme as políticas do shopping."
+    },
+    {
+      "id": "FAQ-026",
+      "categoria": "Programa de Fidelidade",
+      "pergunta": "Como funcionam os programas de fidelidade dos shoppings?",
+      "resposta": "Os principais shoppings brasileiros operam programas de fidelidade baseados em CPF, onde o visitante acumula pontos a cada compra realizada nos lojistas participantes. Os pontos podem ser trocados por descontos, brindes, horas de estacionamento ou experiências exclusivas. Shoppings como Iguatemi, Cidade Jardim e RioMar possuem apps próprios que integram o programa de fidelidade com mapas, programação e reservas."
+    },
+    {
+      "id": "FAQ-027",
+      "categoria": "Programa de Fidelidade",
+      "pergunta": "A participação no programa de fidelidade é obrigatória para os lojistas?",
+      "resposta": "A obrigatoriedade varia por shopping e por contrato. Em geral, grandes redes e lojistas âncora têm sistemas de pontuação próprios que podem ou não ser integrados ao programa central do shopping. Lojistas satélite geralmente são estimulados, mas não obrigados, a integrar seus sistemas de PDV ao programa de fidelidade do empreendimento."
+    },
+    {
+      "id": "FAQ-028",
+      "categoria": "Gastronomia e Alimentação",
+      "pergunta": "Quais são os requisitos sanitários para operação de lojas de alimentação no shopping?",
+      "resposta": "Além das exigências da Vigilância Sanitária Municipal (Alvará Sanitário, responsável técnico nutricionista ou engenheiro de alimentos conforme o porte), os shoppings impõem normas adicionais: projeto de exaustão aprovado pela engenharia do empreendimento, materiais de revestimento aprovados, sistema de gordura com manutenção periódica comprovada e treinamentos de boas práticas para a equipe. O não cumprimento pode resultar em advertências e até rescisão contratual."
+    },
+    {
+      "id": "FAQ-029",
+      "categoria": "Gastronomia e Alimentação",
+      "pergunta": "O shopping pode restringir os tipos de culinária ou marcas na praça de alimentação?",
+      "resposta": "Sim. A curadoria do mix gastronômico é um dos instrumentos mais importantes para o sucesso da praça de alimentação. A administradora pode limitar o número de operadores por tipo de culinária, priorizar marcas com identidade alinhada ao posicionamento do shopping e recusar propostas que representem duplicidade no mix ou que não se encaixem no conceito de qualidade do empreendimento."
+    },
+    {
+      "id": "FAQ-030",
+      "categoria": "Quiosques e Espaços Temporários",
+      "pergunta": "Quais são as diferenças entre quiosque, ilha e pop-up store?",
+      "resposta": "Quiosque é uma estrutura física permanente ou semipermanente instalada em área comum do shopping, geralmente com contrato de 1 a 3 anos e área de 4 a 40 m². Ilha é um espaço aberto sem divisórias, menor que o quiosque, com visibilidade 360°. Pop-up store é uma loja temporária (de dias a semanas) geralmente usada para lançamentos, testes de mercado ou ações sazonais, com menor comprometimento financeiro."
+    },
+    {
+      "id": "FAQ-031",
+      "categoria": "Quiosques e Espaços Temporários",
+      "pergunta": "Como contratar um espaço de quiosque no shopping?",
+      "resposta": "O processo começa com uma solicitação à equipe comercial do shopping, apresentando o conceito do negócio, projeto visual do quiosque e documentação da empresa. Após análise de aderência ao mix e aprovação do projeto, é assinado um contrato com prazo definido. O custo total inclui aluguel do espaço, condomínio e fundo de promoção, geralmente em valores proporcionalmente maiores por m² do que lojas, dado o posicionamento privilegiado nas áreas de maior circulação."
+    },
+    {
+      "id": "FAQ-032",
+      "categoria": "Eventos e Locação de Espaço",
+      "pergunta": "Como alugar um espaço no shopping para realização de evento?",
+      "resposta": "Interessados devem entrar em contato com a equipe de marketing ou de eventos do shopping, apresentando o briefing do evento (tipo de ação, datas, público esperado, estrutura necessária). A administração avaliará a disponibilidade, a adequação ao posicionamento do empreendimento e encaminhará uma proposta com valores de locação e condições operacionais (segurança, energia, acesso para montagem)."
+    },
+    {
+      "id": "FAQ-033",
+      "categoria": "Eventos e Locação de Espaço",
+      "pergunta": "Há restrições para o tipo de evento que pode ser realizado no shopping?",
+      "resposta": "Sim. Os shoppings não permitem eventos com conteúdo político-partidário, manifestações religiosas de caráter proselitista, competições esportivas de contato ou qualquer ação que comprometa a segurança dos visitantes ou que não esteja alinhada ao posicionamento da marca do empreendimento. Eventos com shows ao vivo geralmente exigem autorização da prefeitura e licença de ruído."
+    },
+    {
+      "id": "FAQ-034",
+      "categoria": "Eventos e Locação de Espaço",
+      "pergunta": "O shopping pode ser utilizado para filmagens e produções audiovisuais?",
+      "resposta": "Sim, mediante solicitação prévia e aprovação da administração. São exigidos: apresentação do roteiro ou briefing da produção, lista de equipamentos, horários preferidos (geralmente antes da abertura ao público para minimizar interferência com visitantes), seguro de responsabilidade civil e, em alguns casos, pagamento de taxa de locação. Gravações comerciais ou publicitárias costumam ter valores diferenciados das produções culturais."
+    },
+    {
+      "id": "FAQ-035",
+      "categoria": "Sustentabilidade",
+      "pergunta": "Quais práticas de sustentabilidade os grandes shoppings brasileiros adotam?",
+      "resposta": "Shoppings de referência como BarraShopping, Morumbi e Iguatemi implementam: sistemas de energia solar fotovoltaica, reaproveitamento de água pluvial, estações de coleta seletiva com parceria com cooperativas de reciclagem, acionamento de iluminação por sensores de presença, redução de emissões por frotas de veículos de serviço elétricos e certificações LEED em operação (O+M). Alguns também oferecem pontos de recarga para veículos elétricos no estacionamento."
+    },
+    {
+      "id": "FAQ-036",
+      "categoria": "Tecnologia e Inovação",
+      "pergunta": "Quais tecnologias os shoppings modernos usam para melhorar a experiência do visitante?",
+      "resposta": "Os principais shoppings investem em: aplicativos com mapa indoor de navegação, busca de lojas e serviços, notificações push com ofertas geolocalizadas, programa de fidelidade digital, pagamento de estacionamento via app, chatbots de atendimento ao cliente, inteligência artificial para análise de fluxo e comportamento, realidade aumentada em ativações de marca e integração com assistentes de voz."
+    },
+    {
+      "id": "FAQ-037",
+      "categoria": "Tecnologia e Inovação",
+      "pergunta": "O shopping oferece Wi-Fi gratuito aos visitantes?",
+      "resposta": "Sim, a grande maioria dos shoppings brasileiros de médio e grande porte oferece Wi-Fi gratuito nas áreas comuns. O acesso geralmente requer cadastro com CPF ou login via redes sociais, o que permite ao shopping coletar dados de visitação (respeitando a LGPD) e enviar comunicações promocionais."
+    },
+    {
+      "id": "FAQ-038",
+      "categoria": "Horários",
+      "pergunta": "Qual é o horário de funcionamento típico dos shoppings brasileiros?",
+      "resposta": "O horário padrão da maioria dos shoppings é de segunda a sábado das 10h às 22h e domingos e feriados das 14h às 20h, com variações regionais e por empreendimento. Durante dezembro (Natal), muitos operam com horário estendido, chegando a funcionar até 23h ou 00h. Hipermercados e restaurantes âncora costumam ter horários diferenciados previstos em contrato."
+    },
+    {
+      "id": "FAQ-039",
+      "categoria": "Horários",
+      "pergunta": "O shopping funciona em todos os feriados?",
+      "resposta": "A maioria dos shoppings funciona em feriados municipais, estaduais e nacionais, geralmente com o horário de domingo. Exceções incluem Natal (25 de dezembro), Carnaval (sábado e domingo podem funcionar) e datas específicas determinadas pelo sindicato de lojistas de cada estado, que pode determinar a suspensão do funcionamento mediante negociação coletiva."
+    },
+    {
+      "id": "FAQ-040",
+      "categoria": "Segurança",
+      "pergunta": "O que devo fazer em caso de emergência dentro do shopping?",
+      "resposta": "Em caso de emergência (incêndio, mal súbito, acidente), o visitante deve acionar imediatamente a equipe de segurança do shopping pelo telefone de emergência afixado nos corredores ou dirigindo-se ao posto mais próximo. O shopping conta com equipe treinada em primeiros socorros, brigada de incêndio, DEA (desfibrilador) e protocolo de evacuação. As rotas de saída de emergência são sinalizadas em todos os pisos."
+    },
+    {
+      "id": "FAQ-041",
+      "categoria": "Segurança",
+      "pergunta": "Como o shopping lida com casos de furto nas lojas?",
+      "resposta": "Ocorrências de furto devem ser registradas imediatamente com a equipe de segurança do shopping, que coordena o acionamento da Polícia Militar (190) e preserva as imagens do CFTV para subsidiar o Boletim de Ocorrência. O shopping não é responsável civilmente por furtos ocorridos no interior das lojas, mas coopera com as investigações e mantém protocolos de prevenção nas áreas comuns."
+    },
+    {
+      "id": "FAQ-042",
+      "categoria": "Parcerias Comerciais",
+      "pergunta": "Como uma empresa pode se tornar parceira comercial de um shopping?",
+      "resposta": "Parcerias são formalizadas por meio de contato direto com a equipe de marketing ou negócios do shopping. As modalidades incluem: patrocínio de eventos, co-marketing com o programa de fidelidade, inserção na comunicação oficial, experiências exclusivas para clientes do shopping e ativações nas áreas comuns. Cada parceria é analisada individualmente quanto à aderência ao posicionamento do empreendimento e ao interesse do público."
+    },
+    {
+      "id": "FAQ-043",
+      "categoria": "Parcerias Comerciais",
+      "pergunta": "É possível ter exclusividade de categoria como parceiro comercial?",
+      "resposta": "Sim. Em algumas modalidades de parceria, especialmente em programas de benefícios vinculados ao programa de fidelidade (como bancos parceiros, seguradoras ou operadoras de telefonia), o shopping pode conceder exclusividade de categoria mediante contrato de maior valor e maior comprometimento da marca com a comunicação do empreendimento."
+    },
+    {
+      "id": "FAQ-044",
+      "categoria": "Financiamento e Fundos Imobiliários",
+      "pergunta": "O que são FIIs de shopping e como impactam os lojistas?",
+      "resposta": "Fundos de Investimento Imobiliário (FIIs) são veículos de investimento coletivo que detêm cotas de shopping centers, recebendo a receita de aluguéis como dividendos. Para os lojistas, a presença de um FII no empreendimento significa gestão profissionalizada, foco em governança e eficiência operacional. Shoppings como os do portfólio da XP Malls (XPML11) e Hedge Shopping Centers (HSML11) são exemplos conhecidos no mercado."
+    },
+    {
+      "id": "FAQ-045",
+      "categoria": "Financiamento e Fundos Imobiliários",
+      "pergunta": "Quem são os maiores operadores de shopping centers no Brasil?",
+      "resposta": "Os maiores operadores brasileiros incluem: Multiplan (Morumbi Shopping, BarraShopping, ParkShopping), Iguatemi (Iguatemi São Paulo, JK Iguatemi, PátioHipercentro), BrMalls (maior portfólio por número de shoppings), Aliansce Sonae, Ancar Ivanhoe (Aricanduva, BarraShopping) e Grupo Jereissati (RioMar). Cada operador possui posicionamento e modelo de gestão diferenciados."
+    },
+    {
+      "id": "FAQ-046",
+      "categoria": "Novos Formatos",
+      "pergunta": "O que é um shopping de bairro e como ele se diferencia de um shopping regional?",
+      "resposta": "O shopping de bairro tem ABL entre 5.000 e 25.000 m², atende uma área de influência menor (raio de 5 a 10 km), foca em conveniência e serviços cotidianos (farmácia, supermercado, academia, serviços pessoais) e tem menor concentração de moda e entretenimento. O shopping regional (acima de 40.000 m²) tem abrangência maior, mix completo de categorias, megaâncoras de entretenimento e posicionamento como destino de compras e lazer."
+    },
+    {
+      "id": "FAQ-047",
+      "categoria": "Novos Formatos",
+      "pergunta": "O que é um outlet center e como funciona a locação nesses empreendimentos?",
+      "resposta": "Outlet centers são empreendimentos dedicados à venda de produtos de marcas consagradas com descontos de 30% a 70% sobre o preço original, geralmente por liquidação de coleções passadas ou pequenos defeitos. A locação segue lógica similar ao shopping convencional, mas com aluguel médio por m² geralmente menor. As marcas interessadas precisam comprovar que os produtos vendidos no outlet não canibalizam as coleções em plena comercialização nas lojas da rede."
+    },
+    {
+      "id": "FAQ-048",
+      "categoria": "Tendências",
+      "pergunta": "Como o conceito de 'experiência' está transformando os shoppings brasileiros?",
+      "resposta": "Os shoppings estão destinando crescente proporção de sua ABL para áreas de experiência: parques de entretenimento indoor, espaços culturais, museus interativos, academias premium, centros médicos e de bem-estar, coworkings e restaurantes de alto nível. O objetivo é oferecer razões para o visitante ir ao shopping além das compras, aumentando o tempo de permanência e fortalecendo o vínculo emocional com o empreendimento."
+    },
+    {
+      "id": "FAQ-049",
+      "categoria": "Tendências",
+      "pergunta": "Como os shoppings estão respondendo à concorrência do e-commerce?",
+      "resposta": "As estratégias incluem: fortalecimento de categorias não replicáveis no digital (serviços, gastronomia, saúde, entretenimento); desenvolvimento de dark stores e centros de distribuição dentro do shopping para atender pedidos online de lojistas; integração de soluções omnicanal que usam a loja física como ponto de retirada (click & collect); ampliação de espaços de convivência para aumentar o tempo de permanência; e investimento em experiências sensoriais que criam memórias positivas associadas à marca."
+    },
+    {
+      "id": "FAQ-050",
+      "categoria": "Tendências",
+      "pergunta": "O que é o conceito de 'mall as a service' e como ele se aplica ao Brasil?",
+      "resposta": "Mall as a Service (MaaS) é a evolução do shopping para além do varejo tradicional, oferecendo infraestrutura e serviços para múltiplos tipos de operadores: coworkings, hubs de startups, consulados e espaços governamentais, clínicas médicas, faculdades, laboratórios e centros logísticos. No Brasil, shoppings como o Pátio Batel em Curitiba e o Cidade Jardim em São Paulo já adotam elementos desse conceito, diversificando receitas e reduzindo dependência do varejo de moda."
+  },
+    {
+      "id": "FAQ-051",
+      "categoria": "Gestão de Relacionamento",
+      "pergunta": "Como os shoppings lidam com reclamações de visitantes?",
+      "resposta": "Os shoppings mantêm central de atendimento ao cliente presencial (SAC), canais digitais (chat no site, e-mail, WhatsApp) e em alguns casos ouvidoria. Reclamações sobre lojistas específicos são registradas e encaminhadas ao lojista para resposta. Reclamações sobre a infraestrutura do empreendimento são tratadas internamente. O Procon e o portal Reclame Aqui também são canais externos onde os shoppings monitoram e respondem ativamente."
+    },
+    {
+      "id": "FAQ-052",
+      "categoria": "Gestão de Relacionamento",
+      "pergunta": "Como o shopping apoia lojistas em dificuldades financeiras?",
+      "resposta": "Em situações de crise comprovada (como as impostas pela pandemia), os principais shoppings brasileiros adotam medidas como: suspensão temporária ou redução do aluguel mínimo, carência no fundo de promoção, parcelamento de débitos em atraso e revisão temporária de cláusulas contratuais. O interesse do shopping é manter os lojistas operando — a vacância gerada por fechamentos tem custo maior do que a concessão de benefícios pontuais."
+    },
+    {
+      "id": "FAQ-053",
+      "categoria": "Perfil de Público",
+      "pergunta": "Como o shopping define o perfil socioeconômico do seu público?",
+      "resposta": "O perfil é definido por estudos de área de influência, pesquisas periódicas de satisfação e comportamento (aplicadas por empresas especializadas), dados do programa de fidelidade e análise de tickets médios e categorias de compra. Shoppings como o Iguatemi São Paulo concentram público AB1 com tíquete médio acima de R$ 500, enquanto shoppings como o Aricanduva têm penetração majoritária nas classes C e D com perfil de alta frequência e produtos de consumo cotidiano."
+    },
+    {
+      "id": "FAQ-054",
+      "categoria": "Perfil de Público",
+      "pergunta": "Qual é o perfil dos visitantes dos shoppings de luxo como Cidade Jardim e Iguatemi?",
+      "resposta": "Shoppings de luxo atraem predominantemente o público das classes A e B1, com renda familiar mensal acima de R$ 15.000, alta escolaridade, sensibilidade a tendências internacionais de moda e lifestyle e disposição para tíquetes médios elevados. Esses visitantes valorizam curadoria de marcas, atendimento personalizado, exclusividade e experiência de compra diferenciada — fatores que justificam a restrição do mix e a curadoria rigorosa de lojistas."
+    },
+    {
+      "id": "FAQ-055",
+      "categoria": "Regional",
+      "pergunta": "Quais são as peculiaridades dos shoppings do Nordeste, como o RioMar Fortaleza?",
+      "resposta": "O Nordeste apresentou uma das maiores taxas de crescimento do setor de shoppings na última década, impulsionado pelo crescimento da classe média regional e pela expansão do crédito ao consumo. O RioMar Fortaleza, maior shopping do Nordeste, destaca-se pelo formato multimodal com hotel, torre comercial e mix equilibrado entre moda, gastronomia e entretenimento voltado para o público local — que tem preferências distintas das capitais do Sudeste, com maior valorização de marcas nacionais e regionais de destaque."
+    }
+  ],
+  "cross_knowledge": [
+    {
+      "dominio": "Direito Imobiliário",
+      "relevancia": "Lei do Inquilinato (Lei 8.245/91), contratos de locação comercial, revisional de aluguel, renovatória, Res Sperata, garantias locatícias (fiança, seguro fiança, caução).",
+      "aplicacao_shopping": "Todo contrato de locação em shopping está sujeito a essa lei. Conhecer os direitos e deveres de lojistas e administradoras é essencial para negociações, renovações e rescisões."
+    },
+    {
+      "dominio": "Direito do Consumidor",
+      "relevancia": "Código de Defesa do Consumidor (CDC), Lei 8.078/90, responsabilidade do fornecedor, direito de arrependimento, garantia legal.",
+      "aplicacao_shopping": "O shopping e seus lojistas são fornecedores para fins do CDC. Reclamações de consumidores, responsabilidade por acidentes nas dependências e gestão de devoluções são temas centrais na operação."
+    },
+    {
+      "dominio": "Gestão Financeira e Contabilidade",
+      "relevancia": "Demonstrativos financeiros, DRE, fluxo de caixa, custo total de ocupação (CTO), ponto de equilíbrio (breakeven), lucratividade por m².",
+      "aplicacao_shopping": "Lojistas precisam calcular o CTO em relação ao faturamento esperado para avaliar a viabilidade da operação. A administradora precisa monitorar a saúde financeira dos lojistas para prever inadimplência e vacância."
+    },
+    {
+      "dominio": "Arquitetura e Engenharia Comercial",
+      "relevancia": "Visual merchandising, normas ABNT para construções comerciais, acessibilidade (NBR 9050), segurança contra incêndio (AVCB), design de varejo.",
+      "aplicacao_shopping": "Todo projeto de loja deve ser aprovado pela engenharia do shopping. A arquitetura da loja tem impacto direto na conversão de visitantes em compradores."
+    },
+    {
+      "dominio": "Marketing e Comunicação",
+      "relevancia": "Planejamento de marketing, branding, calendário editorial, mídia paga e orgânica, influenciadores, marketing de performance, CRM.",
+      "aplicacao_shopping": "A equipe de marketing do shopping precisa equilibrar comunicação institucional do empreendimento com suporte às ações dos lojistas, gestão do programa de fidelidade e relacionamento digital com o visitante."
+    },
+    {
+      "dominio": "Varejo e Comportamento do Consumidor",
+      "relevancia": "Jornada de compra, omnichannel, customer experience, categorias de impulso vs. destino, gestão de sortimento, precificação.",
+      "aplicacao_shopping": "Entender o comportamento de compra dentro do shopping permite à administração otimizar o mix, a distribuição dos espaços e as ações de incentivo ao consumo."
+    },
+    {
+      "dominio": "Fundos Imobiliários (FIIs)",
+      "relevancia": "Estrutura de FII de tijolo, rendimentos mensais, dividend yield, vacância física e financeira, Cap Rate, laudo de avaliação de imóveis.",
+      "aplicacao_shopping": "Muitos shoppings são total ou parcialmente detidos por FIIs. A performance operacional do shopping impacta diretamente os rendimentos dos cotistas, criando pressão por eficiência, ocupação plena e crescimento do aluguel real."
+    },
+    {
+      "dominio": "Sustentabilidade e ESG",
+      "relevancia": "Certificações LEED, GRI, ODS, agenda carbono zero, políticas de diversidade e inclusão, relatórios de sustentabilidade.",
+      "aplicacao_shopping": "Investidores institucionais e grandes lojistas âncora exigem cada vez mais que os shoppings parceiros tenham agenda ESG estruturada. A certificação LEED EBOM é o padrão mais adotado para shoppings em operação."
+    },
+    {
+      "dominio": "Tecnologia da Informação",
+      "relevancia": "LGPD, CRM, Business Intelligence, People Analytics, IoT para contadores de fluxo, sistemas de estacionamento inteligente, aplicativos móveis.",
+      "aplicacao_shopping": "A operação de dados de visitantes, campanhas segmentadas e programas de fidelidade requer conformidade com a LGPD e infraestrutura tecnológica robusta."
+    },
+    {
+      "dominio": "Urbanismo e Planejamento Territorial",
+      "relevancia": "Zoneamento municipal, Estudo de Impacto de Vizinhança (EIV), Plano Diretor, uso e ocupação do solo, IPTU e IPTU progressivo.",
+      "aplicacao_shopping": "Expansões, novos empreendimentos e alterações de uso exigem aprovações municipais que podem ser demoradas e restritivas. O shopping precisa manter relacionamento sólido com a prefeitura e entender as regras do Plano Diretor local."
+    }
+  ]
+}

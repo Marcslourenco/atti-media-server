@@ -1,0 +1,948 @@
+{
+  "segmento": "Prefeitura Municipal",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA empresariais atuando no contexto de prefeituras municipais brasileiras. Cobre serviços públicos, tributos municipais, licitações, portal da transparência e atendimento ao cidadão, com referências às melhores práticas das prefeituras de São Paulo, Rio de Janeiro, Distrito Federal, Fortaleza, Salvador, Belo Horizonte, Manaus, Curitiba e Goiânia.",
+  "nucleo_conhecimento": {
+    "contexto_mercado": [
+      "O Brasil possui 5.570 municípios, cada um com sua própria administração municipal (prefeitura) responsável pela prestação de serviços públicos locais, conforme determina a Constituição Federal de 1988, que conferiu ampla autonomia administrativa e financeira aos municípios.",
+      "As prefeituras são responsáveis por serviços essenciais como saúde básica (UBS e UPA), educação infantil e fundamental, assistência social, urbanismo, mobilidade urbana, iluminação pública, coleta de lixo, manutenção de vias e fiscalização do uso do solo.",
+      "A receita municipal é composta por tributos próprios (IPTU, ISS, ITBI e taxas), transferências constitucionais da União (FPM — Fundo de Participação dos Municípios e repasses do SUS/FUNDEB) e transferências do Estado (ICMS municipal, IPVA). Municípios de grande porte como São Paulo e Rio de Janeiro têm arrecadação própria altamente relevante, enquanto municípios pequenos dependem majoritariamente do FPM.",
+      "A digitalização dos serviços públicos municipais acelerou significativamente após 2020. Prefeituras como Curitiba, São Paulo e Belo Horizonte são referências nacionais em governo digital, com portais unificados, aplicativos próprios, chatbots de atendimento e integração de sistemas que permitem ao cidadão resolver demandas sem sair de casa.",
+      "A Lei de Responsabilidade Fiscal (Lei Complementar nº 101/2000) impõe limites rígidos de gastos com pessoal e endividamento às prefeituras, obrigando transparência na execução orçamentária. O Portal da Transparência é exigência legal (Lei de Acesso à Informação, Lei nº 12.527/2011) e deve publicar em tempo real receitas, despesas, contratos, licitações e remuneração de servidores.",
+      "A Lei nº 14.133/2021 (Nova Lei de Licitações e Contratos Administrativos) substituiu o antigo regime da Lei 8.666/93, trazendo novas modalidades (Pregão, Concorrência, Concurso, Leilão e Diálogo Competitivo), critérios de julgamento mais flexíveis e maior ênfase na contratação eficiente e transparente.",
+      "Prefeituras de grandes capitais operam orçamentos bilionários: São Paulo tem orçamento anual superior a R$ 100 bilhões, Rio de Janeiro supera R$ 40 bilhões, Belo Horizonte aproxima-se de R$ 12 bilhões. Esses valores posicionam as grandes prefeituras entre os maiores contratantes do setor público nacional.",
+      "A gestão de saúde pública municipal inclui a operação de Unidades Básicas de Saúde (UBS), Unidades de Pronto Atendimento (UPA), SAMU, Centros de Especialidades Médicas (CEM) e programas de saúde preventiva como vacinação, vigilância epidemiológica e saúde da mulher.",
+      "A educação municipal cobre creches (0 a 3 anos) e pré-escola (4 e 5 anos), que são de responsabilidade exclusiva do município, além do Ensino Fundamental I e II, que é responsabilidade compartilhada entre município e estado. Programas como o Mais Educação e o PDDE ampliam os recursos federais disponíveis.",
+      "Curitiba é referência internacional em urbanismo, mobilidade urbana (Rede Integrada de Transporte, BRT e ciclovias) e gestão ambiental. São Paulo lidera em volume de serviços digitais e inovação em gestão pública. Belo Horizonte é reconhecida por programas sociais inovadores e participação popular no orçamento. Fortaleza e Manaus destacam-se pela gestão de grandes territórios com recursos limitados.",
+      "O processo de participação popular na gestão municipal inclui instrumentos como o Orçamento Participativo (adotado em Fortaleza, Porto Alegre e outras cidades), audiências públicas para projetos de lei relevantes, conselhos municipais (de saúde, educação, assistência social, criança e adolescente) e consultas públicas digitais.",
+      "A gestão de resíduos sólidos é uma das maiores demandas operacionais das prefeituras, regulada pela Política Nacional de Resíduos Sólidos (Lei nº 12.305/2010), que impõe metas de reciclagem, erradicação de lixões e responsabilidade compartilhada entre produtores, distribuidores, comerciantes, usuários e serviços públicos de limpeza.",
+      "O setor de mobilidade urbana é regulado pela Política Nacional de Mobilidade Urbana (Lei nº 12.587/2012) e exige que municípios com mais de 20.000 habitantes elaborem um Plano de Mobilidade Urbana, integrando transporte público, ciclovias, calçadas, acessibilidade e gestão de tráfego.",
+      "Programas habitacionais municipais, em articulação com o Governo Federal (Minha Casa Minha Vida e Casa Verde e Amarela), representam uma das maiores fontes de investimento urbano nas capitais, especialmente em cidades com alta demanda por regularização fundiária como Salvador, Manaus e Fortaleza.",
+      "O Governo do Distrito Federal (GDF) possui características híbridas — exerce simultaneamente funções de estado e município — sendo responsável por todos os serviços que em outros locais seriam divididos entre prefeitura e governo estadual, o que torna sua estrutura administrativa e orçamentária única no Brasil."
+    ],
+    "problemas_comuns": [
+      "Dificuldade de acesso do cidadão a informações claras sobre como solicitar serviços públicos — linguagem técnica e burocrática nos portais dificulta a compreensão de quem não tem familiaridade com a administração pública.",
+      "Longas filas e esperas para atendimento presencial em serviços de alta demanda como IPTU, ISS, licenciamentos, CRAS e UBS, especialmente em capitais com mais de 1 milhão de habitantes.",
+      "Fragmentação de canais de atendimento: o cidadão precisa identificar qual secretaria é responsável por cada demanda antes de conseguir ser atendido, o que gera frustração e retrabalho tanto para o cidadão quanto para o servidor público.",
+      "Inadimplência elevada no pagamento de tributos municipais, especialmente IPTU em áreas de baixa renda ou imóveis com histórico de dívida ativa acumulada por múltiplos proprietários anteriores.",
+      "Falta de atualização cadastral dos imóveis no IPTU — áreas construídas sem regularização, subdivisões informais e mudanças de uso não averbadas resultam em base tributária desatualizada e perda de arrecadação.",
+      "Complexidade do processo de abertura e regularização de empresas, com múltiplas etapas envolvendo Receita Federal, Junta Comercial, Prefeitura (Alvará de Funcionamento, ISS) e órgãos de vigilância sanitária e ambiental.",
+      "Demanda reprimida por serviços de saúde, com longas filas de espera para consultas especializadas, exames e cirurgias eletivas no sistema municipal e estadual de saúde.",
+      "Gestão de contratos de terceirização e concessão com qualidade variável e dificuldades de fiscalização, resultando em serviços de limpeza, transporte e obras com desempenho inconsistente.",
+      "Baixa digitalização de serviços em municípios de pequeno e médio porte, que ainda dependem de atendimento presencial para a maioria das demandas, gerando custos operacionais elevados e inconveniência para o cidadão.",
+      "Publicação incompleta ou desatualizada de dados no Portal da Transparência, gerando questionamentos de jornalistas, pesquisadores, órgãos de controle e cidadãos organizados, além de risco de sanções do Tribunal de Contas.",
+      "Gestão de obras públicas com frequentes atrasos, aditivos de prazo e valor, e reclamações de qualidade — problemas que expõem as prefeituras a auditoria do TCE/TCM e a ações do Ministério Público.",
+      "Dificuldade de comunicação proativa com o cidadão sobre andamento de solicitações de serviços (buracos, poda de árvores, iluminação, etc.), gerando a percepção de que as demandas são ignoradas mesmo quando estão sendo trabalhadas internamente.",
+      "Gestão de ocupações irregulares em áreas públicas — calçadas, praças, encostas e margens de rios — que geram conflitos entre a necessidade de regularização urbanística e o impacto social das remoções.",
+      "Alta rotatividade de servidores comissionados a cada mudança de gestão, gerando descontinuidade em projetos de médio e longo prazo e perda de conhecimento institucional acumulado.",
+      "Subnotificação e desconhecimento dos cidadãos sobre programas sociais municipais — benefícios de assistência, isenções de tributos, subsídios em saúde e educação — que deixam de chegar a quem mais precisa por falta de divulgação acessível."
+    ],
+    "objeções_clientes": [
+      "Já liguei várias vezes para a prefeitura e nunca fui atendido — a linha cai ou fica ocupada.",
+      "O site da prefeitura é complicado demais. Não sei onde clicar para encontrar o que preciso.",
+      "Fui pessoalmente ao IPTU e me mandaram embora dizendo que minha documentação estava incompleta, mas ninguém me avisou antes o que era necessário trazer.",
+      "Minha empresa está esperando há meses o Alvará de Funcionamento e ninguém dá resposta.",
+      "Abri um chamado para um buraco na minha rua faz três semanas e até agora nada foi feito.",
+      "A prefeitura cobra IPTU de um imóvel que não está no meu nome — como corrijo isso?",
+      "Não entendo por que meu IPTU aumentou tanto esse ano sem nenhuma melhoria no bairro.",
+      "Quero saber como a prefeitura está gastando o dinheiro dos impostos, mas o Portal da Transparência é inacessível.",
+      "Tenho dívida de IPTU de anos anteriores e não sei se consigo parcelar ou se já foi para protesto.",
+      "A escola municipal do meu filho está com problemas de infraestrutura e ninguém da secretaria responde.",
+      "Não sei se meu imóvel está dentro da lei — como sei se preciso de licença para fazer uma reforma?",
+      "Minha empresa presta serviços à prefeitura mas a nota fiscal foi rejeitada pelo sistema e não sei o motivo.",
+      "Participei de uma licitação e fui desclassificado por um motivo que não entendo — como recorro?",
+      "Não sei se a prefeitura tem algum programa de isenção de IPTU para idosos ou pessoas de baixa renda.",
+      "Recebi uma notificação de infração do município mas não sei o prazo nem como apresentar defesa.",
+      "Quero denunciar um estabelecimento comercial que funciona irregularmente no meu bairro — como faço isso?",
+      "A guia de ISS que recebi parece errada — como contestar o valor lançado?",
+      "Quero saber o valor venal do meu imóvel para calcular o imposto antes de vender.",
+      "Como funciona o ITBI? Quem paga, qual é a alíquota e quando é cobrado?",
+      "Nunca consegui emplacar uma sugestão no orçamento participativo — o processo parece restrito a grupos organizados."
+    ],
+    "argumentos_venda": [
+      "O atendimento digital da prefeitura está disponível 24 horas por dia, 7 dias por semana — o cidadão resolve suas demandas sem precisar enfrentar filas ou deslocar-se até um posto presencial.",
+      "A integração dos sistemas municipais permite que uma única solicitação acione automaticamente todas as secretarias envolvidas, reduzindo o tempo de resposta e eliminando a necessidade de o cidadão repetir sua demanda.",
+      "O Portal da Transparência garante que qualquer cidadão possa fiscalizar em tempo real como o dinheiro público está sendo utilizado, fortalecendo a confiança na gestão municipal.",
+      "Os programas de parcelamento e refinanciamento de dívida tributária (REFIS municipais) permitem que contribuintes inadimplentes regularizem sua situação com descontos em juros e multas, protegendo o patrimônio e restaurando o acesso a certidões negativas.",
+      "A nota fiscal eletrônica de serviços (NFS-e) simplifica a vida do prestador de serviços — emissão online, sem papelada, com reconhecimento imediato pelo sistema municipal e contribuição automática ao ISS.",
+      "O programa de isenções e reduções de IPTU para idosos, pessoas com deficiência, entidades filantrópicas e imóveis de baixo valor venal é um instrumento de justiça fiscal que a prefeitura administra ativamente.",
+      "As licitações municipais são publicadas em portais eletrônicos de acesso público, garantindo igualdade de condições para empresas de todos os portes concorrerem por contratos com o poder público.",
+      "O atendimento ao cidadão por múltiplos canais — presencial, telefônico, aplicativo, chat e e-mail — garante que pessoas de diferentes perfis e graus de conectividade consigam acessar os serviços municipais.",
+      "Os Centros de Referência de Assistência Social (CRAS) e os equipamentos de saúde (UBS e UPA) distribuídos pelo território garantem que os serviços mais essenciais estejam próximos de onde o cidadão mora.",
+      "A modernização do processo de abertura de empresas — integrada ao REDESIM (Rede Nacional para a Simplificação do Registro e da Legalização de Empresas e Negócios) — reduziu drasticamente o tempo de abertura de negócios em capitais como São Paulo, Curitiba e Belo Horizonte."
+    ]
+  },
+  "areas_tecnicas": [
+    {
+      "area": "Tributos Municipais",
+      "descricao": "Conjunto de impostos, taxas e contribuições de melhoria cobrados pelo município, com base na Constituição Federal (Art. 156) e regulados pelo Código Tributário Municipal de cada cidade.",
+      "conceitos_chave": [
+        "IPTU (Imposto Predial e Territorial Urbano): incide sobre a propriedade, domínio útil ou posse de imóvel localizado em zona urbana. A base de cálculo é o valor venal do imóvel, fixado pela planta genérica de valores do município. Alíquotas variam por município e tipo de imóvel (residencial, comercial, territorial).",
+        "ISS (Imposto Sobre Serviços de Qualquer Natureza): incide sobre a prestação de serviços constantes na Lista Anexa à Lei Complementar nº 116/2003. A alíquota mínima é 2% e a máxima é 5%, conforme definido em lei municipal. Prestadores de serviços devem emitir Nota Fiscal de Serviços Eletrônica (NFS-e).",
+        "ITBI (Imposto de Transmissão de Bens Imóveis): incide sobre a transmissão intervivos de bens imóveis por ato oneroso. A responsabilidade pelo pagamento é do comprador. A alíquota varia entre 2% e 3% a depender do município. O ITBI deve ser pago antes do registro da escritura no Cartório de Registro de Imóveis.",
+        "Taxas Municipais: cobradas em contraprestação a serviços públicos específicos ou pelo exercício do poder de polícia. Exemplos: Taxa de Coleta de Lixo (TCR), Taxa de Iluminação Pública (TIP/CIP), Taxa de Licenciamento de Estabelecimento, Taxa de Publicidade.",
+        "Contribuição de Melhoria: tributo cobrado de proprietários de imóveis valorizados em decorrência de obras públicas (pavimentação, drenagem, saneamento). Limitada ao custo total da obra e à valorização individual de cada imóvel.",
+        "Dívida Ativa: crédito tributário não pago no prazo, inscrito na dívida ativa do município, sujeito à cobrança judicial por execução fiscal. A inscrição gera acréscimo de juros, multa e honorários advocatícios.",
+        "Valor Venal: valor atribuído ao imóvel pela prefeitura para fins de cálculo do IPTU e ITBI, determinado pela Planta Genérica de Valores (PGV), revisada periodicamente. Pode ser contestado pelo contribuinte por meio de impugnação administrativa.",
+        "Nota Fiscal de Serviços Eletrônica (NFS-e): documento fiscal digital emitido pelo prestador de serviços no portal da prefeitura. Substitui o papel e permite cálculo automático do ISS. A não emissão sujeita o prestador a autuação fiscal.",
+        "SIMPLES Nacional: regime tributário simplificado que unifica tributos federais, estaduais e municipais (incluindo ISS) em uma única guia (DAS). Optantes pelo Simples recolhem o ISS de forma unificada, sem necessidade de guia municipal separada, exceto em casos de ISS retido na fonte."
+      ]
+    },
+    {
+      "area": "Licitações e Contratos Administrativos",
+      "descricao": "Processo formal pelo qual a administração pública municipal seleciona a proposta mais vantajosa para aquisição de bens, serviços ou execução de obras, regulado pela Lei nº 14.133/2021 (Nova Lei de Licitações).",
+      "conceitos_chave": [
+        "Modalidades de Licitação (Lei 14.133/2021): Pregão (bens e serviços comuns, preferencialmente eletrônico), Concorrência (obras, serviços e compras de grande valor), Concurso (projetos técnicos ou artísticos), Leilão (alienação de bens), Diálogo Competitivo (contratos inovadores e complexos).",
+        "Dispensa de Licitação: situações em que a lei autoriza a contratação direta sem processo licitatório, como obras de até R$ 100.000, outros serviços até R$ 50.000, emergências, exclusividade de fornecedor e outros casos previstos no Art. 75 da Lei 14.133/2021.",
+        "Inexigibilidade de Licitação: quando a competição é inviável por natureza, como contratação de profissional de notória especialização, artistas consagrados ou fornecedor exclusivo.",
+        "Pregão Eletrônico: modalidade realizada integralmente por plataforma digital (Comprasnet, BLL, BEC ou sistema próprio do município). Permite participação de empresas de todo o Brasil, ampliando a competitividade e reduzindo custos para a administração.",
+        "Edital: documento público que define todas as regras da licitação — objeto, requisitos de habilitação, critérios de julgamento, prazos, obrigações contratuais e penalidades. Deve ser publicado no Portal Nacional de Contratações Públicas (PNCP) e no Diário Oficial.",
+        "Habilitação: fase da licitação em que se verifica se o licitante possui os requisitos jurídicos, técnicos, econômico-financeiros e de regularidade fiscal e trabalhista necessários para contratar com o poder público.",
+        "Proposta Técnica e Comercial: os critérios de julgamento incluem menor preço, maior desconto, melhor técnica, técnica e preço e maior retorno econômico, a depender da natureza do objeto contratado.",
+        "Ata de Registro de Preços (ARP): instrumento que registra preços de bens ou serviços para contratações futuras pelo prazo de até 12 meses (prorrogável por mais 12). Permite ao município contratar sem necessidade de nova licitação para cada aquisição.",
+        "Contrato Administrativo: formaliza a relação jurídica entre o município e o fornecedor vencedor. Deve prever objeto, valor, prazo, obrigações das partes, critérios de reajuste, penalidades e condições de rescisão.",
+        "Aditivo Contratual: instrumento que modifica o contrato original — pode ampliar prazo, valor (limitado a 25% para obras e 50% em casos específicos), escopo ou corrigir especificações. Exige publicação e justificativa formal.",
+        "Portal Nacional de Contratações Públicas (PNCP): plataforma federal obrigatória para publicação de editais, contratos, atas e resultados de licitações de todos os entes federados, garantindo transparência e rastreabilidade."
+      ]
+    },
+    {
+      "area": "Serviços Públicos Municipais",
+      "descricao": "Conjunto de atividades de interesse público prestadas diretamente pela prefeitura ou por meio de concessão, permissão ou parceria, abrangendo saúde, educação, assistência social, urbanismo, mobilidade e meio ambiente.",
+      "conceitos_chave": [
+        "Unidade Básica de Saúde (UBS): porta de entrada do sistema municipal de saúde, responsável por atenção primária — consultas clínicas, vacinação, pré-natal, saúde bucal, programas preventivos e encaminhamentos. O cadastro na UBS mais próxima é o primeiro passo para o acesso ao SUS municipal.",
+        "Unidade de Pronto Atendimento (UPA): unidade de urgência e emergência de média complexidade, aberta 24 horas, que atende casos que não são emergências hospitalares mas que não podem aguardar até a UBS.",
+        "CRAS (Centro de Referência de Assistência Social): equipamento público responsável pela proteção social básica, atendendo famílias em situação de vulnerabilidade. Coordena o Cadastro Único (CadÚnico), acesso ao Bolsa Família, BPC e demais benefícios socioassistenciais.",
+        "CREAS (Centro de Referência Especializado de Assistência Social): atende famílias e indivíduos em situação de risco pessoal e social decorrente de violência, abuso, exploração, discriminação e outros contextos de violação de direitos.",
+        "Zeladoria Urbana: conjunto de serviços de manutenção do espaço público — tapa-buracos, poda de árvores, limpeza de bocas-de-lobo, roçagem de terrenos baldios, manutenção de calçadas e sinalização viária. Em grandes cidades, é coordenada por subprefeituras ou administrações regionais.",
+        "Iluminação Pública: serviço prestado diretamente pelo município ou via concessão, financiado pela Contribuição para o Custeio do Serviço de Iluminação Pública (COSIP/CIP), cobrada na conta de luz ou no carnê do IPTU.",
+        "Coleta de Resíduos Sólidos: serviço de coleta domiciliar de lixo, coleta seletiva e destinação para aterros licenciados ou centrais de triagem e reciclagem. Regulado pela PNRS (Lei 12.305/2010) e progressivamente sujeito a metas de redução de aterramento.",
+        "Creches e CEIs: equipamentos municipais de educação infantil para crianças de 0 a 3 anos. A vaga em creche é direito constitucional da criança. O cadastramento é realizado pelo sistema da Secretaria Municipal de Educação, com lista de espera gerenciada por critérios de vulnerabilidade social.",
+        "Licenciamento Urbanístico: processo de aprovação de projetos de construção, reforma e regularização de edificações junto à Secretaria Municipal de Urbanismo ou equivalente. Inclui análise do projeto, emissão do Alvará de Obras, Certificado de Conclusão (Habite-se) e Alvará de Funcionamento para atividades comerciais.",
+        "Transporte Público Municipal: serviço de ônibus urbano geralmente operado por empresas privadas sob contrato de concessão ou permissão com o município, que define tarifas, rotas, frota mínima e padrões de qualidade. Subsídios municipais são comuns para manter a tarifa acessível.",
+        "Vigilância Sanitária Municipal: responsável por fiscalizar estabelecimentos que produzem, armazenam, distribuem ou comercializam produtos e serviços de interesse da saúde — restaurantes, farmácias, clínicas, creches, fábricas de alimentos, salões de beleza e outros."
+      ]
+    },
+    {
+      "area": "Portal da Transparência e Controle Social",
+      "descricao": "Conjunto de instrumentos legais e tecnológicos que garantem ao cidadão o acesso a informações sobre a gestão pública municipal, em cumprimento à Lei de Acesso à Informação (Lei 12.527/2011) e à Lei de Responsabilidade Fiscal (LC 101/2000).",
+      "conceitos_chave": [
+        "Lei de Acesso à Informação (LAI): garante a qualquer cidadão, empresa ou entidade o direito de solicitar informações a órgãos públicos mediante o Sistema Eletrônico do Serviço de Informação ao Cidadão (e-SIC). O prazo de resposta é de até 20 dias, prorrogável por mais 10.",
+        "Portal da Transparência: plataforma digital obrigatória onde a prefeitura publica receitas, despesas, contratos, licitações, convênios, remuneração de servidores, patrimônio e execução orçamentária em tempo real.",
+        "Orçamento Municipal (LOA, LDO e PPA): o ciclo orçamentário municipal é composto pelo Plano Plurianual (PPA — 4 anos), Lei de Diretrizes Orçamentárias (LDO — anual) e Lei Orçamentária Anual (LOA — anual). Todos devem ser votados pela Câmara Municipal e publicados no Diário Oficial.",
+        "Nota de Empenho: documento contábil que compromete o orçamento para uma determinada despesa, sendo o primeiro passo do processo de execução orçamentária, seguido pelo liquidação e pagamento.",
+        "Diário Oficial Municipal: publicação oficial onde constam todos os atos administrativos da prefeitura — decretos, portarias, editais de licitação, contratos, nomeações, exonerações e outros atos de efeito legal.",
+        "Tribunal de Contas: órgão de controle externo responsável por fiscalizar as contas das prefeituras — TCE (Tribunal de Contas do Estado) na maioria dos estados, ou TCM (Tribunal de Contas do Município) em São Paulo e Rio de Janeiro. Analisam as contas anuais do prefeito e podem emitir pareceres que subsidiam o julgamento pela Câmara Municipal.",
+        "Controladoria Municipal: órgão de controle interno da própria prefeitura, responsável por auditorias, prevenção de irregularidades e fortalecimento da integridade na gestão pública.",
+        "Ouvidoria Municipal: canal de relacionamento com o cidadão para registro de reclamações, sugestões, elogios, denúncias e pedidos de acesso à informação. Diferente do SAC, a ouvidoria tem caráter de controle e deve reportar os resultados à alta gestão.",
+        "SICONFI e SIOPE: sistemas federais onde os municípios lançam dados financeiros (SICONFI, do Tesouro Nacional) e de gastos em saúde e educação (SIOPS e SIMAM), permitindo o controle social e o cumprimento dos mínimos constitucionais."
+      ]
+    },
+    {
+      "area": "Atendimento ao Cidadão",
+      "descricao": "Conjunto de canais, protocolos e sistemas que permitem ao cidadão solicitar serviços, obter informações e acompanhar demandas junto à prefeitura.",
+      "conceitos_chave": [
+        "Central 156: número de telefone adotado pela maioria das grandes prefeituras brasileiras para concentrar chamadas de atendimento ao cidadão, abertura de chamados de zeladoria, informações sobre serviços e encaminhamentos gerais.",
+        "Aplicativo Municipal: app próprio da prefeitura que permite ao cidadão abrir solicitações de serviços, acompanhar chamados, emitir documentos, acessar programas sociais e receber notificações. Exemplos: SP156 (São Paulo), BH App (Belo Horizonte), Curitiba App.",
+        "Carta de Serviços ao Usuário: documento obrigatório pela Lei nº 13.460/2017 que descreve os serviços prestados pela prefeitura, os requisitos para acesso, os prazos esperados e os canais disponíveis. Deve ser publicada no site oficial.",
+        "SIC (Serviço de Informação ao Cidadão): canal específico para pedidos de acesso à informação, conforme a LAI. Pode ser presencial ou eletrônico (e-SIC). Os pedidos devem ser respondidos em até 20 dias úteis.",
+        "Protocolo Único: sistema que unifica o registro de demandas do cidadão, independentemente da secretaria responsável. Cada demanda recebe um número de protocolo que permite rastreabilidade e cobrança de resposta.",
+        "Descentralização do Atendimento: grandes municípios organizam o atendimento por subprefeituras, administrações regionais ou CRAAS (Centros de Referência em Atendimento ao Cidadão), distribuídos pelo território para reduzir deslocamentos.",
+        "Tempos de Resposta (SLA): cada serviço municipal deve ter prazo definido de atendimento. Por exemplo: resposta a pedido de tapa-buraco — até 30 dias; emissão de alvará de obras simples — até 30 dias; resposta a LAI — até 20 dias; atendimento de saúde de urgência — imediato.",
+        "NPS e Pesquisas de Satisfação: instrumentos de mensuração da qualidade do atendimento, adotados por prefeituras modernas para monitorar a experiência do cidadão e identificar pontos de melhoria nos serviços."
+      ]
+    },
+    {
+      "area": "Licenciamento e Urbanismo",
+      "descricao": "Processo de regulação do uso do solo, aprovação de projetos de construção e regularização de edificações, conforme o Plano Diretor e o Código de Obras de cada município.",
+      "conceitos_chave": [
+        "Plano Diretor: lei municipal que define a função social da propriedade urbana, zoneamento, coeficientes de aproveitamento, parâmetros de ocupação do solo e diretrizes para o desenvolvimento urbano. Obrigatório para municípios com mais de 20.000 habitantes.",
+        "Alvará de Obras: licença emitida pela prefeitura para execução de obras de construção, reforma ou demolição. Exige aprovação de projeto arquitetônico conforme o Código de Obras municipal.",
+        "Habite-se (Certificado de Conclusão de Obra): documento emitido após vistoria da prefeitura que atesta que a obra foi concluída de acordo com o projeto aprovado. Necessário para registro do imóvel e regularização do IPTU.",
+        "Alvará de Funcionamento: licença emitida pela prefeitura para funcionamento de estabelecimentos comerciais, industriais ou de prestação de serviços. Pode requerer pareceres adicionais de vigilância sanitária, corpo de bombeiros e meio ambiente.",
+        "Auto de Infração: documento emitido pela fiscalização municipal quando constatada irregularidade em obra, atividade comercial ou uso do solo. Gera prazo para regularização ou pagamento de multa.",
+        "IPTU Progressivo: instrumento de política urbana que permite ao município cobrar IPTU com alíquotas crescentes de imóveis subutilizados ou não edificados em áreas de especial interesse social, visando combater a especulação imobiliária.",
+        "Regularização Fundiária (REURB): processo de reconhecimento jurídico de assentamentos informais, regulado pela Lei nº 13.465/2017, que permite a titulação de imóveis em áreas de ocupação consolidada sem a necessidade de demolição e reconstrução."
+      ]
+    }
+  ],
+  "fluxos_conversa": [
+    {
+      "nome": "Cidadão com Dúvida sobre IPTU",
+      "descricao": "Fluxo de atendimento para cidadãos com dúvidas sobre cálculo, pagamento, isenção ou contestação do IPTU.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Identificação da Demanda",
+          "mensagens_exemplo": [
+            "Olá! Bem-vindo ao atendimento digital da Prefeitura. Sou o assistente virtual e posso ajudar com informações sobre IPTU, serviços municipais, licitações e muito mais. Sobre o IPTU, você gostaria de: (1) Emitir a guia de pagamento, (2) Consultar isenções disponíveis, (3) Contestar o valor lançado, (4) Parcelar uma dívida em atraso, ou (5) Outra dúvida?"
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Emissão de Guia de Pagamento",
+          "descricao": "Orientar o cidadão a emitir a guia de pagamento do IPTU pelo portal ou aplicativo.",
+          "passos": [
+            "Acesse o portal da prefeitura em [URL] ou o aplicativo [Nome do App].",
+            "Clique em 'IPTU' no menu de serviços.",
+            "Informe o número do contribuinte (consta no carnê físico ou na notificação de lançamento).",
+            "Selecione o exercício desejado e escolha entre pagamento à vista (com desconto) ou parcelado.",
+            "Imprima ou salve o boleto e pague em qualquer banco, lotérica ou pelo seu aplicativo bancário."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Consulta de Isenções",
+          "descricao": "Informar sobre as isenções de IPTU disponíveis e como solicitá-las.",
+          "isenções_comuns": [
+            "Imóvel residencial de pessoa com 60 anos ou mais (idoso), proprietário e residente único, com renda limitada a 3 salários mínimos.",
+            "Imóvel de pessoa com deficiência grave ou incurável, com mesmos requisitos de renda.",
+            "Imóveis de entidades filantrópicas, igrejas, sindicatos e partidos políticos, quando cumpridos os requisitos constitucionais.",
+            "Imóveis de ex-combatentes da Segunda Guerra Mundial.",
+            "Imóveis de baixo valor venal (valor abaixo de determinado limite fixado em lei municipal)."
+          ],
+          "procedimento": "Para solicitar a isenção, o cidadão deve acessar o portal da prefeitura ou comparecer pessoalmente à Secretaria de Fazenda munido de documentos pessoais, comprovante de residência, certidão de propriedade atualizada e documentação específica para cada tipo de isenção (certidão de nascimento para idosos, laudo médico para PCD etc.)."
+        },
+        {
+          "etapa": 4,
+          "nome": "Contestação do Valor",
+          "descricao": "Orientar o cidadão sobre como contestar o valor lançado do IPTU caso discorde da avaliação.",
+          "passos": [
+            "O cidadão tem o prazo previsto em lei (geralmente 30 dias a partir da notificação de lançamento) para apresentar impugnação administrativa.",
+            "A impugnação pode ser protocolada presencialmente na Secretaria de Fazenda ou via portal eletrônico.",
+            "Deve ser apresentada justificativa com base em erro de medição da área, uso incorreto atribuído ao imóvel, aplicação equivocada da Planta Genérica de Valores ou erro cadastral.",
+            "A prefeitura tem prazo de 30 a 60 dias para responder, dependendo da legislação local.",
+            "Em caso de indeferimento, é possível recorrer ao Conselho de Contribuintes Municipal (quando existente) ou ao Poder Judiciário."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Empresa Participando de Licitação Municipal",
+      "descricao": "Fluxo de orientação para empresas interessadas em participar de processos licitatórios da prefeitura.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Cadastro de Fornecedor",
+          "descricao": "Orientar a empresa sobre como se cadastrar no sistema de fornecedores da prefeitura.",
+          "passos": [
+            "Acesse o portal de compras do município em [URL] e localize o menu 'Cadastro de Fornecedores'.",
+            "Providencie a documentação básica: CNPJ ativo, contrato social e alterações, balanço patrimonial do último exercício, certidões negativas de débitos federais, estaduais e municipais, certidão de regularidade do FGTS e certidão de regularidade trabalhista (CNDT).",
+            "Após o cadastro, você receberá notificações automáticas de licitações na sua área de atuação."
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Identificação de Oportunidades",
+          "descricao": "Orientar sobre como encontrar licitações abertas.",
+          "canais": [
+            "Portal Nacional de Contratações Públicas (PNCP): pncp.gov.br — obrigatório para publicação de todos os editais.",
+            "Diário Oficial do Município: publicação dos editais de licitação.",
+            "Portal próprio da prefeitura: seção de 'Licitações Abertas' ou 'Compras e Contratos'.",
+            "Plataformas de e-procurement: Comprasnet (federal), BLL, BEC-SP (São Paulo), Licitações-e (Banco do Brasil).",
+            "Atenção ao prazo entre a publicação do edital e a data de entrega de propostas — geralmente entre 8 e 30 dias dependendo da modalidade."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Análise do Edital",
+          "descricao": "Orientar sobre os pontos críticos a verificar num edital antes de decidir participar.",
+          "pontos_criticos": [
+            "Objeto: confirmar que o produto ou serviço exigido está dentro da capacidade técnica e operacional da empresa.",
+            "Requisitos de habilitação técnica: verificar experiência mínima exigida, atestados de capacidade técnica e registros em conselhos profissionais.",
+            "Requisitos econômico-financeiros: capital social mínimo, índices de liquidez e patrimônio líquido exigidos.",
+            "Critério de julgamento: menor preço, técnica e preço, ou outros — impacta diretamente na estratégia de precificação.",
+            "Condições de pagamento: prazo de pagamento após liquidação (30 a 90 dias é comum), forma de correção e eventuais retenções tributárias.",
+            "Penalidades: multas por descumprimento de prazo, suspensão de contratar com a administração pública e declaração de inidoneidade."
+          ]
+        },
+        {
+          "etapa": 4,
+          "nome": "Recursos e Impugnações",
+          "descricao": "Informar sobre os direitos do licitante de questionar o edital ou o resultado do certame.",
+          "passos": [
+            "Impugnação ao Edital: pode ser apresentada por qualquer cidadão ou empresa até 3 dias úteis antes da data de abertura do pregão (ou prazos específicos conforme a modalidade), para questionar cláusulas ilegais ou restritivas.",
+            "Recurso Administrativo: após a fase de habilitação ou julgamento de propostas, o licitante inabilitado ou desclassificado pode interpor recurso no prazo de 3 dias úteis, motivando suas razões de inconformidade.",
+            "Representação ao TCE/TCM: caso suspeite de irregularidades no processo, a empresa pode representar ao Tribunal de Contas competente, que poderá instaurar investigação."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Abertura de Empresa e Alvará de Funcionamento",
+      "descricao": "Fluxo de orientação para empreendedores que desejam abrir uma empresa e obter o Alvará de Funcionamento no município.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Consulta de Viabilidade",
+          "descricao": "Verificar se a atividade pretendida é permitida no endereço escolhido conforme o zoneamento municipal.",
+          "passos": [
+            "Acesse o portal da prefeitura e utilize a ferramenta de Consulta de Viabilidade de Localização.",
+            "Informe o endereço do estabelecimento e o CNAE (Código Nacional de Atividade Econômica) da atividade.",
+            "O sistema informará se a atividade é permitida, tolerada ou proibida naquele zoneamento.",
+            "Atividades de risco alto ou com restrições específicas podem exigir vistorias prévias."
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Registro Empresarial",
+          "descricao": "Orientar sobre as etapas federais e estaduais que precedem o alvará municipal.",
+          "passos": [
+            "Registrar a empresa na Junta Comercial do Estado (para sociedades empresariais) ou em Cartório de RTD (para sociedades simples e profissões regulamentadas).",
+            "Solicitar o CNPJ na Receita Federal (geralmente automático com o registro na Junta via REDESIM).",
+            "Inscrever-se na Secretaria da Fazenda Estadual para obter a Inscrição Estadual (quando aplicável).",
+            "Solicitar a Inscrição Municipal no Cadastro de Contribuintes do ISS (obrigatório para prestadores de serviços)."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Obtenção do Alvará de Funcionamento",
+          "descricao": "Processo específico junto à prefeitura para obtenção da licença de funcionamento.",
+          "passos": [
+            "Protocolar o requerimento de Alvará de Funcionamento no portal ou protocolo da prefeitura.",
+            "Apresentar: CNPJ, contrato social, RG e CPF do responsável, planta baixa do imóvel (para atividades com análise de engenharia), ART do responsável técnico (quando aplicável).",
+            "Aguardar parecer dos órgãos competentes: Urbanismo (adequação do imóvel ao uso), Vigilância Sanitária (para atividades de alimentos, saúde, beleza), Corpo de Bombeiros (AVCB), Meio Ambiente (para atividades impactantes).",
+            "Após aprovação de todos os pareceres, o Alvará de Funcionamento é emitido com prazo de validade definido (geralmente 1 ano, renovável).",
+            "Para atividades de baixo risco, cidades integradas ao REDESIM permitem o auto-licenciamento com emissão automática do alvará."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Denúncia de Irregularidade ou Reclamação de Serviço",
+      "descricao": "Fluxo para orientar o cidadão a registrar reclamações sobre serviços públicos ou denúncias de irregularidades.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Identificação do Tipo de Demanda",
+          "categorias": [
+            "Zeladoria urbana (buraco, calçada danificada, árvore com risco, iluminação apagada, lixo acumulado)",
+            "Saúde (falta de medicamento na UBS, mau atendimento, equipamento com defeito)",
+            "Educação (infraestrutura escolar, falta de professor, irregularidade em merenda)",
+            "Fiscal (estabelecimento sem alvará, construção irregular, comércio informal em área proibida)",
+            "Denúncia de improbidade ou irregularidade administrativa (desvio de verba, contratação irregular)"
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Registro da Demanda",
+          "canais": [
+            "Aplicativo municipal: abertura de chamado com foto e geolocalização automática.",
+            "Portal web da prefeitura: formulário de solicitação por categoria de serviço.",
+            "Central telefônica 156: atendente registra a solicitação e informa o número de protocolo.",
+            "Presencialmente: nas subprefeituras, administrações regionais ou no protocolo central.",
+            "E-mail da ouvidoria: para denúncias com necessidade de maior detalhamento e sigilo."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Acompanhamento e Cobrança",
+          "descricao": "Orientar o cidadão a acompanhar o andamento e, se necessário, escalar a demanda.",
+          "passos": [
+            "Anote o número de protocolo — é a chave para acompanhamento.",
+            "Consulte o status pelo app, portal ou ligando para o 156.",
+            "Caso o prazo estimado seja ultrapassado sem resposta, registre uma reclamação sobre a demanda original — isso gera um segundo protocolo e eleva a prioridade.",
+            "Para irregularidades graves ou falta de resposta reiterada, acione o Ministério Público Municipal, o Tribunal de Contas ou o Procon Municipal."
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Acesso ao Portal da Transparência",
+      "descricao": "Fluxo de orientação para cidadãos, jornalistas ou pesquisadores que desejam acessar informações públicas sobre a gestão municipal.",
+      "etapas": [
+        {
+          "etapa": 1,
+          "nome": "Identificação do Tipo de Informação",
+          "categorias": [
+            "Execução orçamentária e financeira (receitas, despesas, empenhos, pagamentos)",
+            "Contratos e licitações (editais, contratos celebrados, fornecedores, valores)",
+            "Remuneração de servidores (salários, vencimentos, funções gratificadas)",
+            "Convênios e transferências (parcerias com entidades privadas, transferências a associações)",
+            "Patrimônio público (bens imóveis, veículos e equipamentos da prefeitura)",
+            "Pedido formal via LAI (informações não publicadas proativamente)"
+          ]
+        },
+        {
+          "etapa": 2,
+          "nome": "Navegação no Portal",
+          "orientacoes": [
+            "Acesse o Portal da Transparência em [URL do município].",
+            "Utilize os filtros por secretaria, período, tipo de despesa e fornecedor para refinar a busca.",
+            "Os dados de execução orçamentária são atualizados em D+1 (dia útil seguinte à transação).",
+            "Para downloads em massa, verifique a seção de dados abertos — disponível em formatos CSV e JSON nos portais mais avançados como São Paulo e Curitiba."
+          ]
+        },
+        {
+          "etapa": 3,
+          "nome": "Pedido de Acesso à Informação (LAI)",
+          "descricao": "Orientar sobre como formalizar um pedido de informação quando o dado desejado não está disponível publicamente.",
+          "passos": [
+            "Acesse o e-SIC do município (geralmente em [URL]/e-sic ou integrado ao portal da transparência).",
+            "Cadastre-se e preencha o formulário com a descrição clara e objetiva da informação solicitada.",
+            "O prazo legal de resposta é de 20 dias corridos, prorrogável por mais 10 mediante justificativa.",
+            "Em caso de recusa, você tem direito a recurso em até 10 dias ao superior hierárquico e, posteriormente, à CGM/ouvidoria e à Controladoria-Geral da União (para avaliação de descumprimento da LAI).",
+            "A negativa de acesso deve ser fundamentada — sigilo comercial, dados pessoais e segurança são as exceções mais comuns."
+          ]
+        }
+      ]
+    }
+  ],
+  "gatilhos_emocionais": [
+    {
+      "gatilho": "Confiança e Credibilidade Institucional",
+      "descricao": "O cidadão quer saber que a prefeitura é transparente, honesta e confiável no uso dos recursos públicos.",
+      "abordagem": "Reforçar o compromisso com o Portal da Transparência, os mecanismos de controle interno e externo (Controladoria, TCE, Ministério Público) e as certificações de governo digital como indicadores de gestão responsável."
+    },
+    {
+      "gatilho": "Frustração com Burocracia",
+      "descricao": "Um dos principais gatilhos negativos — o cidadão sente que a prefeitura cria obstáculos desnecessários.",
+      "abordagem": "Reconhecer a complexidade do processo com empatia genuína, oferecer um roteiro claro e simplificado passo a passo, e apresentar os canais digitais que eliminam a necessidade de presença física."
+    },
+    {
+      "gatilho": "Senso de Justiça e Equidade",
+      "descricao": "O cidadão quer sentir que as regras valem igualmente para todos — sem favorecimentos ou privilégios.",
+      "abordagem": "Destacar a publicidade dos processos licitatórios, a impessoalidade exigida na administração pública, os mecanismos de denúncia disponíveis e os casos em que a fiscalização municipal atuou com rigor."
+    },
+    {
+      "gatilho": "Medo de Perder Direitos ou Prazo",
+      "descricao": "Prazos de isenção, recursos, parcelamentos e regularizações geram ansiedade quando o cidadão não tem informação.",
+      "abordagem": "Comunicar ativamente os prazos relevantes (encerramento do prazo de isenção, prazo para parcelamento com desconto, prazo de recurso em licitação) com antecedência suficiente para ação."
+    },
+    {
+      "gatilho": "Orgulho Cívico e Pertencimento",
+      "descricao": "O cidadão que se sente parte ativa da cidade tende a ser mais colaborativo — paga impostos em dia, cuida do espaço público e participa.",
+      "abordagem": "Valorizar a contribuição do cidadão com o pagamento de tributos, destacando obras e serviços financiados com esses recursos. Estimular a participação em conselhos municipais e no orçamento participativo."
+    },
+    {
+      "gatilho": "Urgência e Necessidade Imediata",
+      "descricao": "Demandas de saúde, assistência social e segurança têm caráter de urgência que não admite espera.",
+      "abordagem": "Garantir encaminhamento ágil de demandas urgentes, com linguagem empática, sem burocracia adicional e com informação clara sobre o equipamento público mais próximo e disponível."
+    },
+    {
+      "gatilho": "Reconhecimento e Valorização",
+      "descricao": "O cidadão quer sentir que sua demanda é levada a sério e que há alguém responsável por resolvê-la.",
+      "abordagem": "Confirmar o recebimento de cada solicitação com número de protocolo, prazo esperado de resposta e nome da secretaria responsável. Enviar notificações de atualização de status sem que o cidadão precise perguntar."
+    },
+    {
+      "gatilho": "Proteção do Patrimônio",
+      "descricao": "Problemas com IPTU, dívida ativa e regularização fundiária tocam diretamente o patrimônio e o futuro financeiro do cidadão.",
+      "abordagem": "Abordar com objetividade e sem alarmismo as consequências de irregularidades tributárias (protesto em cartório, execução fiscal), apresentando imediatamente as alternativas de regularização disponíveis."
+    }
+  ],
+  "cenarios_simulacao": [
+    {
+      "id": "SIM-001",
+      "titulo": "Cidadão com IPTU muito Alto Ameaçando Não Pagar",
+      "contexto": "Proprietário de imóvel residencial contata a prefeitura reclamando que o IPTU deste ano aumentou 40% e ameaçando não pagar.",
+      "interacao": [
+        {
+          "papel": "Cidadão",
+          "mensagem": "O IPTU do meu imóvel aumentou 40% de um ano para o outro e eu não recebo nenhum serviço melhorado no meu bairro. Não vou pagar."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo sua indignação — um aumento dessa magnitude merece explicação. Primeiro, vou verificar o que pode ter ocorrido: o IPTU é calculado sobre o valor venal do imóvel, que pode ter sido atualizado pela revisão da Planta Genérica de Valores, ou houve alguma alteração cadastral no seu imóvel (área construída, uso). Você tem em mãos o número do contribuinte ou o endereço do imóvel? Consigo verificar agora o histórico de lançamentos e a base de cálculo para identificar a causa do aumento."
+        },
+        {
+          "papel": "Cidadão",
+          "mensagem": "O número é 12345678. E eu quero saber por que aumentou tanto."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Consultando o número 12345678... Identifiquei que houve revisão da Planta Genérica de Valores neste exercício, o que afetou imóveis em toda a sua região. Além disso, houve uma atualização cadastral registrando uma área de 45 m² que não constava anteriormente — isso é algo que você pode contestar se a área for incorreta. Para o aumento decorrente da PGV, a lei prevê prazo de impugnação de 30 dias. Quanto ao não pagamento: antes dessa decisão, preciso informar que o débito gera multa de 10% e juros de 1% ao mês, além de inscrição na dívida ativa com protesto em cartório. Uma alternativa é pagar parcelado agora e contestar formalmente o valor — se a contestação for procedente, você recebe a diferença de volta. Posso te orientar nos dois processos."
+        }
+      ]
+    },
+    {
+      "id": "SIM-002",
+      "titulo": "Empresa Desclassificada em Pregão Sem Entender o Motivo",
+      "contexto": "Representante de uma empresa de TI que participou de um pregão eletrônico foi desclassificado e entra em contato para entender o motivo.",
+      "interacao": [
+        {
+          "papel": "Empresa",
+          "mensagem": "Participamos de um pregão da prefeitura para fornecimento de software e fomos desclassificados sem nenhuma explicação adequada. Quero saber o motivo e se podemos recorrer."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Lamento que a situação não tenha sido clara durante o certame. Toda desclassificação em pregão eletrônico deve ser justificada nos autos do processo e publicada no sistema — você tem acesso à ata da sessão pública? Ela contém o motivo registrado pelo pregoeiro. Posso localizar o processo pelo número do pregão ou CNPJ da sua empresa. Qual é o número do certame?"
+        },
+        {
+          "papel": "Empresa",
+          "mensagem": "O número é PE 045/2025. Me disseram que nossa proposta não estava em conformidade, mas não especificaram o quê."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Localizando o Pregão Eletrônico 045/2025... A ata registra que a proposta foi desclassificada por não apresentar a declaração de conformidade com a LGPD exigida no item 8.3 do edital, e por o preço unitário ter ficado acima do valor de referência estabelecido no Termo de Referência. Quanto ao recurso: você tem 3 dias úteis a partir de hoje para interpor recurso administrativo, que deve ser fundamentado por escrito no portal do pregão. Se entender que a exigência da declaração foi aplicada de forma restritiva ou que o valor de referência estava subdimensionado, esse é o argumento a construir. Posso te orientar sobre como estruturar a peça de recurso?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-003",
+      "titulo": "Idoso Tentando Solicitar Isenção de IPTU",
+      "contexto": "Cidadão de 72 anos liga para a central 156 querendo solicitar isenção de IPTU mas não sabe o processo.",
+      "interacao": [
+        {
+          "papel": "Cidadão",
+          "mensagem": "Tenho 72 anos, moro só, e a minha vizinha me disse que eu tenho direito de não pagar IPTU. É verdade? Como eu faço isso?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Boa tarde! Sim, muitos municípios têm isenção de IPTU para moradores com 60 anos ou mais que sejam proprietários do único imóvel e tenham renda de até 3 salários mínimos. Você preenche esses requisitos? Você é o único dono do imóvel onde mora?"
+        },
+        {
+          "papel": "Cidadão",
+          "mensagem": "Sim, sou eu e meu falecido marido que estava no papel. Como fica isso?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo. Nesse caso, o primeiro passo é regularizar a propriedade no seu nome — isso é feito com o inventário do imóvel, mesmo que informal. Municípios como São Paulo e Curitiba têm programas de regularização fundiária simplificada para imóveis de baixo valor. Posso te encaminhar para o setor de assistência jurídica gratuita da prefeitura, que pode auxiliar gratuitamente na regularização do imóvel. Depois de regularizado, você solicita a isenção presencialmente na Secretaria de Fazenda ou pelo portal, com: RG, CPF, comprovante de residência, comprovante de renda e o número do contribuinte do IPTU. O senhor prefere que eu já agende o atendimento presencial ou gostaria de mais informações primeiro?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-004",
+      "titulo": "Jornalista Pedindo Dados de Contratos via LAI",
+      "contexto": "Jornalista entra em contato pelo portal da transparência para fazer um pedido formal de acesso à informação sobre contratos de publicidade.",
+      "interacao": [
+        {
+          "papel": "Jornalista",
+          "mensagem": "Gostaria de obter a lista de todos os contratos de publicidade e comunicação firmados pela prefeitura nos últimos 3 anos, com valores, fornecedores e objetos contratados."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Boa tarde! Parte dessas informações já está disponível proativamente no Portal da Transparência, na seção 'Contratos', filtráveis por secretaria e período — sugiro começar por lá, pois pode resolver parte da sua necessidade sem necessidade de protocolo formal. Para os dados que não estejam disponíveis ou para exportação estruturada, você pode formalizar um pedido via LAI pelo nosso e-SIC em [URL]. O prazo de resposta é de até 20 dias corridos. Para facilitar o atendimento, recomendo que o pedido especifique: período (anos), órgão contratante (Secretaria de Comunicação, todas as secretarias?), formato dos dados desejados (Excel, PDF) e se deseja os contratos completos ou apenas o extrato com as informações básicas. Posso ajudá-la a estruturar o pedido agora?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-005",
+      "titulo": "Microempresário com Problemas no Alvará",
+      "contexto": "Proprietário de uma barbearia que aguarda o Alvará de Funcionamento há 4 meses entra em contato desesperado, pois está operando sem regularização.",
+      "interacao": [
+        {
+          "papel": "Empresário",
+          "mensagem": "Abri minha barbearia há 4 meses, paguei todas as taxas e protocolei tudo que pediram. Até hoje não recebi o alvará. Minha empresa pode ser multada por isso?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo a urgência — operar sem alvará de fato gera risco de autuação pela fiscalização. Vamos resolver isso agora. Me informe o número do protocolo do requerimento para eu verificar em qual etapa o processo está."
+        },
+        {
+          "papel": "Empresário",
+          "mensagem": "O protocolo é 2025/ALV/00789."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Consultando o processo 2025/ALV/00789... Identifico que o parecer da Vigilância Sanitária está pendente desde o mês de fevereiro, aguardando agendamento de vistoria. O sistema mostra que não houve resposta ao e-mail enviado pela Vigilância para agendar a vistoria. Você recebeu esse e-mail? Pode ter ido para o spam. Se não recebeu, posso registrar agora uma notificação de urgência na Vigilância Sanitária e solicitar prioridade no agendamento. Além disso, em alguns municípios o microempreendedor pode solicitar o Auto de Funcionamento Provisório enquanto aguarda o alvará definitivo — isso te protege de autuações durante o processo. Quer que eu verifique se essa opção está disponível no seu caso?"
+        }
+      ]
+    },
+    {
+      "id": "SIM-006",
+      "titulo": "Cidadão Querendo Reportar Buraco Perigoso",
+      "contexto": "Moradora liga para o 156 reportando um buraco grande numa rua movimentada que já causou um acidente.",
+      "interacao": [
+        {
+          "papel": "Cidadão",
+          "mensagem": "Tem um buraco enorme na Rua das Flores que já causou um acidente de moto ontem. Preciso que alguém conserte urgente."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Boa tarde! Vou registrar essa solicitação agora com prioridade alta, dado o histórico de acidente. Para eu abrir o chamado de forma completa: qual é o número do endereço mais próximo ao buraco e em qual bairro fica a Rua das Flores?"
+        },
+        {
+          "papel": "Cidadão",
+          "mensagem": "É na Rua das Flores, 340, no bairro Jardim Primavera."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Chamado registrado com o número de protocolo 2025-ZEL-048291, encaminhado com prioridade à Subprefeitura responsável pela região. O prazo padrão para atendimento é de até 30 dias, mas dado o risco de segurança com histórico de acidente, vou incluir uma marcação de urgência que eleva a prioridade interna. Recomendo que você também fotografe o buraco agora pelo app da prefeitura — a foto com geolocalização reforça o chamado. Você receberá um SMS de confirmação neste número e pode acompanhar o status pelo app ou ligando novamente para o 156 com o número do protocolo. Há algo mais em que posso ajudar?"
+        }
+      ]
+    }
+  ],
+  "faq_estruturado": [
+    {
+      "id": "FAQ-001",
+      "categoria": "IPTU",
+      "pergunta": "O que é IPTU e quem é obrigado a pagar?",
+      "resposta": "O IPTU (Imposto Predial e Territorial Urbano) é um tributo municipal que incide sobre imóveis localizados em área urbana. São obrigados a pagar o proprietário, o titular do domínio útil ou o possuidor do imóvel a qualquer título. Imóveis rurais são tributados pelo ITR (Imposto Territorial Rural), cobrado pela União."
+    },
+    {
+      "id": "FAQ-002",
+      "categoria": "IPTU",
+      "pergunta": "Como é calculado o valor do IPTU?",
+      "resposta": "O IPTU é calculado multiplicando-se o valor venal do imóvel (definido pela Planta Genérica de Valores do município) pela alíquota correspondente ao tipo e uso do imóvel. Imóveis residenciais geralmente têm alíquotas menores que imóveis comerciais e terrenos. O valor venal leva em conta localização, área, padrão construtivo e infraestrutura do logradouro."
+    },
+    {
+      "id": "FAQ-003",
+      "categoria": "IPTU",
+      "pergunta": "Como emitir a guia de pagamento do IPTU?",
+      "resposta": "A guia pode ser emitida pelo portal oficial da prefeitura, no aplicativo municipal ou presencialmente nos postos de atendimento da Secretaria de Fazenda. Para emissão online, é necessário o número do contribuinte, que consta no carnê físico entregue pelos Correios ou na notificação de lançamento."
+    },
+    {
+      "id": "FAQ-004",
+      "categoria": "IPTU",
+      "pergunta": "É possível parcelar o IPTU em atraso?",
+      "resposta": "Sim. A maioria dos municípios oferece programas de parcelamento de dívida tributária (REFIS municipais) com desconto em juros e multas. Além disso, débitos inscritos em dívida ativa podem ser parcelados em até 60 ou 120 parcelas, dependendo do valor e da legislação municipal. O parcelamento regulariza a situação do contribuinte, possibilitando emissão de certidão negativa de débitos."
+    },
+    {
+      "id": "FAQ-005",
+      "categoria": "IPTU",
+      "pergunta": "Quem tem direito à isenção de IPTU?",
+      "resposta": "As isenções mais comuns são: proprietários idosos (geralmente 60 anos ou mais) com único imóvel e renda limitada; pessoas com deficiência grave; entidades filantrópicas, igrejas e organizações sem fins lucrativos que cumpram os requisitos constitucionais; ex-combatentes da Segunda Guerra Mundial; e imóveis de baixo valor venal. As condições variam por município e devem ser verificadas na legislação local."
+    },
+    {
+      "id": "FAQ-006",
+      "categoria": "IPTU",
+      "pergunta": "Como contestar o valor do IPTU que considero incorreto?",
+      "resposta": "O contribuinte pode apresentar impugnação administrativa no prazo fixado em lei (geralmente 30 dias após a notificação de lançamento) à Secretaria Municipal de Fazenda, apontando o erro específico — área incorreta, uso indevido, valor venal acima do mercado ou outro. Em caso de indeferimento, é possível recorrer ao Conselho de Contribuintes ou ao Poder Judiciário."
+    },
+    {
+      "id": "FAQ-007",
+      "categoria": "IPTU",
+      "pergunta": "O que acontece se eu não pagar o IPTU?",
+      "resposta": "O débito de IPTU vence com acréscimo de multa (geralmente 10%) e juros de mora (1% ao mês). Após prazo de cobrança administrativa, é inscrito em dívida ativa e pode ser objeto de protesto em cartório e execução fiscal, com possibilidade de penhora de bens do devedor. Não compromete a propriedade diretamente, mas impede a emissão de certidão negativa e pode dificultar venda e financiamento do imóvel."
+    },
+    {
+      "id": "FAQ-008",
+      "categoria": "IPTU",
+      "pergunta": "O que é valor venal e como ele é determinado?",
+      "resposta": "O valor venal é o valor de referência que a prefeitura atribui ao imóvel para fins de tributação, calculado com base na Planta Genérica de Valores (PGV). Considera a localização, o padrão construtivo, a área total do imóvel e do terreno e a infraestrutura do logradouro. Difere do valor de mercado e pode ser contestado pelo contribuinte se divergir significativamente da realidade."
+    },
+    {
+      "id": "FAQ-009",
+      "categoria": "ISS",
+      "pergunta": "O que é ISS e quem deve pagá-lo?",
+      "resposta": "O ISS (Imposto Sobre Serviços) é um tributo municipal que incide sobre a prestação de serviços de qualquer natureza listados na Lei Complementar nº 116/2003. Devem recolhê-lo os prestadores de serviços — pessoas físicas autônomas, microempreendedores individuais (MEI, quando aplicável), empresas de todos os portes, exceto optantes pelo Simples Nacional que recolhem o ISS junto ao DAS."
+    },
+    {
+      "id": "FAQ-010",
+      "categoria": "ISS",
+      "pergunta": "Qual é a alíquota do ISS e como é calculado?",
+      "resposta": "A alíquota mínima do ISS é de 2% e a máxima de 5%, conforme a Lei Complementar nº 116/2003. Cada município define suas alíquotas por tipo de serviço dentro desse intervalo. O ISS é calculado sobre o preço total do serviço prestado. Alguns municípios aplicam alíquotas diferenciadas para serviços de tecnologia, saúde, educação e construção civil."
+    },
+    {
+      "id": "FAQ-011",
+      "categoria": "ISS",
+      "pergunta": "O que é a Nota Fiscal de Serviços Eletrônica (NFS-e)?",
+      "resposta": "É o documento fiscal digital que o prestador de serviços emite pelo portal da prefeitura para registrar cada prestação de serviço. Substitui o antigo bloco de notas em papel, permite ao tomador de serviços verificar a autenticidade e é a base para o cálculo e recolhimento do ISS. A não emissão pode resultar em autuação fiscal com multa de 50% a 100% do valor do serviço."
+    },
+    {
+      "id": "FAQ-012",
+      "categoria": "ISS",
+      "pergunta": "O que é ISS retido na fonte e quando se aplica?",
+      "resposta": "O ISS retido na fonte ocorre quando o tomador do serviço (geralmente empresa ou órgão público) é obrigado a descontar o ISS do valor pago ao prestador e recolhê-lo diretamente ao município. Aplica-se especialmente quando o tomador está no município e o serviço é de determinadas categorias previstas em lei (construção civil, limpeza, segurança, entre outras). O prestador não precisa recolher o ISS separadamente nesses casos."
+    },
+    {
+      "id": "FAQ-013",
+      "categoria": "ITBI",
+      "pergunta": "O que é ITBI e quando é cobrado?",
+      "resposta": "O ITBI (Imposto de Transmissão de Bens Imóveis) é um tributo municipal cobrado na transmissão intervivos de bens imóveis por ato oneroso (compra e venda, dação em pagamento, permuta). Não incide sobre doações (sujeitas ao ITCMD estadual) nem sobre transmissões para integralização de capital de empresa ou por herança. Deve ser pago pelo comprador antes do registro da escritura."
+    },
+    {
+      "id": "FAQ-014",
+      "categoria": "ITBI",
+      "pergunta": "Qual é a alíquota do ITBI?",
+      "resposta": "A alíquota do ITBI varia por município — em geral entre 2% e 3% sobre o maior valor entre o valor venal do imóvel (definido pela prefeitura) e o valor declarado na escritura. Cidades como São Paulo cobram 3%; Rio de Janeiro cobra 3%; Curitiba cobra 2,7%; Belo Horizonte cobra 3%. É importante verificar a alíquota específica do município onde o imóvel está localizado."
+    },
+    {
+      "id": "FAQ-015",
+      "categoria": "Licitações",
+      "pergunta": "Quais são as modalidades de licitação previstas na Nova Lei (14.133/2021)?",
+      "resposta": "A Nova Lei de Licitações prevê cinco modalidades: Pregão (para bens e serviços comuns, preferencialmente eletrônico); Concorrência (para obras e serviços de engenharia acima de R$ 3,3 milhões, bens e serviços especiais e concessões); Concurso (para projetos técnicos, científicos ou artísticos); Leilão (para alienação de bens imóveis ou móveis inservíveis); e Diálogo Competitivo (para contratações inovadoras onde o mercado pode contribuir para a definição da solução)."
+    },
+    {
+      "id": "FAQ-016",
+      "categoria": "Licitações",
+      "pergunta": "O que é Dispensa de Licitação e quais são os limites de valor?",
+      "resposta": "A Dispensa de Licitação permite contratação direta sem processo competitivo em situações específicas. Os limites de valor na Lei 14.133/2021 são: obras e serviços de engenharia — até R$ 100.000; outros serviços e compras — até R$ 50.000; consórcios públicos — o dobro desses valores. Além dos limites financeiros, existem hipóteses qualitativas de dispensa como emergência, calamidade, exclusividade de fornecedor e outros casos do Art. 75."
+    },
+    {
+      "id": "FAQ-017",
+      "categoria": "Licitações",
+      "pergunta": "Como uma empresa de outro estado pode participar de licitações de uma prefeitura?",
+      "resposta": "A Constituição veda preferência por empresas locais em licitações, garantindo igualdade de participação a empresas de qualquer estado. Empresas de outro estado devem: possuir CNPJ ativo, estar em dia com as obrigações tributárias federais, estaduais e municipais (do seu domicílio fiscal), participar via plataforma eletrônica (Pregão Eletrônico) que elimina a necessidade de presença física. Para habilitação jurídica, os documentos devem ser apresentados conforme exigido no edital."
+    },
+    {
+      "id": "FAQ-018",
+      "categoria": "Licitações",
+      "pergunta": "O que é o Portal Nacional de Contratações Públicas (PNCP)?",
+      "resposta": "O PNCP (pncp.gov.br) é a plataforma federal de publicação obrigatória de todos os editais, contratos, atas de registro de preços e resultados de licitações de órgãos públicos federais, estaduais e municipais. Centraliza o acesso a oportunidades de contratação pública em todo o Brasil, permitindo que empresas monitorem oportunidades sem acessar dezenas de portais municipais diferentes."
+    },
+    {
+      "id": "FAQ-019",
+      "categoria": "Licitações",
+      "pergunta": "O que é Ata de Registro de Preços e como ela beneficia fornecedores?",
+      "resposta": "A Ata de Registro de Preços (ARP) é um instrumento onde a prefeitura registra preços de produtos ou serviços vencedores de licitação para contratações futuras, sem comprometimento imediato de quantidade. Para o fornecedor, é uma oportunidade de vender ao município por até 12 meses (prorrogável por mais 12) sem que haja nova licitação a cada demanda. A ata pode ser utilizada por outros órgãos municipais (carona/adesão), ampliando o volume potencial de negócios."
+    },
+    {
+      "id": "FAQ-020",
+      "categoria": "Licitações",
+      "pergunta": "O que acontece se uma empresa for declarada inidônea pela prefeitura?",
+      "resposta": "A declaração de inidoneidade é a penalidade mais grave da Lei 14.133/2021. Impede a empresa de participar de licitações e contratar com a administração pública em qualquer esfera (federal, estadual e municipal) pelo prazo de 3 a 6 anos. É aplicada para infrações graves como fraude em licitações, entrega de produto falsificado ou adulterado. Pode ser desconstituída via recurso ao TCU (para o âmbito federal) ou Tribunal de Contas competente."
+    },
+    {
+      "id": "FAQ-021",
+      "categoria": "Serviços Municipais",
+      "pergunta": "Como funciona o SUS municipal? O que a prefeitura oferece na área de saúde?",
+      "resposta": "No âmbito municipal, o SUS oferece Atenção Primária (UBS — Unidade Básica de Saúde), com consultas clínicas, saúde bucal, vacinação, pré-natal, saúde do idoso e programas preventivos; Urgência e Emergência (UPA e SAMU); e em muitos municípios, Centros de Especialidades Médicas para consultas especializadas. Internações e procedimentos de alta complexidade são geralmente referenciados para hospitais estaduais ou federais, exceto nos municípios com hospitais próprios."
+    },
+    {
+      "id": "FAQ-022",
+      "categoria": "Serviços Municipais",
+      "pergunta": "Como faço para matricular meu filho em creche municipal?",
+      "resposta": "O cadastramento para creche municipal é realizado pelo portal ou aplicativo da prefeitura, ou presencialmente nas secretarias de educação ou nas próprias unidades. A vaga em creche (0 a 3 anos) é um direito constitucional da criança. A distribuição de vagas segue critérios de vulnerabilidade social, proximidade da residência e ordem de cadastramento. Em cidades com alta demanda, há lista de espera — é importante cadastrar o quanto antes."
+    },
+    {
+      "id": "FAQ-023",
+      "categoria": "Serviços Municipais",
+      "pergunta": "Como denunciar um estabelecimento que funciona sem alvará?",
+      "resposta": "Denúncias de estabelecimentos irregulares podem ser feitas pelo aplicativo municipal, pela central 156, pelo portal da prefeitura (seção de fiscalização ou ouvidoria) ou presencialmente na Secretaria de Fiscalização. É possível identificar-se ou fazer a denúncia de forma anônima. A fiscalização municipal tem o dever de apurar a irregularidade e notificar o responsável, que terá prazo para regularização ou estará sujeito a interdição."
+    },
+    {
+      "id": "FAQ-024",
+      "categoria": "Serviços Municipais",
+      "pergunta": "Como solicitar poda de árvore ou remoção de árvore em risco na minha calçada?",
+      "resposta": "Solicitações de poda e remoção de árvores devem ser feitas pelo aplicativo municipal, pelo 156 ou pelo portal da prefeitura, informando o endereço e, de preferência, fotos da situação. Remoção de árvores requer avaliação técnica e, em muitos casos, compensação ambiental (plantio de nova muda). O prazo médio de atendimento varia entre 30 e 90 dias, dependendo da urgência avaliada e da fila de demandas do município."
+    },
+    {
+      "id": "FAQ-025",
+      "categoria": "Serviços Municipais",
+      "pergunta": "O que é o Cadastro Único (CadÚnico) e como me cadastrar?",
+      "resposta": "O CadÚnico é o sistema federal de identificação e caracterização de famílias de baixa renda que permite o acesso a programas sociais como Bolsa Família/Auxílio Brasil, BPC, Tarifa Social de Energia, Isenção de Taxas em Concursos Públicos e outros. O cadastramento é feito gratuitamente nos CRAS (Centros de Referência de Assistência Social) do município, mediante apresentação de documentos pessoais de todos os membros da família."
+    },
+    {
+      "id": "FAQ-026",
+      "categoria": "Transparência e LAI",
+      "pergunta": "O que é a Lei de Acesso à Informação e como ela protege o cidadão?",
+      "resposta": "A Lei de Acesso à Informação (Lei nº 12.527/2011) garante a qualquer pessoa, física ou jurídica, o direito de solicitar informações a órgãos públicos de todas as esferas sem necessidade de justificar o motivo do pedido. Os órgãos têm até 20 dias para responder (prorrogável por mais 10). A recusa deve ser fundamentada. O descumprimento pode ser denunciado ao Ministério Público e ao Tribunal de Contas."
+    },
+    {
+      "id": "FAQ-027",
+      "categoria": "Transparência e LAI",
+      "pergunta": "O salário dos servidores públicos municipais é público?",
+      "resposta": "Sim. A remuneração de todos os servidores públicos é informação de acesso público, conforme a Constituição Federal e a LAI. Os dados devem ser publicados no Portal da Transparência com nome, cargo e remuneração bruta. O STF já pacificou esse entendimento, que não conflita com a proteção de dados pessoais por se tratar de informação relativa ao exercício de função pública remunerada com recursos do contribuinte."
+    },
+    {
+      "id": "FAQ-028",
+      "categoria": "Transparência e LAI",
+      "pergunta": "Como acompanhar como a prefeitura está gastando o dinheiro público?",
+      "resposta": "O acompanhamento pode ser feito pelo Portal da Transparência do município, que publica receitas arrecadadas, despesas empenhadas, liquidadas e pagas por secretaria, programa e fornecedor — geralmente atualizadas em D+1. Para análise mais aprofundada, portais de capitais como São Paulo (transparencia.prefeitura.sp.gov.br), Rio de Janeiro e Curitiba oferecem dados abertos para download em formato CSV e JSON."
+    },
+    {
+      "id": "FAQ-029",
+      "categoria": "Transparência e LAI",
+      "pergunta": "O que é o Diário Oficial Municipal e onde é publicado?",
+      "resposta": "O Diário Oficial Municipal é a publicação oficial de atos administrativos da prefeitura — decretos, portarias, licitações, contratos, nomeações, exonerações e outros atos de efeito jurídico. Pode ser consultado no portal da prefeitura, geralmente na seção 'Diário Oficial' ou 'Legislação'. Em São Paulo, é publicado no DOC (Diário Oficial da Cidade); no Rio de Janeiro, no Diário Oficial do Município do Rio de Janeiro."
+    },
+    {
+      "id": "FAQ-030",
+      "categoria": "Transparência e LAI",
+      "pergunta": "Como denunciar suspeita de irregularidade ou desvio de recursos na prefeitura?",
+      "resposta": "Denúncias podem ser feitas por múltiplos canais: Ouvidoria Municipal (garante sigilo do denunciante); Ministério Público Estadual (GAECO para casos de crime organizado); Tribunal de Contas do Estado (TCE); Controladoria-Geral da União (para desvios de recursos federais); Polícia Civil ou Federal (dependendo da natureza do crime). A denúncia pode ser feita de forma anônima na maioria dos canais."
+    },
+    {
+      "id": "FAQ-031",
+      "categoria": "Licenciamento",
+      "pergunta": "O que é o Alvará de Funcionamento e quando é obrigatório?",
+      "resposta": "O Alvará de Funcionamento é a licença emitida pela prefeitura que autoriza o exercício de atividades econômicas em determinado endereço. É obrigatório para qualquer estabelecimento comercial, industrial ou de serviços antes do início das atividades. Funcionar sem alvará sujeita o estabelecimento a interdição e multa. A renovação é geralmente anual e condicionada à manutenção das condições que justificaram a concessão."
+    },
+    {
+      "id": "FAQ-032",
+      "categoria": "Licenciamento",
+      "pergunta": "O que é consulta de viabilidade e por que é o primeiro passo para abrir uma empresa?",
+      "resposta": "A Consulta de Viabilidade é a verificação, antes de qualquer investimento, de que a atividade pretendida é permitida no endereço escolhido conforme o zoneamento municipal. Uma atividade industrial, por exemplo, pode ser proibida em zona exclusivamente residencial. A consulta é feita no portal da prefeitura informando o endereço e o CNAE da atividade. Caso o resultado seja negativo, é necessário escolher outro endereço antes de prosseguir com o registro da empresa."
+    },
+    {
+      "id": "FAQ-033",
+      "categoria": "Licenciamento",
+      "pergunta": "O que é o Habite-se e quando preciso obtê-lo?",
+      "resposta": "O Habite-se (ou Certificado de Conclusão de Obra) é o documento emitido pela prefeitura após vistoria técnica que atesta que a construção foi concluída em conformidade com o projeto aprovado. É necessário para registrar o imóvel no Cartório de Registro de Imóveis, para financiamentos imobiliários, para a averbação da construção no IPTU e para a regularização do imóvel. Imóveis sem Habite-se têm dificuldades na venda e não podem ser financiados pelo FGTS."
+    },
+    {
+      "id": "FAQ-034",
+      "categoria": "Licenciamento",
+      "pergunta": "Posso fazer uma reforma na minha casa sem comunicar a prefeitura?",
+      "resposta": "Reformas simples que não alteram a estrutura, o uso ou as dimensões do imóvel (como pintura, troca de piso e reformas internas menores) geralmente não exigem comunicação prévia. Reformas que ampliam a área construída, alteram a fachada, mudam o uso ou tocam na estrutura exigem Alvará de Obras e aprovação de projeto. Realizar obras sujeitas a licença sem o alvará pode resultar em embargo, multa e obrigação de demolição das partes irregulares."
+    },
+    {
+      "id": "FAQ-035",
+      "categoria": "Licenciamento",
+      "pergunta": "O que é Regularização Fundiária (REURB) e para quem é indicada?",
+      "resposta": "A Regularização Fundiária Urbana (REURB), regulada pela Lei nº 13.465/2017, é o processo de reconhecimento jurídico de assentamentos informais consolidados, garantindo titulação aos moradores. É indicada para moradores de favelas, loteamentos irregulares e ocupações históricas que não possuem escritura ou registro formal do imóvel. Permite a obtenção de Certidão de Regularização Fundiária (CRF), que tem efeito de escritura e pode ser registrada em cartório, conferindo propriedade plena ao morador."
+    },
+    {
+      "id": "FAQ-036",
+      "categoria": "Atendimento",
+      "pergunta": "O que é o 156 e quais serviços posso solicitar por ele?",
+      "resposta": "O 156 é a central de atendimento ao cidadão adotada pela maioria das grandes prefeituras brasileiras. Por ele é possível: abrir solicitações de zeladoria (buraco, iluminação, lixo, poda), obter informações sobre serviços municipais, registrar reclamações, obter orientações sobre tributos, agendar serviços de saúde e muito mais. O atendimento é gratuito e funciona geralmente em horário comercial (com variações por cidade)."
+    },
+    {
+      "id": "FAQ-037",
+      "categoria": "Atendimento",
+      "pergunta": "Qual é o prazo para a prefeitura responder ao meu pedido de serviço?",
+      "resposta": "Os prazos variam por tipo de serviço e estão previstos na Carta de Serviços ao Usuário de cada prefeitura. Referências comuns: tapa-buraco — até 30 dias; poda de árvore — até 60 dias; iluminação pública apagada — 3 a 10 dias úteis; resposta a pedido via LAI — 20 dias corridos; emissão de certidão negativa de débitos — imediata a 5 dias úteis; alvará de funcionamento de atividade de baixo risco — automático ou até 30 dias."
+    },
+    {
+      "id": "FAQ-038",
+      "categoria": "Atendimento",
+      "pergunta": "O que fazer quando a prefeitura não responde dentro do prazo?",
+      "resposta": "Se a prefeitura não responder dentro do prazo estabelecido, o cidadão pode: registrar nova reclamação referenciando o protocolo original (isso eleva a prioridade interna); acionar a Ouvidoria Municipal, que tem papel de cobrar respostas das secretarias; para pedidos via LAI, recorrer ao superior hierárquico no prazo de 10 dias após o vencimento; e como último recurso, registrar ocorrência no Procon Municipal ou acionar o Ministério Público."
+    },
+    {
+      "id": "FAQ-039",
+      "categoria": "Atendimento",
+      "pergunta": "Como agendar consulta médica numa UBS?",
+      "resposta": "O agendamento pode ser feito presencialmente na própria UBS (geralmente em horário de abertura, com distribuição de fichas), pela central 156 ou pelo aplicativo/portal da prefeitura em cidades mais digitalizadas. Consultas de urgência são atendidas por demanda espontânea. Para especialidades, o encaminhamento parte da UBS — o cidadão não acessa especialistas diretamente pelo SUS sem a referência da atenção primária."
+    },
+    {
+      "id": "FAQ-040",
+      "categoria": "Programas Sociais",
+      "pergunta": "Quais programas de assistência social a prefeitura oferece?",
+      "resposta": "As prefeituras municipais geralmente oferecem: proteção social básica via CRAS (acompanhamento de famílias vulneráveis, CadÚnico, acesso a benefícios federais); proteção especial via CREAS (atendimento a vítimas de violência, crianças e adolescentes em risco); programas habitacionais (regularização fundiária, reformas emergenciais, inserção em programas federais); benefícios eventuais (auxílio funeral, natalidade, alimentação emergencial); e programas de geração de renda (cursos profissionalizantes, microcrédito)."
+    },
+    {
+      "id": "FAQ-041",
+      "categoria": "Programas Sociais",
+      "pergunta": "Como saber se tenho direito ao Bolsa Família ou outros benefícios federais?",
+      "resposta": "O acesso ao Bolsa Família (e outros benefícios como BPC e Tarifa Social) passa pelo CadÚnico. O cidadão deve se cadastrar no CRAS mais próximo. Para o Bolsa Família, a família deve ter renda per capita de até R$ 218,00. A concessão é gerida pelo Ministério do Desenvolvimento Social em âmbito federal, mas o cadastramento e atualização do CadÚnico são operados pelo município."
+    },
+    {
+      "id": "FAQ-042",
+      "categoria": "Mobilidade e Transporte",
+      "pergunta": "A prefeitura é responsável pelos ônibus urbanos?",
+      "resposta": "Em grande parte dos municípios brasileiros, o transporte público por ônibus é operado por empresas privadas mediante contrato de concessão ou permissão com a prefeitura. A prefeitura define as rotas, os padrões de qualidade, as tarifas e a frota mínima. Reclamações sobre qualidade do serviço devem ser direcionadas à secretaria ou autarquia municipal de transportes (SPTrans em São Paulo, SMTR no Rio, BHTrans em BH, entre outros)."
+    },
+    {
+      "id": "FAQ-043",
+      "categoria": "Mobilidade e Transporte",
+      "pergunta": "Como solicitar meia-passagem municipal?",
+      "resposta": "O benefício de meia-passagem (ou gratuidade) no transporte público municipal varia por cidade. Em geral, têm direito: estudantes de ensino público (com carteira estudantil), idosos com 65 anos ou mais (gratuidade total, garantida pelo Estatuto do Idoso), pessoas com deficiência e acompanhante, servidores municipais (em alguns municípios). O cadastramento é feito junto à empresa de transporte ou à secretaria municipal responsável, com apresentação de documentação comprobatória."
+    },
+    {
+      "id": "FAQ-044",
+      "categoria": "Meio Ambiente",
+      "pergunta": "Como funciona a coleta seletiva no município?",
+      "resposta": "A coleta seletiva é regulada pela Lei Federal nº 12.305/2010 (PNRS) e operada pelos municípios. Nas cidades com coleta seletiva estruturada, o cidadão separa resíduos recicláveis (papel, plástico, metal, vidro) do lixo orgânico e os coloca em dias e horários específicos ou em pontos de entrega voluntária (PEVs). Detalhes do calendário e dos pontos de coleta estão disponíveis no portal da prefeitura."
+    },
+    {
+      "id": "FAQ-045",
+      "categoria": "Meio Ambiente",
+      "pergunta": "Como denunciar descarte irregular de lixo ou entulho?",
+      "resposta": "O descarte irregular pode ser denunciado pelo 156, pelo aplicativo municipal (com foto e geolocalização) ou pela Secretaria de Meio Ambiente. A prefeitura tem a obrigação de retirar o material descartado irregularmente em vias públicas. O descarte irregular é infração ambiental sujeita a multa para o infrator identificado."
+    },
+    {
+      "id": "FAQ-046",
+      "categoria": "Governo Digital",
+      "pergunta": "Quais cidades brasileiras são referências em governo digital municipal?",
+      "resposta": "São Paulo lidera com o SP156 e o portal de dados abertos (dados.prefeitura.sp.gov.br). Curitiba é referência em mobilidade urbana inteligente e no aplicativo Curitiba App com mais de 100 serviços digitais. Belo Horizonte se destaca pelo BH App e pelo orçamento participativo digital. Fortaleza investe em governo eletrônico integrado com serviços de saúde e educação. O GDF tem o DF na Palma da Mão para serviços do Distrito Federal."
+    },
+    {
+      "id": "FAQ-047",
+      "categoria": "Governo Digital",
+      "pergunta": "O que é o Gov.br e qual é a relação com os serviços municipais?",
+      "resposta": "O Gov.br é a identidade digital unificada do Governo Federal que permite ao cidadão acessar serviços de vários órgãos federais com um único login. Progressivamente, municípios passam a aceitar o login Gov.br para acesso a serviços municipais integrados ao portal de serviços federal. Municípios com sistemas próprios podem exigir cadastro separado no portal municipal, embora haja movimento de integração."
+    },
+    {
+      "id": "FAQ-048",
+      "categoria": "Participação Cidadã",
+      "pergunta": "O que é o Orçamento Participativo e como o cidadão pode participar?",
+      "resposta": "O Orçamento Participativo (OP) é um mecanismo de participação popular em que a prefeitura reserva parte do orçamento para ser direcionada conforme as prioridades indicadas pelos próprios cidadãos. As etapas incluem assembleias regionais ou votação online onde os moradores indicam demandas (obras, serviços), que são analisadas tecnicamente e incluídas no orçamento quando aprovadas. Fortaleza, Porto Alegre e outras cidades têm tradição consolidada nesse instrumento."
+    },
+    {
+      "id": "FAQ-049",
+      "categoria": "Participação Cidadã",
+      "pergunta": "O que são os Conselhos Municipais e como participar?",
+      "resposta": "Conselhos Municipais são órgãos colegiados que reúnem representantes do poder público e da sociedade civil para deliberar sobre políticas públicas em áreas específicas — saúde, educação, assistência social, criança e adolescente, idoso, habitação, meio ambiente, entre outros. São instâncias de controle social e participação popular. Para participar, o interessado deve acompanhar os editais de eleição de representantes da sociedade civil, publicados no Diário Oficial."
+    },
+    {
+      "id": "FAQ-050",
+      "categoria": "Recursos Humanos Municipais",
+      "pergunta": "Como funciona o concurso público municipal?",
+      "resposta": "Concursos públicos municipais são realizados para preenchimento de vagas no quadro efetivo do município. O edital é publicado no Diário Oficial e nos principais portais de concursos. Contém: descrição do cargo, salário, carga horária, requisitos de escolaridade, conteúdo programático, cronograma e regras de inscrição. A aprovação não gera direito imediato à nomeação — o candidato pode aguardar dentro do prazo de validade do concurso (geralmente 2 anos, prorrogável por mais 2)."
+    },
+    {
+      "id": "FAQ-051",
+      "categoria": "Tributação",
+      "pergunta": "O que é a Certidão Negativa de Débitos Municipais e quando preciso dela?",
+      "resposta": "A Certidão Negativa de Débitos (CND) atesta que determinado CPF ou CNPJ não possui débitos tributários em aberto com o município. É exigida para: participação em licitações públicas, obtenção de financiamentos e créditos, transferência de imóveis (para o ITBI), renovação de alvarás, habilitação em programas governamentais e, em alguns estados, para certidões estaduais e federais. Pode ser emitida pelo portal da prefeitura."
+    },
+    {
+      "id": "FAQ-052",
+      "categoria": "Tributação",
+      "pergunta": "O que é a Dívida Ativa Municipal e quais são as consequências de estar inscrito nela?",
+      "resposta": "A Dívida Ativa Municipal é o conjunto de créditos tributários não pagos no prazo, inscritos formalmente pela Procuradoria do município para cobrança judicial. As consequências incluem: acréscimo de multa, juros e honorários advocatícios; protesto em cartório do município (mancha no crédito); impossibilidade de emissão de certidão negativa; e execução fiscal com possibilidade de penhora de bens. A regularização é feita diretamente com a Procuradoria Municipal, geralmente com possibilidade de parcelamento."
+    },
+    {
+      "id": "FAQ-053",
+      "categoria": "Infraestrutura",
+      "pergunta": "A prefeitura é responsável pelas calçadas?",
+      "resposta": "No Brasil, a responsabilidade pelas calçadas varia por legislação municipal. Em grande parte dos municípios, a manutenção da calçada é obrigação do proprietário do imóvel frontal. A prefeitura é responsável pelas calçadas em frente a imóveis públicos, praças e logradouros públicos. Calçadas em mau estado que representam risco podem ser denunciadas à prefeitura, que notificará o proprietário a regularizar. Em casos de inércia, a prefeitura pode executar a obra e cobrar o custo do proprietário."
+    },
+    {
+      "id": "FAQ-054",
+      "categoria": "Infraestrutura",
+      "pergunta": "Como solicitar instalação ou reparo de ponto de ônibus?",
+      "resposta": "Solicitações de instalação de novos pontos de ônibus ou reparo de estruturas danificadas devem ser feitas à secretaria ou autarquia responsável pelo transporte público do município, pelo 156, pelo aplicativo ou pelo portal da prefeitura. A aprovação de novos pontos considera o volume de passageiros, a segurança da localização e a operação das linhas existentes. Pontos vandalados ou com estrutura danificada são atendidos com maior rapidez por questão de segurança."
+    },
+    {
+      "id": "FAQ-055",
+      "categoria": "Iluminação",
+      "pergunta": "Como reportar lâmpada apagada na via pública?",
+      "resposta": "Lâmpadas apagadas na iluminação pública podem ser reportadas pelo aplicativo municipal, pelo 156 ou pelo portal da prefeitura, informando o endereço exato e, se possível, o número do poste (afixado em placa metálica na base ou na base da luminária). O prazo de atendimento varia entre 3 e 10 dias úteis dependendo do município. Em cidades onde a concessão da iluminação foi transferida para o setor privado, o chamado pode ser direcionado diretamente à concessionária."
+    }
+  ],
+  "cross_knowledge": [
+    {
+      "dominio": "Direito Administrativo",
+      "relevancia": "Princípios da administração pública (legalidade, impessoalidade, moralidade, publicidade e eficiência), poder de polícia, atos administrativos, contratos administrativos, responsabilidade civil do Estado.",
+      "aplicacao_prefeitura": "Toda atuação da prefeitura deve observar os princípios constitucionais. O poder de polícia fundamenta a fiscalização, o licenciamento e as autuações. Contratos administrativos têm regras específicas de aditivos, rescisão e penalidades."
+    },
+    {
+      "dominio": "Direito Tributário",
+      "relevancia": "Código Tributário Nacional (CTN), princípios tributários (legalidade, anterioridade, irretroatividade, capacidade contributiva), lançamento, prescrição e decadência tributária, execução fiscal.",
+      "aplicacao_prefeitura": "O IPTU, ISS e ITBI são regulados pelo CTN e por leis complementares nacionais. A prefeitura só pode criar, modificar ou extinguir tributos por lei municipal. Débitos tributários têm prazo de prescrição de 5 anos para execução fiscal."
+    },
+    {
+      "dominio": "Lei de Responsabilidade Fiscal",
+      "relevancia": "Lei Complementar 101/2000, limites de gastos com pessoal (60% da RCL para estados e municípios), vedações em ano eleitoral, transparência fiscal, controle de endividamento.",
+      "aplicacao_prefeitura": "Prefeituras com gastos de pessoal acima do limite estão proibidas de contratar, remanejar e conceder aumentos. Descumprimento pode resultar em sanções do TCE e bloqueio de transferências voluntárias federais."
+    },
+    {
+      "dominio": "Lei Geral de Proteção de Dados (LGPD)",
+      "relevancia": "Lei nº 13.709/2018, tratamento de dados pessoais pelo poder público, bases legais para tratamento (cumprimento de obrigação legal, execução de política pública), direitos dos titulares, encarregado de dados.",
+      "aplicacao_prefeitura": "Prefeituras coletam e processam enormes volumes de dados pessoais — CadÚnico, prontuários de saúde, cadastros tributários, sistemas de mobilidade. A LGPD exige que esse tratamento seja minimizado, finalístico e seguro."
+    },
+    {
+      "dominio": "Planejamento Urbano",
+      "relevancia": "Estatuto da Cidade (Lei 10.257/2001), Plano Diretor, zoneamento, uso e ocupação do solo, instrumentos urbanísticos (IPTU progressivo, outorga onerosa, transferência do direito de construir), política habitacional.",
+      "aplicacao_prefeitura": "O Plano Diretor é a lei fundamental da política urbana municipal. As decisões de licenciamento, zoneamento e regularização fundiária derivam dele. Municípios com mais de 20 mil habitantes são obrigados a tê-lo."
+    },
+    {
+      "dominio": "Saúde Pública",
+      "relevancia": "SUS (Lei 8.080/1990 e 8.142/1990), atenção primária, vigilância epidemiológica, vigilância sanitária, ANVISA, regulação de planos de saúde (ANS), política nacional de imunização.",
+      "aplicacao_prefeitura": "O município é responsável pela atenção primária à saúde (UBS, PSF), vigilância sanitária local e epidemiológica, e coordenação de campanhas de vacinação. O SUS é financiado por recursos federais, estaduais e municipais."
+    },
+    {
+      "dominio": "Educação",
+      "relevancia": "LDB (Lei 9.394/1996), FUNDEB (Lei 14.113/2020), PNAE, PDDE, metas do PNE, creche como direito constitucional (EC 59/2009), carreira do magistério municipal.",
+      "aplicacao_prefeitura": "Municípios são responsáveis constitucionalmente pela educação infantil e, em regime de colaboração com o estado, pelo ensino fundamental. O FUNDEB é o principal fundo de financiamento educacional redistributivo."
+    },
+    {
+      "dominio": "Controle Externo e Tribunais de Contas",
+      "relevancia": "TCU, TCEs, TCMs, Súmulas do TCU, jurisprudência de licitações, contas de gestão e de governo, responsabilização de agentes públicos.",
+      "aplicacao_prefeitura": "O TCE/TCM analisa as contas anuais do prefeito e pode emitir parecer prévio de desaprovação, além de aplicar multas a gestores por irregularidades. Empresas que identificarem irregularidades em licitações podem representar diretamente ao Tribunal de Contas competente."
+    },
+    {
+      "dominio": "Finanças Públicas",
+      "relevancia": "Orçamento público (PPA, LDO, LOA), execução orçamentária, empenho, liquidação e pagamento, dívida pública municipal, FPM, FUNDEB, transferências voluntárias, SICONFI.",
+      "aplicacao_prefeitura": "O ciclo orçamentário municipal é o instrumento central de planejamento e controle financeiro. Empresas que prestam serviços à prefeitura precisam entender o ciclo de pagamento público para gestão de fluxo de caixa."
+    },
+    {
+      "dominio": "Tecnologia da Informação Governamental",
+      "relevancia": "BNDES Conecta Municípios, SERPRO, Rede Nacional de Governo Digital, interoperabilidade entre sistemas governamentais, dados abertos, LGPD no setor público, cibersegurança em infraestrutura crítica.",
+      "aplicacao_prefeitura": "A modernização tecnológica das prefeituras é um desafio contínuo, especialmente nos municípios de menor porte. A integração ao Gov.br, ao REDESIM e ao PNCP são marcos de digitalização obrigatórios que impactam diretamente os serviços ao cidadão e aos fornecedores."
+    }
+  ]
+}

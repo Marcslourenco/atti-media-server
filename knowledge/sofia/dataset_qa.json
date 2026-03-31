@@ -1,0 +1,479 @@
+{
+  "meta": {
+    "avatar": "Sofia",
+    "idioma": "pt-BR",
+    "objetivo": "Camada cognitiva plugável para humanos digitais conversacionais com foco comercial consultivo e resposta por voz.",
+    "status": "Pacote base pronto para uso. Para consolidação comercial final, basta substituir ou complementar os itens com as perguntas reais do cliente sem alterar a estrutura.",
+    "observacao_importante": "O usuário ainda não enviou a lista completa de perguntas reais. Este dataset entrega uma base comercial/técnica/institucional inicial pronta para RAG, simulação e expansão."
+  },
+  "items": [
+    {
+      "id": "health_01",
+      "pergunta": "Como um humano digital pode ajudar na triagem inicial em saúde?",
+      "setor": "saúde",
+      "categoria": "técnico",
+      "intencao": "descoberta",
+      "resposta_base": "Ele pode fazer a primeira coleta de contexto com linguagem simples, entender sintomas relatados, organizar prioridade de atendimento e encaminhar o paciente para o fluxo correto. O ganho maior está em reduzir espera, padronizar perguntas sensíveis e manter disponibilidade 24 horas. Na prática, isso funciona bem para orientações iniciais, confirmação de dados, preparo para consulta e encaminhamento seguro, sempre respeitando limites clínicos e transferindo casos críticos para equipe humana.",
+      "variacoes": [
+        "Na prática, ele ajuda a organizar a primeira conversa com o paciente e direcionar melhor o próximo passo.",
+        "O valor aqui está em triagem mais consistente, menos fila e uma experiência mais acolhedora logo no começo.",
+        "Ele não substitui decisão médica, mas melhora muito a etapa inicial de entendimento e encaminhamento."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Redução de fila + atendimento 24/7 + melhor experiência inicial.",
+      "follow_up_sugerido": "Quer que eu te mostre um fluxo de triagem com escalonamento para humano?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "health_02",
+      "pergunta": "Dá para integrar com agenda, CRM ou prontuário?",
+      "setor": "saúde",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "resposta_base": "Sim, desde que o sistema atual tenha API, webhook ou uma camada intermediária de integração. O caminho mais comum é o avatar consultar horários, registrar intenção, capturar dados autorizados e devolver a ação para o sistema existente. O benefício é preservar o stack atual e adicionar uma camada conversacional por cima, sem precisar reconstruir a operação do zero.",
+      "variacoes": [
+        "Sim, normalmente a integração acontece sobre o que vocês já usam hoje, sem trocar o backend principal.",
+        "O modelo ideal é plugar o avatar na agenda e nos sistemas já existentes para evitar retrabalho.",
+        "Se houver API ou alguma ponte de integração, a conexão costuma ser bem viável."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Implantação incremental sobre sistemas existentes.",
+      "follow_up_sugerido": "Se quiser, eu posso listar o mínimo técnico necessário para essa integração.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "health_03",
+      "pergunta": "O atendimento pode funcionar 24 horas por dia?",
+      "setor": "saúde",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "resposta_base": "Pode, e esse costuma ser um dos ganhos mais percebidos. O humano digital mantém a mesma qualidade de acolhimento fora do horário comercial, consegue responder dúvidas recorrentes, orientar preparo, coletar intenção e encaminhar urgências. Isso evita perda de contato, melhora disponibilidade percebida e reduz sobrecarga da equipe em horários de pico.",
+      "variacoes": [
+        "Sim, e isso é especialmente útil quando a demanda chega fora do horário da equipe.",
+        "Funciona muito bem como primeira camada de atendimento contínuo.",
+        "O principal benefício é não deixar o paciente sem orientação inicial quando a equipe não está online."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Disponibilidade contínua e redução de contatos perdidos.",
+      "follow_up_sugerido": "Quer que eu te mostre o que faz sentido automatizar e o que deve seguir com humano?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "health_04",
+      "pergunta": "Como fica LGPD e privacidade dos dados?",
+      "setor": "saúde",
+      "categoria": "institucional",
+      "intencao": "objeção",
+      "resposta_base": "A arquitetura deve seguir minimização de dados, consentimento quando necessário, registro de finalidade, controle de acesso e criptografia em trânsito e em repouso. O mais importante é desenhar o avatar para coletar apenas o que realmente precisa em cada etapa. Em projetos maduros, também vale separar dados sensíveis da camada de conversa e registrar auditoria dos eventos críticos.",
+      "variacoes": [
+        "Esse ponto é central, e a recomendação é tratar o avatar como uma camada controlada de coleta e encaminhamento.",
+        "Privacidade não depende só do modelo, mas do desenho do fluxo e da governança em volta dele.",
+        "O melhor caminho é pedir menos dados por vez e usar integrações seguras com rastreabilidade."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "alto",
+      "gatilho_comercial": "Confiabilidade institucional e viabilidade para setores regulados.",
+      "follow_up_sugerido": "Se fizer sentido, eu organizo um checklist prático de LGPD para a implantação.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "health_05",
+      "pergunta": "Esse avatar substitui a equipe humana?",
+      "setor": "saúde",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "resposta_base": "Não. O papel mais inteligente é complementar a equipe, absorvendo atendimento repetitivo, triagem, orientação e captação inicial. Quando a situação exige empatia clínica, decisão médica ou negociação delicada, o melhor fluxo é escalar para um profissional. O resultado costuma ser uma equipe mais focada em casos de maior valor humano e operacional.",
+      "variacoes": [
+        "O melhor uso não é substituir, e sim liberar a equipe para o que realmente precisa de humano.",
+        "Ele entra muito bem como primeira camada de atendimento, não como eliminação do time.",
+        "Na prática, quem ganha é a operação: menos tarefa repetitiva e mais foco nos casos relevantes."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Reposiciona a solução como ganho de eficiência e não ameaça interna.",
+      "follow_up_sugerido": "Quer que eu te mostre um modelo híbrido entre avatar e atendimento humano?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "auto_01",
+      "pergunta": "Como o avatar ajuda a gerar leads no setor automotivo?",
+      "setor": "automotivo",
+      "categoria": "comercial",
+      "intencao": "descoberta",
+      "resposta_base": "Ele pode abordar visitantes em páginas de veículo, entender interesse, comparar versões, qualificar intenção de compra e conduzir para test-drive, proposta ou atendimento humano. O ganho real é transformar tráfego frio em conversa orientada, sem depender de formulário seco. Em muitos casos, o visitante fala mais com voz do que preencheria num formulário tradicional.",
+      "variacoes": [
+        "No automotivo, ele funciona muito bem como ponte entre curiosidade e lead qualificado.",
+        "O grande diferencial é conversar sobre modelo, uso e faixa de interesse antes de pedir contato.",
+        "Ele reduz atrito na captação porque o cliente sente que está sendo atendido, não apenas fichado."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Mais conversão de tráfego em lead qualificado.",
+      "follow_up_sugerido": "Se quiser, eu simulo um fluxo de showroom digital com agendamento de test-drive.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "auto_02",
+      "pergunta": "Ele consegue comparar versões e responder dúvidas sobre veículos?",
+      "setor": "automotivo",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "resposta_base": "Consegue, desde que a base de conhecimento esteja bem estruturada com versões, motorização, itens de série, diferenciais e regras de comparação. A experiência fica melhor quando o avatar organiza a resposta por perfil de uso, por exemplo cidade, estrada, frota ou família. Assim a conversa deixa de ser catálogo falado e passa a ser orientação de compra.",
+      "variacoes": [
+        "Sim, e o ideal é responder sempre conectando especificação com necessidade real do cliente.",
+        "Ele pode comparar veículos, mas o valor está em traduzir ficha técnica para decisão de compra.",
+        "Com um bom RAG, a comparação fica precisa e contextualizada."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Venda consultiva em vez de resposta estática de catálogo.",
+      "follow_up_sugerido": "Quer que eu te mostre como montar a base de conhecimento por modelo e versão?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "auto_03",
+      "pergunta": "Dá para agendar test-drive pelo avatar?",
+      "setor": "automotivo",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "resposta_base": "Dá, e essa costuma ser uma das automações mais valiosas. O avatar pode confirmar interesse, captar unidade de preferência, filtrar modelo, sugerir horários e enviar o lead pronto para o sistema ou time comercial. O benefício é encurtar o caminho entre intenção e ação, reduzindo abandono no meio do processo.",
+      "variacoes": [
+        "Sim, e isso ajuda muito a transformar interesse em visita real.",
+        "Quando o agendamento entra na conversa, o lead tende a chegar mais quente para o vendedor.",
+        "É uma automação simples de entender e com impacto direto em conversão."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Curto caminho para resultado comercial mensurável.",
+      "follow_up_sugerido": "Se quiser, eu desenho um fluxo simples de agendamento integrado ao CRM ou agenda da loja.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "auto_04",
+      "pergunta": "O avatar pode ajudar no pós-venda e manutenção?",
+      "setor": "automotivo",
+      "categoria": "suporte",
+      "intencao": "descoberta",
+      "resposta_base": "Pode sim. Ele funciona bem para orientações recorrentes, revisão, lembretes, preparo para manutenção, status básico e triagem de demandas antes da oficina ou central humana. Isso melhora experiência do cliente e reduz carga no atendimento convencional, principalmente em dúvidas repetidas e agendamentos operacionais.",
+      "variacoes": [
+        "Sim, o pós-venda é um espaço excelente para automação com linguagem humana.",
+        "Ele ajuda bastante quando a demanda é repetitiva, mas o cliente ainda quer sensação de atendimento.",
+        "É uma boa forma de manter relacionamento além da venda inicial."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Expansão de uso além da captação de lead.",
+      "follow_up_sugerido": "Quer que eu separe um fluxo de venda e outro de pós-venda para você comparar?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "auto_05",
+      "pergunta": "Como isso conversa com o CRM da concessionária?",
+      "setor": "automotivo",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "resposta_base": "A integração ideal registra intenção, estágio da conversa, veículo de interesse, faixa de compra, unidade e próxima ação sugerida. Em vez de jogar apenas nome e telefone no CRM, o avatar pode enviar contexto comercial já enriquecido. Isso melhora follow-up, priorização e aproveitamento do lead pela equipe.",
+      "variacoes": [
+        "O ponto forte é mandar para o CRM um lead mais rico, não só um cadastro básico.",
+        "Quando a conversa vira contexto estruturado, o time comercial trabalha melhor.",
+        "Integrar com CRM faz mais sentido quando o avatar já entrega intenção e próxima ação."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "alto",
+      "gatilho_comercial": "Lead scoring e qualificação melhor para o time de vendas.",
+      "follow_up_sugerido": "Se fizer sentido, eu te passo um payload mínimo recomendado para CRM.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "gov_01",
+      "pergunta": "Como um humano digital pode orientar serviços públicos?",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "descoberta",
+      "resposta_base": "Ele pode atuar como guia de serviços, explicando documentos, etapas, elegibilidade, prazos e canais corretos para cada demanda. O benefício está em reduzir desencontro de informação e tornar o acesso mais simples para o cidadão. Na prática, ele funciona muito bem em portais, totens e centrais de orientação com linguagem acessível.",
+      "variacoes": [
+        "No governo, ele ajuda a traduzir processo burocrático para linguagem clara.",
+        "O maior ganho é orientar melhor o cidadão sem exigir navegação complexa no portal.",
+        "Ele funciona como uma camada de acesso mais humana para serviços públicos."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Melhora experiência do cidadão e reduz volume de dúvidas repetidas.",
+      "follow_up_sugerido": "Quer que eu te mostre um exemplo de fluxo para emissão, agendamento ou protocolo?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "gov_02",
+      "pergunta": "Isso ajuda em acessibilidade e inclusão digital?",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "resposta_base": "Ajuda bastante quando o projeto prioriza voz, linguagem simples, múltiplos idiomas e roteiros curtos. Para muitas pessoas, falar e ouvir é mais fácil do que ler um portal extenso. O avatar pode reduzir barreira cognitiva e orientar passo a passo, o que é especialmente valioso em serviços com alto volume e baixa familiaridade digital.",
+      "variacoes": [
+        "Sim, principalmente quando a interface precisa ficar menos dependente de leitura longa.",
+        "Voz e orientação guiada costumam melhorar muito a inclusão digital.",
+        "A acessibilidade cresce quando a jornada é conversacional e objetiva."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Valor público + experiência inclusiva.",
+      "follow_up_sugerido": "Se quiser, eu listo recursos mínimos de acessibilidade para esse tipo de implantação.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "gov_03",
+      "pergunta": "O avatar pode atender fora do horário e reduzir fila?",
+      "setor": "governo",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "resposta_base": "Pode, especialmente como primeira camada de orientação. Ele consegue esclarecer requisitos, coletar intenção, encaminhar para o canal certo e preparar a solicitação antes do atendimento humano. Isso reduz fila improdutiva, melhora previsibilidade e evita que o cidadão comece o processo sem informação suficiente.",
+      "variacoes": [
+        "Sim, o ganho maior é reduzir desperdício de atendimento em dúvidas previsíveis.",
+        "Atendimento contínuo ajuda muito em serviços com pico e filas recorrentes.",
+        "O avatar não elimina o humano, mas limpa boa parte da demanda repetitiva."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Eficiência operacional com manutenção do serviço atual.",
+      "follow_up_sugerido": "Quer que eu monte um fluxo com triagem automática e transbordo para atendente?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "gov_04",
+      "pergunta": "Como garantir transparência e segurança das respostas?",
+      "setor": "governo",
+      "categoria": "técnico",
+      "intencao": "objeção",
+      "resposta_base": "O ideal é trabalhar com RAG sobre base oficial, versionamento de conteúdo, logs de consulta, limites de escopo e encaminhamento quando houver ambiguidade. Em vez de deixar o modelo responder livremente, a camada cognitiva consulta fontes aprovadas e monta a resposta dentro de faixas seguras. Isso aumenta confiabilidade e facilita governança.",
+      "variacoes": [
+        "A resposta precisa nascer de fonte oficial, não de improviso do modelo.",
+        "Segurança vem de base controlada, logs e regras claras de fallback.",
+        "Quanto mais sensível o serviço, mais importante é restringir escopo e citar origem."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "alto",
+      "gatilho_comercial": "Governança forte para aprovação institucional.",
+      "follow_up_sugerido": "Se fizer sentido, eu organizo um padrão de resposta com fonte e nível de confiança.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "gov_05",
+      "pergunta": "Onde esse avatar pode ser usado: site, totem ou WhatsApp?",
+      "setor": "governo",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "resposta_base": "Ele pode atuar em vários pontos, mas a escolha ideal depende do tipo de jornada. Portal funciona bem para orientação ampla, totem ajuda atendimento presencial assistido e canais de mensagem servem continuidade. O melhor desenho costuma combinar presença onde o cidadão já está, mantendo a mesma inteligência por trás.",
+      "variacoes": [
+        "Sim, a camada cognitiva pode ser reaproveitada em diferentes canais.",
+        "O importante é manter consistência de resposta, mesmo mudando a interface.",
+        "Normalmente, o canal muda; a inteligência central continua a mesma."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Escalabilidade multicanal sem reconstrução total.",
+      "follow_up_sugerido": "Quer que eu te proponha uma ordem de implantação por canal?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_01",
+      "pergunta": "Quanto custa implantar um avatar como a Sofia?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "resposta_base": "O investimento varia conforme número de fluxos, integrações, volume de atendimento, qualidade do avatar, voz e governança desejada. A forma mais saudável de tratar preço é olhar pacote de implantação mais operação contínua e comparar isso com ganho em conversão, redução de fila e disponibilidade. Em vez de perguntar só quanto custa, vale olhar quanto da sua demanda atual ele consegue absorver com qualidade.",
+      "variacoes": [
+        "Preço depende bastante do escopo, mas normalmente faz mais sentido falar em faixa por caso de uso.",
+        "Eu gosto de conectar custo com impacto, porque o valor muda muito conforme o objetivo.",
+        "Se vocês tiverem um caso prioritário, eu consigo enquadrar melhor a faixa de investimento."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Conduz do preço para valor e escopo.",
+      "follow_up_sugerido": "Se quiser, eu posso te ajudar a estimar uma faixa com base no seu caso prioritário.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_02",
+      "pergunta": "Qual é o ROI mais comum desse tipo de projeto?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "descoberta",
+      "resposta_base": "O ROI costuma aparecer em quatro frentes: aumento de conversão, redução de abandono, ganho de eficiência operacional e disponibilidade estendida sem ampliar time na mesma proporção. Em operações comerciais, também pesa a qualidade do lead que chega ao vendedor. O retorno fica mais visível quando o projeto começa por um fluxo com volume alto e gargalo claro.",
+      "variacoes": [
+        "O retorno normalmente vem de conversão e eficiência ao mesmo tempo.",
+        "Projetos assim performam melhor quando entram em um ponto já conhecido de atrito operacional.",
+        "ROI não vem só de corte de custo; muitas vezes vem de oportunidade recuperada."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Mostra valor financeiro e operacional.",
+      "follow_up_sugerido": "Quer que eu te ajude a calcular um ROI inicial com premissas simples?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_03",
+      "pergunta": "Quanto tempo leva para colocar em produção?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "dúvida",
+      "resposta_base": "Depende da complexidade, mas um piloto focado em um caso de uso costuma ser muito mais rápido do que um projeto amplo logo de saída. Quando a base de conhecimento está organizada e as integrações são objetivas, o caminho de validação acelera bastante. A recomendação mais segura é começar enxuto, medir resultado e expandir em ondas.",
+      "variacoes": [
+        "Em geral, um piloto bem recortado entra no ar bem mais rápido do que as pessoas imaginam.",
+        "O prazo é muito influenciado por integração e organização do conteúdo.",
+        "Começar por um fluxo prioritário costuma reduzir risco e acelerar aprendizado."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Venda por piloto com menor atrito.",
+      "follow_up_sugerido": "Se quiser, eu te proponho um roadmap em 3 fases sem mexer na estrutura atual.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_04",
+      "pergunta": "Como provar valor antes de um rollout maior?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "resposta_base": "O melhor caminho é escolher um caso de uso com dor clara, como captação, triagem ou suporte recorrente, definir métricas simples e rodar um piloto comparável. Assim vocês medem volume atendido, taxa de conclusão, encaminhamento útil, conversão e percepção do usuário. Prova de valor boa é pequena o suficiente para começar rápido e forte o suficiente para mostrar impacto real.",
+      "variacoes": [
+        "Piloto bom não tenta provar tudo; ele prova um valor claro com métrica objetiva.",
+        "O segredo está em escolher um fluxo com volume, dor e capacidade de mensuração.",
+        "Antes do rollout, vale validar onde a Sofia gera mais impacto com menor esforço."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Facilita venda incremental e redução de risco.",
+      "follow_up_sugerido": "Quer que eu te monte um desenho de POC com métricas de sucesso?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_05",
+      "pergunta": "Isso não vai soar robótico demais para o cliente?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "objeção",
+      "resposta_base": "Só soa robótico quando a experiência é tratada como TTS sem inteligência conversacional. Quando existe contexto, variação de linguagem, cadência adequada e objetivo claro, a percepção muda bastante. A chave está em evitar respostas genéricas, lembrar o que o cliente disse e falar como consultora, não como FAQ recitado.",
+      "variacoes": [
+        "Esse risco existe quando a camada cognitiva é fraca, não quando o projeto é bem desenhado.",
+        "Naturalidade vem mais do comportamento do que da voz isoladamente.",
+        "Se a Sofia lembrar contexto e variar linguagem, a sensação fica muito mais humana."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Reposiciona objeção como problema de desenho, não de conceito.",
+      "follow_up_sugerido": "Se quiser, eu posso te mostrar as regras que evitam repetição e resposta mecânica.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "comm_06",
+      "pergunta": "Vale a pena oferecer uma demo guiada pela Sofia?",
+      "setor": "comercial",
+      "categoria": "comercial",
+      "intencao": "compra",
+      "resposta_base": "Vale, porque a demo guiada faz duas coisas ao mesmo tempo: apresenta a proposta e já demonstra a própria experiência conversacional. Quando a Sofia conduz a conversa, qualifica necessidade e mostra um caso prático, a venda fica mais tangível. É uma forma elegante de vender a solução usando a própria solução.",
+      "variacoes": [
+        "Sim, porque a demo deixa de ser só explicação e vira experiência.",
+        "É uma abordagem forte para mostrar valor sem depender só de slide.",
+        "Quando a Sofia demonstra, o cliente entende o potencial de forma muito mais concreta."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Acelera percepção de valor e diferenciação comercial.",
+      "follow_up_sugerido": "Quer que eu esboce um roteiro de demo consultiva em 5 minutos?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "inst_01",
+      "pergunta": "O que exatamente é um humano digital conversacional?",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "descoberta",
+      "resposta_base": "É uma interface conversacional com presença visual e voz, pensada para interagir de forma mais humana do que um chatbot tradicional. A combinação de avatar, linguagem natural, contexto e objetivo de negócio permite orientar, vender, atender e encaminhar ações. Em resumo, é a camada de relacionamento conversacional com cara, voz e comportamento de marca.",
+      "variacoes": [
+        "Pensa nele como uma interface conversacional mais humana e mais orientada a experiência.",
+        "Não é só um avatar bonito; é uma camada de interação com inteligência por trás.",
+        "O valor aparece quando voz, contexto e objetivo de negócio trabalham juntos."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Educa o mercado e prepara terreno comercial.",
+      "follow_up_sugerido": "Se quiser, eu também posso comparar isso com chatbot, voicebot e assistente virtual tradicional.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "inst_02",
+      "pergunta": "Qual é a diferença entre humano digital e chatbot?",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "dúvida",
+      "resposta_base": "O chatbot costuma ser centrado em texto e navegação por mensagens. Já o humano digital adiciona voz, presença, ritmo, expressividade e uma percepção maior de acolhimento. Mas a diferença relevante não é só visual: quando bem implementado, ele mantém contexto, conduz a jornada e entrega uma experiência mais próxima de uma conversa guiada.",
+      "variacoes": [
+        "A diferença não está só no rosto; está na forma como a experiência é percebida.",
+        "O humano digital tende a reduzir frieza e aumentar engajamento quando há boa inteligência conversacional.",
+        "Na prática, ele pode ocupar um papel mais consultivo do que um chatbot clássico."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "baixo",
+      "gatilho_comercial": "Diferencia produto e reforça valor premium.",
+      "follow_up_sugerido": "Quer que eu te mostre em quais jornadas o humano digital faz mais sentido do que chatbot puro?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "inst_03",
+      "pergunta": "A Sofia pode responder só por voz, sem texto na tela?",
+      "setor": "institucional",
+      "categoria": "técnico",
+      "intencao": "dúvida",
+      "resposta_base": "Pode, e isso inclusive reforça uma experiência mais próxima de interação humana quando o caso de uso pede fluidez e presença. Nesse formato, vale ajustar tamanho das respostas, pausas, sinais de continuidade e fallback para garantir clareza. O segredo é desenhar a resposta para ser ouvida, não lida.",
+      "variacoes": [
+        "Sim, e quando a UX é bem calibrada, isso fica muito natural.",
+        "Só por voz funciona bem, desde que a conversa seja curta, clara e contextual.",
+        "Nesse formato, a escrita da resposta precisa nascer pensando em áudio."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Alinha diretamente com a proposta de experiência da Sofia.",
+      "follow_up_sugerido": "Se quiser, eu te passo um padrão de escrita próprio para voz-only.",
+      "emocao": "friendly"
+    },
+    {
+      "id": "inst_04",
+      "pergunta": "Ela consegue manter contexto de conversa de verdade?",
+      "setor": "institucional",
+      "categoria": "técnico",
+      "intencao": "objeção",
+      "resposta_base": "Consegue, desde que a arquitetura mantenha memória de sessão, intenção atual, entidades capturadas e sinais de estágio da jornada. Sem essa camada, a conversa vira pergunta-resposta solta. Com contexto, a Sofia consegue retomar assunto, evitar repetição, aprofundar sem começar do zero e parecer muito mais natural.",
+      "variacoes": [
+        "Sim, mas isso depende da arquitetura cognitiva, não apenas do modelo de linguagem.",
+        "Contexto real vem de memória de sessão e estrutura de decisão bem desenhadas.",
+        "Quando essa camada existe, a conversa deixa de soar como FAQ falada."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "alto",
+      "gatilho_comercial": "Resolve a principal dor atual do projeto.",
+      "follow_up_sugerido": "Quer que eu te mostre quais estados mínimos precisam ser salvos por sessão?",
+      "emocao": "friendly"
+    },
+    {
+      "id": "inst_05",
+      "pergunta": "Dá para adaptar a Sofia ao tom da nossa marca?",
+      "setor": "institucional",
+      "categoria": "institucional",
+      "intencao": "compra",
+      "resposta_base": "Dá, e isso é uma parte central do projeto. Tom de voz, abertura, forma de explicar, profundidade técnica, nível de energia e abordagem comercial podem ser calibrados por prompt, regras e dataset. O ideal é a Sofia soar como extensão coerente da marca, e não como um assistente genérico trocado de roupa.",
+      "variacoes": [
+        "Sim, e isso muda bastante a percepção de qualidade da experiência.",
+        "A personalização de tom é o que faz a Sofia parecer marca, não ferramenta genérica.",
+        "Com regras e dataset certos, ela fala do jeito que a sua operação precisa."
+      ],
+      "tom": "consultivo",
+      "nivel_tecnico": "medio",
+      "gatilho_comercial": "Reforça branding e aderência comercial.",
+      "follow_up_sugerido": "Se fizer sentido, eu posso te mostrar um framework simples de calibragem de tom de marca.",
+      "emocao": "friendly"
+    }
+  ]
+}

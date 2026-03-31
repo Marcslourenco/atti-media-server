@@ -1,0 +1,1122 @@
+{
+  "segmento": "Hotelaria",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA atuantes em redes hoteleiras no mercado brasileiro. Cobre tipos de acomodação, experiência do hóspede, estratégias de upsell, turismo regional, políticas de cancelamento, programas de fidelidade, canais de distribuição, gestão de eventos e grupos, sustentabilidade e FAQ completo com 53 perguntas. Referenciado nas práticas das maiores redes hoteleiras operantes no Brasil: Accor (ALL), Atlantica Hospitality International, Hilton, Nobile Hotéis, Intercity Hotéis, Wyndham Hotels e Slaviero Hotéis.",
+
+  "nucleo_conhecimento": {
+
+    "contexto_mercado": [
+      {
+        "id": "CM001",
+        "titulo": "Panorama do setor hoteleiro brasileiro",
+        "conteudo": "O mercado hoteleiro brasileiro foi avaliado em US$ 9,14 bilhões em 2024 e deve atingir US$ 12,35 bilhões até 2029, com crescimento médio anual de 6,23% (CAGR). O setor registrou crescimento expressivo de 2023 a 2025, impulsionado pela recuperação pós-pandemia, fortalecimento do turismo doméstico — especialmente com a alta do dólar inibindo viagens internacionais de brasileiros — e aumento do turismo de negócios. O Fórum de Operadores Hoteleiros do Brasil (FOHB) registrou alta superior a 1% na taxa de ocupação de janeiro a agosto de 2024, com crescimento em todos os segmentos. Estão previstos investimentos de R$ 8,4 bilhões no setor até 2028, com 137 novos contratos e aproximadamente 21.863 novos quartos."
+      },
+      {
+        "id": "CM002",
+        "titulo": "Principais redes hoteleiras operando no Brasil",
+        "conteudo": "O Brasil conta com forte presença de redes nacionais e internacionais. Accor — maior rede hoteleira da América Latina com marcas como Sofitel, Pullman, Novotel, Mercure, ibis e ibis budget. Atlantica Hospitality International — maior administradora multimarcas privada da América Latina, com mais de 195 hotéis e 28 mil quartos em mais de 75 destinos, representando marcas como Radisson, Hilton Garden Inn, DoubleTree, Choice Hotels e Wyndham no Brasil, além das marcas próprias Go Inn, eSuites e Transamerica. Hilton — presente com bandeiras como Hilton Hotels, DoubleTree, Hampton Inn, Tru by Hilton e Embassy Suites. Wyndham — com Ramada, Wyndham Grand, Super 8 e La Quinta. Intercity Hotéis — rede nacional com foco em cidades de médio e grande porte com perfil de viajantes corporativos. Nobile Hotéis — rede nacional com hotéis no Brasil e exterior (Argentina, Chile, Paraguai, Uruguai e Portugal). Slaviero Hotéis — rede gaúcha com forte presença no Sul e expansão nacional, com submarcas Slim e Full Jazz."
+      },
+      {
+        "id": "CM003",
+        "titulo": "Segmentação do mercado hoteleiro por categoria",
+        "conteudo": "O mercado hoteleiro brasileiro é segmentado em: Luxo (5 estrelas) — Sofitel, Grand Hyatt, Fasano, Rosewood, Four Seasons (SP e RJ), com diárias médias acima de R$ 800; Upper Midscale / Superior (4 estrelas) — Hilton, Radisson, Pullman, Novotel, DoubleTree, com diárias de R$ 350 a R$ 800; Midscale (3 estrelas) — Mercure, Quality, Comfort, Slaviero, Intercity, Nobile, diárias de R$ 180 a R$ 350; Economy (2 estrelas) — ibis, Go Inn, Hampton Inn, Transamerica Fit, Sleep Inn, diárias de R$ 100 a R$ 180; Budget (1 estrela e cama & café) — ibis budget, Super 8, hostel, diárias abaixo de R$ 100. O segmento midscale e economy respondem por mais de 60% do volume de diárias vendidas no Brasil."
+      },
+      {
+        "id": "CM004",
+        "titulo": "Turismo de negócios versus lazer no Brasil",
+        "conteudo": "Mais de 70% da ocupação hoteleira no Brasil é gerada por viajantes de negócios, especialmente em capitais e cidades industriais como São Paulo, Brasília, Campinas, Belo Horizonte, Curitiba e Porto Alegre. O turismo de lazer domina destinos como Fortaleza, Natal, Florianópolis, Porto Seguro, Foz do Iguaçu e Fernando de Noronha. Eventos corporativos (congressos, convenções, feiras) são grandes geradores de demanda para hotéis com espaço para eventos. O chamado 'bleisure' — combinação de negócios com lazer — cresce como tendência, com executivos que estendem a viagem de trabalho para o fim de semana turístico."
+      },
+      {
+        "id": "CM005",
+        "titulo": "Canais de distribuição hoteleira",
+        "conteudo": "Os principais canais de venda de reservas hoteleiras no Brasil são: Site oficial do hotel (melhor margem para o hotel e melhor preço para o hóspede); OTAs — Online Travel Agencies como Booking.com, Expedia, Hotels.com e Decolar (comissão entre 15% e 25%); Aplicativos próprios e programas de fidelidade da rede; GDS — Global Distribution System (Amadeus, Sabre, Galileo) para agências de viagens corporativas; Operadoras turísticas (CVC, Azul Viagens, Latam Travel); WhatsApp e redes sociais para reservas diretas; e centrais de reservas das redes (CRS). A estratégia de reserva direta é prioridade para todas as redes, que oferecem benefícios exclusivos para hóspedes que reservam pelo site ou app oficial."
+      },
+      {
+        "id": "CM006",
+        "titulo": "Indicadores de desempenho hoteleiro (KPIs)",
+        "conteudo": "Os principais indicadores da indústria hoteleira são: Taxa de Ocupação (percentual de quartos ocupados sobre o total disponível; média nacional de 60-70% em capitais); Diária Média (ADR — Average Daily Rate; média nacional entre R$ 250 e R$ 450 em hotéis de rede); RevPAR (Revenue Per Available Room — Receita por quarto disponível = Ocupação × ADR); TrevPAR (receita total por quarto, incluindo F&B, spa e eventos); NPS (Net Promoter Score) para medir satisfação do hóspede; GOP (Gross Operating Profit) por quarto; e Índice de Penetração de Mercado (MPI — comparação com comp-set). O RevPAR é o indicador mais utilizado pela indústria para benchmark competitivo."
+      },
+      {
+        "id": "CM007",
+        "titulo": "Tendências do setor hoteleiro 2025-2026",
+        "conteudo": "As principais tendências que moldam a hotelaria brasileira são: Digitalização da experiência — check-in e check-out mobile, chave digital no smartphone, controle por voz no quarto; Hiperpersonalização com uso de IA e CRM para antecipar preferências; Sustentabilidade e certificações ESG — hóspedes mais conscientes demandam práticas verdes (selo ABNT NBR 15401, Chave Verde); Hiper-sazonalidade criada por mega-eventos (Rock in Rio, F1 São Paulo, Carnaval, Copa do Nordeste); Day use e novos formatos de hospedagem (co-living, bleisure, estadias mais longas); Turismo regional — destinos secundários ganham força (Serra Gaúcha, Bonito, Chapada, Pantanal); Upsell digital antes e durante a estadia via aplicativos e WhatsApp; e crescimento do segmento pet-friendly como diferencial competitivo."
+      },
+      {
+        "id": "CM008",
+        "titulo": "Sazonalidade e eventos no calendário hoteleiro brasileiro",
+        "conteudo": "Janeiro e julho são os meses de maior ocupação em destinos de lazer (férias escolares). Carnaval (fevereiro/março) gera pico em Salvador, Rio de Janeiro, Olinda e Florianópolis. Semana Santa é alta temporada em destinos religiosos e de praia. Junho e julho têm forte demanda corporativa em capitais. Novembro e dezembro têm pico em São Paulo por eventos como F1 e Black Friday. O Rio tem pico em Réveillon. Gramado e Campos do Jordão têm alta em julho e dezembro (Natal Luz e Festival de Inverno). A gestão de Revenue Management é crítica para maximizar receita nos períodos de pico e reduzir impacto nos períodos de baixa ocupação."
+      },
+      {
+        "id": "CM009",
+        "titulo": "Regulamentação e classificação hoteleira no Brasil",
+        "conteudo": "O Sistema Brasileiro de Classificação de Meios de Hospedagem (SBClass) é gerido pelo Ministério do Turismo e pelo INMETRO, utilizando o sistema de estrelas de 1 a 5. A classificação é voluntária mas amplamente adotada pelas redes. A ABIH (Associação Brasileira da Indústria de Hotéis) representa o setor perante o governo e promove o desenvolvimento do segmento. O Cadastro de Prestadores de Serviços Turísticos (CADASTUR) é obrigatório para meios de hospedagem. A ANVISA regula aspectos sanitários (limpeza, manipulação de alimentos). O Código de Defesa do Consumidor e a LGPD aplicam-se integralmente ao relacionamento hotel-hóspede."
+      }
+    ],
+
+    "problemas_comuns": [
+      {
+        "id": "PC001",
+        "problema": "Hóspede insatisfeito com o quarto recebido",
+        "descricao": "O hóspede chega, acessa o quarto e percebe que não corresponde ao que esperava: andar baixo, vista desfavorável, próximo ao elevador ou sem os amenities comunicados.",
+        "solucao_sugerida": "Demonstrar empatia imediata e verificar disponibilidade de upgrade sem custo adicional. Se não houver quarto melhor disponível, oferecer compensação (jantar, crédito no bar, late check-out). Registrar a preferência para que na próxima estadia o sistema já identifique o perfil do hóspede."
+      },
+      {
+        "id": "PC002",
+        "problema": "Reclamação sobre barulho durante a noite",
+        "descricao": "Ruído de obras próximas, hóspedes barulhentos em quartos adjacentes ou eventos no hotel perturbam o sono do hóspede.",
+        "solucao_sugerida": "Pedir desculpas e agir imediatamente: ligar para o quarto vizinho (se aplicável), oferecer troca de quarto para andar ou ala mais silenciosa, e disponibilizar protetores auriculares como cortesia. Registrar o ocorrido no sistema para prevenir recorrências."
+      },
+      {
+        "id": "PC003",
+        "problema": "Dificuldade no processo de check-in — fila ou dados errados",
+        "descricao": "Longas filas no check-in, especialmente em horários de pico, ou dados da reserva incorretos geram frustração no momento da chegada.",
+        "solucao_sugerida": "Implementar pré-check-in digital (app ou WhatsApp 24h antes). Na recepção, atender com agilidade e oferecer alternativas como check-in expresso. Para dados incorretos, corrigir no sistema imediatamente sem burocracia, pedindo desculpas pelo inconveniente."
+      },
+      {
+        "id": "PC004",
+        "problema": "Hóspede contesta cobranças no momento do check-out",
+        "descricao": "Cobranças por consumo no frigobar, serviços adicionais ou taxas não comunicadas claramente geram conflito no check-out.",
+        "solucao_sugerida": "Apresentar o extrato detalhado de consumo com clareza. Se o hóspede alegar que não consumiu determinado item, verificar com a equipe responsável antes de insistir na cobrança. Em caso de dúvida fundada, preferir absorver o custo e manter a relação. Apresentar a política de consumo no check-in como prevenção."
+      },
+      {
+        "id": "PC005",
+        "problema": "Perda de reserva por overbooking",
+        "descricao": "O hotel não tem quarto disponível para o hóspede com reserva confirmada por ter praticado overbooking.",
+        "solucao_sugerida": "Protocolo de walking: hospedar o hóspede em hotel de categoria igual ou superior às expensas do hotel, pagar o transporte, ligar de volta com a situação resolvida e oferecer desconto na próxima estadia. O hóspede jamais deve pagar a diferença de categoria. Comunicar com extrema gentileza e responsabilidade."
+      },
+      {
+        "id": "PC006",
+        "problema": "Hóspede solicita early check-in ou late check-out negado",
+        "descricao": "Hóspede chega cedo ou precisa sair tarde e o hotel não tem o quarto disponível ou nega a solicitação sem alternativas.",
+        "solucao_sugerida": "Verificar disponibilidade de quarto para early check-in. Se não houver, oferecer: guarda-volumes, acesso à academia ou à piscina antes do horário padrão, uso de sala de estar ou lobby. Para late check-out, verificar disponibilidade e oferecer quando possível — é um dos upsells mais valorizados. Comunicar as limitações com empatia e oferecer alternativas concretas."
+      },
+      {
+        "id": "PC007",
+        "problema": "Reclamação de limpeza insatisfatória no quarto",
+        "descricao": "Hóspede encontra quarto mal limpo, toalhas sujas, amenities não repostos ou cheiro desagradável.",
+        "solucao_sugerida": "Pedir desculpas e providenciar relimpeza imediata do quarto enquanto o hóspede é acomodado em outra área do hotel. Verificar falha no processo de governança e registrar para treinamento. Oferecer cortesia como compensação pelo inconveniente."
+      },
+      {
+        "id": "PC008",
+        "problema": "Cancelamento de reserva fora do prazo pelo hóspede",
+        "descricao": "Hóspede cancela a reserva após o prazo de cancelamento gratuito e questiona ou se recusa a pagar a multa.",
+        "solucao_sugerida": "Apresentar a política de cancelamento aceita no momento da reserva de forma clara e educada. Verificar se há motivo de força maior (doença, luto) que justifique exceção. Oferecer alternativas como crédito para uso futuro em vez de cobrança da multa — gera fidelização e evita atrito."
+      },
+      {
+        "id": "PC009",
+        "problema": "Problema técnico no quarto (ar-condicionado, TV, internet)",
+        "descricao": "Equipamentos do quarto com falha — ar-condicionado não funcionando, TV sem sinal, internet lenta ou sem funcionar — prejudicam a experiência do hóspede.",
+        "solucao_sugerida": "Acionar a manutenção imediatamente. Se o problema não puder ser resolvido rapidamente (30 minutos), oferecer troca de quarto sem custo adicional. Em caso de internet, oferecer chip de dados ou hotspot temporário. Registrar o problema para manutenção preventiva."
+      },
+      {
+        "id": "PC010",
+        "problema": "Conflito em reservas de grupos ou eventos",
+        "descricao": "Grupos com expectativas diferentes do combinado em contrato: montagem do evento, cardápio, número de participantes ou equipamentos audiovisuais.",
+        "solucao_sugerida": "Realizar reunião de alinhamento (BEO — Banquet Event Order) 48 horas antes do evento para confirmar todos os detalhes. Designar um coordenador de eventos dedicado ao grupo durante todo o período. Resolver divergências com foco em soluções criativas dentro das possibilidades operacionais."
+      }
+    ],
+
+    "objeções_clientes": [
+      {
+        "id": "OB001",
+        "objecao": "Está mais barato no Booking ou Expedia",
+        "categoria": "Preço",
+        "resposta_recomendada": "Entendo! Algumas OTAs oferecem tarifas com menor flexibilidade — restrições de cancelamento ou sem café da manhã incluso. Reservando diretamente pelo nosso site ou app, garantimos: a mesma tarifa mais benefícios exclusivos como upgrade sujeito a disponibilidade, late check-out preferencial e acumulação de pontos no programa de fidelidade. Posso ajustá-la para bater com o preço que encontrou?"
+      },
+      {
+        "id": "OB002",
+        "objecao": "A diária está muito cara para o que oferecem",
+        "categoria": "Valor percebido",
+        "resposta_recomendada": "Compreendo sua percepção. Vamos detalhar o que está incluso: café da manhã completo para [X pessoas], acesso à academia e piscina, wi-fi de alta velocidade, estacionamento e serviço de concierge 24h. Calculando individualmente esses benefícios, o valor da diária se torna bastante competitivo. Posso mostrar uma opção com tarifa ajustada dependendo da data ou da categoria do quarto?"
+      },
+      {
+        "id": "OB003",
+        "objecao": "Prefiro Airbnb, fica mais em conta e tenho mais espaço",
+        "categoria": "Concorrência",
+        "resposta_recomendada": "É uma opção válida para muitos perfis de viagem. Para quem valoriza atendimento 24h, café da manhã preparado por nossa equipe, serviço de limpeza diário, segurança, piscina e academia, o hotel oferece uma experiência completa que a hospedagem por aplicativo geralmente não tem. E para estadias mais longas, temos apartamentos estendidos e suítes espaçosas com estrutura de apart-hotel. Posso mostrar?"
+      },
+      {
+        "id": "OB004",
+        "objecao": "Já me hospedei antes e não foi uma boa experiência",
+        "categoria": "Histórico negativo",
+        "resposta_recomendada": "Lamento muito o que aconteceu na sua estadia anterior. Cada experiência negativa é uma oportunidade de melhoria e levamos isso a sério. Pode me contar o que ocorreu? Quero garantir que sua próxima visita seja completamente diferente. Se autorizar, vou registrar suas preferências para que nossa equipe cuide de cada detalhe pessoalmente."
+      },
+      {
+        "id": "OB005",
+        "objecao": "Não quero pagar por estacionamento separado",
+        "categoria": "Custo adicional",
+        "resposta_recomendada": "Entendo que o estacionamento avulso é um custo extra que incomoda. Para reservas diretas com antecedência, podemos incluir o estacionamento sem custo adicional em determinadas tarifas. Posso verificar se a tarifa que você está vendo tem essa opção ou se há uma tarifa especial que já inclua tudo."
+      },
+      {
+        "id": "OB006",
+        "objecao": "O hotel não aceita pets e vou precisar deixar meu animal em casa",
+        "categoria": "Pet-friendly",
+        "resposta_recomendada": "Sentimos muito por essa limitação. Temos trabalhado para ampliar nossa política pet-friendly. Posso verificar se temos alguma ala ou tipo de acomodação que aceite animais de pequeno porte, ou indicar unidades de nossa rede na mesma cidade que têm política pet. A Slaviero e a Intercity, por exemplo, têm unidades específicas com estrutura para pets."
+      },
+      {
+        "id": "OB007",
+        "objecao": "A política de cancelamento é muito rígida",
+        "categoria": "Flexibilidade",
+        "resposta_recomendada": "Temos diferentes tipos de tarifa: a tarifa totalmente flexível permite cancelamento gratuito até 24h antes sem custo algum — é a mais adequada para quem tem agenda incerta. A tarifa com restrições é mais econômica justamente por ter essa condição. Qual é o seu grau de certeza sobre a viagem? Posso indicar qual tarifa se encaixa melhor no seu perfil."
+      },
+      {
+        "id": "OB008",
+        "objecao": "Não encontrei minha data disponível no site",
+        "categoria": "Disponibilidade",
+        "resposta_recomendada": "Vou verificar no sistema agora para aquela data específica. Às vezes a disponibilidade online não reflete quartos que acabaram de ser liberados por cancelamentos. Também posso verificar unidades próximas da mesma rede ou colocar seu nome na lista de espera — em datas de alta demanda, costuma haver movimento de cancelamentos até 48h antes."
+      },
+      {
+        "id": "OB009",
+        "objecao": "Vi avaliações negativas sobre a limpeza no TripAdvisor",
+        "categoria": "Reputação",
+        "resposta_recomendada": "Agradeço por compartilhar isso. Avaliações negativas são levadas a sério e monitoradas diariamente. Vejo que aquelas avaliações são de [período], desde então implementamos [melhoria específica: nova equipe, auditoria semanal, novo protocolo]. Posso garantir que os padrões atuais são bem diferentes. Se quiser, compartilho nossos índices de satisfação mais recentes."
+      },
+      {
+        "id": "OB010",
+        "objecao": "Não quero me comprometer com o pagamento antecipado",
+        "categoria": "Pagamento",
+        "resposta_recomendada": "Compreendo. Temos a opção de tarifas com pagamento no hotel no check-in, sem cobrança antecipada. A vantagem das tarifas pré-pagas é o preço mais em conta. Para quem prefere mais flexibilidade, a tarifa flexível com pagamento na chegada é a solução ideal — você reserva agora com garantia de preço e só paga quando chegar."
+      },
+      {
+        "id": "OB011",
+        "objecao": "O café da manhã incluso não vale o preço que cobram",
+        "categoria": "Valor do serviço",
+        "resposta_recomendada": "Entendo. Se preferir, posso oferecer a tarifa sem o café da manhã, com um desconto proporcional. Dessa forma, você tem a liberdade de escolher quando e onde tomar café. Nossa preferência é que você experimente nosso buffet pelo menos uma vez — temos recebido excelentes avaliações especialmente na variedade de itens regionais. Posso reservar para você na tarifa sem café?"
+      },
+      {
+        "id": "OB012",
+        "objecao": "Meu programa de fidelidade não é da sua rede",
+        "categoria": "Fidelização",
+        "resposta_recomendada": "Sem problema! Temos parcerias com os principais programas de fidelidade. Caso não haja integração, posso inscrevê-lo agora gratuitamente no nosso programa — os pontos acumulados nesta estadia já podem ser resgatados em estadias futuras ou em upgrades. É uma boa oportunidade para começar a acumular benefícios conosco."
+      }
+    ],
+
+    "argumentos_venda": [
+      {
+        "id": "AV001",
+        "argumento": "Melhor preço garantido na reserva direta",
+        "descricao": "Reservar pelo site oficial ou app da rede garante o menor preço disponível, com paridade de tarifa. Além disso, benefícios exclusivos para reserva direta: upgrade sujeito a disponibilidade, acumulação de pontos no programa fidelidade, cancelamento flexível e atendimento prioritário.",
+        "quando_usar": "Quando o hóspede menciona preços encontrados em OTAs ou quando está em dúvida sobre onde reservar."
+      },
+      {
+        "id": "AV002",
+        "argumento": "Localização e conveniência",
+        "descricao": "Apresentar a localização estratégica do hotel em relação aos destinos do hóspede: distância do centro de convenções, do aeroporto, dos principais pontos turísticos ou da área comercial. Calcular o custo e tempo de deslocamento versus hotéis mais baratos em localizações menos convenientes.",
+        "quando_usar": "Para hóspedes de negócios que valorizam proximidade do trabalho e para turistas que querem praticidade de acesso aos atrativos."
+      },
+      {
+        "id": "AV003",
+        "argumento": "Experiência completa e serviços integrados",
+        "descricao": "Destacar que o hotel oferece além do quarto: restaurante, bar, academia, piscina, spa, business center, lavanderia, transfer e concierge. Hospedar-se em um hotel com estrutura completa elimina a necessidade de deslocamento para refeições, exercícios e serviços, gerando conveniência e economia de tempo.",
+        "quando_usar": "Para comparar com hospedagens em Airbnb, apartamentos ou hotéis sem estrutura de serviços."
+      },
+      {
+        "id": "AV004",
+        "argumento": "Programa de fidelidade com benefícios reais",
+        "descricao": "Apresentar o programa de fidelidade da rede (ALL — Accor Live Limitless, Wyndham Rewards, Hilton Honors, Clube Orange Intercity, Nobile Plus) com benefícios concretos: diárias gratuitas após X pontos, upgrades automáticos para membros elite, late check-out garantido, café da manhã incluso e acesso a lounges exclusivos.",
+        "quando_usar": "Para hóspedes frequentes de negócios que ainda não são membros do programa ou que usam programa de rede concorrente."
+      },
+      {
+        "id": "AV005",
+        "argumento": "Segurança e padrão confiável",
+        "descricao": "Redes hoteleiras certificadas oferecem padrão consistente de segurança, higiene e qualidade independentemente da unidade. O hóspede sabe exatamente o que esperar em qualquer cidade. Câmeras de segurança, cofre no quarto, equipe treinada 24h e protocolos de emergência garantem tranquilidade especialmente para mulheres viajando sozinhas e famílias.",
+        "quando_usar": "Para hóspedes que citam insegurança ou que nunca se hospedaram na rede antes."
+      },
+      {
+        "id": "AV006",
+        "argumento": "Infraestrutura para eventos e reuniões",
+        "descricao": "Para clientes corporativos: apresentar os espaços de eventos disponíveis, capacidade, equipamentos audiovisuais (projetor, LED, sistema de som), serviço de coffee break e almoço/jantar de evento, estacionamento para participantes e suporte técnico dedicado. Hotéis com centro de convenções são parceiros estratégicos para empresas.",
+        "quando_usar": "Para empresas, organizadores de eventos, secretárias executivas e planejadores de eventos corporativos."
+      },
+      {
+        "id": "AV007",
+        "argumento": "Sustentabilidade e práticas ESG",
+        "descricao": "Apresentar iniciativas ambientais do hotel: programa de reutilização de toalhas, redução de plásticos de uso único, eficiência energética (painéis solares, sensores de presença), gestão de resíduos, fornecimento local de alimentos e certificações ambientais (Chave Verde, ABNT NBR 15401). Hóspedes mais conscientes valorizam e escolhem hotéis comprometidos com sustentabilidade.",
+        "quando_usar": "Para hóspedes que mencionam preocupação ambiental, empresas com políticas ESG e turistas conscientes."
+      },
+      {
+        "id": "AV008",
+        "argumento": "Experiências locais e turismo regional",
+        "descricao": "O concierge do hotel é um especialista local: roteiros personalizados, reservas em restaurantes, ingressos para atrações, dicas de passeios fora do roteiro turístico convencional, parceria com operadoras locais e aluguel de veículos. A experiência de hospedagem vai além do quarto — o hotel é a porta de entrada para a cultura e gastronomia da região.",
+        "quando_usar": "Para turistas que visitam a cidade pela primeira vez ou que querem experiências além do óbvio."
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "id": "AT001",
+      "area": "Tipos de Acomodação",
+      "categorias": [
+        {
+          "tipo": "Standard",
+          "descricao": "Quarto básico com cama de casal ou duas de solteiro, banheiro privativo, TV, ar-condicionado, frigobar, wi-fi e amenities básicos (shampoo, condicionador, sabonete). Ideal para estadias de 1 a 3 noites com foco em custo-benefício.",
+          "perfil_ideal": "Viajante solo de negócios, casal em viagem curta, turista econômico."
+        },
+        {
+          "tipo": "Superior / Deluxe",
+          "descricao": "Quarto maior que o standard, melhor andar, vista diferenciada, amenities premium, cama king size ou twin cama box, minibar completo, café expresso no quarto e roupão. Decoração diferenciada.",
+          "perfil_ideal": "Casal comemorando data especial, executivo que valoriza conforto, turista que busca melhor experiência sem custo de suíte."
+        },
+        {
+          "tipo": "Suíte",
+          "descricao": "Apartamento com sala de estar separada do quarto, banheira ou ducha dupla, area de trabalho, amenities de luxo, view privilegiado e serviços adicionais como mordomo disponível. Variações: Suíte Junior, Suíte Master, Suíte Presidencial.",
+          "perfil_ideal": "Lua de mel, aniversários importantes, executivos de alto escalão, hóspedes VIP."
+        },
+        {
+          "tipo": "Apart-hotel / Flat",
+          "descricao": "Unidade com kitchenette ou cozinha completa, sala de estar e quarto separados. Ideal para estadias longas (weekly, monthly rate). Inclui serviço de limpeza semanal ou diário. Marcas: eSuites Atlantica, Roomo.",
+          "perfil_ideal": "Profissional em projeto temporário fora da cidade, família em mudança, expatriado."
+        },
+        {
+          "tipo": "Quarto Acessível (PcD)",
+          "descricao": "Adaptado para hóspedes com mobilidade reduzida: portas largas, banheiro adaptado com barras de apoio e banco, cama com altura regulável, comunicação visual (para hóspedes com deficiência auditiva) e acesso livre de barreiras arquitetônicas. Obrigatório por lei (ABNT NBR 9050).",
+          "perfil_ideal": "Hóspedes com mobilidade reduzida, deficiência visual ou auditiva, ou que usam cadeira de rodas."
+        },
+        {
+          "tipo": "Quarto Family / Familiar",
+          "descricao": "Quarto maior com configuração para famílias: cama de casal para os pais mais uma ou duas camas de solteiro, ou opção de rollaway cama extra. Alguns hotéis têm quartos comunicantes (connecting rooms). Amenities infantis.",
+          "perfil_ideal": "Famílias com crianças, grupos de amigos, viagens em grupo."
+        },
+        {
+          "tipo": "Quarto Pet-Friendly",
+          "descricao": "Quartos designados para hóspedes com animais de estimação. Inclui cama para pet, tigelas, sachê de ração, e acesso a área verde ou pet walk. Política específica por raça, porte e número de animais. Disponível em redes como Slaviero, Intercity e algumas unidades Accor.",
+          "perfil_ideal": "Hóspedes que viajam com cães ou gatos de pequeno a médio porte."
+        }
+      ]
+    },
+    {
+      "id": "AT002",
+      "area": "Food & Beverage (F&B) — Restaurante e Bar",
+      "descricao": "O departamento de F&B é um dos principais geradores de receita além das diárias e uma das maiores oportunidades de upsell.",
+      "servicos": [
+        {
+          "servico": "Café da manhã buffet",
+          "detalhes": "Principal serviço de F&B. Buffet completo com opções quentes, frios, frutas, sucos naturais, iogurtes e pães artesanais. Diferencial competitivo importante — hóspedes avaliam positivamente cafés da manhã fartos e com produtos regionais. Hotéis de luxo oferecem opções à la carte adicionais."
+        },
+        {
+          "servico": "Room Service (serviço de quarto) 24h",
+          "detalhes": "Pedidos de refeição e bebidas diretamente no quarto, via app, telefone ou QR code. Taxa de serviço adicional (15-20%) geralmente aplicada. Horários limitados em hotéis economy. É um dos serviços mais valorizados por hóspedes de negócios que chegam tarde."
+        },
+        {
+          "servico": "Restaurante à la carte ou buffet",
+          "detalhes": "Aberto para hóspedes e público externo. Cardápio com culinária regional e internacional. Em hotéis de luxo, o restaurante é assinado por chef renomado e pode ser destino gastronômico independente do hotel."
+        },
+        {
+          "servico": "Bar e Happy Hour",
+          "detalhes": "Bar de lobby ou rooftop bar. Happy hour com promoções (caipirinha, choppinho, petiscos) entre 17h e 20h. Importante ponto de socialização para hóspedes corporativos. Alguns hotéis têm bares temáticos (gin bar, cervejaria artesanal)."
+        },
+        {
+          "servico": "Minibar / Frigobar",
+          "detalhes": "Frigobar no quarto abastecido com bebidas, snacks e água. Pode ser cortesia (premium) ou cobrado por consumo. Tendência: minibares temáticos com produtos regionais ou artesanais."
+        }
+      ]
+    },
+    {
+      "id": "AT003",
+      "area": "Lazer e Bem-estar",
+      "descricao": "Infraestrutura de lazer é diferencial competitivo, especialmente para turistas e para o segmento bleisure.",
+      "servicos": [
+        {
+          "servico": "Piscina",
+          "detalhes": "Piscina adulto e infantil. Em resorts: piscina com borda infinita, tobogã, área de descanso com espreguiçadeiras, serviço de piscina (bebidas e petiscos). Alguns hotéis urbanos têm rooftop pool como diferencial premium."
+        },
+        {
+          "servico": "Fitness Center / Academia",
+          "detalhes": "Academia equipada com cardio (esteiras, elípticos, bikes) e musculação. Disponível 24h em hotéis de categoria superior. Avaliado positivamente por hóspedes corporativos que mantêm rotina de exercícios em viagem."
+        },
+        {
+          "servico": "Spa",
+          "detalhes": "Serviços de massagem, tratamentos corporais e faciais, sauna, banheira de hidromassagem e área de relaxamento. Principal serviço de upsell para resorts e hotéis de luxo. Parcerias com marcas premium (L'Occitane, Natura, Nuxe)."
+        },
+        {
+          "servico": "Área kids e espaço família",
+          "detalhes": "Brinquedoteca, piscina infantil, recreação monitorada, cardápio infantil e babá-service (mediante agendamento). Diferencial para hotéis que querem atrair famílias com crianças."
+        },
+        {
+          "servico": "Atividades e entretenimento",
+          "detalhes": "Em resorts: aulas de surf, stand-up paddle, passeios de caiaque, trilhas guiadas, shows e atividades noturnas. Em hotéis urbanos: parcerias com operadoras locais para city tours, shows e experiências gastronômicas."
+        }
+      ]
+    },
+    {
+      "id": "AT004",
+      "area": "Eventos e Grupos Corporativos",
+      "descricao": "Segmento MICE (Meetings, Incentives, Conferences, Exhibitions) é fonte crucial de receita, com alta ocupação e alto ticket médio.",
+      "servicos": [
+        {
+          "servico": "Salas de reunião e auditório",
+          "detalhes": "Salas de diferentes capacidades (10 a 1.500 pessoas). Configurações: teatro, escolar, U-shape, espinha de peixe, banquete. Equipamentos: projetor ou painel LED, sistema de videoconferência, microfone sem fio, whiteboard. Luz natural e acesso direto ao pátio são diferenciais."
+        },
+        {
+          "servico": "Coffee break e banquetes",
+          "detalhes": "Coffee break matutino, vespertino e premium para eventos. Almoços e jantares de gala para grupos. Cardápio personalizado conforme tema do evento. Chef disponível para adequações (vegetariano, celíaco, kosher, halal)."
+        },
+        {
+          "servico": "Assessoria de eventos (Event Manager)",
+          "detalhes": "Profissional dedicado ao cliente desde a proposta até o pós-evento. Elabora BEO (Banquet Event Order), coordena fornecedores terceiros, gerencia timeline e resolve imprevistos. É o principal diferencial de hotéis com foco em eventos."
+        },
+        {
+          "servico": "Tarifas de grupo",
+          "detalhes": "Grupos acima de 10 quartos têm condições negociadas: diária especial, quartos cortesia (geralmente 1 para cada 20 reservas), horário de check-in/out preferencial e espaço de reunião com desconto ou incluso."
+        }
+      ]
+    },
+    {
+      "id": "AT005",
+      "area": "Serviços ao Hóspede (Guest Services)",
+      "descricao": "A qualidade dos serviços de atendimento é o principal fator de diferenciação e de avaliação positiva nas plataformas de reviews.",
+      "servicos": [
+        {
+          "servico": "Concierge",
+          "detalhes": "Especialista em experiências locais: reservas em restaurantes, ingressos para shows, passeios e trilhas, aluguel de veículos, informações turísticas e indicações personalizadas. Chave de ouro (Clés d'Or) é a mais alta certificação para concierges no mundo."
+        },
+        {
+          "servico": "Transfer e transporte",
+          "detalhes": "Transfer aeroporto-hotel-aeroporto, car rental, táxi e aplicativos de mobilidade. Em hotéis de luxo: motorista dedicado, van para grupos e parceria com empresas de transfer premium."
+        },
+        {
+          "servico": "Lavanderia e dry cleaning",
+          "detalhes": "Serviço de lavagem, passagem e limpeza a seco de roupas com entrega no quarto. Em hotéis economy: laundromat self-service no andar. Serviço expresso (same-day) disponível com custo adicional."
+        },
+        {
+          "servico": "Business Center",
+          "detalhes": "Área com computadores, impressora, scanner e sala de reunião pequena. Disponível 24h. Essencial para hóspedes corporativos. Em hotéis modernos, é substituído parcialmente pelo co-working no lobby."
+        },
+        {
+          "servico": "Valet parking",
+          "detalhes": "Serviço de manobrista com guarda e entrega do veículo. Diferencial de conveniência, especialmente em hotéis urbanos com estacionamento subterrâneo. Cobrado diariamente ou por evento."
+        },
+        {
+          "servico": "Check-in e check-out digital",
+          "detalhes": "Pré-check-in pelo app ou WhatsApp com preenchimento de dados, escolha de quarto e pagamento. Chave digital no smartphone elimina cartão físico. Check-out expresso com fatura enviada por e-mail. Tendência crescente que reduz filas e aumenta satisfação."
+        }
+      ]
+    },
+    {
+      "id": "AT006",
+      "area": "Programas de Fidelidade das Principais Redes",
+      "programas": [
+        {
+          "rede": "Accor — ALL (Accor Live Limitless)",
+          "descricao": "Programa com mais de 100 milhões de membros globais. Níveis: Classic, Silver, Gold, Platinum, Diamond. Pontos acumulados em hospedagem, restaurante e parceiros. Benefícios por status: upgrade automático, late check-out, acesso ao lounge executivo, diárias gratuitas. ALL Signature: assinatura mensal com pontos recorrentes. No Brasil, presente em mais de 300 hotéis de 25 marcas."
+        },
+        {
+          "rede": "Hilton Honors",
+          "descricao": "Programa global com + 180 milhões de membros. Níveis: Member, Silver, Gold, Diamond. Pontos acumulados em hospedagem, F&B e parceiros (Amex, hertz). 5ª noite grátis em estadas com pontos. Benefícios Gold/Diamond: café da manhã incluso, upgrade garantido, late check-out e pontos bônus."
+        },
+        {
+          "rede": "Wyndham Rewards",
+          "descricao": "Programa com + 100 milhões de membros globais. Número mínimo de pontos para diárias gratuitas fixo (7.500 pontos por noite em qualquer hotel participante). Parceria com cartões Wyndham Rewards Visa. Níveis: Blue, Gold, Platinum, Diamond."
+        },
+        {
+          "rede": "Intercity — Clube Orange",
+          "descricao": "Programa de fidelidade nacional com cashback em hospedagens. Percentual de retorno cresce conforme volume de estadias. Garantia de menor preço para membros. Benefícios: check-in prioritário, acumulação em todas as unidades da rede."
+        },
+        {
+          "rede": "Nobile Plus",
+          "descricao": "Programa de fidelidade da rede Nobile com pontos por diárias. Benefícios crescentes conforme frequência. Válido em todas as unidades da rede no Brasil e exterior."
+        },
+        {
+          "rede": "Slaviero — Clube de Fidelidade",
+          "descricao": "Programa com acumulação de pontos por diárias. Benefícios: desconto em hospedagens futuras, cortesias em F&B e upgrade preferencial. Forte integração com programas corporativos."
+        }
+      ]
+    },
+    {
+      "id": "AT007",
+      "area": "Turismo Regional — Principais Destinos Brasileiros",
+      "destinos": [
+        {
+          "regiao": "Nordeste",
+          "estados_principais": ["CE", "RN", "PE", "BA"],
+          "atrativos": "Praia de Jericoacoara, Lençóis Maranhenses, Porto de Galinhas, Morro de São Paulo, Praia do Forte. Alta temporada: julho e janeiro. Produto: resorts all-inclusive, hotéis de praia, pousadas boutique. Gastronomia: frutos do mar, tapioca, carne de sol, acarajé.",
+          "redes_presentes": ["Accor (Novotel, ibis)", "Atlantica (Radisson)", "Nobile", "Wyndham"]
+        },
+        {
+          "regiao": "Sul",
+          "estados_principais": ["SC", "RS", "PR"],
+          "atrativos": "Gramado e Canela (Festival de Cinema, Natal Luz), Florianópolis (praias), Foz do Iguaçu (Cataratas), Balneário Camboriú (turismo de alto padrão), Serra Gaúcha (enoturismo).",
+          "redes_presentes": ["Slaviero", "Accor (Mercure, ibis)", "Intercity", "Nobile", "Atlantica"]
+        },
+        {
+          "regiao": "Sudeste",
+          "estados_principais": ["SP", "RJ", "MG"],
+          "atrativos": "São Paulo (turismo de negócios, gastronomia, shows), Rio de Janeiro (Carnaval, Cristo, Pão de Açúcar, praias), Paraty, Búzios, Ouro Preto, Tiradentes, Serra da Mantiqueira.",
+          "redes_presentes": ["Accor (todas as marcas)", "Hilton", "Wyndham", "Atlantica", "Intercity", "Slaviero", "Nobile"]
+        },
+        {
+          "regiao": "Centro-Oeste",
+          "estados_principais": ["DF", "MS", "MT", "GO"],
+          "atrativos": "Brasília (turismo cívico e corporativo), Bonito (ecoturismo), Pantanal (natureza), Chapada dos Veadeiros, Chapada dos Guimarães.",
+          "redes_presentes": ["Accor", "Nobile", "Wyndham", "Intercity"]
+        },
+        {
+          "regiao": "Norte",
+          "estados_principais": ["AM", "PA"],
+          "atrativos": "Manaus (Festival de Ópera, turismo de aventura na Amazônia), Belém (gastronomia paraense, Ver-o-Peso, Círio de Nazaré), Alter do Chão.",
+          "redes_presentes": ["Intercity", "Wyndham", "Atlantica"]
+        }
+      ]
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "id": "FC001",
+      "nome": "Fluxo de Reserva pelo WhatsApp",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Boas-vindas e identificação da necessidade",
+          "mensagem": "Olá! 😊 Seja bem-vindo(a) ao [Nome do Hotel]. Sou [Agente], seu consultor de reservas. Estou aqui para ajudá-lo(a) a planejar a estadia perfeita! Para que cidade e quais datas você está pesquisando?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Qualificação do perfil de viagem",
+          "mensagem": "Ótimo, vou verificar disponibilidade para [destino] de [data entrada] a [data saída]. Para montar a melhor opção: a viagem é a lazer ou a negócios? E quantos hóspedes adultos e crianças?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação de opções",
+          "mensagem": "Tenho disponibilidade para você! Veja as opções:\n\n🛏 *Quarto Standard* — R$ [X]/noite (café incluso)\n🛏 *Quarto Superior* — R$ [Y]/noite (café + upgrade de amenities)\n🛏 *Suíte* — R$ [Z]/noite (vista privilegiada, sala separada)\n\nQual se encaixa melhor no que você busca?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Apresentação de benefícios da reserva direta",
+          "mensagem": "Reservando diretamente comigo você garante: ✅ Melhor preço garantido ✅ Cancelamento flexível até 48h antes ✅ Acumulação de pontos no programa [Nome] ✅ Pedido de quarto preferencial cadastrado. Deseja confirmar a reserva agora ou prefere que eu reserve por 24h enquanto você decide?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Confirmação e próximos passos",
+          "mensagem": "Reserva confirmada! 🎉 Você receberá o voucher por e-mail em instantes. Seu número de reserva é [XXXXX]. Check-in: [horário padrão]. Check-out: [horário padrão]. Qualquer dúvida estou disponível aqui no WhatsApp. Esperamos você! 🏨"
+        }
+      ]
+    },
+    {
+      "id": "FC002",
+      "nome": "Fluxo de Upsell Pré-Chegada",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Contato 48h antes (automatizado + personalizado)",
+          "mensagem": "Olá, [Nome]! 😊 Sua estadia no [Hotel] está chegando! Check-in em [data]. Estamos preparando tudo para sua chegada. Posso oferecer algumas experiências especiais para tornar sua visita ainda mais inesquecível?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Oferta de upgrade de quarto",
+          "mensagem": "Temos disponibilidade de Suíte [Nome] por apenas +R$ [X]/noite em relação ao quarto reservado. Inclui: vista para o mar / cidade / piscina, banheira, roupão e amenities premium. Gostaria de confirmar o upgrade?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Oferta de pacote de experiências",
+          "mensagem": "Também temos pacotes especiais que posso incluir na sua reserva: 🍷 *Jantar romântico* no restaurante — R$ [X] para 2 (inclui vinho) 💆 *Massagem relaxante* no spa — R$ [X] (60 minutos) 🚗 *Transfer aeroporto-hotel* — R$ [X] (van confortável) Deseja incluir algum desses na sua estadia?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Pré-check-in digital",
+          "mensagem": "Para agilizar sua chegada, você pode fazer o pré-check-in agora mesmo! Só precisamos confirmar: documento de identidade, placa do veículo (para estacionamento) e horário estimado de chegada. Isso garante que seu quarto esteja pronto assim que chegar. 🙌"
+        }
+      ]
+    },
+    {
+      "id": "FC003",
+      "nome": "Fluxo de Check-in Presencial",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção e identificação",
+          "mensagem": "Boa-vinda, [Nome]! Que prazer tê-lo(a) aqui no [Hotel]. Vou localizar sua reserva. Pode me apresentar um documento de identidade? [Enquanto localiza] Sua viagem foi tranquila até aqui?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Apresentação do quarto e benefícios",
+          "mensagem": "Sua reserva está confirmada! Você está no [quarto X], no [andar X], com vista para [descrição]. Café da manhã é servido das [horário] a [horário] no restaurante [andar]. A piscina e academia ficam no [andar] e funcionam das [horário] às [horário]. O room service está disponível [horário] pelo ramal [X]."
+        },
+        {
+          "etapa": 3,
+          "acao": "Oferta de upgrade no momento do check-in",
+          "mensagem": "Tenho uma boa notícia: hoje temos disponibilidade de uma Suíte [Nome], que normalmente custa R$ [X] a mais por noite. Para sua estadia de [N] noites, posso oferecer por apenas R$ [Y] adicionais no total — isso dá a diferença de R$ [Z] por dia. Fica a seu critério, mas é uma experiência bem especial!"
+        },
+        {
+          "etapa": 4,
+          "acao": "Cadastro no programa de fidelidade",
+          "mensagem": "Aproveito para perguntar: você é membro do nosso programa [Nome]? É gratuito e as diárias desta estadia já pontuam para desconto nas próximas visitas. Leva apenas 2 minutos para cadastrar. Gostaria?"
+        }
+      ]
+    },
+    {
+      "id": "FC004",
+      "nome": "Fluxo de Atendimento de Reclamação",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Escuta ativa e empatia",
+          "mensagem": "Lamento muito pelo inconveniente que ocorreu, [Nome]. Sua experiência aqui é nossa maior prioridade e está claro que falhamos neste momento. Pode me contar exatamente o que aconteceu para que eu possa resolver da melhor forma?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Ação imediata",
+          "mensagem": "Entendido. Vou resolver isso agora mesmo. [Ação específica: trocar de quarto / acionar manutenção / reprocessar a conta / acionar a governança]. Prevejo que em [X minutos] a situação estará resolvida. Posso acompanhar você até [local] enquanto aguarda?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Compensação e encerramento",
+          "mensagem": "O problema foi resolvido. Para compensar o inconveniente, gostaria de oferecer [cortesia: jantar, upgrade, late check-out, desconto na próxima reserva]. Isso não apaga o que aconteceu, mas quero que saiba que levamos sua experiência muito a sério. O feedback que você nos deu vai gerar melhorias reais. Há mais alguma coisa que posso fazer por você?"
+        }
+      ]
+    },
+    {
+      "id": "FC005",
+      "nome": "Fluxo de Proposta para Grupo Corporativo",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Identificação da necessidade do grupo",
+          "mensagem": "Olá! Recebemos sua solicitação de proposta para grupo. Para elaborar a proposta mais adequada: quantas diárias (quartos × noites) estão previstas? Haverá necessidade de espaço para eventos ou reuniões? E qual é o período de realização?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Qualificação detalhada",
+          "mensagem": "Perfeito. Algumas informações adicionais para personalizar a proposta: qual é a empresa e o perfil dos participantes? Precisam de alguma acomodação especial (acessibilidade, quarto individual para todos)? Haverá coffee break, almoço ou jantar de evento? E qual é o prazo para resposta?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação da proposta",
+          "mensagem": "Elaboramos uma proposta especial para o [Nome do Grupo]. Resumo: [X] quartos por [N] noites — diária especial de R$ [Y] (X% de desconto sobre a tarifa balcão); [sala de reunião inclusa/com desconto]; coffee break: R$ [Z] por pessoa por sessão; 1 quarto cortesia a cada 20 reservados; early/late check-in preferencial para o grupo. A proposta é válida por 7 dias. Posso agendar uma visita de reconhecimento do espaço?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Follow-up pós-proposta",
+          "mensagem": "Olá, [Nome]! Passando para saber se teve a oportunidade de analisar nossa proposta para o evento de [data]. Estamos com disponibilidade para o período e seria um prazer receber o grupo. Há algum ponto que posso ajustar ou esclarecer para facilitar a decisão?"
+        }
+      ]
+    },
+    {
+      "id": "FC006",
+      "nome": "Fluxo de Pós-Estadia e Fidelização",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Mensagem de agradecimento após check-out",
+          "mensagem": "Olá, [Nome]! Foi um prazer tê-lo(a) conosco. Esperamos que sua estadia tenha sido exatamente como você merecia. Para continuarmos melhorando, adoraríamos saber sua opinião — nossa pesquisa de satisfação leva menos de 2 minutos: [link]. Seu feedback é muito valioso para nós!"
+        },
+        {
+          "etapa": 2,
+          "acao": "Reconhecimento e oferta de retorno",
+          "mensagem": "Seus pontos da estadia já foram creditados no programa [Nome]. Você acumulou [X pontos] e está a [Y pontos] de atingir a próxima categoria de benefícios. Para sua próxima visita, posso já guardar suas preferências de quarto? E temos uma tarifa exclusiva para hóspedes que retornam em até 60 dias: [desconto/benefício]."
+        }
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "id": "GE001",
+      "gatilho": "Fuga da rotina e descanso merecido",
+      "descricao": "O viajante de lazer busca uma pausa real do cotidiano — trabalho, responsabilidades, trânsito. O hotel representa o espaço onde ele pode finalmente descansar, sem preocupações.",
+      "como_ativar": "Destacar o silêncio dos quartos, a qualidade das camas, o serviço de quarto disponível, a piscina tranquila e o spa relaxante. Conectar cada serviço ao descanso genuíno e à recarrega de energias.",
+      "frases_gatilho": [
+        "Você merece esse descanso. Deixe tudo por nossa conta.",
+        "Aqui, o único compromisso é relaxar.",
+        "Sua única tarefa neste fim de semana é não ter tarefa nenhuma."
+      ]
+    },
+    {
+      "id": "GE002",
+      "gatilho": "Criação de memórias e experiências únicas",
+      "descricao": "Viajantes buscam experiências que vão além do quarto — momentos que ficarão na memória e serão compartilhados com quem amam.",
+      "como_ativar": "Apresentar experiências exclusivas: jantar romântico com vista para o mar, café da manhã na cama com direito a flores, passeio surpresa organizado pelo concierge, fotografia das férias com serviço de fotógrafo profissional.",
+      "frases_gatilho": [
+        "Esta viagem vai se tornar uma história que você vai contar por anos.",
+        "Que tal transformar esse aniversário em algo inesquecível?",
+        "Algumas experiências só acontecem uma vez — e nós somos especialistas em criá-las."
+      ]
+    },
+    {
+      "id": "GE003",
+      "gatilho": "Pertencimento e status",
+      "descricao": "Hóspedes de programas de fidelidade e categorias premium sentem orgulho do status conquistado. O reconhecimento da equipe do hotel pelo nome e por suas preferências gera lealdade profunda.",
+      "como_ativar": "Chamar pelo nome sempre. Reconhecer o status no programa de fidelidade ('Bem-vindo de volta, Doutor [Nome], membro Platinum!'). Oferecer upgrade não solicitado. Deixar cortesia personalizada no quarto (frutas, vinho, bilhete manuscrito).",
+      "frases_gatilho": [
+        "Como membro Platinum, seu quarto já foi atualizado para a nossa melhor categoria disponível.",
+        "Sabemos que você prefere andar alto e vista para o mar — já reservamos especialmente para você.",
+        "Para nossos hóspedes frequentes, temos um tratamento especial que você vai notar."
+      ]
+    },
+    {
+      "id": "GE004",
+      "gatilho": "Segurança e previsibilidade",
+      "descricao": "Especialmente para viajantes de negócios e famílias, a certeza de que o hotel será exatamente o que prometeu é um valor fundamental.",
+      "como_ativar": "Destacar o padrão consistente da rede (o ibis em Manaus é idêntico ao ibis em São Paulo), as avaliações positivas verificadas, a política de garantia de satisfação e o atendimento 24h para resolução de qualquer problema.",
+      "frases_gatilho": [
+        "Em qualquer cidade do Brasil onde você estiver, o padrão será o mesmo.",
+        "Mais de 95% dos nossos hóspedes classificam sua estadia como Excelente ou Muito Boa.",
+        "Se algo não estiver perfeito, a equipe resolve imediatamente — é nossa garantia."
+      ]
+    },
+    {
+      "id": "GE005",
+      "gatilho": "Amor e romance",
+      "descricao": "Casais em lua de mel, aniversários, Dia dos Namorados e viagens românticas buscam um ambiente que celebre e potencie o momento a dois.",
+      "como_ativar": "Oferecer pacotes românticos: decoração especial do quarto (pétalas, velas, espumante), jantar com cardápio especial, massagem a dois no spa, café da manhã na cama.",
+      "frases_gatilho": [
+        "Vamos tornar essa viagem inesquecível para vocês dois.",
+        "Deixe os detalhes românticos por nossa conta — você só precisa aparecer.",
+        "Há momentos especiais que merecem um hotel igualmente especial."
+      ]
+    },
+    {
+      "id": "GE006",
+      "gatilho": "Aventura e descoberta",
+      "descricao": "O viajante explorativo busca novas experiências, gastronomia regional, cultura local e aventuras que expandam seus horizontes.",
+      "como_ativar": "O concierge é fundamental: oferecer roteiros personalizados, indicações de restaurantes que os guias não cobrem, passeios fora do óbvio, trilhas e experiências imersivas na cultura local.",
+      "frases_gatilho": [
+        "Nosso concierge conhece os segredos desta cidade que os guias turísticos não revelam.",
+        "Preparamos um roteiro personalizado para você descobrir o que há de melhor aqui.",
+        "A aventura começa assim que você chegar — temos tudo planejado para você."
+      ]
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "id": "CS001",
+      "titulo": "Casal em lua de mel buscando pacote especial",
+      "contexto": "Gabriel e Mariana entram em contato pelo WhatsApp buscando um hotel para a lua de mel em Florianópolis.",
+      "conversa": [
+        {
+          "papel": "Hóspede",
+          "mensagem": "Oi! Estamos nos casando em novembro e gostaríamos de ver opções de hospedagem para lua de mel em Florianópolis. Queremos algo especial."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Parabéns pelo casamento que se aproxima! 🥂 Que momento lindo! Vou adorar ajudá-los a planejar essa viagem inesquecível. Para sugerir a melhor opção: vocês preferem hotel na cidade (bairro Agronômica, com vista para a Baía Norte) ou mais próximo das praias da ilha? E qual período de novembro estavam pensando?"
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Queremos praia. Pensamos em 5 noites, de 10 a 15 de novembro."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito! Tenho disponibilidade justamente para esse período. Para lua de mel, nossa Suíte Master com vista para o mar é simplesmente deslumbrante: banheira de hidromassagem, terraço privativo, champanhe gelado na chegada e decoração especial com pétalas inclusos. O pacote completo para 5 noites, com café da manhã e decoração romântica, fica em R$ [X]. Já temos alguns pacotes adicionais como jantar à la carte com menu de degustação e massagem para dois. Gostaria que eu montasse uma proposta completa?"
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Nossa, adorei! Quanto fica com tudo incluindo o jantar e a massagem?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Com o Pacote Lua de Mel Completo: 5 noites na Suíte Master + café da manhã na cama no primeiro dia + jantar romântico no 3º dia (2 menus degustação com harmonização) + massagem para dois de 60 minutos no spa = R$ [X] para o casal, todo o pacote. Reservando até amanhã garantimos o desconto de 10% por antecedência. Posso confirmar?"
+        }
+      ]
+    },
+    {
+      "id": "CS002",
+      "titulo": "Viajante corporativo negociando tarifa mensal",
+      "contexto": "Executivo de SP que precisa passar 3 semanas por mês em Brasília por 6 meses em projeto.",
+      "conversa": [
+        {
+          "papel": "Hóspede",
+          "mensagem": "Preciso de uma acomodação em Brasília por pelo menos 6 meses. Vou ficar de segunda a sexta toda semana, em média 20 noites por mês. Qual a melhor condição?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Excelente! Para esse volume e período, você não apenas merece uma tarifa diferenciada — merece uma solução personalizada. Temos duas opções ideais para o seu perfil: um quarto standard executivo com tarifa mensal negociada, ou nosso apart-hotel com kitchenette, que dá muito mais conforto para quem fica vários dias — você pode preparar algo leve, tem mais espaço para trabalhar e o custo mensal é muito mais econômico que hotel convencional. Qual das duas faz mais sentido para o seu dia a dia?"
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "O apart-hotel parece melhor. O que inclui e qual é o preço?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Para 20 noites/mês por 6 meses, monto um contrato de longa estadia: apart-hotel com kitchenette (microondas, geladeira, talheres), sala de estar separada do quarto, limpeza 3x por semana, wi-fi, academia e estacionamento. A tarifa mensal para o volume que você precisa fica em R$ [X]/mês — equivalente a R$ [Y] por noite, bem abaixo da tarifa balcão de R$ [Z]. Café da manhã pode ser incluso por +R$ [W]/mês ou opcional por diária. O contrato é cancelável com 30 dias de aviso. Posso enviar a proposta formal por e-mail agora?"
+        }
+      ]
+    },
+    {
+      "id": "CS003",
+      "titulo": "Hóspede reclamando de barulho e pedindo reembolso",
+      "contexto": "Ana dormiu mal por barulho de obra próxima que não foi informada no momento da reserva.",
+      "conversa": [
+        {
+          "papel": "Hóspede",
+          "mensagem": "Dormi péssimo essa noite! Há uma obra aqui do lado e o barulho foi o tempo todo. Ninguém me avisou disso. Quero desconto ou reembolso!"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Ana, lamento muito. Você tem toda a razão em estar insatisfeita — uma noite de sono prejudicada é algo sério, e precisávamos ter te avisado sobre a obra ao fazer a reserva. Isso foi uma falha nossa. Vou resolver isso agora. Primeiro: você prefere trocar de quarto para um que fique do lado oposto e sem nenhum barulho? Tenho disponibilidade."
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Sim, mas e a noite de ontem? Não foi o que eu paguei para ter."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Concordo plenamente. Por isso vou emitir um crédito equivalente a 50% do valor da diária de ontem para ser usado em sua próxima reserva, sem prazo de expiração. Além disso, já pedi para nossa equipe de governança preparar o novo quarto agora mesmo. Enquanto isso, posso enviar um café da manhã cortesia ao quarto onde está? O mínimo que posso fazer é garantir que esta manhã comece melhor."
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Ok, aceito. O café seria ótimo obrigada."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito! Café chega em 15 minutos. O novo quarto estará pronto em cerca de 40 minutos — te aviso quando estiver liberado. Sua satisfação é o que mais importa para nós e espero que os próximos dias sejam exatamente como você merece."
+        }
+      ]
+    },
+    {
+      "id": "CS004",
+      "titulo": "Cliente que encontrou preço mais barato na OTA",
+      "contexto": "Pedro viu no Booking o mesmo hotel 12% mais barato que no site oficial.",
+      "conversa": [
+        {
+          "papel": "Hóspede",
+          "mensagem": "Estou vendo o hotel no Booking por R$ 380 a noite, mas no site de vocês está R$ 430. Por que é mais caro reservar direto com vocês?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Pedro, ótima pergunta — e você fez bem em verificar. Nosso preço direto não pode ser maior que o das OTAs por contrato. Me passa a página do Booking com aquele valor? Vou verificar se são as mesmas condições porque às vezes há diferença sutil: tarifa não-reembolsável versus cancelamento flexível, sem café da manhã, ou com taxas escondidas que aparecem no final."
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Olha aqui: R$ 380, mas é não-reembolsável."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Tá explicado! A tarifa de R$ 380 no Booking é não-reembolsável — se você precisar cancelar por qualquer motivo, perde o valor inteiro. A nossa tarifa de R$ 430 inclui cancelamento gratuito até 48h antes da chegada. Faço o seguinte: no site direto, consigo oferecer a mesma tarifa não-reembolsável por R$ 370 — R$ 10 a menos que o Booking — e você ainda ganha os pontos no programa fidelidade e o pedido de preferências de quarto. Quer que eu processe nessa condição?"
+        }
+      ]
+    },
+    {
+      "id": "CS005",
+      "titulo": "Família com criança com necessidade alimentar especial",
+      "contexto": "Família com filho celíaco que precisa confirmar se o café da manhã e restaurante atendem a dieta sem glúten.",
+      "conversa": [
+        {
+          "papel": "Hóspede",
+          "mensagem": "Vamos nos hospedar com nossa filha de 8 anos que é celíaca. O café da manhã e o restaurante têm opções sem glúten?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Que bom que você perguntou antes de chegar! Sim, temos opções sem glúten no café da manhã: pão sem glúten artesanal (assado diariamente), cereais certificados, frutas, ovos, iogurte e frios naturais. Todas as opções com glúten são servidas em utensílios separados para evitar contaminação cruzada. No restaurante, posso sinalizar sua reserva para que o chef prepare pratos sem glúten para sua filha. Vou registrar agora no seu perfil para que toda a equipe esteja ciente desde a chegada."
+        },
+        {
+          "papel": "Hóspede",
+          "mensagem": "Ótimo! Isso nos dá muito mais tranquilidade. E no room service tem opção também?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Sim! O cardápio do room service tem marcadores de restrições alimentares e sempre posso pedir à cozinha adaptações. Para garantir total segurança, sugiro que ao fazer o pedido você mencione novamente para o atendente que é alergia (não apenas intolerância) — isso aciona o protocolo de cozinha separada que usamos para alergênicos. Anoto também no pedido especial da reserva de vocês. Sua família vai ficar muito bem cuidada aqui!"
+        }
+      ]
+    }
+  ],
+
+  "faq_estruturado": [
+    {
+      "id": "FAQ001",
+      "pergunta": "Quais são os horários de check-in e check-out?",
+      "resposta": "O horário padrão de check-in na maioria das redes hoteleiras brasileiras é a partir das 14h, e o check-out até as 12h. Para chegadas antes das 14h, o hotel armazena a bagagem gratuitamente e, sujeito a disponibilidade, pode liberar o quarto mais cedo sem custo adicional (early check-in). Para saídas após as 12h, o late check-out pode ser solicitado com antecedência: algumas redes oferecem gratuitamente para membros do programa fidelidade, e outras cobram por hora adicional (geralmente R$ 50 a R$ 120/hora)."
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "O café da manhã está incluído na diária?",
+      "resposta": "Depende da tarifa e do hotel. Muitos hotéis oferecem tarifas com e sem café da manhã. Hotéis ibis, por exemplo, cobram o café separadamente. Hotéis Mercure, Novotel e Radisson geralmente incluem nas tarifas superiores. Na dúvida, verifique no voucher de reserva se a tarifa é 'room only', 'café incluso' ou 'all inclusive'. Reservar com café incluso pode ser mais econômico do que pagar na chegada, pois a diária especial para programas de fidelidade geralmente já inclui."
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "Qual é a política de cancelamento?",
+      "resposta": "A política varia por tarifa: Tarifa Flexível — cancelamento gratuito geralmente até 24h ou 48h antes do check-in, com reembolso integral. Tarifa Semi-Flexível — cancelamento gratuito até 7 dias antes, com cobrança de 1 noite após esse prazo. Tarifa Não-Reembolsável — sem direito a cancelamento ou alteração após a reserva. A política específica é sempre informada no momento da reserva e no voucher. Em casos de força maior (doença com atestado médico, falecimento de familiar), muitos hotéis aceitam renegociar mesmo em tarifas não-reembolsáveis — o pedido deve ser feito antes da data de check-in."
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "O hotel aceita animais de estimação?",
+      "resposta": "A política pet-friendly varia por unidade. Redes como Slaviero Hotéis, algumas unidades Intercity, ibis Styles e hotéis boutique costumam aceitar pets (geralmente cães e gatos de até 10kg). Normalmente é cobrada uma taxa de limpeza adicional (R$ 50 a R$ 150 por estadia). Ao reservar, informe que viajará com animal e confirme a política específica da unidade desejada. Não leve o pet sem aviso prévio — pode resultar em recusa de hospedagem ou cobrança extra."
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "O que é o sistema de classificação em estrelas dos hotéis?",
+      "resposta": "No Brasil, o Sistema Brasileiro de Classificação (SBClass) do Ministério do Turismo classifica meios de hospedagem de 1 a 5 estrelas com base em: infraestrutura (tamanho dos quartos, equipamentos), serviços oferecidos (room service, concierge, spa), qualidade dos processos e avaliação dos hóspedes. 1 estrela — básico, econômico; 2 estrelas — standard com serviços básicos; 3 estrelas — conforto médio, serviços ampliados; 4 estrelas — qualidade superior, variedade de serviços; 5 estrelas — luxo pleno, experiência premium. A classificação é voluntária, mas amplamente adotada pelas redes."
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "Qual é a diferença entre hotel, resort e apart-hotel?",
+      "resposta": "Hotel: hospedagem convencional com quarto privativo, café da manhã e serviços básicos. Ideal para estadias curtas. Resort: hotel com ampla infraestrutura de lazer — piscinas, beach, esportes, shows, atividades, geralmente em destinos de praia ou montanha. Pode ser all-inclusive. Apart-hotel (ou flat): unidades com kitchenette ou cozinha completa, sala de estar separada, ideal para estadias longas. Pousada: estabelecimento menor, geralmente familiar, com ambiance mais aconchegante e personalizado. Hostel: hospedagem com quartos compartilhados (dormitórios) e espaços sociais, voltado para mochileiros e viajantes jovens."
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "O que é tarifa all-inclusive e o que ela cobre?",
+      "resposta": "A tarifa all-inclusive inclui todas as refeições (café da manhã, almoço e jantar em restaurante buffet), bebidas não alcoólicas ilimitadas e, dependendo do pacote, bebidas alcoólicas, lanches intermediários, atividades recreativas, entretenimento noturno e uso de infraestrutura de lazer. É popular em resorts de praia do Nordeste e em resorts internacionais. Não costuma incluir: excursões externas, spa, serviços premium, bebidas importadas de alto valor ou tratamentos especiais. Verifique o que está incluído antes de reservar."
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Como funciona a política de crianças nos hotéis?",
+      "resposta": "Políticas variam por rede: A maioria dos hotéis aceita crianças de até 12 anos gratuitamente no quarto dos pais, sem custo adicional (sem cama extra). Para crianças maiores de 12 anos geralmente é cobrada taxa de adulto adicional. Alguns hotéis oferecem cama extra (rollaway bed) mediante taxa adicional (R$ 80-150/noite). Quartos familiares ou communicating rooms são ideais para famílias. Em resorts, crianças até 5 anos costumam ser totalmente gratuitas inclusive no regime all-inclusive."
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "O que é o programa de fidelidade ALL da Accor?",
+      "resposta": "O ALL (Accor Live Limitless) é o programa de fidelidade da rede Accor, com mais de 100 milhões de membros globais. Funciona com acumulação de pontos nas estadias e em parceiros (restaurantes, lojas, companhias aéreas). Os pontos podem ser trocados por diárias gratuitas, upgrades, refeições e experiências. Os níveis são: Classic, Silver (a partir de 10 noites/ano), Gold (30 noites), Platinum (60 noites) e Diamond (100 noites). Benefícios crescem por nível: late check-out garantido, upgrades automáticos, café da manhã incluído, acesso ao lounge executivo e pontos bônus."
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "Posso fazer check-in pelo celular?",
+      "resposta": "Sim, em muitas redes hoteleiras o check-in digital está disponível pelo app ou pelo WhatsApp, geralmente a partir de 24h antes da chegada. Permite: preencher dados do hóspede antecipadamente, escolher preferência de quarto, informar horário de chegada e, em alguns casos, receber a chave digital diretamente no smartphone. Redes como Accor (ALL App), Hilton (Hilton Honors App), Intercity e Slaviero oferecem essa funcionalidade. O pré-check-in não garante o quarto exato, apenas agiliza o processo de recepção."
+    },
+    {
+      "id": "FAQ011",
+      "pergunta": "O que é o serviço de concierge e como posso utilizá-lo?",
+      "resposta": "O concierge é o especialista em experiências locais do hotel. Está disponível na recepção ou por telefone/app. Pode ajudar com: reservas em restaurantes (especialmente os mais concorridos), ingressos para shows e eventos culturais, reserva de transporte, roteiros turísticos personalizados, informações sobre a cidade, serviços de entrega e compras, e qualquer necessidade que facilite sua estadia. Hotéis de luxo têm concierge com a certificação Chave de Ouro (Clés d'Or), credencial da associação internacional de concierges."
+    },
+    {
+      "id": "FAQ012",
+      "pergunta": "Como funciona o room service?",
+      "resposta": "O serviço de quarto (room service) permite que refeições e bebidas sejam entregues diretamente no quarto. Em hotéis de médio e alto padrão está disponível 24 horas. Em hotéis economy pode ter horários restritos (ex.: 6h às 23h). O pedido é feito pelo telefone do quarto, pelo app do hotel ou pelo QR code no menu disponível no quarto. É cobrada uma taxa de serviço adicional (10-20%) sobre o valor dos itens consumidos. O tempo médio de entrega varia de 20 a 45 minutos."
+    },
+    {
+      "id": "FAQ013",
+      "pergunta": "Posso guardar bagagem antes do check-in ou após o check-out?",
+      "resposta": "Sim. Praticamente todos os hotéis oferecem guarda-volumes gratuito. Você pode deixar a bagagem no hotel antes do check-in (quando chega cedo) ou após o check-out (quando ainda vai usar o dia no destino antes do voo). O serviço é gratuito na grande maioria dos hotéis. Alguns resorts e hotéis de luxo têm sistema de entrega da bagagem direto no quarto (bell service) incluso como cortesia."
+    },
+    {
+      "id": "FAQ014",
+      "pergunta": "O hotel tem estacionamento? É cobrado?",
+      "resposta": "A maioria dos hotéis urbanos tem estacionamento próprio ou conveniado, cobrado por dia (geralmente R$ 50 a R$ 120/dia). Alguns hotéis de resort ou em cidades pequenas oferecem estacionamento gratuito. Valet parking (manobrista) costuma ter custo adicional de R$ 20 a R$ 50 sobre a diária de estacionamento. Para hóspedes de longa estadia ou de grupos, o estacionamento pode ser negociado como parte do pacote. Verifique a disponibilidade antes de chegar, especialmente em hotéis de centro de grandes cidades."
+    },
+    {
+      "id": "FAQ015",
+      "pergunta": "O hotel tem wi-fi? É gratuito?",
+      "resposta": "Wi-fi é padrão e gratuito em praticamente todos os hotéis brasileiros, em todas as categorias. Hotéis econômicos podem ter velocidade limitada. Hotéis de negócios e categorias superiores oferecem wi-fi de alta velocidade, adequado para videoconferências. A senha é fornecida no check-in. Áreas comuns (lobby, restaurante, piscina) geralmente têm cobertura. Para necessidades de conexão crítica (trabalho remoto intenso), recomenda-se confirmar a velocidade de upload e download disponível."
+    },
+    {
+      "id": "FAQ016",
+      "pergunta": "O que é tarifa corporativa e como minha empresa pode contratar?",
+      "resposta": "Tarifa corporativa é uma condição negociada entre o hotel/rede e uma empresa para os funcionários que viajam a trabalho. Oferece: desconto sobre a tarifa balcão (geralmente 15-30%), garantia de disponibilidade em datas de alta demanda, faturamento para a empresa (sem necessidade de pagamento individual por viagem), relatórios de hospedagem para controle de despesas e eventualmente acumulação de pontos no programa fidelidade. Para contratar, a empresa entra em contato com o departamento comercial da rede ou unidade, informa o volume de diárias anuais e formaliza um contrato de conta corporativa."
+    },
+    {
+      "id": "FAQ017",
+      "pergunta": "O hotel tem acessibilidade para hóspedes com deficiência ou mobilidade reduzida?",
+      "resposta": "Por lei federal (Lei Brasileira de Inclusão — Lei 13.146/2015) e ABNT NBR 9050, hotéis devem oferecer acessibilidade arquitetônica. Os quartos adaptados (PcD) têm: portas com 90cm de largura mínima, banheiro adaptado com barras de apoio e banco, cama com altura regulável, espaço de manobra para cadeira de rodas. Acesso à recepção, restaurante, piscina e elevadores deve ser sem barreiras. Para hóspedes com deficiência visual, alguns hotéis têm sinalização em Braille e equipe treinada. Ao reservar, informe a necessidade específica para garantir o quarto adequado."
+    },
+    {
+      "id": "FAQ018",
+      "pergunta": "Como funciona o frigobar do quarto? Vou ser cobrado pelo que está dentro?",
+      "resposta": "Depende da política do hotel. Hotéis econômicos geralmente têm frigobar vazio (você usa para guardar seus próprios itens, sem cobrança). Hotéis de médio e alto padrão têm o frigobar abastecido com bebidas e snacks cobrados por consumo — os itens que faltarem no check-out são lançados na sua conta. Alguns hotéis premium incluem o conteúdo do minibar na diária. Na dúvida, pergunte na recepção antes de consumir. Os valores geralmente são mais altos que os de mercado (3-4 vezes o preço de supermercado)."
+    },
+    {
+      "id": "FAQ019",
+      "pergunta": "Posso receber visitas no quarto?",
+      "resposta": "Cada hotel tem sua própria política. Na maioria, visitas externas são permitidas no lobby, restaurante e bar do hotel. O acesso ao quarto geralmente é limitado aos hóspedes registrados. Em alguns hotéis, visitantes podem subir ao quarto mediante identificação na recepção e autorização do hóspede. Visitas durante a madrugada geralmente são mais restritivas. Recomenda-se verificar a política específica ao fazer check-in, especialmente se tiver reuniões de trabalho programadas no quarto."
+    },
+    {
+      "id": "FAQ020",
+      "pergunta": "O hotel tem serviço de lavanderia?",
+      "resposta": "A maioria dos hotéis de 3, 4 e 5 estrelas oferece serviço de lavanderia e dry cleaning, com retirada e entrega no quarto. O prazo padrão é 24h; o serviço expresso (same day) é possível com pedido até determinado horário (geralmente até 9h). Os preços são por peça e costumam ser mais altos que lavanderias externas. Hotéis econômicos podem ter laundromat (lavanderia self-service) em andar específico com máquinas de lavar e secar por moeda ou cartão."
+    },
+    {
+      "id": "FAQ021",
+      "pergunta": "Como funciona o programa de sustentabilidade dos hotéis?",
+      "resposta": "Hotéis comprometidos com sustentabilidade adotam práticas como: reutilização de toalhas e roupas de cama (cartão com opção de troca ou reuso); redução de plásticos de uso único (garrafa de shampoo em dispenser, eliminação de canudos plásticos); energia solar e sensores de presença para redução do consumo; coleta seletiva de resíduos; fornecimento preferencial de produtos locais no restaurante; e gestão de água com torneiras e descargas economizadoras. Certificações reconhecidas: Chave Verde, ABNT NBR 15401, Rainforest Alliance. A Accor tem metas de Net Zero Carbono para 2050."
+    },
+    {
+      "id": "FAQ022",
+      "pergunta": "Posso fumar no hotel?",
+      "resposta": "A Lei Antifumo federal (Lei 12.546/2011) proíbe fumar em ambientes fechados de uso coletivo, incluindo hotéis. Quartos de fumantes foram extintos na prática. O hóspede pode fumar em áreas externas designadas pelo hotel (geralmente varanda aberta, jardim ou área específica no térreo). Fumar no quarto resulta em cobranças de limpeza especial (R$ 200 a R$ 500) e, em alguns hotéis, multas contratuais. Vaporizadores e cigarros eletrônicos seguem a mesma política do cigarro convencional na maioria dos hotéis."
+    },
+    {
+      "id": "FAQ023",
+      "pergunta": "O que é o programa Chave Verde e o que ele significa para os hóspedes?",
+      "resposta": "A Chave Verde (Green Key) é uma certificação ambiental internacional concedida a estabelecimentos de hospedagem que atendem a critérios rigorosos de sustentabilidade: gestão de água e energia, redução de resíduos, uso de produtos sustentáveis, educação ambiental da equipe e envolvimento com a comunidade local. Para o hóspede significa: hotel comprometido com o meio ambiente, qualidade superior na gestão operacional e transparência nas práticas ambientais. É um critério crescente de escolha especialmente entre turistas europeus e viajantes com políticas ESG corporativas."
+    },
+    {
+      "id": "FAQ024",
+      "pergunta": "Como faço para reservar uma sala de reunião no hotel?",
+      "resposta": "Salas de reunião são reservadas pelo departamento comercial/eventos do hotel. O processo: contato por e-mail, telefone ou formulário no site com as informações de: data, horário, duração, número de participantes, configuração desejada (U-shape, teatro, escolar, board room) e equipamentos necessários (projetor, videoconferência, flipchart). Hotéis enviam proposta com valores para a sala, equipamentos e coffee break. Para reservas de até 10 pessoas, algumas redes têm salas executivas disponíveis por hora sem necessidade de proposta formal."
+    },
+    {
+      "id": "FAQ025",
+      "pergunta": "O que são quartos connecting (comunicantes) e como reservar?",
+      "resposta": "Quartos comunicantes têm uma porta interna que conecta dois quartos adjacentes, permitindo circular entre eles sem sair para o corredor. São ideais para famílias com crianças ou grupos de amigos que querem privacidade mas mantendo acesso fácil entre os quartos. Para reservar: informe ao fazer a reserva que precisa de quartos comunicantes e verifique disponibilidade. Esses quartos são limitados (geralmente poucos por andar) e sua disponibilidade não é garantida. Em datas de alta demanda, reserve com muita antecedência."
+    },
+    {
+      "id": "FAQ026",
+      "pergunta": "O hotel oferece transfer do aeroporto?",
+      "resposta": "A maioria dos hotéis de médio e alto padrão oferece serviço de transfer aeroporto-hotel, seja com veículo próprio ou por parceira com empresa de transporte. O custo varia: R$ 80 a R$ 200 por veículo para transfer particular; alguns hotéis têm transfer compartilhado mais econômico. Deve ser reservado com antecedência, informando: número do voo, horário de chegada, companhia aérea e número de passageiros. Apps como Uber e 99 também são alternativas acessíveis e disponíveis nos principais aeroportos brasileiros."
+    },
+    {
+      "id": "FAQ027",
+      "pergunta": "Posso pagar com pontos do meu programa de milhagem aérea no hotel?",
+      "resposta": "Alguns hotéis têm parcerias com programas de milhagem que permitem trocar milhas por diárias (ex.: pontos Livelo, LATAM Pass, TudoAzul em hotéis parceiros). A conversão nem sempre é vantajosa financeiramente — compare o valor em dinheiro da diária com o valor equivalente das milhas antes de decidir. Programas de fidelidade hoteleiros (ALL, Hilton Honors, Wyndham Rewards) também têm parcerias com companhias aéreas para transferência de pontos nos dois sentidos."
+    },
+    {
+      "id": "FAQ028",
+      "pergunta": "Como funciona a política de overbooking nos hotéis?",
+      "resposta": "Overbooking ocorre quando o hotel vende mais reservas do que quartos disponíveis, antecipando cancelamentos. Quando todos os hóspedes aparecem, o hotel deve seguir o protocolo de 'walking': hospedar o hóspede em hotel de categoria igual ou superior, arcar com o custo da diária e do transporte, e geralmente oferecer benefícios compensatórios (crédito, desconto futuro). O Código de Defesa do Consumidor garante que o hóspede com reserva confirmada não pode ser simplesmente negado sem as devidas compensações."
+    },
+    {
+      "id": "FAQ029",
+      "pergunta": "Qual é a idade mínima para fazer check-in sem acompanhante?",
+      "resposta": "Em geral, hóspedes precisam ter 18 anos completos para fazer check-in sem acompanhante. Menores de 18 anos precisam de autorização formal dos pais ou responsáveis. Para menores viajando com parentes que não são os pais, é necessária uma declaração notariada dos pais autorizando a viagem e a estadia. Hotéis podem solicitar esses documentos no check-in. Em resorts e destinos de lazer, essa exigência é mais frequentemente aplicada."
+    },
+    {
+      "id": "FAQ030",
+      "pergunta": "O que é o Revenue Management e como ele afeta o preço das diárias?",
+      "resposta": "Revenue Management é a estratégia de precificação dinâmica dos hotéis: as diárias variam conforme a demanda, antecedência da reserva, dia da semana e eventos locais. Um quarto pode custar R$ 200 numa segunda de baixa temporada e R$ 600 no mesmo quarto durante o Carnaval. Regra geral: quanto mais antecedência, menor o preço (early booking). Em datas de alta demanda, o preço sobe significativamente. Por isso, para eventos importantes, reserve com meses de antecedência. Tarifas não-reembolsáveis geralmente são as mais baratas."
+    },
+    {
+      "id": "FAQ031",
+      "pergunta": "O hotel fornece berço para bebê?",
+      "resposta": "A maioria dos hotéis de médio e alto padrão disponibiliza berços (babycots) mediante solicitação prévia. Informe ao fazer a reserva ou entre em contato com o hotel antes da chegada para garantir disponibilidade. O berço geralmente é gratuito, mas há limite de 1 berço por quarto. Para famílias com bebês, também verifique disponibilidade de banheira ou cadeira para bebê e se há microondas disponível para aquecer mamadeira (geralmente no lounge executivo ou na cozinha do restaurante)."
+    },
+    {
+      "id": "FAQ032",
+      "pergunta": "O hotel tem lounge executivo? O que ele oferece?",
+      "resposta": "O lounge executivo (executive lounge ou club floor) é um espaço exclusivo para hóspedes de categorias superiores ou membros de elite dos programas fidelidade. Oferece: café da manhã privativo, aperitivos happy hour, bebidas e snacks durante o dia, atendimento personalizado, impressora/computador exclusivos e ambiente silencioso de trabalho. Acesso ao lounge executivo é um dos principais benefícios dos status Gold e Platinum nos programas de fidelidade. Algumas redes cobram tarifa adicional por acesso ao lounge mesmo sem status."
+    },
+    {
+      "id": "FAQ033",
+      "pergunta": "Como o hotel cuida da privacidade dos meus dados (LGPD)?",
+      "resposta": "Hotéis coletam dados pessoais dos hóspedes: nome, CPF, data de nascimento, endereço, e-mail, cartão de crédito e preferências. Pela LGPD, o hotel deve: informar a finalidade do uso dos dados, protegê-los com segurança adequada, não compartilhá-los sem autorização e garantir ao hóspede o direito de acesso, correção e exclusão. Dados de cartão de crédito são tokenizados. O perfil de preferências (tipo de quarto, alergias, preferências de almofada) é mantido para personalizar estadias futuras, sempre com seu consentimento."
+    },
+    {
+      "id": "FAQ034",
+      "pergunta": "O que é day use e como funciona?",
+      "resposta": "Day use é a hospedagem temporária sem pernoite. Permite usar o quarto e as instalações do hotel por um período determinado durante o dia (geralmente 6h, das 8h às 20h). Inclui acesso à academia, piscina e restaurante. Muito procurado por: profissionais que precisam de um espaço para trabalhar e descansar entre reuniões, casais que querem um momento de privacidade sem pernoite, ou turistas de passagem pela cidade que precisam de um espaço para se arrumar. O custo costuma ser de 40-60% do valor da diária completa."
+    },
+    {
+      "id": "FAQ035",
+      "pergunta": "Quais documentos devo apresentar no check-in?",
+      "resposta": "Documentos obrigatórios no check-in: documento de identidade oficial com foto (RG, CNH, passaporte ou carteira de trabalho), cartão de crédito para pré-autorização (mesmo que a diária já esteja paga — serve como garantia para consumos adicionais). Para hóspedes estrangeiros: passaporte com visto válido ou, para países do Mercosul, RNE ou documento de identidade nacional. O hotel preenche a FNRH (Ficha Nacional de Registro de Hóspedes) que é obrigação legal de todos os meios de hospedagem brasileiros."
+    },
+    {
+      "id": "FAQ036",
+      "pergunta": "O que é a FNRH e por que o hotel pede meus dados pessoais?",
+      "resposta": "A FNRH (Ficha Nacional de Registro de Hóspedes) é um documento obrigatório por lei federal (Portaria MTur 130/2011) que todos os meios de hospedagem devem preencher para cada hóspede. Inclui: nome completo, data de nascimento, CPF ou documento de identidade, estado civil, ocupação, endereço, procedência e destino. Os dados ficam armazenados pelo hotel por 5 anos e podem ser solicitados pelas autoridades competentes. É diferente dos dados usados para o programa de fidelidade — esses requerem consentimento adicional."
+    },
+    {
+      "id": "FAQ037",
+      "pergunta": "Como funciona a internet no hotel? Existe limite de dados?",
+      "resposta": "O wi-fi é oferecido gratuitamente na maioria dos hotéis brasileiros, sem limite de dados. A senha é fornecida no check-in. Velocidade varia: hotéis economy podem ter 10-20 Mbps; hotéis superiores oferecem 100 Mbps ou mais com fibra ótica. Para uso profissional intenso (videoconferências, upload de arquivos grandes), recomenda-se confirmar a velocidade disponível. Em eventos com muitos hóspedes, a velocidade pode ser compartilhada e cair. Hotéis com foco corporativo frequentemente oferecem internet dedicada por quarto ou por andar para uso profissional."
+    },
+    {
+      "id": "FAQ038",
+      "pergunta": "O hotel tem academia? Qual é o equipamento disponível?",
+      "resposta": "Hotéis de 3, 4 e 5 estrelas geralmente têm fitness center (academia). O equipamento básico inclui: esteiras, bicicletas ergométricas, elípticos e equipamentos de musculação. Hotéis superiores e resorts têm academias mais completas com pesos livres, TRX, spinning e às vezes personal trainer disponível. O horário de funcionamento varia (geralmente 6h às 22h; alguns são 24h). Em hotéis econômicos pode não existir academia própria, mas pode haver parceria com academia próxima."
+    },
+    {
+      "id": "FAQ039",
+      "pergunta": "Como posso solicitar serviço de babá ou monitora infantil no hotel?",
+      "resposta": "O serviço de babá (babysitting) está disponível em resorts e hotéis de luxo mediante solicitação prévia. Deve ser agendado com pelo menos 24h de antecedência pelo concierge ou recepção. O custo geralmente é por hora. A babá ou monitora contratada pelo hotel tem treinamento específico e passa por verificação de antecedentes. Para creches infantis em resorts, o serviço costuma ser incluído em pacotes all-inclusive e funciona em horários determinados com equipe de recreação."
+    },
+    {
+      "id": "FAQ040",
+      "pergunta": "O hotel tem spa? Como agendar?",
+      "resposta": "Hotéis de 4 e 5 estrelas e resorts geralmente têm spa com serviços de massagem, tratamentos corporais e faciais, sauna e hidromassagem. O agendamento é feito pelo concierge, pela recepção ou diretamente com o spa. Recomenda-se agendar com antecedência, especialmente em fins de semana e temporada alta. Alguns spas têm produtos premium de marcas como L'Occitane, Natura ou NUXE. Pacotes combinados (spa + café da manhã, spa + jantar) são uma boa opção de upsell e experiência diferenciada."
+    },
+    {
+      "id": "FAQ041",
+      "pergunta": "Posso organizar um evento como aniversário ou proposta de casamento no hotel?",
+      "resposta": "Sim! Os hotéis adoram participar de momentos especiais. Para organizar: entre em contato com a gerência do hotel ou o departamento de eventos com antecedência (mínimo 48-72h). Informe o tipo de celebração, data, número de pessoas e orçamento. O hotel pode providenciar: decoração especial do quarto ou salão, bolo sob encomenda, flores, espumante, músico ao vivo, fotógrafo (por indicação) e jantar privativo. Eventos maiores (aniversários com convidados) devem usar os espaços de eventos formalmente contratados."
+    },
+    {
+      "id": "FAQ042",
+      "pergunta": "Quais são os principais destinos turísticos servidos pelas redes hoteleiras no Brasil?",
+      "resposta": "As principais redes hoteleiras têm presença nos maiores destinos: São Paulo e Rio de Janeiro (maior concentração de hotéis de todas as categorias); Brasília (turismo corporativo e cívico); Nordeste: Fortaleza, Natal, Recife, Salvador, Maceió (turismo de praia e resort); Sul: Porto Alegre, Curitiba, Florianópolis, Gramado (cultura e natureza); Interior: Belo Horizonte, Campinas, Ribeirão Preto, Goiânia (corporativo e eventos); Destinos emergentes: Bonito (ecoturismo), Chapada Diamantina, Pantanal, Serra Gaúcha (enoturismo)."
+    },
+    {
+      "id": "FAQ043",
+      "pergunta": "Como funciona o sistema de avaliação em plataformas como TripAdvisor e Booking?",
+      "resposta": "Hóspedes avaliam hotéis em plataformas como TripAdvisor (de 1 a 5 pontos), Booking.com (de 1 a 10), Google Reviews e Expedia após a estadia. Os critérios incluem: limpeza, conforto, localização, atendimento, custo-benefício e wi-fi. Avaliações são públicas e influenciam fortemente as futuras reservas. Os hotéis devem responder às avaliações negativas de forma profissional e empática. Uma nota acima de 4/5 ou 8/10 é considerada muito boa. Para experiências insatisfatórias, sempre recomenda-se falar primeiro com a gerência do hotel antes de publicar avaliação negativa."
+    },
+    {
+      "id": "FAQ044",
+      "pergunta": "O que fazer se eu esquecer um objeto no quarto após o check-out?",
+      "resposta": "Contate o hotel o quanto antes pelo telefone ou WhatsApp informando: nome, datas de hospedagem, número do quarto e descrição do objeto. A governança verificará o quarto e os depósitos de achados e perdidos. Hotéis mantêm objetos encontrados por 90 a 180 dias. Se o objeto for encontrado, o hotel pode enviar por transportadora (custo por conta do hóspede) ou guardar para retirada pessoal. Para objetos de valor (joias, documentos, eletrônicos), o protocolo é mais rigoroso com registro formal e confirmação de identidade."
+    },
+    {
+      "id": "FAQ045",
+      "pergunta": "O hotel tem gerador de energia? O que acontece em caso de queda de luz?",
+      "resposta": "Hotéis de médio e alto padrão têm gerador de emergência que entra automaticamente em caso de queda de energia. O gerador garante: funcionamento de elevadores, iluminação de emergência, sistemas de segurança (câmeras, portões), ar-condicionado parcial e funcionamento das áreas críticas (recepção, restaurante). Em áreas com quedas frequentes (interior do Brasil, alguns estados do Norte), hotéis de boa categoria têm geradores de grande porte que mantêm a operação praticamente normal."
+    },
+    {
+      "id": "FAQ046",
+      "pergunta": "O hotel tem serviço de impressão e secretariado para hóspedes corporativos?",
+      "resposta": "Business centers em hotéis corporativos oferecem: computadores com acesso à internet, impressora e scanner, telefone para ligações locais e nacionais, serviço de fax, encadernação e copiadoras. Em hotéis modernos, esses serviços estão integrados ao co-working no lobby, com estações de trabalho individuais e salas de reunião pequenas disponíveis por hora. Secretariado (digitação, tradução, suporte administrativo) é disponível mediante contratação com o concierge, geralmente via prestadores parceiros."
+    },
+    {
+      "id": "FAQ047",
+      "pergunta": "Posso receber encomendas e correspondências no hotel durante minha estadia?",
+      "resposta": "Sim. Hotéis recebem correspondências e encomendas endereçadas ao hóspede durante a estadia. Informe o hotel com antecedência sobre a entrega esperada. O endereço deve incluir o nome completo do hóspede e a informação 'A/C: [Nome do hóspede], Quarto [número] (a confirmar)'. Entregadores como Correios e transportadoras podem deixar na recepção. Hotéis de luxo têm serviço de portaria que assina e guarda a encomenda com segurança."
+    },
+    {
+      "id": "FAQ048",
+      "pergunta": "Como funciona o sistema de pontuação do Hilton Honors?",
+      "resposta": "O Hilton Honors é o programa de fidelidade da rede Hilton, com mais de 180 milhões de membros. Os pontos são acumulados por dólar gasto em hospedagem (10 pontos por dólar no nível básico). Os níveis são: Member, Silver (10 noites/ano), Gold (40 noites) e Diamond (60 noites). Benefícios Gold incluem: café da manhã grátis, bônus de 80% em pontos e upgrade de quarto. Diamond adiciona: lounge executivo, spa grátis e 100% de bônus em pontos. A 5ª noite é gratuita em reservas com pontos. Pontos podem ser transferidos para companhias aéreas parceiras."
+    },
+    {
+      "id": "FAQ049",
+      "pergunta": "O hotel tem serviço de câmbio de moeda?",
+      "resposta": "Hotéis de 4 e 5 estrelas em grandes cidades e destinos turísticos costumam oferecer câmbio de moeda estrangeira (dólar, euro) na recepção ou concierge. As taxas costumam ser menos favoráveis que as de casas de câmbio independentes ou de bancos. Para turistas internacionais, a dica é usar caixas eletrônicos com cartão de débito internacional (menor spread) ou casas de câmbio autorizadas pelo Banco Central. Em São Paulo e Rio, há diversas opções de câmbio próximas a hotéis de alto padrão."
+    },
+    {
+      "id": "FAQ050",
+      "pergunta": "Quais são as principais feiras e convenções que movimentam a hotelaria em São Paulo?",
+      "resposta": "São Paulo é o maior polo de eventos corporativos da América Latina. As principais feiras que geram alta demanda hoteleira: São Paulo Fashion Week (março e outubro), Agrishow (maio), Autodata São Paulo, FEBRATEX, Hospitalar, ABF Franchising Expo, São Paulo Expo eventos, COMDINHEIRO, São Paulo Boat Show, World Retail Congress, Formula 1 (novembro, GP Brasil em Interlagos) e feiras setoriais no Expo Center Norte, Anhembi, São Paulo Expo e Transamerica Expo. Durante esses eventos, as diárias podem quadruplicar e a disponibilidade é escassa — reservas com meses de antecedência são essenciais."
+    },
+    {
+      "id": "FAQ051",
+      "pergunta": "O que é bleisure e como o hotel pode atender esse perfil de hóspede?",
+      "resposta": "Bleisure é a combinação de business (negócios) e leisure (lazer) em uma mesma viagem. O hóspede extend a viagem de trabalho para o final de semana para explorar o destino. Para atender bem: oferecer dicas de passeios e restaurantes locais pelo concierge, tarifas de fim de semana mais competitivas para quem já está hospedado, pacotes de atividades (tour gastronômico, esportes de aventura, spa day), late check-out no domingo facilitado e ambiente de trabalho no lobby para sexta-feira produtiva. É um segmento em forte crescimento especialmente após a popularização do trabalho híbrido."
+    },
+    {
+      "id": "FAQ052",
+      "pergunta": "Como o hotel lida com situações de emergência (incêndio, acidentes)?",
+      "resposta": "Hotéis são obrigados a ter plano de emergência completo homologado pelo Corpo de Bombeiros. Os procedimentos incluem: saídas de emergência sinalizadas em todos os andares (verifique ao chegar), rotas de fuga no mapa atrás da porta do quarto, extintor de incêndio em cada andar, sprinklers automáticos, detector de fumaça em todos os quartos, equipe treinada em primeiros socorros, plano de evacuação e comunicação com Bombeiros e SAMU. Em caso de emergência, use o telefone do quarto para contato imediato com a recepção — não use elevadores."
+    },
+    {
+      "id": "FAQ053",
+      "pergunta": "O hotel oferece experiências gastronômicas regionais?",
+      "resposta": "A tendência atual da hotelaria é valorizar a cultura e gastronomia local. Hotéis e resorts progressistas oferecem: ingredientes regionais no café da manhã (pão de queijo em MG, tapioca no NE, queijo de colônia no Sul), cardápio com pratos típicos da região no restaurante, workshops de culinária regional para hóspedes, parcerias com produtores locais e agricultores familiares, tours gastronômicos organizados pelo concierge e menus de chef com identidade cultural brasileira. Em resorts de praia do Nordeste, frutos do mar locais e culinária afro-brasileira são destaques do cardápio."
+    }
+  ],
+
+  "cross_knowledge": [
+    {
+      "id": "CK001",
+      "topico": "Revenue Management e precificação dinâmica",
+      "descricao": "O agente deve compreender os princípios do Revenue Management — variação de tarifas por demanda, antecedência, dia da semana e eventos — para explicar ao hóspede por que o preço em uma data específica é mais alto e ajudá-lo a encontrar a melhor tarifa disponível.",
+      "areas_relacionadas": ["Pricing", "OTA", "Disponibilidade de quartos"]
+    },
+    {
+      "id": "CK002",
+      "topico": "LGPD na hotelaria",
+      "descricao": "Dados de hóspedes (CPF, cartão de crédito, preferências, histórico de estadia) são dados pessoais protegidos pela LGPD. O agente deve saber explicar o que é coletado, por que, como é protegido e como o hóspede pode solicitar acesso ou exclusão. A FNRH é obrigação legal distinta da coleta para marketing.",
+      "areas_relacionadas": ["Privacidade", "FNRH", "Programa de fidelidade"]
+    },
+    {
+      "id": "CK003",
+      "topico": "Código de Defesa do Consumidor na hotelaria",
+      "descricao": "O CDC protege hóspedes em situações de overbooking, serviços não prestados conforme contratado, cobranças indevidas e publicidade enganosa. O agente deve conhecer os direitos básicos do consumidor no setor para lidar com reclamações com segurança jurídica.",
+      "areas_relacionadas": ["Reclamações", "Overbooking", "Política de cancelamento"]
+    },
+    {
+      "id": "CK004",
+      "topico": "Gestão de reputação online",
+      "descricao": "Avaliações em TripAdvisor, Google, Booking e OTAs impactam diretamente a taxa de ocupação e o ADR do hotel. O agente deve entender a importância de encerrar bem cada interação — especialmente reclamações — para incentivar avaliações positivas e reduzir o risco de reviews negativos publicados sem contato prévio.",
+      "areas_relacionadas": ["Satisfação do hóspede", "NPS", "TripAdvisor", "Booking"]
+    },
+    {
+      "id": "CK005",
+      "topico": "Turismo acessível e inclusivo",
+      "descricao": "O agente deve estar preparado para atender hóspedes com deficiência (física, visual, auditiva, cognitiva) e conhecer os recursos disponíveis no hotel: quartos adaptados, sinalização acessível, equipamentos de banheiro, elevadores e treinamento da equipe. Lei Brasileira de Inclusão (Lei 13.146/2015) e ABNT NBR 9050 são as referências legais.",
+      "areas_relacionadas": ["Acessibilidade", "PcD", "Inclusão"]
+    },
+    {
+      "id": "CK006",
+      "topico": "Turismo de segmentos especiais",
+      "descricao": "Existem segmentos com necessidades específicas que o agente deve conhecer: turismo LGBTQIA+ (políticas de acolhimento, viagens de casal do mesmo sexo), turismo sênior (mobilidade reduzida, ritmo mais tranquilo, comodidades extras), turismo solo feminino (segurança reforçada, quarto em andar mais seguro), turismo de aventura e ecoturismo (estrutura para atividades externas, armazenamento de equipamentos).",
+      "areas_relacionadas": ["Diversidade", "Inclusão", "Segmentação de hóspedes"]
+    }
+  ]
+}

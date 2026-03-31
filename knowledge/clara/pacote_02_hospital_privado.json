@@ -1,0 +1,1120 @@
+{
+  "segmento": "Hospital Privado",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA atuantes em hospitais privados no mercado brasileiro. Cobre especialidades médicas, serviços hospitalares, fluxo do paciente, convênios e planos de saúde, processos de internação e alta, humanização do atendimento, LGPD na saúde, objeções frequentes, argumentação institucional e FAQ com 53 perguntas. Referenciado nas melhores práticas dos hospitais Albert Einstein, Sírio-Libanês, Alemão Oswaldo Cruz e Hospital das Clínicas (HCFMUSP).",
+
+  "nucleo_conhecimento": {
+
+    "contexto_mercado": [
+      {
+        "id": "CM001",
+        "titulo": "Panorama da saúde privada no Brasil",
+        "conteudo": "O Brasil possui um dos maiores sistemas de saúde suplementar do mundo, com aproximadamente 50 milhões de beneficiários de planos de saúde (dados ANS 2024). O setor de saúde privada movimenta cerca de R$ 600 bilhões por ano, incluindo planos de saúde, hospitais, clínicas e laboratórios. Os hospitais privados de alta complexidade concentram-se nas grandes capitais, mas redes hospitalares expandem-se para o interior. A acreditação pela Joint Commission International (JCI) e pela Organização Nacional de Acreditação (ONA) é referência de qualidade para hospitais privados brasileiros."
+      },
+      {
+        "id": "CM002",
+        "titulo": "Perfil dos principais hospitais de referência no Brasil",
+        "conteudo": "Os hospitais Albert Einstein (SP), Sírio-Libanês (SP e BSB), Alemão Oswaldo Cruz (SP), Beneficência Portuguesa (SP) e Moinhos de Vento (RS) são referências nacionais em alta complexidade, pesquisa e ensino. O Einstein foi o primeiro hospital fora dos EUA a ser acreditado pela JCI (1999) e está entre os 50 melhores do mundo pelo ranking Newsweek. O Sírio-Libanês possui dupla acreditação JCI (assistencial e atenção primária) e é o segundo mais reconhecido da América Latina pelo ranking IntelLat. O Oswaldo Cruz é o único hospital brasileiro a receber reconhecimento da OMS em higienização de mãos. Esses hospitais servem de referência de protocolo, humanização e tecnologia para toda a rede privada nacional."
+      },
+      {
+        "id": "CM003",
+        "titulo": "Regulação do setor: ANS, CFM e legislação",
+        "conteudo": "A Agência Nacional de Saúde Suplementar (ANS) regula os planos de saúde e define o Rol de Procedimentos obrigatórios, atualizado periodicamente por Resolução Normativa (RN). O Conselho Federal de Medicina (CFM) regula a ética médica e as práticas assistenciais. A Lei 9.656/98 regula os contratos de planos de saúde. A Lei 9.961/00 criou a ANS. O Código de Ética Médica (Resolução CFM 2.217/2018) define os deveres e direitos dos médicos. A Resolução CFM 2.314/2022 regulamenta a telemedicina no Brasil. Hospitais são também regulados pela ANVISA (vigilância sanitária) quanto a medicamentos, equipamentos, saneamento e segurança do paciente."
+      },
+      {
+        "id": "CM004",
+        "titulo": "Principais convênios e operadoras de saúde no Brasil",
+        "conteudo": "As maiores operadoras de planos de saúde no Brasil são: Bradesco Saúde (maior operadora privada), Amil (grupo UnitedHealth), NotreDame Intermédica (grupo Hapvida), SulAmérica (grupo Allianz), Unimed (cooperativas médicas — maior rede em número de beneficiários), CarePlus (alta renda), Omint (alta renda), Porto Seguro Saúde e Prevent Senior. Grandes hospitais privados negociam contratos com múltiplas operadoras e definem tabelas de reembolso. A cobertura mínima obrigatória é o Rol de Procedimentos da ANS. Procedimentos fora do Rol exigem autorização especial ou cobertura particular."
+      },
+      {
+        "id": "CM005",
+        "titulo": "Estrutura hospitalar: níveis de complexidade",
+        "conteudo": "Os hospitais são classificados por nível de complexidade: Baixa complexidade — consultas, exames de rotina, procedimentos ambulatoriais simples; Média complexidade — cirurgias de menor porte, internações clínicas, diagnóstico por imagem avançado; Alta complexidade — cirurgias de grande porte, UTI, transplantes, oncologia avançada, neurocirurgia, cardiologia intervencionista. Hospitais de grande porte como Einstein, Sírio-Libanês e Oswaldo Cruz atuam nos três níveis, com ênfase na alta complexidade. O Day Clinic (hospital-dia) é a estrutura para procedimentos ambulatoriais com alta no mesmo dia, reduzindo custos e risco de infecções hospitalares."
+      },
+      {
+        "id": "CM006",
+        "titulo": "Tendências e inovações na saúde hospitalar privada",
+        "conteudo": "As principais tendências do setor incluem: Cirurgia robótica (Da Vinci, Hugo) com crescimento acelerado no Brasil; Telemedicina e teleconsulta, regulamentadas pelo CFM e com expansão pós-pandemia; Medicina de precisão e genômica; Inteligência artificial para diagnóstico por imagem e apoio à decisão clínica; Health tech e hospitais inteligentes (Smart Hospitals); Atendimento domiciliar ('hospital em casa') como alternativa à internação; Cuidados paliativos e humanização; Prontuário Eletrônico do Paciente (PEP) integrado; e telemedicina para gestão de doenças crônicas. O Hospital Sírio-Libanês integra o ranking World's Best Smart Hospitals da Newsweek por uso de IA e tecnologia."
+      },
+      {
+        "id": "CM007",
+        "titulo": "Humanização hospitalar no Brasil",
+        "conteudo": "A Política Nacional de Humanização (PNH) do Ministério da Saúde define diretrizes de humanização para toda a rede de saúde. Para hospitais privados, humanização é também diferencial competitivo: inclui acolhimento do paciente e familiares, comunicação transparente, gestão da dor, apoio emocional, ambiência (quartos humanizados, luz natural, acesso à família), respeito à autonomia do paciente e cuidados centrados na pessoa. Hospitais de excelência adotam protocolos de comunicação com familiares, passeios de enfermagem noturnos (Rounding) e equipes multidisciplinares de suporte psicossocial."
+      },
+      {
+        "id": "CM008",
+        "titulo": "LGPD na saúde: obrigações dos hospitais",
+        "conteudo": "A Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018) aplica-se integralmente a hospitais e clínicas, que tratam dados pessoais sensíveis (saúde, histórico médico, genética). As principais obrigações são: obter consentimento explícito para coleta e uso de dados de saúde; indicar um Encarregado de Dados (DPO); implementar Política de Privacidade clara; garantir segurança dos dados (acesso restrito a prontuários); permitir ao paciente acesso, correção e exclusão de seus dados; notificar a ANPD em caso de incidente de segurança. O prontuário médico tem sigilo garantido pelo Código de Ética Médica. Compartilhamento com planos de saúde e laboratórios deve ser formalizado e autorizado."
+      },
+      {
+        "id": "CM009",
+        "titulo": "Sazonalidade e demanda no setor hospitalar",
+        "conteudo": "A demanda hospitalar tem padrões sazonais: inverno (maio a agosto) com pico de doenças respiratórias (gripe, pneumonia, Covid-19); verão com aumento de acidentes, arboviroses (dengue, zika) e intoxicações; fim de ano com aumento de acidentes de trânsito; início de ano com alta demanda por check-ups corporativos. UTIs têm occupancy variável e picos em pandemias e surtos. Cirurgias eletivas têm demanda relativamente estável, com leve queda em dezembro/janeiro por férias de médicos. Maternidades têm pico de nascimentos em março-abril (gestações da metade do ano)."
+      }
+    ],
+
+    "problemas_comuns": [
+      {
+        "id": "PC001",
+        "problema": "Paciente não sabe se o procedimento é coberto pelo convênio",
+        "descricao": "Grande parte dos contatos recebidos pelo hospital são de pacientes inseguros sobre a cobertura do seu plano para consultas, exames ou cirurgias específicas.",
+        "solucao_sugerida": "Orientar o paciente a apresentar a carteirinha do plano para verificação na Central de Autorizações. Informar que o hospital verifica a cobertura diretamente com a operadora antes de qualquer procedimento eletivo. Esclarecer que procedimentos de emergência são cobertos independentemente de autorização prévia (Lei 9.656/98)."
+      },
+      {
+        "id": "PC002",
+        "problema": "Dificuldade de agendamento por falta de horários disponíveis",
+        "descricao": "Especialidades com alta demanda (oncologia, cardiologia, neurologia) têm agenda lotada e pacientes frustrados com prazos de espera.",
+        "solucao_sugerida": "Oferecer lista de espera ativa, notificação automática de cancelamentos, agendamento digital 24h pelo app ou portal, e indicar quando necessário unidades parceiras ou agenda de urgência para casos prioritários. Diferenciar 'consulta de rotina' de 'consulta de urgência' para priorização adequada."
+      },
+      {
+        "id": "PC003",
+        "problema": "Demora no processo de autorização do plano",
+        "descricao": "Procedimentos eletivos dependem de autorização da operadora, que pode demorar dias, gerando ansiedade no paciente e sobrecarga na equipe administrativa.",
+        "solucao_sugerida": "Explicar ao paciente o prazo legal de autorização (máximo 10 dias úteis para procedimentos eletivos; 24h para urgências — conforme ANS). Manter comunicação proativa sobre o andamento. Orientar sobre o direito de recorrer ao canal de ouvidoria da operadora ou à ANS em caso de negativa injustificada."
+      },
+      {
+        "id": "PC004",
+        "problema": "Paciente recebe conta adicional inesperada após convênio",
+        "descricao": "Após internação ou cirurgia, o paciente recebe cobrança de valores não cobertos pelo plano (diferença de honorários médicos, itens não incluídos no Rol da ANS, acomodação upgrade).",
+        "solucao_sugerida": "Transparência total antes do procedimento: informar itens não cobertos pelo convênio e seus valores estimados. Oferecer planilha de cobertura pelo plano versus valor particular para o paciente decidir com clareza. Criar canal dedicado para esclarecimento de dúvidas sobre faturamento antes e após o procedimento."
+      },
+      {
+        "id": "PC005",
+        "problema": "Familiares ansiosos durante internação de parente",
+        "descricao": "Familiares ficam sem informação sobre o estado do paciente internado, especialmente em UTIs com acesso restrito, gerando angústia e conflitos com a equipe.",
+        "solucao_sugerida": "Estabelecer protocolo de comunicação proativa com familiares: boletim médico diário em horário fixo, canal de contato direto com o médico responsável, aplicativo de acompanhamento de internação em tempo real e sala de espera humanizada com suporte de assistente social quando necessário."
+      },
+      {
+        "id": "PC006",
+        "problema": "Reclamação sobre tempo de espera no pronto atendimento",
+        "descricao": "Pacientes e acompanhantes reclamam da demora no atendimento no pronto-socorro, mesmo em hospitais de alta complexidade.",
+        "solucao_sugerida": "Explicar o sistema de classificação de risco (Protocolo de Manchester): cores de triagem definem prioridade por gravidade clínica, não por ordem de chegada. Comunicar proativamente o tempo estimado de espera. Garantir conforto na sala de espera e acolhimento pelo enfermeiro triador. Disponibilizar rastreamento do status de atendimento pelo app."
+      },
+      {
+        "id": "PC007",
+        "problema": "Dificuldade de acesso a prontuário e laudos",
+        "descricao": "Pacientes têm dificuldade em obter cópias do prontuário, resultados de exames ou relatórios médicos para segunda opinião ou continuidade do tratamento.",
+        "solucao_sugerida": "Informar que o paciente tem direito irrestrito ao prontuário médico (CFM e LGPD). Disponibilizar portal do paciente online ou app para acesso a resultados de exames, laudos e resumo de alta. Estabelecer prazo máximo de 24-72 horas para entrega de cópias físicas do prontuário mediante solicitação formal."
+      },
+      {
+        "id": "PC008",
+        "problema": "Negativa de cobertura pela operadora",
+        "descricao": "O plano de saúde nega autorização para procedimento indicado pelo médico, gerando conflito e sofrimento para o paciente.",
+        "solucao_sugerida": "Orientar o paciente sobre seus direitos: recorrer à ouvidoria da operadora, acionar a ANS (www.ans.gov.br ou 0800 701 9656), buscar o PROCON ou acionar judicialmente via Juizado Especial Cível. O hospital pode apoiar com relatório médico detalhado que justifica a necessidade do procedimento."
+      },
+      {
+        "id": "PC009",
+        "problema": "Paciente com medo e ansiedade pré-cirúrgica",
+        "descricao": "Pacientes que enfrentam cirurgias de grande porte apresentam alto nível de ansiedade, afetando a qualidade do preparo e a adesão ao tratamento.",
+        "solucao_sugerida": "Protocolo de preparo pré-operatório que inclui: visita do anestesista 24h antes para explicar o procedimento, material informativo impresso ou digital sobre o que esperar, apoio da equipe de psicologia quando necessário, e presença de acompanhante até a entrada na sala cirúrgica. A humanização no pré-operatório reduz ansiedade e melhora desfechos clínicos."
+      },
+      {
+        "id": "PC010",
+        "problema": "Alta hospitalar: paciente sem suporte pós-internação",
+        "descricao": "Pacientes recebem alta hospitalar sem orientações claras sobre medicamentos, restrições, sinais de alerta e retorno médico, aumentando o risco de reinternação.",
+        "solucao_sugerida": "Implementar protocolo de alta estruturado: resumo de alta impresso e digital com medicamentos, restrições e data de retorno, contato de enfermagem para dúvidas nas primeiras 48h pós-alta, teleatendimento de acompanhamento para pacientes crônicos ou cirúrgicos, e check-list de sinais de alerta para retorno ao pronto-atendimento."
+      }
+    ],
+
+    "objeções_clientes": [
+      {
+        "id": "OB001",
+        "objecao": "Meu plano não cobre esse procedimento",
+        "categoria": "Convênio",
+        "resposta_recomendada": "Vamos verificar juntos. O Rol de Procedimentos da ANS obriga todos os planos a cobrirem uma série de exames e procedimentos. Muitas negativas iniciais das operadoras são indevidas. Posso verificar agora com a sua carteirinha se o procedimento indicado pelo seu médico tem cobertura, e se houver recusa injustificada, orientar você sobre como recorrer junto à ANS."
+      },
+      {
+        "id": "OB002",
+        "objecao": "O hospital é muito caro para atendimento particular",
+        "categoria": "Preço",
+        "resposta_recomendada": "Compreendo a preocupação. Para procedimentos eletivos, podemos fazer uma estimativa de custo antes do procedimento para que você decida com clareza. Temos diferentes modalidades de acomodação com preços variados. Em muitos casos, o custo total com um hospital acreditado é similar ao de alternativas menores, quando se considera a menor chance de complicações e reinternação."
+      },
+      {
+        "id": "OB003",
+        "objecao": "Prefiro ser atendido em outro hospital que meu médico indica",
+        "categoria": "Preferência",
+        "resposta_recomendada": "A escolha do médico e do hospital é um direito seu. Podemos verificar se o seu médico tem cadastro ativo em nosso corpo clínico. Em caso positivo, ele pode atendê-lo aqui com toda a estrutura disponível. Se não tiver cadastro aqui, podemos recomendar especialistas de excelência equivalente do nosso quadro. O que posso fazer para ajudá-lo a tomar a melhor decisão para sua saúde?"
+      },
+      {
+        "id": "OB004",
+        "objecao": "Ouvi falar que a espera no pronto atendimento é muito longa",
+        "categoria": "Tempo de espera",
+        "resposta_recomendada": "Nosso pronto atendimento utiliza o Protocolo de Manchester — um sistema de triagem por gravidade clínica que garante que os casos mais urgentes sejam atendidos imediatamente. Para situações de menor urgência, existe espera prevista. Para evitar ela, consultas e exames de rotina devem ser agendados no ambulatório, liberando o PA para emergências reais. Posso ajudá-lo a agendar uma consulta agora?"
+      },
+      {
+        "id": "OB005",
+        "objecao": "Não quero ficar internado — prefiro tratar em casa",
+        "categoria": "Internação",
+        "resposta_recomendada": "Sua preferência é totalmente compreensível e respeitamos sua autonomia. Quando a internação é indicada pelo médico, é porque o tratamento exige monitoramento contínuo, medicação endovenosa ou procedimentos que não podem ser feitos com segurança em domicílio. Nos casos em que é possível, oferecemos o serviço de 'hospital em casa' (internação domiciliar), onde equipe de enfermagem vai até você. Posso verificar se seu caso se encaixa nessa modalidade?"
+      },
+      {
+        "id": "OB006",
+        "objecao": "Tenho medo de infecção hospitalar",
+        "categoria": "Segurança",
+        "resposta_recomendada": "Sua preocupação é legítima e levamos isso muito a sério. Nosso hospital mantém protocolos rigorosos de controle de infecção hospitalar baseados nas diretrizes da ANVISA e da OMS: higienização de mãos obrigatória para toda a equipe, isolamento de casos infecciosos, esterilização central de materiais e monitoramento contínuo de indicadores de infecção. Nossas taxas são auditadas e publicadas como parte de nossa política de transparência."
+      },
+      {
+        "id": "OB007",
+        "objecao": "Quero uma segunda opinião antes de operar",
+        "categoria": "Decisão médica",
+        "resposta_recomendada": "Segunda opinião é um direito do paciente e recomendamos quando você se sentir inseguro sobre uma decisão cirúrgica importante. Podemos providenciar o resumo do caso, os exames e o laudo do seu médico em formato digital para que você leve a outro especialista. Se preferir, podemos também indicar um segundo especialista de nosso corpo clínico para análise independente do seu caso."
+      },
+      {
+        "id": "OB008",
+        "objecao": "Meu plano exige autorização e está demorando muito",
+        "categoria": "Autorização",
+        "resposta_recomendada": "A ANS estabelece prazos máximos: 10 dias úteis para procedimentos eletivos e 24 horas para urgências. Se esse prazo foi ultrapassado, a operadora está em infração e você pode acionar a ANS. Nossa Central de Autorizações pode acompanhar o processo junto com você e, em casos de urgência comprovada, o hospital tem o protocolo de iniciar o atendimento e regularizar a autorização posteriormente, conforme previsto em lei."
+      },
+      {
+        "id": "OB009",
+        "objecao": "Não confio em médico que não conheço",
+        "categoria": "Confiança",
+        "resposta_recomendada": "Sua confiança no médico é fundamental para um bom tratamento. Posso compartilhar com você o currículo do especialista, suas certificações e área de atuação. Todos os médicos do nosso corpo clínico passam por processo de credenciamento com verificação de registro ativo no CRM e avaliação de competências. Se quiser, também posso indicar especialistas com maior avaliação dos pacientes na nossa plataforma."
+      },
+      {
+        "id": "OB010",
+        "objecao": "Tenho medo de não acordar da anestesia",
+        "categoria": "Medo cirúrgico",
+        "resposta_recomendada": "Esse é um medo muito comum e humano. A anestesiologia moderna é extremamente segura — o risco de complicações graves por anestesia em pacientes saudáveis é inferior a 1 em 100.000 procedimentos. Antes da sua cirurgia, o anestesista fará uma consulta pré-anestésica para avaliar seu histórico, medicamentos e saúde geral, reduzindo qualquer risco individual. Você pode tirar todas as suas dúvidas diretamente com ele nessa consulta."
+      },
+      {
+        "id": "OB011",
+        "objecao": "Não quero que meus dados médicos sejam compartilhados",
+        "categoria": "Privacidade / LGPD",
+        "resposta_recomendada": "Seu direito à privacidade é inviolável e está protegido pela LGPD (Lei 13.709/2018) e pelo Código de Ética Médica. Seus dados de saúde são dados sensíveis e somente são compartilhados com seu consentimento explícito, exceto em casos de obrigação legal ou risco de vida. Você pode consultar nossa Política de Privacidade, solicitar uma cópia dos seus dados a qualquer momento e revogar autorizações de compartilhamento. Posso explicar cada ponto da nossa política se quiser."
+      },
+      {
+        "id": "OB012",
+        "objecao": "Vou buscar tratamento fora do Brasil (turismo médico)",
+        "categoria": "Concorrência internacional",
+        "resposta_recomendada": "Respeitamos sua decisão. Posso compartilhar que hospitais como Einstein, Sírio-Libanês e Oswaldo Cruz figuram entre os melhores do mundo nos rankings Newsweek, com acreditação JCI — a mesma certificação dos maiores hospitais americanos e europeus. Tratamentos no Brasil têm custo médio 60-80% menor que nos EUA para a mesma complexidade e qualidade. Posso preparar uma comparação detalhada do seu tratamento aqui versus no exterior?"
+      }
+    ],
+
+    "argumentos_venda": [
+      {
+        "id": "AV001",
+        "argumento": "Acreditação e certificações internacionais",
+        "descricao": "A acreditação JCI (Joint Commission International) e ONA Nível 3 comprovam que o hospital atinge os mais altos padrões mundiais de segurança do paciente, qualidade assistencial e gestão. É a mesma certificação exigida pelos melhores hospitais dos EUA e Europa.",
+        "quando_usar": "Quando o paciente questiona a qualidade do hospital ou compara com opções no exterior."
+      },
+      {
+        "id": "AV002",
+        "argumento": "Equipe médica de referência nacional",
+        "descricao": "Destacar que os especialistas são titulares de suas sociedades médicas, com formação em grandes centros nacionais e internacionais, participação ativa em pesquisa científica e publicações em periódicos indexados. Mencionar que o hospital recebe residentes e fellowship de todo o Brasil.",
+        "quando_usar": "Quando o paciente desconfia da competência dos médicos ou prefere ir a outro centro de referência."
+      },
+      {
+        "id": "AV003",
+        "argumento": "Tecnologia de ponta e diagnóstico preciso",
+        "descricao": "Apresentar os equipamentos disponíveis: PET-CT, Ressonância Magnética de 3 Tesla, Robô cirúrgico Da Vinci, acelerador linear para radioterapia, ultrassonografia intraoperatória, genômica e medicina de precisão. Tecnologia avançada reduz tempo de diagnóstico, minimiza erros e permite cirurgias menos invasivas com recuperação mais rápida.",
+        "quando_usar": "Para pacientes com diagnósticos complexos ou que buscam cirurgia minimamente invasiva."
+      },
+      {
+        "id": "AV004",
+        "argumento": "Cuidado multidisciplinar e humanizado",
+        "descricao": "O modelo de cuidado centrado no paciente envolve médicos, enfermeiros, fisioterapeutas, nutricionistas, psicólogos, assistentes sociais e farmacêuticos trabalhando de forma integrada. Isso garante que todas as dimensões da saúde do paciente sejam tratadas, não apenas a doença.",
+        "quando_usar": "Para pacientes com condições complexas, oncológicos, idosos ou que valorizem o aspecto humano do cuidado."
+      },
+      {
+        "id": "AV005",
+        "argumento": "Segurança do paciente e controle de infecção",
+        "descricao": "Protocolos baseados nas diretrizes da OMS e ANVISA para prevenção de infecções, quedas e erros de medicação. O hospital monitora e publica indicadores de qualidade, incluindo taxas de infecção hospitalar, mortalidade ajustada por risco e tempo de permanência. A transparência dos indicadores é diferencial competitivo.",
+        "quando_usar": "Para pacientes com histórico de complicações ou muito preocupados com segurança."
+      },
+      {
+        "id": "AV006",
+        "argumento": "Convênios e facilidade de acesso",
+        "descricao": "Destacar o número de operadoras credenciadas, a agilidade do processo de autorização (Central de Autorizações própria), o suporte na resolução de negativas e a possibilidade de parcelamento para procedimentos particulares.",
+        "quando_usar": "Quando o paciente tem dúvidas sobre cobertura ou o processo financeiro."
+      },
+      {
+        "id": "AV007",
+        "argumento": "Experiência e conforto do paciente e familiares",
+        "descricao": "Ambiência humanizada: quartos privativos com luz natural, acesso a internet, TV, refeições personalizadas por nutricionista, área de descanso para acompanhantes, capelania inter-religiosa e serviços de hotelaria hospitalar (concierge, estacionamento, serviços digitais). A qualidade do ambiente impacta diretamente na recuperação.",
+        "quando_usar": "Para pacientes que precisam de internação prolongada ou que valorizam conforto e privacidade."
+      },
+      {
+        "id": "AV008",
+        "argumento": "Continuidade do cuidado e medicina preventiva",
+        "descricao": "O hospital oferece além do tratamento agudo: check-up executivo personalizado, gestão de doenças crônicas, programas de reabilitação, telemedicina de acompanhamento e programas de saúde corporativa para empresas. Tratar apenas a doença é insuficiente — o objetivo é a saúde plena ao longo da vida.",
+        "quando_usar": "Para captar pacientes para check-up, programas corporativos e acompanhamento crônico."
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "id": "AT001",
+      "area": "Centro de Oncologia",
+      "descricao": "Referência em diagnóstico e tratamento de todos os tipos de câncer. Atendimento multidisciplinar com oncologistas clínicos, cirurgiões oncológicos, radio-oncologistas, hematologistas, geneticistas e equipe de cuidados paliativos.",
+      "servicos": [
+        "Quimioterapia ambulatorial e hospitalar",
+        "Radioterapia (acelerador linear, IMRT, SBRT, braquiterapia)",
+        "Cirurgia oncológica minimamente invasiva e robótica",
+        "Imunoterapia e terapia-alvo",
+        "Transplante de medula óssea",
+        "Terapia CAR-T (centros de referência)",
+        "Oncogenética e teste genômico tumoral",
+        "Centro de infusão ambulatorial",
+        "Cuidados paliativos e controle da dor",
+        "Oncologia pediátrica"
+      ],
+      "indicadores_qualidade": "Taxa de sobrevida em 5 anos por tipo de tumor, taxa de resposta a tratamento sistêmico, tempo de início de tratamento após diagnóstico.",
+      "perfil_paciente": "Pacientes com diagnóstico confirmado ou suspeita de neoplasia; indicação para quimioterapia, radioterapia, cirurgia oncológica ou transplante."
+    },
+    {
+      "id": "AT002",
+      "area": "Centro de Cardiologia e Cirurgia Cardiovascular",
+      "descricao": "Diagnóstico e tratamento de doenças do coração e vasos. Um dos rankings Newsweek posiciona o Einstein entre os melhores em cirurgia cardíaca e cardiologia na América Latina.",
+      "servicos": [
+        "Cardiologia clínica e preventiva",
+        "Eletrofisiologia e arritmias (ablação, marcapasso, desfibrilador)",
+        "Hemodinâmica e intervenção coronariana (cateterismo, angioplastia, stent)",
+        "Cirurgia cardíaca aberta (revascularização, troca de válvula)",
+        "Cirurgia cardíaca minimamente invasiva e robótica",
+        "Insuficiência cardíaca e transplante cardíaco",
+        "Ecocardiografia (2D, 3D, doppler, transesofágico, intraoperatório)",
+        "Ressonância magnética cardíaca",
+        "Reabilitação cardíaca",
+        "Cardiologia pediátrica e cardiopatia congênita"
+      ],
+      "indicadores_qualidade": "Mortalidade cirúrgica ajustada por risco, taxa de complicações pós-operatórias, tempo porta-balão no infarto agudo do miocárdio.",
+      "perfil_paciente": "Pacientes com doença arterial coronariana, arritmias, valvopatias, insuficiência cardíaca, hipertensão refratária ou cardiopatia congênita."
+    },
+    {
+      "id": "AT003",
+      "area": "Neurologia e Neurocirurgia",
+      "descricao": "Diagnóstico e tratamento de doenças do sistema nervoso central e periférico. O Einstein possui o Instituto do Cérebro (InCe) como centro de pesquisa e excelência.",
+      "servicos": [
+        "Neurologia clínica (epilepsia, esclerose múltipla, AVC, demências)",
+        "Neurocirurgia (tumores cerebrais, aneurismas, coluna, epilepsia cirúrgica)",
+        "Cirurgia robótica e endoscópica neurocirúrgica",
+        "Neuronavegação intraoperatória",
+        "Estimulação cerebral profunda (DBS) para Parkinson",
+        "Radiocirurgia estereotáxica (Gamma Knife, CyberKnife)",
+        "Neurointensivismo (UTI Neurológica)",
+        "Neurorreabilitação",
+        "Neurointervenção (trombectomia mecânica para AVC isquêmico)",
+        "Neurofisiologia clínica (EEG, EMG, potenciais evocados)"
+      ],
+      "indicadores_qualidade": "Tempo porta-agulha no AVC isquêmico (meta: abaixo de 60 minutos), taxa de recanalização em AVC, mortalidade em neurocirurgia de alta complexidade.",
+      "perfil_paciente": "Pacientes com AVC (urgência), tumores cerebrais, epilepsia refratária, doença de Parkinson, esclerose múltipla, demências e doenças da coluna."
+    },
+    {
+      "id": "AT004",
+      "area": "Ortopedia e Traumatologia",
+      "descricao": "O Einstein foi reconhecido como melhor da América Latina em ortopedia pelo Newsweek 2023. Abrange trauma agudo e cirurgia eletiva do aparelho músculo-esquelético.",
+      "servicos": [
+        "Cirurgia do joelho (artroscopia, LCA, artroplastia total)",
+        "Cirurgia do quadril (artroplastia total, displasia, fraturas)",
+        "Cirurgia do ombro e cotovelo",
+        "Cirurgia da coluna (hérnia de disco, estenose, deformidades)",
+        "Cirurgia do pé e tornozelo",
+        "Traumatologia (fraturas, luxações, politrauma)",
+        "Cirurgia oncológica ortopédica (tumores ósseos e de partes moles)",
+        "Cirurgia robótica ortopédica",
+        "Medicina esportiva",
+        "Fisioterapia e reabilitação musculoesquelética"
+      ],
+      "indicadores_qualidade": "Taxa de infecção de sítio cirúrgico, tempo de reabilitação pós-artroplastia, taxa de revisão cirúrgica.",
+      "perfil_paciente": "Atletas com lesões esportivas, pacientes com artrose avançada para artroplastia, vítimas de trauma ortopédico e portadores de deformidades congênitas ou adquiridas."
+    },
+    {
+      "id": "AT005",
+      "area": "Gastroenterologia e Cirurgia Digestiva",
+      "descricao": "O Einstein foi reconhecido como melhor da América Latina em gastroenterologia pelo Newsweek 2023. O Oswaldo Cruz é referência nacional em oncologia digestiva.",
+      "servicos": [
+        "Endoscopia digestiva alta e colonoscopia",
+        "Ecoendoscopia e CPRE",
+        "Tratamento de doenças inflamatórias intestinais (Crohn, retocolite)",
+        "Cirurgia bariátrica e metabólica",
+        "Transplante de fígado",
+        "Cirurgia hepática, pancreática e biliar",
+        "Cirurgia colorretal minimamente invasiva e robótica",
+        "Tratamento de hérnias complexas",
+        "Gastroenterologia pediátrica",
+        "Hepatologia (cirrose, hepatite viral, esteatohepatite)"
+      ],
+      "indicadores_qualidade": "Taxa de detecção de adenoma em colonoscopia, mortalidade em cirurgia hepática, taxa de conversão em cirurgia laparoscópica.",
+      "perfil_paciente": "Pacientes com câncer do trato digestivo, doença inflamatória intestinal, cirrose hepática, obesidade grau II ou III, ou doenças benignas do trato digestivo."
+    },
+    {
+      "id": "AT006",
+      "area": "Maternidade e Ginecologia",
+      "descricao": "Assistência ao parto humanizado, gestação de alto risco, neonatologia e ginecologia oncológica.",
+      "servicos": [
+        "Pré-natal de baixo e alto risco",
+        "Parto normal e cesárea com equipe multiprofissional",
+        "UTI Neonatal (neonatologia)",
+        "Medicina fetal e diagnóstico pré-natal",
+        "Reprodução assistida (FIV, ICSI, congelamento de óvulos)",
+        "Ginecologia oncológica (câncer de mama, útero, ovário)",
+        "Mastologia",
+        "Endometriose e mioma",
+        "Uroginecologia (incontinência urinária, prolapso)",
+        "Climatério e menopausa"
+      ],
+      "indicadores_qualidade": "Taxa de cesáreas (meta: abaixo de 50%), taxa de prematuridade, mortalidade neonatal, taxa de infecção pós-parto.",
+      "perfil_paciente": "Gestantes (especialmente de alto risco), casais com infertilidade, mulheres com doenças ginecológicas ou em acompanhamento de saúde preventiva."
+    },
+    {
+      "id": "AT007",
+      "area": "Unidade de Terapia Intensiva (UTI)",
+      "descricao": "Monitoramento e tratamento de pacientes em estado crítico. Equipada com tecnologia de ponta e equipe multidisciplinar 24 horas.",
+      "servicos": [
+        "UTI Adulto (clínica e cirúrgica)",
+        "UTI Cardiológica (UCO)",
+        "UTI Neurológica",
+        "UTI Neonatal",
+        "UTI Pediátrica",
+        "Ventilação mecânica invasiva e não invasiva",
+        "Monitorização hemodinâmica contínua",
+        "Suporte de vida extracorpóreo (ECMO)",
+        "Diálise contínua em UTI",
+        "Gestão de sepse (protocolos SSC)"
+      ],
+      "indicadores_qualidade": "Mortalidade padronizada na UTI (SMR), taxa de infecção primária de corrente sanguínea (IPCS), taxa de pneumonia associada à ventilação mecânica (PAV).",
+      "perfil_paciente": "Pacientes pós-operatório de grande porte, choque séptico, infarto agudo, AVC grave, insuficiência respiratória e politraumatizado."
+    },
+    {
+      "id": "AT008",
+      "area": "Diagnóstico por Imagem e Medicina Nuclear",
+      "descricao": "Centro de diagnóstico com equipamentos de última geração para exames de imagem de alta resolução.",
+      "servicos": [
+        "Ressonância Magnética (1,5T e 3T)",
+        "Tomografia Computadorizada Multislice",
+        "PET-CT (Tomografia por Emissão de Pósitrons)",
+        "Ultrassonografia (convencional, doppler, elastografia)",
+        "Mamografia digital com tomossíntese (3D)",
+        "Densitometria óssea (DEXA)",
+        "Radiologia intervencionista",
+        "Medicina Nuclear (cintilografia, SPECT-CT)",
+        "Angiotomografia e angioressonância",
+        "Raio-X digital"
+      ],
+      "indicadores_qualidade": "Tempo de laudo (meta: exames urgentes em até 1 hora), taxa de exames técnicos insatisfatórios, concordância inter-observador em laudos.",
+      "perfil_paciente": "Qualquer paciente com indicação clínica para exame de imagem, desde rastreamento preventivo até investigação de alta complexidade."
+    },
+    {
+      "id": "AT009",
+      "area": "Check-up Executivo e Medicina Preventiva",
+      "descricao": "Programas personalizados de rastreamento de doenças e avaliação do estado de saúde global, voltados para pessoas assintomáticas que desejam prevenção ativa.",
+      "servicos": [
+        "Check-up básico (exames laboratoriais + eletrocardiograma + consulta clínica)",
+        "Check-up avançado (inclui exames de imagem, avaliação cardiológica e nutricional)",
+        "Check-up executivo (personalizado por faixa etária, sexo e fatores de risco)",
+        "Check-up feminino (inclui mamografia, Papanicolau, densitometria)",
+        "Check-up masculino (inclui avaliação prostática, cardiovascular)",
+        "Check-up corporativo para empresas",
+        "Avaliação do estilo de vida (nutrição, atividade física, saúde mental)",
+        "Consulta de longevidade e envelhecimento saudável",
+        "Vacinação do adulto",
+        "Telemedicina de acompanhamento pós-check-up"
+      ],
+      "indicadores_qualidade": "Taxa de detecção de doenças em fase inicial, adesão ao programa de acompanhamento, NPS (Net Promoter Score) do paciente.",
+      "perfil_paciente": "Adultos acima de 35 anos, executivos, pessoas com histórico familiar de doenças crônicas, empresas que investem em saúde corporativa."
+    },
+    {
+      "id": "AT010",
+      "area": "Cirurgia Robótica",
+      "descricao": "A cirurgia robótica é uma das principais tendências da medicina de alta complexidade no Brasil. O robô Da Vinci permite procedimentos minimamente invasivos com precisão superior.",
+      "procedimentos_comuns": [
+        "Prostatectomia radical robótica (câncer de próstata)",
+        "Histerectomia robótica (mioma, endometriose)",
+        "Nefrectomia e nefrectomia parcial robótica",
+        "Colectomia robótica (câncer colorretal)",
+        "Cirurgia bariátrica robótica",
+        "Cirurgia cardíaca robótica (válvula mitral)",
+        "Cirurgia torácica robótica (câncer de pulmão)",
+        "Pancreatectomia robótica",
+        "Cirurgia de coluna robótica",
+        "Ressecção de tumores retroperitoneais"
+      ],
+      "vantagens_para_paciente": "Menor tempo de internação, menos dor pós-operatória, menor sangramento, cicatrizes menores, recuperação mais rápida e retorno precoce às atividades.",
+      "perfil_paciente": "Pacientes com indicação cirúrgica em especialidades onde a robótica está disponível, que buscam menor invasividade e recuperação mais rápida."
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "id": "FC001",
+      "nome": "Fluxo de Agendamento de Consulta — Canal Digital",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção e identificação",
+          "mensagem": "Olá! Seja bem-vindo(a) ao [Nome do Hospital]. Sou [Nome do Agente], estou aqui para ajudá-lo(a). Como posso te atender hoje?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Identificar necessidade",
+          "mensagem": "Você gostaria de agendar uma consulta, um exame, ou tem alguma dúvida sobre cobertura do seu plano de saúde?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Coleta de informações para agendamento",
+          "mensagem": "Para agendar, preciso de algumas informações: qual especialidade ou médico você procura? Tem preferência de dia e horário? E qual é o seu plano de saúde? Vou verificar a disponibilidade para você agora."
+        },
+        {
+          "etapa": 4,
+          "acao": "Verificação de cobertura",
+          "mensagem": "Verificando a cobertura do seu plano para [especialidade]... [Plano] cobre consultas de [especialidade] em nosso hospital. Tenho disponibilidade nos seguintes horários: [opções]. Qual prefere?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Confirmação e orientações",
+          "mensagem": "Perfeito! Sua consulta está agendada para [data/hora] com [Dr./Dra. Nome], na unidade [endereço]. Você receberá um SMS e e-mail de confirmação. Na consulta, traga sua carteirinha do plano, documento de identidade, e se tiver, exames anteriores relacionados ao motivo da consulta. Posso ajudá-lo(a) com mais alguma coisa?"
+        }
+      ]
+    },
+    {
+      "id": "FC002",
+      "nome": "Fluxo de Atendimento no Pronto-Socorro",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Triagem — Protocolo de Manchester",
+          "mensagem": "Boa [hora do dia]. Vou fazer uma triagem rápida para entender sua situação. Pode me descrever o que está sentindo? Há quanto tempo? Tem dor? Em que região? Algum sintoma adicional (falta de ar, febre, tontura)?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Classificação de risco e orientação",
+          "mensagem": "Baseado nas informações fornecidas, você foi classificado(a) como [cor do protocolo de Manchester]. Isso significa que seu atendimento ocorrerá em aproximadamente [tempo estimado]. Você aguardará na [área de espera]. Um enfermeiro acompanhará você periodicamente. Se houver piora dos sintomas, nos avise imediatamente."
+        },
+        {
+          "etapa": 3,
+          "acao": "Cadastro e verificação de plano",
+          "mensagem": "Enquanto aguarda, vou cadastrar seus dados. Pode me informar seu nome completo, data de nascimento e CPF? Tem plano de saúde? Posso ver a carteirinha? Em emergências, o atendimento é garantido mesmo sem confirmação prévia de cobertura."
+        },
+        {
+          "etapa": 4,
+          "acao": "Atualização durante a espera",
+          "mensagem": "Você está na fila de atendimento. Atualmente há [N] pacientes à sua frente com a mesma classificação. Estimativa atualizada: [tempo]. Posso oferecer algum recurso de conforto enquanto aguarda? Precisa de acompanhante autorizado?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Pós-atendimento e orientação de alta",
+          "mensagem": "Seu atendimento foi concluído. O médico prescreveu: [resumo do tratamento]. Você receberá o resumo de atendimento por e-mail/app. Siga as orientações: [instruções específicas]. Em caso de piora ou dúvida, retorne ao pronto atendimento ou ligue para [número 24h]. Cuide-se!"
+        }
+      ]
+    },
+    {
+      "id": "FC003",
+      "nome": "Fluxo de Internação Eletiva",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Pré-internação: orientações ao paciente",
+          "mensagem": "Olá, [Nome]. Estou entrando em contato sobre sua internação agendada para [data]. Para garantir que tudo corra bem, preciso orientá-lo sobre: documentos necessários, horário de chegada, preparos específicos (jejum, medicamentos), o que levar e o que não levar. Tem alguns minutos para conversarmos?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Checklist de documentos e preparos",
+          "mensagem": "Anote: traga RG, CPF, carteirinha do plano, laudos e exames pré-operatórios realizados, lista de medicamentos em uso e contato de familiar responsável. Jejum de [X horas] para sólidos e [Y horas] para líquidos. Não use esmalte nas unhas (interfere na oximetria). Deixe joias e objetos de valor em casa."
+        },
+        {
+          "etapa": 3,
+          "acao": "Chegada e recepção na internação",
+          "mensagem": "Bem-vindo(a), [Nome]! Vou acompanhá-lo(a) até o seu quarto. Durante sua internação, a equipe de enfermagem estará disponível 24 horas. Cada quarto tem este painel: [explicação do padrão]. O médico responsável visitará você [frequência]. O horário de visitas é das [horário]. Tem alguma necessidade especial que devemos estar cientes?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Comunicação com familiares",
+          "mensagem": "Para manter sua família informada: o boletim médico é emitido diariamente às [horário] pelo médico responsável. O contato deve ser feito pelo familiar designado, de preferência uma única pessoa. Para UTI, há horário específico de visita e boletim [horário]. Posso cadastrar o contato do familiar agora?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Alta hospitalar: orientações",
+          "mensagem": "[Nome], sua alta foi concedida pelo Dr./Dra. [Nome]. Vou entregar agora o resumo de alta com: diagnóstico, procedimentos realizados, medicamentos prescritos com posologia, restrições de atividades e alimentação, data do retorno médico e sinais de alerta para retornar ao pronto-atendimento. Por favor, confirme que recebeu e entendeu todas as orientações. Posso esclarecer qualquer dúvida."
+        }
+      ]
+    },
+    {
+      "id": "FC004",
+      "nome": "Fluxo de Atendimento ao Familiar de Paciente em UTI",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Acolhimento inicial",
+          "mensagem": "Boa [hora do dia]. Você é familiar de [Nome do paciente]? Sou [Agente/Assistente Social] do hospital. Entendo que esse é um momento muito difícil. Estou aqui para garantir que você receba todas as informações necessárias e tenha o suporte que precisa."
+        },
+        {
+          "etapa": 2,
+          "acao": "Orientação sobre o funcionamento da UTI",
+          "mensagem": "A UTI tem regras específicas para proteger os pacientes internados. O horário de visita é [horário], com duração de [tempo]. É permitido [número] visitante(s) por vez. O boletim médico é às [horário] com o médico intensivista. Para dúvidas urgentes fora do boletim, entre em contato pelo [telefone/canal direto]."
+        },
+        {
+          "etapa": 3,
+          "acao": "Comunicação de condição clínica",
+          "mensagem": "O Dr./Dra. [Nome] atualiza o estado de [Paciente]: [situação clínica atual em linguagem acessível]. O plano de cuidados inclui [principais ações]. Tem alguma pergunta sobre o que foi explicado? É importante que o familiar designado seja o ponto focal de comunicação para evitar informações contraditórias."
+        },
+        {
+          "etapa": 4,
+          "acao": "Suporte emocional e assistência social",
+          "mensagem": "Nos momentos difíceis como este, é normal sentir ansiedade, medo e tristeza. Nossa equipe de assistência social e psicologia hospitalar está disponível para você e sua família. Quer que eu agende um atendimento com nossa assistente social/psicóloga para apoio emocional?"
+        }
+      ]
+    },
+    {
+      "id": "FC005",
+      "nome": "Fluxo de Esclarecimento de Conta Hospitalar",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção da reclamação com empatia",
+          "mensagem": "Olá, [Nome]. Entendo que você tem dúvidas sobre a sua fatura. Agradeço por entrar em contato — é muito importante para nós garantir total transparência nos valores cobrados. Pode me informar o número do atendimento ou o período de internação para que eu acesse sua conta?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Detalhamento da conta",
+          "mensagem": "Localizei sua conta. Vou explicar cada item: diárias hospitalares [X dias × R$ Y], honorários médicos [lista de procedimentos], materiais e medicamentos utilizados durante a internação, e os itens cobertos pelo convênio versus os de sua responsabilidade. Qual item gerou mais dúvida?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Resolução de contestação",
+          "mensagem": "Caso você acredite que algum item foi cobrado indevidamente ou deveria estar coberto pelo seu plano, posso abrir uma contestação junto ao setor de faturamento. O prazo para análise é de [X dias úteis]. Posso também orientá-lo a acionar o SAC do seu plano de saúde caso a cobertura tenha sido negada indevidamente."
+        },
+        {
+          "etapa": 4,
+          "acao": "Opção de parcelamento",
+          "mensagem": "Para valores particulares, oferecemos parcelamento em até [X] vezes sem juros no cartão de crédito, ou boleto parcelado mediante análise. Posso gerar uma simulação de parcelamento para você agora?"
+        }
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "id": "GE001",
+      "gatilho": "Medo da doença grave e da morte",
+      "descricao": "O diagnóstico de uma doença grave (câncer, cardiopatia, AVC) provoca medo profundo. O hospital pode transformar esse medo em esperança e confiança.",
+      "como_ativar": "Apresentar estatísticas reais de sobrevida e cura no hospital. Mostrar casos de sucesso (com consentimento). Destacar a experiência e volume de procedimentos da equipe. Humanizar com 'estamos com você nessa jornada'.",
+      "frases_gatilho": [
+        "Você não está sozinho(a). Temos uma equipe completa dedicada exclusivamente ao seu caso.",
+        "Diagnóstico precoce com o tratamento certo na instituição certa muda completamente o prognóstico.",
+        "Já tratamos [X] pacientes com esse diagnóstico — e nossa taxa de sucesso é [Y]%."
+      ]
+    },
+    {
+      "id": "GE002",
+      "gatilho": "Proteção da família",
+      "descricao": "O paciente que busca tratamento frequentemente está motivado não apenas por si, mas por filhos, cônjuge ou pais que dependem dele.",
+      "como_ativar": "Conectar o tratamento e a recuperação à capacidade de estar presente para a família. Apresentar programas de apoio à família durante o tratamento. Mostrar como a prevenção via check-up protege quem o paciente ama.",
+      "frases_gatilho": [
+        "Cuidar de você é cuidar de quem você ama.",
+        "Cada exame preventivo que você faz hoje é um investimento no seu tempo com sua família.",
+        "Sua recuperação completa começa aqui — para que você volte ao lado de quem precisa de você."
+      ]
+    },
+    {
+      "id": "GE003",
+      "gatilho": "Confiança e segurança",
+      "descricao": "Pacientes em situação de vulnerabilidade de saúde precisam confiar totalmente na instituição e na equipe.",
+      "como_ativar": "Reforçar as acreditações (JCI, ONA), publicar indicadores de qualidade, apresentar histórico e formação dos médicos, e citar prêmios e rankings internacionais. A transparência de indicadores é o maior gerador de confiança.",
+      "frases_gatilho": [
+        "Somos acreditados pela Joint Commission International — a mesma certificação dos melhores hospitais do mundo.",
+        "Nossos protocolos seguem as diretrizes internacionais mais atualizadas.",
+        "Nossos dados de qualidade são auditados e públicos porque acreditamos em total transparência."
+      ]
+    },
+    {
+      "id": "GE004",
+      "gatilho": "Urgência e tempo",
+      "descricao": "Em saúde, o atraso no diagnóstico ou tratamento pode ser fatal. Esse gatilho deve ser usado com ética e responsabilidade, apenas quando clinicamente pertinente.",
+      "como_ativar": "Comunicar que tempo é fator crítico em condições específicas (câncer, infarto, AVC). Apresentar disponibilidade de agendamento rápido. Oferecer segunda opinião ágil. Nunca criar urgência artificial ou desnecessária.",
+      "frases_gatilho": [
+        "No AVC isquêmico, cada minuto conta — por isso nosso tempo porta-trombolítico é de menos de 60 minutos.",
+        "Câncer detectado no estágio I tem chance de cura acima de 90% para a maioria dos tipos.",
+        "Se há sintomas preocupantes, o momento de investigar é agora, não quando piorar."
+      ]
+    },
+    {
+      "id": "GE005",
+      "gatilho": "Dignidade e respeito",
+      "descricao": "O paciente quer ser tratado como pessoa, não como número de prontuário. O reconhecimento da individualidade é fundamental.",
+      "como_ativar": "Personalizar sempre a comunicação com o nome do paciente. Respeitar suas crenças, valores e decisões. Garantir privacidade. Comunicar com linguagem acessível, não técnica. Incluir paciente e família nas decisões de tratamento.",
+      "frases_gatilho": [
+        "Aqui, seu tratamento é construído para você — não é protocolo único para todos.",
+        "Sua opinião e seus valores fazem parte do plano de cuidados.",
+        "Você tem o direito de entender cada etapa do seu tratamento e decidir junto com sua equipe médica."
+      ]
+    },
+    {
+      "id": "GE006",
+      "gatilho": "Alívio do sofrimento",
+      "descricao": "Pacientes com dor crônica, doenças progressivas ou limitações físicas buscam não apenas tratar, mas ter qualidade de vida.",
+      "como_ativar": "Apresentar programas de controle de dor, cuidados paliativos, reabilitação e qualidade de vida. Mostrar que o objetivo não é apenas sobreviver, mas viver bem.",
+      "frases_gatilho": [
+        "Controle da dor é um direito do paciente — não toleramos sofrimento desnecessário.",
+        "Nosso programa de reabilitação visa não apenas a recuperação clínica, mas o retorno à sua vida plena.",
+        "Cuidados paliativos não são desistência — são o mais alto nível de cuidado centrado na pessoa."
+      ]
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "id": "CS001",
+      "titulo": "Paciente com diagnóstico recente de câncer buscando informações",
+      "contexto": "Ana, 52 anos, recebeu diagnóstico de câncer de mama há 3 dias. Está assustada, com muitas dúvidas e busca atendimento pelo WhatsApp do hospital.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Olá, tive um diagnóstico de câncer de mama há 3 dias. Estou muito assustada. O que eu faço? Preciso marcar uma consulta urgente?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Ana, antes de tudo, quero que saiba que você não está sozinha nesse momento. Obrigado por nos contatar — você tomou o passo certo. Vou ajudá-la agora. Para um diagnóstico recente de câncer de mama, o encaminhamento correto é para nossa oncologista clínica ou mastologista oncológica. Você tem algum exame em mãos — biópsia, ultrassonografia ou mamografia?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Tenho o laudo da biópsia e a ressonância que fiz. Tenho plano de saúde, o Bradesco."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito, Ana. O Bradesco Saúde cobre consultas de oncologia e mastologia em nosso hospital. Para casos de diagnóstico oncológico recente, temos encaixes de urgência com prazo de até 48 horas. Posso verificar a agenda agora mesmo. Você prefere manhã ou tarde? E tem algum dia que seja impossível para você essa semana?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Posso qualquer dia, quanto antes melhor. Tenho muito medo sobre o que vem por aí."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo completamente o seu medo. É natural e humano sentir isso. O que posso adiantar é que câncer de mama detectado com biópsia já feita está em avaliação no estágio correto. Nossa equipe é especializada nisso e vai traçar o melhor caminho com você. Tenho disponibilidade amanhã às 10h com a Dra. [Nome], mastologista oncológica. Confirmo seu agendamento? Vou te enviar a confirmação por SMS e e-mail com os documentos que você precisa trazer."
+        }
+      ]
+    },
+    {
+      "id": "CS002",
+      "titulo": "Familiar desesperado com parente em UTI",
+      "contexto": "Carlos, filho de paciente internado em UTI cardíaca há 2 dias após infarto. Está muito ansioso e quer informações que ainda não recebeu.",
+      "conversa": [
+        {
+          "papel": "Familiar",
+          "mensagem": "Meu pai está internado na UTI desde ontem e ninguém me dá informações. Estou desesperado. O que está acontecendo com ele?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Carlos, eu entendo sua angústia e sinto muito que você esteja nessa situação tão difícil. Vou verificar o status do boletim médico do seu pai agora. Pode me informar o nome completo dele para acessar o sistema?"
+        },
+        {
+          "papel": "Familiar",
+          "mensagem": "José Carlos Mendes. Ele entrou ontem às 14h com infarto."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Localizei o registro. O Dr. [Nome], médico intensivista responsável, emite boletim diário às 16h. Faltam apenas [X] horas. Para informações além do boletim programado, o canal direto com a UTI cardíaca é o ramal [número], disponível de segunda a sexta das 8h às 18h. Enquanto isso, posso conectá-lo agora com nossa assistente social para que ela possa te acolher e orientar sobre o processo de UTI. Gostaria?"
+        },
+        {
+          "papel": "Familiar",
+          "mensagem": "Sim, por favor. É muito difícil ficar sem notícias."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Compreendo. Vou conectá-lo agora com a assistente social [Nome]. Ela vai explicar tudo sobre como funciona a UTI, o fluxo de informações e como você pode estar mais próximo do seu pai dentro das possibilidades. Fique tranquilo — seu pai está sendo cuidado por uma equipe dedicada 24 horas. Você está sendo muito presente e isso também importa muito."
+        }
+      ]
+    },
+    {
+      "id": "CS003",
+      "titulo": "Paciente reclamando de conta hospitalar inesperada",
+      "contexto": "Roberto recebeu uma conta de R$ 4.500 após cirurgia de hérnia que acreditava ser totalmente coberta pelo plano.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Que absurdo! Fiz uma cirurgia de hérnia e achei que o plano cobria tudo. Agora recebi uma conta de R$ 4.500. Ninguém me avisou que teria esse gasto!"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Roberto, entendo sua frustração e peço desculpas se a comunicação antes da cirurgia não foi suficientemente clara. Isso não deveria ter acontecido. Posso acessar sua conta agora para verificar exatamente o que está sendo cobrado e por quê. Pode me confirmar o número do atendimento?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "É o atendimento de 15 de fevereiro. Número 4523891."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Localizei. Vou explicar cada item: a cirurgia em si e a internação foram cobertas pelo seu plano. O valor de R$ 4.500 refere-se a: tela de polipropileno premium utilizada (R$ 2.800 — material com cobertura parcial pelo plano, diferença de R$ 1.200), honorários do anestesista fora da tabela do plano (R$ 2.000 — diferença de honorários) e taxa de sala diferenciada solicitada (R$ 1.300). Esses itens deveriam ter sido comunicados antes do procedimento. Vou abrir uma contestação interna para verificar se houve falha no processo de comunicação."
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Não me ofereceram alternativa mais barata. Quero saber o que posso fazer."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Você tem razão em questionar. Vou fazer duas coisas: abrir uma revisão interna do processo — se houve falha na comunicação pré-operatória, podemos revisar os valores. Paralelamente, posso verificar junto ao seu plano se o reembolso da diferença de honorários tem alguma cobertura adicional pelo seu contrato. O prazo de resposta da revisão é de 5 dias úteis. Para o valor restante, posso oferecer parcelamento em até 12 vezes sem juros. Isso seria aceitável para você enquanto a revisão ocorre?"
+        }
+      ]
+    },
+    {
+      "id": "CS004",
+      "titulo": "Empresa buscando programa de check-up corporativo",
+      "contexto": "Diretora de RH de empresa com 200 funcionários quer implementar programa de saúde preventiva.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "Sou diretora de RH de uma empresa com 200 funcionários. Quero implementar um programa de check-up corporativo. Que vocês oferecem?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Que excelente iniciativa! Investir em saúde preventiva reduz afastamentos, aumenta produtividade e demonstra cuidado com as pessoas. Temos um programa corporativo completo que atende empresas de todos os portes. Para personalizar a proposta, me conta: qual é o perfil predominante dos funcionários (faixa etária, cargo, exposições de risco)? E vocês têm algum convênio médico corporativo atualmente?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Funcionários de 30 a 55 anos, maioria executivos e analistas. Temos Bradesco Saúde. Quero algo além do que o plano oferece."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Perfeito. Nosso programa corporativo premium inclui: check-up personalizado por faixa etária e sexo, consulta de medicina do trabalho e ocupacional, avaliação de estilo de vida (nutrição, atividade física, saúde mental), vacinação do adulto, e relatório epidemiológico anual da saúde da sua empresa — com dados agregados e anonimizados para orientar sua estratégia de saúde. Também podemos integrar com o Bradesco Saúde para cobrir parte do custo. Posso preparar uma proposta personalizada com valores para 200 vidas?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Sim, gostaria muito. E qual é o prazo para implementar?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Após aprovação da proposta, conseguimos iniciar em 15 dias úteis. O fluxo é: assinatura do contrato, envio da lista de funcionários, agendamento escalonado (para não sobrecarregar sua equipe com ausências simultâneas) e realização dos check-ups em 30 a 60 dias para todos. Vou agendar agora uma reunião de apresentação detalhada com nossa equipe comercial de saúde corporativa. Qual é a melhor data para você nessa semana?"
+        }
+      ]
+    },
+    {
+      "id": "CS005",
+      "titulo": "Paciente idoso com dificuldades de acessar prontuário digital",
+      "contexto": "Dona Maria, 74 anos, quer os resultados dos seus exames feitos há 3 dias mas tem dificuldade com o portal digital.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Fiz exames na semana passada e minha filha tentou entrar no portal mas não consegue os resultados. Podem me ajudar?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Claro, dona Maria! Vamos resolver isso agora. Pode me informar o nome completo e a data dos exames? Vou verificar a situação no sistema."
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Maria das Graças Oliveira, os exames foram dia 20 de fevereiro. Sangue, urina e um de imagem."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Localizei. Os exames laboratoriais já estão disponíveis com laudo. O exame de imagem ficará pronto até amanhã às 18h. Posso enviar os resultados já disponíveis por e-mail agora. Qual é o e-mail que deseja usar? Ou, se preferir, sua filha pode retirar uma cópia impressa na nossa unidade com o documento de identidade dela e uma autorização simples. Qual opção é melhor para vocês?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Manda por e-mail mesmo, mas não entendo muito dessas coisas. Precisa ir ao médico ou posso ver sozinha?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Vou enviar agora para seu e-mail com uma explicação simples sobre cada exame. Mas o ideal é sempre que o médico que a atendeu analise os resultados no contexto do seu caso — ele conhece seu histórico. Sua consulta de retorno está marcada? Se não estiver, posso agendar agora com o médico que solicitou os exames para que ele explique tudo detalhadamente para você e sua filha."
+        }
+      ]
+    }
+  ],
+
+  "faq_estruturado": [
+    {
+      "id": "FAQ001",
+      "pergunta": "Quais planos de saúde são aceitos no hospital?",
+      "resposta": "Nosso hospital trabalha com as principais operadoras de saúde do Brasil, incluindo Bradesco Saúde, Amil, Unimed, SulAmérica, NotreDame Intermédica, CarePlus, Omint, Porto Seguro Saúde e muitas outras. Para verificar se o seu plano específico está credenciado e se o procedimento que você precisa tem cobertura, entre em contato com nossa Central de Relacionamento pelo telefone [número] ou pelo portal do paciente, informando o nome da operadora e o plano."
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "Como faço para agendar uma consulta?",
+      "resposta": "Você pode agendar pelo site oficial, pelo aplicativo do hospital, pelo WhatsApp, por telefone ou presencialmente na unidade. Para consultas de especialidade, informe o nome do médico ou a especialidade desejada, seu plano de saúde e preferência de data e horário. Para procedimentos de urgência, o pronto-atendimento funciona 24 horas e não exige agendamento prévio."
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "Preciso de autorização do plano para realizar exames e consultas?",
+      "resposta": "Depende da operadora e do procedimento. Consultas de rotina geralmente não exigem autorização prévia (acesso livre). Exames de alta complexidade (PET-CT, ressonância com contraste, cateterismo) e internações geralmente exigem autorização prévia da operadora. Nossa equipe administrativa verifica a necessidade de autorização e conduz o processo junto ao seu plano antes do procedimento eletivo."
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "Qual é o prazo máximo que o plano tem para autorizar um procedimento?",
+      "resposta": "Conforme regulação da ANS: consultas e exames ambulatoriais de baixa complexidade devem ser autorizados em até 7 dias úteis; procedimentos cirúrgicos eletivos em até 10 dias úteis; urgências e emergências devem ter autorização imediata (prazo legal: até 4 horas para urgências e imediatamente para emergências). Se o plano descumprir esses prazos, o paciente pode acionar a ANS pelo telefone 0800 701 9656 ou pelo site ans.gov.br."
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "O que fazer se o plano negar cobertura para o procedimento indicado pelo médico?",
+      "resposta": "Em caso de negativa, o paciente tem os seguintes direitos: 1) solicitar a negativa por escrito com a justificativa; 2) recorrer internamente ao SAC da operadora; 3) acionar a ANS (0800 701 9656 ou ans.gov.br); 4) registrar reclamação no PROCON; 5) acionar o Poder Judiciário via Juizado Especial Cível ou ação civil. Em casos urgentes, liminares judiciais costumam ser concedidas rapidamente quando há risco de vida. Nossa equipe pode apoiá-lo com relatório médico justificando a necessidade."
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "O que é o Protocolo de Manchester usado na triagem do pronto-socorro?",
+      "resposta": "O Protocolo de Manchester é o sistema de classificação de risco mais utilizado em pronto-socorros brasileiros. Classifica os pacientes em 5 níveis de prioridade por cor: Vermelho (emergência, atendimento imediato), Laranja (muito urgente, até 10 minutos), Amarelo (urgente, até 60 minutos), Verde (pouco urgente, até 120 minutos), Azul (não urgente, até 240 minutos). A classificação é feita por enfermeiro treinado, com base nos sintomas e sinais vitais, não pela ordem de chegada."
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "Quanto tempo é a carência do plano para internação?",
+      "resposta": "A ANS estabelece prazos máximos de carência: urgências (acidentes e complicações de gestação até 36 semanas) — 24 horas; emergências (risco de vida imediato) — sem carência; internação, cirurgia eletiva e parto — 180 dias; doenças preexistentes — até 24 meses. Durante a carência para internação, o plano deve cobrir as primeiras 12 horas de atendimento de emergência. Verifique sempre as condições específicas do seu contrato."
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Posso trazer acompanhante na internação?",
+      "resposta": "Sim. A Lei Federal 8.069/90 (Estatuto da Criança e do Adolescente) garante acompanhante 24h para crianças. A Lei Federal 10.741/03 (Estatuto do Idoso) garante acompanhante 24h para idosos. Para adultos, cada hospital define sua política de acompanhante, geralmente permitindo um acompanhante por período. Nas UTIs, o horário de visita é restrito (geralmente 1-2 horas por dia) por protocolo de segurança e controle de infecção."
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "Tenho direito de receber meu prontuário médico?",
+      "resposta": "Sim, é direito irrevogável do paciente. Conforme o Código de Ética Médica e a LGPD, o paciente pode solicitar cópia integral do prontuário a qualquer momento. O prazo para entrega é de 72 horas para solicitações não urgentes. Em hospitais modernos, o acesso ao prontuário e resultados de exames pode ser feito diretamente pelo portal do paciente ou aplicativo, sem necessidade de solicitação formal. O prontuário pertence ao paciente, não ao médico ou ao hospital."
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "O que é o Day Clinic (Hospital-Dia)?",
+      "resposta": "O Day Clinic é uma unidade para procedimentos que exigem anestesia ou observação por algumas horas, mas que não necessitam de internação por mais de 24 horas. Inclui: pequenas cirurgias, endoscopias, quimioterapia ambulatorial, biópsias, procedimentos dermatológicos, alguns procedimentos cardiológicos e infiltrações. O paciente entra em jejum, realiza o procedimento, é monitorado por algumas horas e recebe alta no mesmo dia. É mais econômico que a internação convencional e reduz o risco de infecções hospitalares."
+    },
+    {
+      "id": "FAQ011",
+      "pergunta": "O que é a cirurgia robótica e como ela difere da cirurgia laparoscópica?",
+      "resposta": "Ambas são minimamente invasivas (pequenas incisões). A laparoscopia usa instrumentos rígidos controlados diretamente pelo cirurgião. A cirurgia robótica (robô Da Vinci, Hugo) adiciona uma consola de controle remoto com ampliação 3D da imagem de 10x, braços robóticos com 7 graus de liberdade (movimento mais preciso que a mão humana), filtragem de tremores e movimentos mais delicados em espaços confinados. Vantagens sobre a laparoscópica: mais precisão em anatomias complexas, menos sangramento, menor dor pós-operatória e recuperação ainda mais rápida."
+    },
+    {
+      "id": "FAQ012",
+      "pergunta": "O que é o PET-CT e quando ele é indicado?",
+      "resposta": "O PET-CT (Tomografia por Emissão de Pósitrons combinada com Tomografia Computadorizada) é um exame de medicina nuclear que combina informações metabólicas (atividade celular) com informações anatômicas. É especialmente utilizado em oncologia para: diagnóstico e estadiamento do câncer (identificar metástases), avaliação de resposta ao tratamento e identificação de recidiva. Também tem uso em cardiologia (viabilidade miocárdica) e neurologia (epilepsia, demências). Requer injeção de glicose radiomarcada e jejum prévio de 6 horas."
+    },
+    {
+      "id": "FAQ013",
+      "pergunta": "O que é cuidado paliativo?",
+      "resposta": "Cuidados paliativos são uma abordagem de saúde que melhora a qualidade de vida de pacientes e suas famílias diante de doenças graves e progressivas (não apenas terminais). Tem como foco o alívio da dor e do sofrimento físico, emocional, social e espiritual — não a cura da doença. Pode ser combinado com tratamentos curativos. Envolve equipe multidisciplinar (médico, enfermeiro, psicólogo, assistente social, fisioterapeuta, nutricionista e capelão). É um direito do paciente e um dever ético da medicina, independentemente do prognóstico."
+    },
+    {
+      "id": "FAQ014",
+      "pergunta": "Como funciona o transplante de órgão no hospital privado?",
+      "resposta": "Transplantes no Brasil são regulados pelo SNT (Sistema Nacional de Transplantes). A fila de espera por órgãos de doadores falecidos é única e gerenciada pelo Estado (CNCDO estadual). O hospital privado pode realizar o transplante e cobrar honorários médicos e hospitalares, mas a fila de espera é a mesma do SUS. Para doadores vivos (rins, fígado parcial, medula óssea), o processo é regulado pelo CFM e pelo SNT. O Einstein realizou mais de 1.900 transplantes, sendo 97% pelo SUS."
+    },
+    {
+      "id": "FAQ015",
+      "pergunta": "O que é a acreditação hospitalar pela JCI?",
+      "resposta": "A Joint Commission International (JCI) é a principal certificadora de qualidade hospitalar do mundo, sediada nos EUA. Avalia padrões de segurança do paciente, qualidade assistencial, gestão de risco, protocolos de higienização, gestão de medicamentos, direitos do paciente e desempenho clínico. A certificação é válida por 3 anos, com visitas de acompanhamento anuais. No Brasil, o Einstein (desde 1999), Sírio-Libanês (desde 2007) e outros hospitais de referência possuem essa acreditação, que representa o mesmo padrão dos melhores hospitais dos EUA e Europa."
+    },
+    {
+      "id": "FAQ016",
+      "pergunta": "Posso fazer check-up no hospital sem ter plano de saúde?",
+      "resposta": "Sim. Os programas de check-up executivo e preventivo podem ser contratados diretamente com o hospital, de forma particular, sem necessidade de plano de saúde. O pagamento pode ser feito à vista, parcelado no cartão ou via empresa (benefício corporativo). Planos de saúde geralmente cobrem alguns itens do check-up, mas os pacotes premium costumam incluir exames e avaliações não cobertos pelo plano."
+    },
+    {
+      "id": "FAQ017",
+      "pergunta": "O que é telemedicina e o hospital oferece esse serviço?",
+      "resposta": "A telemedicina é a prestação de serviços médicos por meios de comunicação digitais (vídeo, chat, aplicativo). A Resolução CFM 2.314/2022 regulamentou permanentemente a telemedicina no Brasil. Os serviços disponíveis por telemedicina incluem: teleconsulta (primeira consulta ou retorno), telediagnóstico (análise de exames por especialistas), telemonitoramento de doenças crônicas e segunda opinião a distância. A telemedicina não substitui o atendimento presencial em urgências e emergências, nem exames físicos que exijam contato direto."
+    },
+    {
+      "id": "FAQ018",
+      "pergunta": "O que é o SADT e como funciona no contexto hospitalar?",
+      "resposta": "O SADT (Serviço de Apoio Diagnóstico e Terapêutico) é o conjunto de exames e procedimentos que apoia o diagnóstico e o tratamento dos pacientes, sem a necessidade de internação. Inclui: laboratório de análises clínicas, diagnóstico por imagem, endoscopia, cardiologia não invasiva, fisioterapia, nutrição, psicologia e outros. No contexto de planos de saúde, o SADT faz parte da cobertura ambulatorial e hospitalar. Os exames no SADT exigem pedido médico e, dependendo da complexidade, autorização prévia do plano."
+    },
+    {
+      "id": "FAQ019",
+      "pergunta": "O que significa internação domiciliar ('hospital em casa')?",
+      "resposta": "A internação domiciliar (Home Care ou Hospital em Casa) é a modalidade em que o paciente recebe cuidados de saúde em sua residência que normalmente seriam feitos em ambiente hospitalar. É indicada para pacientes estáveis em recuperação pós-cirúrgica, pacientes com doenças crônicas que precisam de monitoramento, cuidados paliativos e administração de medicação endovenosa. Reduz o risco de infecções hospitalares, melhora o bem-estar emocional e libera leitos hospitalares. A cobertura por plano de saúde pode ser exigida conforme o PL aprovado em 2025 no Senado."
+    },
+    {
+      "id": "FAQ020",
+      "pergunta": "O que é o Rol de Procedimentos da ANS?",
+      "resposta": "O Rol de Procedimentos e Eventos em Saúde da ANS é a lista mínima obrigatória de procedimentos, exames e tratamentos que todos os planos de saúde devem cobrir, independentemente do preço ou categoria do plano. É atualizado periodicamente por Resolução Normativa da ANS com base em evidências científicas e incorporação de novas tecnologias. Procedimentos fora do Rol podem ser cobertos por alguns planos (cobertura ampliada) ou podem ser pleiteados judicialmente se houver indicação clínica comprovada."
+    },
+    {
+      "id": "FAQ021",
+      "pergunta": "Quais são os direitos do paciente internado?",
+      "resposta": "Os principais direitos incluem: ser identificado pelo nome; receber informações claras sobre diagnóstico, tratamento e prognóstico; consentir ou recusar tratamentos (exceto em emergências com risco de morte); ter acompanhante (crianças e idosos por lei); ter acesso ao prontuário; privacidade e sigilo das informações; receber visitas conforme regulamento; não ser discriminado por qualquer condição; receber cuidados paliativos e controle da dor; ter resolvido o problema de saúde com qualidade e dignidade. A Carta dos Direitos dos Usuários da Saúde (Portaria GM/MS 1.820/2009) consolida esses direitos."
+    },
+    {
+      "id": "FAQ022",
+      "pergunta": "Como funciona a UTI? Posso visitar o paciente?",
+      "resposta": "A UTI é uma unidade de cuidados intensivos para pacientes criticamente enfermos, com monitoramento contínuo e equipe multiprofissional 24 horas. As visitas são regulamentadas pelo hospital por protocolo de segurança e controle de infecção. Geralmente é permitida uma visita por dia com duração de 30 a 60 minutos, para familiares diretos. O boletim médico é emitido uma vez ao dia pelo médico intensivista. Crianças abaixo de 12 anos podem ter restrições de visita. Em alguns hospitais, há aplicativos que permitem ao familiar acompanhar em tempo real os parâmetros vitais do paciente."
+    },
+    {
+      "id": "FAQ023",
+      "pergunta": "O que é o prontuário eletrônico do paciente (PEP)?",
+      "resposta": "O PEP é o registro digital de todas as informações clínicas e administrativas do paciente em um hospital ou sistema de saúde. Inclui: histórico médico, alergias, medicamentos em uso, resultados de exames, laudos de imagem, registro de consultas e internações, receitas e prescrições. Hospitais modernos utilizam PEP integrado que permite acesso por toda a equipe multidisciplinar em tempo real. O paciente tem acesso ao seu PEP pelo portal ou app. A LGPD garante proteção e sigilo dos dados do PEP."
+    },
+    {
+      "id": "FAQ024",
+      "pergunta": "O que é medicina de precisão e onde ela é aplicada?",
+      "resposta": "Medicina de precisão é a abordagem que personaliza o tratamento com base nas características genéticas, moleculares e de estilo de vida de cada paciente. Na oncologia, isso significa realizar teste genômico tumoral para identificar mutações específicas e usar terapias-alvo que atacam exatamente essas mutações. Na cardiologia, inclui análise de polimorfismos genéticos que afetam o metabolismo de anticoagulantes. Na farmacogenômica, determina qual medicamento e dose é ideal para cada pessoa. Centros de Medicina Personalizada existem no Einstein, Sírio-Libanês e outros hospitais de referência."
+    },
+    {
+      "id": "FAQ025",
+      "pergunta": "Como funciona o sistema de segurança do paciente no hospital?",
+      "resposta": "Hospitais acreditados implementam os 6 Metas Internacionais de Segurança do Paciente (JCI/ONA): 1) Identificar corretamente os pacientes (pulseira com nome e data de nascimento); 2) Melhorar a comunicação efetiva entre profissionais; 3) Melhorar a segurança de medicamentos de alta vigilância; 4) Assegurar cirurgias em local, procedimento e paciente corretos (Time Out cirúrgico); 5) Reduzir risco de infecções associadas aos cuidados de saúde; 6) Reduzir o risco de lesões ao paciente por quedas. Todos os profissionais são treinados nessas metas."
+    },
+    {
+      "id": "FAQ026",
+      "pergunta": "O que é quimioterapia e como ela é administrada?",
+      "resposta": "Quimioterapia é o tratamento com medicamentos (citostáticos) que destroem células cancerosas. Pode ser administrada por via endovenosa (no centro de infusão ou durante internação), oral (comprimidos em casa), intratecal (no líquido cefalorraquidiano) ou tópica. O esquema (tipo de droga, doses e ciclos) é definido pelo oncologista conforme o tipo e estágio do câncer. O tratamento pode ser curativo, adjuvante (após cirurgia), neoadjuvante (antes da cirurgia) ou paliativo. Efeitos colaterais variam por droga e são gerenciados pela equipe oncológica."
+    },
+    {
+      "id": "FAQ027",
+      "pergunta": "O que é trombolítico e quando é usado no AVC?",
+      "resposta": "O trombolítico (rt-PA — alteplase) é uma droga que dissolve o coágulo que causa o AVC isquêmico. Deve ser administrado em até 4,5 horas após o início dos sintomas para ser eficaz e seguro. O sucesso do tratamento depende do 'tempo porta-agulha' — o tempo entre a chegada ao hospital e a administração da droga (meta: abaixo de 60 minutos). Para AVC isquêmico com grandes vasos ocluídos, a trombectomia mecânica (remoção do coágulo por cateter) pode ser realizada em até 24 horas com critérios específicos."
+    },
+    {
+      "id": "FAQ028",
+      "pergunta": "Quais exames compõem um check-up básico para adultos?",
+      "resposta": "Um check-up básico para adultos geralmente inclui: hemograma completo, glicemia em jejum, hemoglobina glicada (HbA1c), colesterol total e frações (LDL, HDL, triglicérides), uréia e creatinina, ácido úrico, TSH (função tireoidiana), TGO e TGP (função hepática), urina tipo 1, eletrocardiograma em repouso, aferição de pressão arterial e consulta com clínico geral para interpretação. Check-ups avançados adicionam exames de imagem, avaliação cardiológica com ergométrico, densitometria óssea e rastreamentos específicos por faixa etária e sexo."
+    },
+    {
+      "id": "FAQ029",
+      "pergunta": "Como funciona a cirurgia bariátrica? O plano cobre?",
+      "resposta": "A cirurgia bariátrica é indicada para obesidade grau II (IMC ≥ 35) com comorbidades ou obesidade grau III (IMC ≥ 40). As técnicas principais são: Bypass gástrico (redução de estômago + desvio intestinal), Sleeve gástrico (remoção parcial do estômago) e Duodenal Switch. Atualmente pode ser feita por via laparoscópica ou robótica. A ANS inclui a cirurgia no Rol de Procedimentos obrigatórios — planos com cobertura hospitalar devem cobrir, após avaliação multidisciplinar (clínica, psicológica e nutricional) e aprovação do cirurgião. O tempo de carência do plano deve ser respeitado."
+    },
+    {
+      "id": "FAQ030",
+      "pergunta": "O que é a ANVISA e como ela regula os hospitais?",
+      "resposta": "A ANVISA (Agência Nacional de Vigilância Sanitária) regula a segurança sanitária em serviços de saúde. Para hospitais, suas atribuições incluem: licenciamento sanitário (Alvará Sanitário), regulação de medicamentos e materiais utilizados, controle de infecções hospitalares (PGRSS — Plano de Gerenciamento de Resíduos de Serviços de Saúde), regulação de sangue e hemoderivados, controle de equipamentos médicos e inspeções sanitárias periódicas. O descumprimento das normas ANVISA pode resultar em multa, interdição ou cancelamento do funcionamento."
+    },
+    {
+      "id": "FAQ031",
+      "pergunta": "Como o hospital protege meus dados médicos (LGPD)?",
+      "resposta": "Seus dados de saúde são considerados dados pessoais sensíveis pela LGPD e têm proteção reforçada. O hospital deve: coletar apenas os dados necessários para o atendimento; obter consentimento para uso de dados além do tratamento médico; manter os dados seguros com controles de acesso restrito; nomear um Encarregado de Dados (DPO) responsável pelo cumprimento da LGPD; notificar a ANPD em caso de incidente de dados; e garantir ao paciente o direito de acesso, correção, portabilidade e eliminação dos dados quando aplicável."
+    },
+    {
+      "id": "FAQ032",
+      "pergunta": "O que é o hospital-dia psiquiátrico?",
+      "resposta": "O hospital-dia psiquiátrico é uma modalidade de tratamento intensivo para transtornos mentais que não exige internação integral. O paciente frequenta o hospital por 6 a 8 horas diárias (geralmente de segunda a sexta) e retorna para casa à noite. É indicado para: depressão grave, transtorno bipolar em crise, transtornos de ansiedade refratários e transtornos alimentares. A cobertura pelo plano de saúde é obrigatória pelo Rol ANS para todas as condições que tenham indicação clínica. É menos estigmatizante que a internação integral e preserva o vínculo familiar."
+    },
+    {
+      "id": "FAQ033",
+      "pergunta": "O que é o consentimento informado e por que ele é solicitado antes de procedimentos?",
+      "resposta": "O consentimento informado (ou Termo de Consentimento Livre e Esclarecido — TCLE) é o documento pelo qual o paciente, após receber informações claras sobre o procedimento proposto (riscos, benefícios, alternativas e possíveis complicações), declara que concorda em realizar o tratamento. É um direito fundamental do paciente baseado no princípio da autonomia e em lei (Resolução CFM 2.217/2018 e Código Civil). Sem consentimento informado assinado, procedimentos eletivos não devem ser realizados. Em emergências com risco de vida e paciente incapaz de consentir, o médico pode agir sem TCLE."
+    },
+    {
+      "id": "FAQ034",
+      "pergunta": "Posso solicitar a presença de um especialista além do meu médico assistente?",
+      "resposta": "Sim. O paciente tem o direito de solicitar interconsulta com outros especialistas durante sua internação ou tratamento ambulatorial. Em internações complexas, equipes multidisciplinares (interconsultores de especialidades) são acionadas rotineiramente pelo médico assistente. O paciente também tem direito de buscar segunda opinião médica em outro serviço — o hospital deve fornecer cópia dos exames e prontuário para esse fim."
+    },
+    {
+      "id": "FAQ035",
+      "pergunta": "O que é MRSA e como o hospital previne infecções hospitalares?",
+      "resposta": "MRSA (Staphylococcus aureus resistente à meticilina) é uma das principais bactérias multirresistentes causadoras de infecções hospitalares. Para prevenir infecções associadas à assistência à saúde (IACS), os hospitais implementam: higienização de mãos com álcool 70% ou sabonete (protocolo OMS), isolamento de contato para pacientes com microrganismos multirresistentes, esterilização rigorosa de instrumentos e superfícies, protocolos de cateter zero (bundle de cateter central) e vigilância microbiológica ativa. As taxas de IACS são indicadores obrigatórios de qualidade hospitalar."
+    },
+    {
+      "id": "FAQ036",
+      "pergunta": "O que é a medicina nuclear e para que ela serve?",
+      "resposta": "Medicina nuclear é a especialidade médica que utiliza substâncias radioativas (radiofármacos) para diagnóstico e tratamento. Para diagnóstico: cintilografia óssea (metástases), cintilografia da tireoide, SPECT-CT cardíaco (perfusão miocárdica) e PET-CT (oncologia, neurologia). Para tratamento: iodoterapia (I-131) para câncer de tireoide, peptídeos marcados para tumores neuroendócrinos (PRRT) e Radio-223 para metástases ósseas. A dose de radiação é baixa e controlada. Os exames são prescritos por médico e realizados por médico nuclear especializado."
+    },
+    {
+      "id": "FAQ037",
+      "pergunta": "O que acontece se eu não puder pagar a conta do hospital?",
+      "resposta": "Em emergências e urgências com risco de vida, o hospital é obrigado a prestar atendimento independentemente da capacidade de pagamento. Para situações programadas, o hospital pode exigir pagamento antecipado ou garantia (cartão de crédito, fiança). Para pacientes sem recursos financeiros, existem opções: serviço social do hospital para orientação, SUS (Sistema Único de Saúde) para atendimento público gratuito, PROCON em casos de cobranças abusivas, e parcelamento ou negociação direta com o setor financeiro do hospital."
+    },
+    {
+      "id": "FAQ038",
+      "pergunta": "O que é a ressonância magnética e quando ela não pode ser feita?",
+      "resposta": "A Ressonância Magnética (RM) usa campo magnético e radiofrequência (sem radiação ionizante) para gerar imagens detalhadas de órgãos e tecidos moles. É superior à tomografia na avaliação do encéfalo, medula, articulações e pelve. Contraindicações absolutas incluem: marcapassos cardíacos não compatíveis com RM, implantes cocleares (alguns modelos), stents coronarianos (primeiros 6 semanas) e corpos estranhos metálicos nos olhos. Pacientes com claustrofobia podem necessitar de sedação leve. A gravidez no primeiro trimestre requer avaliação cuidadosa pelo médico solicitante."
+    },
+    {
+      "id": "FAQ039",
+      "pergunta": "O que é a tomografia e qual a diferença para raio-X?",
+      "resposta": "O raio-X convencional produz uma imagem bidimensional usando radiação ionizante — é rápido, acessível e ideal para ossos e pulmões. A tomografia computadorizada (TC) usa múltiplos raios-X em diferentes ângulos processados por computador, gerando imagens em cortes transversais com alta resolução — permite avaliar órgãos sólidos, hemorragias, derrames e estruturas vasculares com muito mais detalhe que o raio-X. A dose de radiação da TC é maior que a do raio-X. O contraste iodado pode ser usado para realçar vasos e lesões; requer teste de função renal antes."
+    },
+    {
+      "id": "FAQ040",
+      "pergunta": "O que é o nutricionista hospitalar e como ele atua no tratamento?",
+      "resposta": "O nutricionista hospitalar avalia o estado nutricional do paciente internado e prescreve a dieta adequada para cada condição clínica. Para pacientes impossibilitados de comer via oral, prescreve nutrição enteral (via sonda nasogástrica) ou parenteral (via cateter venoso central). Em oncologia, gerencia a perda de peso e caquexia. Em cirurgia bariátrica, orienta a dieta pós-operatória progressiva. No UTI, calcula as necessidades calóricas e proteicas para prevenção de desnutrição. A equipe de nutrição também orienta pacientes na alta hospitalar sobre a dieta de continuidade."
+    },
+    {
+      "id": "FAQ041",
+      "pergunta": "Como funciona a reprodução assistida no hospital?",
+      "resposta": "O Centro de Reprodução Assistida oferece: avaliação da fertilidade do casal, indução de ovulação, inseminação intrauterina (IUI), fertilização in vitro (FIV), injeção intracitoplasmática de espermatozoide (ICSI), congelamento de óvulos e embriões, diagnóstico genético pré-implantacional (PGT), e tratamento de infertilidade masculina. No Brasil, a ANS obriga planos de saúde a cobrir procedimentos de reprodução assistida para casais com diagnóstico de infertilidade, conforme inclusão no Rol em 2016 (RN 428). Clínicas como o Sírio-Libanês possuem Centro de Reprodução Assistida completo."
+    },
+    {
+      "id": "FAQ042",
+      "pergunta": "O que é o médico de medicina de família e quando devo consultá-lo?",
+      "resposta": "O médico de medicina de família e comunidade (MFC) é o especialista em atenção primária à saúde — o 'médico de cabeceira' moderno. É o ponto de entrada preferencial no sistema de saúde para adultos e crianças saudáveis ou com condições crônicas. Atua em: promoção de saúde e prevenção, diagnóstico e tratamento de doenças agudas e crônicas de baixa e média complexidade, gestão de múltiplas condições simultâneas (paciente polimórbido), encaminhamento para especialistas quando necessário e continuidade do cuidado ao longo da vida."
+    },
+    {
+      "id": "FAQ043",
+      "pergunta": "O que é um Hospital acreditado pela ONA Nível 3?",
+      "resposta": "A ONA (Organização Nacional de Acreditação) é a principal certificadora de qualidade hospitalar no Brasil. O Nível 3 — Acreditado com Excelência — é o mais alto grau de certificação e exige que o hospital demonstre excelência em segurança do paciente, qualidade assistencial e gestão organizacional, além de evidências de melhoria contínua dos indicadores. Hospitais com ONA Nível 3 e JCI simultaneamente representam o topo da qualidade hospitalar no Brasil. A certificação é válida por 2-3 anos com auditorias periódicas."
+    },
+    {
+      "id": "FAQ044",
+      "pergunta": "O que é o Programa PROADI-SUS e como ele beneficia o sistema de saúde público?",
+      "resposta": "O PROADI-SUS (Programa de Apoio ao Desenvolvimento Institucional do SUS) permite que hospitais filantrópicos de excelência (como Einstein, Sírio-Libanês, Moinhos de Vento e outros) cumpram parte de sua obrigação filantrópica desenvolvendo projetos de capacitação, gestão e assistência para o SUS. Por meio desse programa, esses hospitais treinam profissionais do SUS, desenvolvem protocolos clínicos, auxiliam na gestão de hospitais públicos e desenvolvem pesquisas aplicáveis ao sistema público. O Einstein, por exemplo, gerencia hospitais municipais de São Paulo pelo seu Instituto de Responsabilidade Social."
+    },
+    {
+      "id": "FAQ045",
+      "pergunta": "Como funcionam os exames genéticos ofertados pelo hospital?",
+      "resposta": "Os testes genéticos disponíveis incluem: painéis genômicos tumorais (Foundation One, MSK-IMPACT) para orientar terapias-alvo em oncologia; testes de mutação em genes de suscetibilidade ao câncer (BRCA1, BRCA2, Lynch); testes de farmacogenômica (como o paciente metaboliza medicamentos); diagnóstico de doenças genéticas raras e heredofamiliares; e testes pré-implantacionais (PGT) em reprodução assistida. O aconselhamento genético por geneticista clínico é indispensável antes e após os testes para orientar o paciente sobre os resultados e suas implicações."
+    },
+    {
+      "id": "FAQ046",
+      "pergunta": "O que é o serviço de Ouvidoria do hospital e como utilizá-lo?",
+      "resposta": "A Ouvidoria é o canal oficial de comunicação entre pacientes, familiares e o hospital para registrar: reclamações sobre atendimento, sugestões de melhoria, elogios, denúncias e solicitações de informação. As manifestações podem ser feitas por telefone, formulário no site, e-mail, urna presencial ou atendimento pessoal. A Ouvidoria tem obrigação de registrar, analisar e responder ao paciente dentro de prazo estabelecido (geralmente 5 a 15 dias úteis). As manifestações são sigilosas quando solicitado, conforme a LGPD."
+    },
+    {
+      "id": "FAQ047",
+      "pergunta": "O que é medicina integrativa e o hospital oferece esse serviço?",
+      "resposta": "Medicina integrativa combina tratamentos baseados em evidências da medicina convencional com práticas complementares como acupuntura, meditação, yoga, fitoterapia, medicina antroposófica e outras. Não substitui o tratamento médico convencional, mas complementa para melhorar qualidade de vida, controle da dor, ansiedade e sono. O CFM e o Ministério da Saúde reconhecem diversas práticas integrativas. Hospitais de referência como o Sírio-Libanês oferecem serviços integrativos especialmente para pacientes oncológicos e crônicos."
+    },
+    {
+      "id": "FAQ048",
+      "pergunta": "O que é o índice APACHE e para que serve na UTI?",
+      "resposta": "O APACHE II (Acute Physiology and Chronic Health Evaluation) é um escore de gravidade utilizado na UTI para avaliar o risco de mortalidade hospitalar do paciente crítico. Utiliza 12 variáveis fisiológicas (temperatura, pressão arterial, frequência cardíaca, frequência respiratória, pH arterial, sódio, potássio, creatinina, hematócrito, leucócitos, escala de coma de Glasgow e relação PaO2/FiO2), além de idade e estado de saúde crônico. Quanto maior o escore, maior o risco de óbito. É usado para estratificação de risco, pesquisa e avaliação de desempenho das UTIs."
+    },
+    {
+      "id": "FAQ049",
+      "pergunta": "O hospital atende pacientes estrangeiros?",
+      "resposta": "Sim. Os principais hospitais privados brasileiros de alta complexidade oferecem serviços para pacientes internacionais, incluindo: equipe de atendimento bilíngue (inglês, espanhol e outros idiomas), suporte para convênios internacionais (como Bupa International, Cigna, AXA e outros), tradução de prontuários e laudos, suporte logístico para acomodação e transporte, e concierge dedicado. O Brasil é destino crescente de turismo médico pela excelência hospitalar com custos menores que EUA e Europa. Hospitais como o Sírio-Libanês têm central de atendimento internacional."
+    },
+    {
+      "id": "FAQ050",
+      "pergunta": "O que é o serviço de capelania hospitalar?",
+      "resposta": "A capelania hospitalar é o serviço de suporte espiritual e religioso oferecido a pacientes, familiares e equipe de saúde. Atende pacientes de todas as crenças e religiões (ou sem religião), com respeito à diversidade espiritual. Oferece: visitas aos pacientes internados para apoio emocional e espiritual; suporte em momentos críticos (diagnóstico grave, final de vida, luto); orações conforme solicitação do paciente; apoio a familiares em situações de terminalidade; e participação em reuniões de equipe sobre cuidados paliativos. Não tem caráter proselitista — respeita a crença de cada pessoa."
+    },
+    {
+      "id": "FAQ051",
+      "pergunta": "O que é o 'Rapid Response Team' (Time de Resposta Rápida)?",
+      "resposta": "O Time de Resposta Rápida (TRR) ou Equipe de Resposta Rápida (ERR) é um grupo de profissionais de saúde (médico intensivista, enfermeiro intensivista, fisioterapeuta) que pode ser acionado pela equipe das enfermarias ao identificar sinais precoces de deterioração clínica de um paciente internado — antes de um parada cardiorrespiratória. O objetivo é intervir precocemente, estabilizar o paciente e evitar o PCR ou a necessidade de transferência emergencial para UTI. É um dos principais protocolos de segurança do paciente em hospitais de alta complexidade."
+    },
+    {
+      "id": "FAQ052",
+      "pergunta": "O que é o Programa Einstein/Sírio na Comunidade — como hospitais privados atuam no SUS?",
+      "resposta": "Hospitais filantrópicos de excelência como o Einstein e o Sírio-Libanês têm como missão não apenas a assistência privada, mas o fortalecimento do sistema público. O Einstein gerencia hospitais municipais em São Paulo, mantém 82 equipes de saúde da família em comunidades como Paraisópolis e treinou mais de 129 mil profissionais da saúde. O Sírio-Libanês gestiona 5 equipamentos públicos no estado de SP, como o Hospital Geral do Grajaú, e executa projetos PROADI-SUS. Esses programas refletem o compromisso filantrópico dessas instituições com a saúde de toda a população."
+    },
+    {
+      "id": "FAQ053",
+      "pergunta": "O que é o consentimento para uso de dados em pesquisa clínica?",
+      "resposta": "Hospitais de ensino e pesquisa como o Einstein, Sírio-Libanês e Hospital das Clínicas realizam pesquisas clínicas aprovadas pelo Comitê de Ética em Pesquisa (CEP) e pela CONEP. Para participar de qualquer pesquisa, o paciente deve assinar um TCLE (Termo de Consentimento Livre e Esclarecido) específico, explicando os objetivos da pesquisa, os dados que serão coletados e como serão usados. A participação é sempre voluntária e o paciente pode retirar o consentimento a qualquer momento sem prejuízo ao seu tratamento. A LGPD aplica-se integralmente ao uso de dados em pesquisa."
+    }
+  ],
+
+  "cross_knowledge": [
+    {
+      "id": "CK001",
+      "topico": "Regulação de planos de saúde — ANS",
+      "descricao": "O agente deve compreender os fundamentos da regulação da ANS: Rol de Procedimentos, prazos de autorização, carências, coberturas obrigatórias, e os canais de reclamação disponíveis ao beneficiário. Esse conhecimento é essencial para orientar pacientes com dúvidas e reclamações sobre cobertura.",
+      "areas_relacionadas": ["Convênios", "Direito do consumidor em saúde", "ANS"]
+    },
+    {
+      "id": "CK002",
+      "topico": "LGPD aplicada à saúde",
+      "descricao": "Dados de saúde são sensíveis pela LGPD. O agente deve saber explicar ao paciente: o que é coletado, por que, por quanto tempo é guardado, com quem é compartilhado e como exercer os direitos de acesso, correção e eliminação. Fundamental para situações de questionamento sobre privacidade.",
+      "areas_relacionadas": ["Privacidade", "Prontuário", "Consentimento", "ANPD"]
+    },
+    {
+      "id": "CK003",
+      "topico": "Farmácia hospitalar e medicamentos",
+      "descricao": "Conhecimento básico sobre dispensação de medicamentos em hospital, distinção entre medicamentos cobertos pelo plano (lista RENAME e RENAME-H) versus medicamentos de uso exclusivo por convênio versus particulares. Fundamental para esclarecer cobranças de medicamentos na conta hospitalar.",
+      "areas_relacionadas": ["Faturamento", "Convênios", "ANVISA"]
+    },
+    {
+      "id": "CK004",
+      "topico": "Ética médica e direitos do paciente",
+      "descricao": "O Código de Ética Médica e a Carta dos Direitos dos Usuários da Saúde definem os limites do que pode e não pode ser feito sem consentimento do paciente. O agente deve saber responder sobre sigilo médico, direito de recusa de tratamento, representação por familiares em incapazes e direito a segunda opinião.",
+      "areas_relacionadas": ["CFM", "Consentimento", "Autonomia do paciente"]
+    },
+    {
+      "id": "CK005",
+      "topico": "Saúde mental e humanização",
+      "descricao": "O ambiente hospitalar pode ser altamente estressante para pacientes e familiares. O agente deve reconhecer sinais de sofrimento emocional, demonstrar empatia, usar linguagem acolhedora, evitar termos técnicos desnecessários e encaminhar para suporte psicossocial quando necessário.",
+      "areas_relacionadas": ["Psicologia hospitalar", "Assistência social", "Capelania"]
+    },
+    {
+      "id": "CK006",
+      "topico": "Gestão de crises e comunicação de más notícias",
+      "descricao": "Comunicar diagnósticos graves, óbitos ou complicações exige protocolo especial (comunicação SPIKES). O agente de IA não deve comunicar resultados diagnósticos graves ou notícias de óbito — deve imediatamente escalar para a equipe médica ou assistente social responsável. Reconhecer a limitação e encaminhar com agilidade é fundamental.",
+      "areas_relacionadas": ["Comunicação clínica", "Psicologia", "Assistência social"]
+    }
+  ]
+}

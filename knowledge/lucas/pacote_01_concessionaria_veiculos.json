@@ -1,0 +1,1162 @@
+{
+  "segmento": "Concessionária de Veículos",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA atuantes em concessionárias de veículos no mercado brasileiro. Cobre marcas nacionais e importadas, perfis de clientes, argumentação de vendas, fluxos de atendimento, objeções, gatilhos emocionais e FAQ completo com 50 perguntas.",
+
+  "nucleo_conhecimento": {
+
+    "contexto_mercado": [
+      {
+        "id": "CM001",
+        "titulo": "Panorama do setor automotivo brasileiro",
+        "conteudo": "O Brasil é um dos maiores mercados automotivos do mundo, com vendas anuais que oscilam entre 1,8 e 2,5 milhões de veículos novos por ano. O setor emprega mais de 1,5 milhão de pessoas direta e indiretamente. Após a crise de 2015-2016 e os impactos da pandemia de 2020, o mercado vive um ciclo de recuperação impulsionado pela demanda reprimida, crédito acessível e renovação da frota nacional. A eletrificação e a conectividade dos veículos são tendências crescentes, com montadoras investindo em híbridos e elétricos para o mercado local."
+      },
+      {
+        "id": "CM002",
+        "titulo": "Principais montadoras e marcas no Brasil",
+        "conteudo": "As marcas líderes de mercado no Brasil incluem: Fiat (líder histórica), Chevrolet (GM), Volkswagen, Toyota, Hyundai, Jeep, Renault, Honda, Ford (somente importados após encerramento da produção local em 2021), Nissan, Mitsubishi, Peugeot, Citroën e BYD (em crescimento acelerado no segmento elétrico). O segmento de picapes e SUVs representa fatia crescente, enquanto os hatches compactos dominam o volume de vendas populares."
+      },
+      {
+        "id": "CM003",
+        "titulo": "Perfil do consumidor brasileiro de veículos",
+        "conteudo": "O consumidor brasileiro é exigente e sensível ao preço. Valoriza custo-benefício, economia de combustível, segurança, conectividade e status. A decisão de compra costuma envolver toda a família e levar de 2 semanas a 3 meses de pesquisa. Grande parte dos compradores financia entre 60% e 80% do valor do veículo. O crédito é fator determinante na decisão final. O consumidor pesquisa extensivamente online antes de visitar a concessionária."
+      },
+      {
+        "id": "CM004",
+        "titulo": "Canais de venda e tendências digitais",
+        "conteudo": "As concessionárias modernas operam em modelo omnichannel: loja física, site próprio, WhatsApp, Instagram, portais como iCarros, Webmotors, OLX e MercadoLivre. O atendimento digital precede em 80% dos casos a visita presencial. O test drive ainda é decisivo para a conversão. O pós-venda e o relacionamento com o cliente são diferenciais competitivos relevantes para fidelização e indicações."
+      },
+      {
+        "id": "CM005",
+        "titulo": "Financiamento e crédito no setor",
+        "conteudo": "O financiamento de veículos no Brasil é dominado pelos bancos das próprias montadoras (Banco Fiat, Banco Chevrolet, Banco Toyota, Bradesco Financiamentos, Santander Financiamentos, Itaú Unibanco). As taxas médias de juros para veículos novos ficam entre 1,2% e 1,9% ao mês, podendo chegar a 2,5% em PFs sem comprovação de renda. O CDC (Crédito Direto ao Consumidor) e o Leasing são as modalidades mais comuns. O consórcio é alternativa crescente para quem não tem urgência."
+      },
+      {
+        "id": "CM006",
+        "titulo": "Veículos elétricos e híbridos no Brasil",
+        "conteudo": "O mercado de veículos elétricos e híbridos cresce exponencialmente. Em 2023, as vendas de elétricos e híbridos plug-in ultrapassaram 94 mil unidades, crescimento de 93% em relação ao ano anterior. BYD, Volvo, GWM, BMW e Toyota lideram esse segmento. A infraestrutura de recarga ainda é limitada fora dos grandes centros, o que gera objeções de clientes. Isenções de IPVA em vários estados brasileiros tornam a opção mais atrativa financeiramente."
+      },
+      {
+        "id": "CM007",
+        "titulo": "Regulamentações e legislação automotiva",
+        "conteudo": "O setor é regulado pelo DENATRAN/SENATRAN, INMETRO (segurança e emissões), CONTRAN e pelo Código de Defesa do Consumidor (CDC). O PROCON e o consumidor.gov.br são canais de reclamação relevantes. O Recall obrigatório é gerenciado pelas montadoras e monitorado pelo DENATRAN. A garantia legal mínima é de 90 dias para veículos usados e 1 ano para novos, podendo as montadoras oferecerem garantias estendidas."
+      },
+      {
+        "id": "CM008",
+        "titulo": "Sazonalidade e períodos de maior venda",
+        "conteudo": "Os meses de maior volume de vendas são: março (virada do ano fiscal de algumas empresas), julho (férias e renovação de frota), novembro e dezembro (13º salário e bônus anuais). Feiras como o Salão do Automóvel e campanhas como Black Friday automotiva também impulsionam as vendas. Janeiro e fevereiro são historicamente meses de menor volume, aproveitados para campanhas de liquidação de estoque do ano anterior."
+      }
+    ],
+
+    "problemas_comuns": [
+      {
+        "id": "PC001",
+        "problema": "Cliente indeciso entre modelos",
+        "descricao": "O cliente visita a loja sem definição clara sobre qual modelo deseja, gerando atendimentos longos e sem conversão imediata.",
+        "solucao_sugerida": "Realizar perguntas consultivas para identificar necessidades reais: uso diário, número de passageiros, tipo de estrada, orçamento mensal e prioridades (economia, espaço, tecnologia). Apresentar no máximo 2 modelos que se encaixem no perfil levantado."
+      },
+      {
+        "id": "PC002",
+        "problema": "Resistência ao valor de entrada no financiamento",
+        "descricao": "O cliente deseja financiar 100% do veículo ou tem valor de entrada muito abaixo do mínimo exigido pelo banco.",
+        "solucao_sugerida": "Apresentar alternativas: consórcio, entrada com veículo usado como parte do pagamento (troca), financiamento com prazo maior para reduzir parcelas, ou modelos de ticket mais baixo que se encaixem na capacidade financeira declarada."
+      },
+      {
+        "id": "PC003",
+        "problema": "Desconfiança com o preço tabelado",
+        "descricao": "O cliente acredita que o preço apresentado tem margem oculta e pressiona por descontos maiores do que os praticáveis.",
+        "solucao_sugerida": "Ser transparente sobre a formação de preço, mostrar o preço sugerido pela montadora (tabela FIPE), apresentar os benefícios e acessórios inclusos. Oferecer valor agregado (garantia estendida, revisões inclusas, brindes) em vez de descontos monetários diretos."
+      },
+      {
+        "id": "PC004",
+        "problema": "Dificuldade de aprovação de crédito",
+        "descricao": "Cliente com score de crédito baixo ou restrições no CPF não consegue aprovação no banco parceiro.",
+        "solucao_sugerida": "Encaminhar para múltiplos bancos simultaneamente (Santander, BV, Bradesco), sugerir adição de um avalista, aumentar o valor de entrada, ou apresentar a alternativa do consórcio que não exige aprovação de crédito convencional."
+      },
+      {
+        "id": "PC005",
+        "problema": "Estoque insuficiente do modelo e cor desejados",
+        "descricao": "O cliente tem preferência específica de versão, cor ou acessório que não está disponível no estoque imediato.",
+        "solucao_sugerida": "Verificar disponibilidade em outras unidades do grupo, oferecer encomenda com prazo claro de entrega, apresentar o modelo em cor/versão disponível para test drive e oferecer garantia de preço travado até a chegada do veículo desejado."
+      },
+      {
+        "id": "PC006",
+        "problema": "Comparação com concorrente de preço mais baixo",
+        "descricao": "O cliente apresenta proposta de concorrente com preço menor e ameaça encerrar a negociação.",
+        "solucao_sugerida": "Solicitar a proposta do concorrente por escrito para análise. Comparar itens inclusos (garantia, revisões, acessórios, prazo de entrega). Destacar os diferenciais pós-venda da concessionária, a confiabilidade da marca e o custo total de propriedade ao longo de 5 anos."
+      },
+      {
+        "id": "PC007",
+        "problema": "Cliente que pesquisa muito mas não decide",
+        "descricao": "O cliente retorna diversas vezes, pede informações detalhadas, mas não avança para a proposta formal.",
+        "solucao_sugerida": "Identificar o real impeditivo (medo de endividar-se, influência de terceiros, aguardar lançamento de concorrente). Criar urgência legítima: prazo de validade da proposta, disponibilidade limitada do estoque, possibilidade de reajuste de preço. Oferecer test drive para acelerar o vínculo emocional."
+      },
+      {
+        "id": "PC008",
+        "problema": "Expectativa de avaliação alta do veículo usado",
+        "descricao": "O cliente deseja dar o veículo usado como parte do pagamento, mas a avaliação da concessionária é inferior ao valor esperado.",
+        "solucao_sugerida": "Apresentar laudos técnicos da avaliação com base na tabela FIPE, mostrar os custos de recondicionamento que a concessionária terá, e oferecer valor justo com argumentação técnica. Alternativamente, sugerir que o cliente venda o veículo de forma particular para obter valor superior, e retorne para a compra do novo."
+      },
+      {
+        "id": "PC009",
+        "problema": "Reclamações no pós-venda",
+        "descricao": "Cliente retorna com problema técnico no veículo adquirido e se sente mal atendido pela oficina ou pelo processo de garantia.",
+        "solucao_sugerida": "Demonstrar empatia imediata, acionar o serviço de garantia sem burocracia desnecessária, disponibilizar veículo reserva quando possível, manter comunicação ativa sobre o andamento do reparo. Escalar internamente caso o problema ultrapasse o prazo aceitável."
+      },
+      {
+        "id": "PC010",
+        "problema": "Concorrência com marketplaces e vendas diretas",
+        "descricao": "O cliente encontra o mesmo veículo em plataformas digitais com preço aparentemente menor.",
+        "solucao_sugerida": "Explicar os riscos de aquisição por intermediários sem idoneidade comprovada, destacar a procedência, nota fiscal, garantia de fábrica, e suporte pós-venda da concessionária autorizada. Apresentar o custo total da compra online versus presencial."
+      }
+    ],
+
+    "objeções_clientes": [
+      {
+        "id": "OB001",
+        "objecao": "Está muito caro",
+        "categoria": "Preço",
+        "resposta_recomendada": "Entendo sua preocupação com o investimento. Vamos analisar juntos o custo mensal com o financiamento disponível. Um veículo desta categoria, financiado em 60 meses, representa uma parcela de X reais por mês. Comparado à economia que terá em combustível, manutenção e segurança em relação ao seu veículo atual, o custo real pode ser menor do que parece. Posso mostrar essa simulação agora?"
+      },
+      {
+        "id": "OB002",
+        "objecao": "Vou pensar e retorno",
+        "categoria": "Indecisão",
+        "resposta_recomendada": "Claro, a decisão é importante e merece reflexão. Para ajudá-lo nessa análise, posso preparar uma proposta formal com os valores travados por 5 dias úteis. Assim você tem as informações completas para comparar. O que ainda falta para você se sentir confortável com a decisão?"
+      },
+      {
+        "id": "OB003",
+        "objecao": "O concorrente oferece o mesmo veículo mais barato",
+        "categoria": "Competição",
+        "resposta_recomendada": "Gostaria muito de analisar essa proposta com você. Propostas similares costumam ter diferenças importantes: itens inclusos, prazo de entrega, acessórios, revisões grátis e condições de garantia. Pode me mostrar os detalhes da oferta? Quero ter certeza de que estamos comparando condições idênticas."
+      },
+      {
+        "id": "OB004",
+        "objecao": "Não preciso de um carro agora",
+        "categoria": "Urgência",
+        "resposta_recomendada": "Compreendo. Posso perguntar o que está usando atualmente para se locomover? Muitas vezes o custo de manutenção de um veículo mais antigo ou o custo com aplicativos e transporte acaba sendo maior do que uma parcela de financiamento. Posso calcular esse comparativo para você?"
+      },
+      {
+        "id": "OB005",
+        "objecao": "Tenho medo de me endividar",
+        "categoria": "Financeiro",
+        "resposta_recomendada": "Sua cautela é muito saudável e eu respeito isso. Por isso mesmo existe o financiamento planejado: você escolhe a parcela que cabe no seu orçamento, não o contrário. Vamos definir qual é o valor confortável por mês para você e eu encontro o veículo e as condições que se encaixam nesse limite."
+      },
+      {
+        "id": "OB006",
+        "objecao": "Prefiro comprar um usado e pagar à vista",
+        "categoria": "Produto",
+        "resposta_recomendada": "Excelente estratégia. Temos uma linha de seminovos certificados com procedência garantida, revisão completa e garantia de 3 a 12 meses. Posso apresentar opções que atendam ao seu orçamento à vista e com a segurança de uma concessionária autorizada. Quer conhecer o estoque?"
+      },
+      {
+        "id": "OB007",
+        "objecao": "A manutenção desse veículo é cara",
+        "categoria": "Custo total",
+        "resposta_recomendada": "Vamos analisar os dados reais. Este modelo tem revisão programada a cada 10.000 km com custo médio de R$ X. O consumo médio de combustível é de X km/litro. Comparado a veículos de marcas similares, o custo de manutenção está dentro da média do segmento. Posso mostrar o plano de revisões completo."
+      },
+      {
+        "id": "OB008",
+        "objecao": "Não gosto da cor disponível",
+        "categoria": "Disponibilidade",
+        "resposta_recomendada": "Entendo que a cor é parte importante da experiência. Temos a possibilidade de encomendar o veículo na cor exata que deseja, com prazo estimado de X semanas e o preço travado hoje. Ou posso verificar se há disponibilidade em outras unidades do grupo. O que prefere?"
+      },
+      {
+        "id": "OB009",
+        "objecao": "Ouvi falar que essa marca dá muito problema",
+        "categoria": "Confiança",
+        "resposta_recomendada": "É importante considerar fontes confiáveis para essa avaliação. Posso compartilhar os índices de satisfação do cliente (JD Power, ANFAVEA), o histórico de recalls desta marca e os resultados de crash test. Este modelo em específico tem X anos no mercado com X% de aprovação dos proprietários. Gostaria de ver esses dados?"
+      },
+      {
+        "id": "OB010",
+        "objecao": "Vou esperar o lançamento do modelo novo",
+        "categoria": "Timing",
+        "resposta_recomendada": "Compreendo a expectativa. Posso verificar o cronograma de lançamento previsto. Importante considerar que lançamentos costumam vir com preços de lançamento mais altos e estoque inicial limitado. O modelo atual oferece excelente custo-benefício e está disponível para entrega imediata. Vamos calcular quanto você investiria em transporte até o lançamento?"
+      },
+      {
+        "id": "OB011",
+        "objecao": "A parcela não cabe no meu orçamento",
+        "categoria": "Financeiro",
+        "resposta_recomendada": "Vamos ajustar a simulação para a parcela ideal para você. Qual seria o valor máximo confortável por mês? Com esse número em mãos, posso trabalhar com prazos maiores, valor de entrada diferente, ou apresentar modelos com ticket adequado ao seu orçamento."
+      },
+      {
+        "id": "OB012",
+        "objecao": "Tenho receio do veículo elétrico por falta de recarga",
+        "categoria": "Tecnologia",
+        "resposta_recomendada": "Essa é uma preocupação muito válida. Posso mostrar o mapa de pontos de recarga disponíveis na sua cidade e região. Veículos híbridos plug-in são uma transição segura: funcionam tanto no modo elétrico quanto a gasolina, eliminando o risco de ficar sem energia. Vamos avaliar qual tecnologia faz mais sentido para a sua rotina?"
+      }
+    ],
+
+    "argumentos_venda": [
+      {
+        "id": "AV001",
+        "argumento": "Custo total de propriedade",
+        "descricao": "Apresentar o custo real ao longo de 5 anos, incluindo combustível, manutenção, seguro, IPVA e depreciação. Veículos com menor depreciação e menor custo de manutenção podem ser economicamente superiores mesmo com preço de compra mais alto.",
+        "quando_usar": "Quando o cliente foca apenas no preço de compra."
+      },
+      {
+        "id": "AV002",
+        "argumento": "Garantia e suporte pós-venda",
+        "descricao": "Destacar a rede de concessionárias autorizadas, o prazo de garantia de fábrica (geralmente 3 anos), a garantia estendida disponível, o plano de revisões com preço fixo e o atendimento de emergência 24h.",
+        "quando_usar": "Quando o cliente compara com veículos de procedência duvidosa ou compra direta."
+      },
+      {
+        "id": "AV003",
+        "argumento": "Tecnologia embarcada e conectividade",
+        "descricao": "Apresentar os sistemas de infotainment, integração com Apple CarPlay e Android Auto, assistentes de voz, sistemas de segurança ativa (frenagem automática, alerta de colisão, câmera 360°) e conectividade com aplicativos do fabricante.",
+        "quando_usar": "Para clientes jovens, profissionais de tecnologia ou famílias com filhos."
+      },
+      {
+        "id": "AV004",
+        "argumento": "Economia de combustível e custo mensal",
+        "descricao": "Calcular em tempo real a economia gerada pelo consumo eficiente do veículo em comparação ao modelo atual do cliente. Apresentar o custo mensal de abastecimento baseado na quilometragem declarada pelo cliente.",
+        "quando_usar": "Para clientes que rodam muito ou que possuem veículos de alto consumo."
+      },
+      {
+        "id": "AV005",
+        "argumento": "Segurança ativa e passiva",
+        "descricao": "Apresentar as notas de crash test (Latin NCAP, Euro NCAP), os airbags disponíveis, os sistemas de assistência ao motorista (ADAS) e os recursos que protegem crianças e idosos. Conectar à responsabilidade do cliente com sua família.",
+        "quando_usar": "Para clientes com filhos pequenos, idosos na família ou que tiveram acidentes anteriores."
+      },
+      {
+        "id": "AV006",
+        "argumento": "Condições exclusivas e prazo limitado",
+        "descricao": "Apresentar taxa de juros especial vigente no mês, isenção de taxa de abertura de crédito, brindes e acessórios inclusos sem custo adicional, revisões gratuitas inclusas e seguro com desconto especial para clientes da concessionária.",
+        "quando_usar": "Para criar urgência em clientes indecisos e acelerar o fechamento."
+      },
+      {
+        "id": "AV007",
+        "argumento": "Valorização patrimonial e revenda",
+        "descricao": "Apresentar o histórico de desvalorização da tabela FIPE do modelo, comparar com concorrentes que depreciam mais rapidamente, e mostrar como a escolha correta do veículo representa um ativo com melhor liquidez no mercado de usados.",
+        "quando_usar": "Para clientes que pensam em troca futura ou que veem o veículo como investimento."
+      },
+      {
+        "id": "AV008",
+        "argumento": "Experiência de compra e relacionamento",
+        "descricao": "Destacar o processo de compra sem complicações, o suporte do consultor de vendas durante toda a vida útil do veículo, os programas de fidelidade da concessionária, os benefícios para indicações e a experiência completa do pós-venda.",
+        "quando_usar": "Para clientes que valorizam atendimento e relacionamento de longo prazo."
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "id": "AT001",
+      "area": "Fiat — Modelos Principais",
+      "modelos": [
+        {
+          "nome": "Fiat Mobi",
+          "segmento": "Hatch compacto popular",
+          "perfil_cliente": "Primeiro carro, baixa renda, uso urbano, jovens e aposentados",
+          "motorização": "1.0 Fire 65cv flex",
+          "diferenciais": "Menor preço do segmento, baixo custo de manutenção, facilidade de estacionamento",
+          "objecoes_frequentes": ["É muito pequeno", "Motor fraco para estrada"],
+          "argumentos_especificos": ["Custo de manutenção entre os mais baixos do Brasil", "IPVA mais baixo por ser veículo popular"]
+        },
+        {
+          "nome": "Fiat Argo",
+          "segmento": "Hatch compacto",
+          "perfil_cliente": "Jovens adultos, casais sem filhos, uso misto cidade e estrada",
+          "motorização": "1.0 GSE Turbo 130cv ou 1.3 GSE 101cv, flex",
+          "diferenciais": "Design moderno, conectividade avançada, espaço interno generoso para o segmento",
+          "objecoes_frequentes": ["Preferem SUV", "Preço próximo de modelos maiores"],
+          "argumentos_especificos": ["Melhor relação custo-benefício do segmento", "Sistema de som Beat Audio disponível"]
+        },
+        {
+          "nome": "Fiat Pulse",
+          "segmento": "SUV compacto",
+          "perfil_cliente": "Famílias jovens, profissionais liberais, quem quer SUV com preço acessível",
+          "motorização": "1.0 Turbo 130cv flex ou 1.3 Turbo 185cv Hybrid",
+          "diferenciais": "Tecnologia de microvolt-híbrido (MHEV), design diferenciado, versão Abarth de alta performance",
+          "objecoes_frequentes": ["Espaço de porta-malas menor que concorrentes", "Preço da versão topo elevado"],
+          "argumentos_especificos": ["Tecnologia híbrida leve com economia real", "Rede de assistência Fiat mais extensa do Brasil"]
+        },
+        {
+          "nome": "Fiat Fastback",
+          "segmento": "SUV cupê",
+          "perfil_cliente": "Profissionais de 30-45 anos, que buscam estilo e desempenho",
+          "motorização": "1.0 Turbo 130cv flex ou 1.3 Turbo 185cv Hybrid/Abarth",
+          "diferenciais": "Design cupê exclusivo no segmento, versão Abarth 185cv, tecnologia MHEV",
+          "objecoes_frequentes": ["Porta-malas reduzido pelo design cupê", "Preço elevado"],
+          "argumentos_especificos": ["Único SUV cupê acessível no Brasil", "Alto apelo visual e status"]
+        },
+        {
+          "nome": "Fiat Strada",
+          "segmento": "Picape compacta",
+          "perfil_cliente": "Trabalhadores autônomos, pequenos empresários, uso misto trabalho e lazer",
+          "motorização": "1.3 GSE 101cv flex",
+          "diferenciais": "Líder absoluta de vendas no Brasil, caçamba versátil, custo de manutenção baixo",
+          "objecoes_frequentes": ["Cabine simples tem menos conforto", "Concorrência da Saveiro"],
+          "argumentos_especificos": ["Modelo mais vendido do Brasil em várias edições", "Versatilidade para trabalho e lazer"]
+        }
+      ]
+    },
+    {
+      "id": "AT002",
+      "area": "Chevrolet — Modelos Principais",
+      "modelos": [
+        {
+          "nome": "Chevrolet Onix",
+          "segmento": "Hatch e sedã compacto",
+          "perfil_cliente": "Famílias de classe média, frotas corporativas, motoristas de aplicativo",
+          "motorização": "1.0 Turbo 116cv flex ou 1.0 aspirado 82cv flex",
+          "diferenciais": "Alta liquidez no mercado de revenda, MyLink com tela de 8 polegadas, versão sedã (Onix Plus) para quem precisa de porta-malas maior",
+          "objecoes_frequentes": ["Muito popular, sem exclusividade", "Versão básica pouco equipada"],
+          "argumentos_especificos": ["Modelo mais vendido do Brasil por muitos anos consecutivos", "Rede de assistência Chevrolet extensa", "Alta liquidez para revenda"]
+        },
+        {
+          "nome": "Chevrolet Tracker",
+          "segmento": "SUV compacto",
+          "perfil_cliente": "Jovens profissionais, famílias pequenas, clientes que migram de hatches",
+          "motorização": "1.0 Turbo 116cv flex",
+          "diferenciais": "Design moderno, espaço interno, tecnologia de segurança ativa (alerta de colisão, câmera de ré com linhas dinâmicas)",
+          "objecoes_frequentes": ["Motor menos potente que concorrentes", "Sem versão automática com câmbio mais sofisticado"],
+          "argumentos_especificos": ["Excelente relação custo-benefício no segmento SUV", "Consumo competitivo para um SUV"]
+        },
+        {
+          "nome": "Chevrolet Equinox EV",
+          "segmento": "SUV elétrico médio",
+          "perfil_cliente": "Profissionais de alta renda, entusiastas de tecnologia, compradores conscientes do meio ambiente",
+          "motorização": "Motor elétrico de 211cv ou 286cv, bateria de 78kWh",
+          "diferenciais": "Autonomia de até 483 km, carregamento rápido em 45 minutos (80%), tecnologia SuperCruise disponível",
+          "objecoes_frequentes": ["Preço elevado", "Infraestrutura de recarga", "Autonomia em cidades pequenas"],
+          "argumentos_especificos": ["Custo de recarga versus combustível: economia de até 70% no abastecimento mensal", "Isenção de IPVA em vários estados"]
+        },
+        {
+          "nome": "Chevrolet S10",
+          "segmento": "Picape média",
+          "perfil_cliente": "Empresários, agricultores, profissionais liberais que precisam de robustez",
+          "motorização": "2.8 Diesel Turbo 200cv (diesel) ou 2.5 Flex 197cv",
+          "diferenciais": "Alta capacidade de carga, conforto de SUV com utilidade de picape, versão Z71 para off-road",
+          "objecoes_frequentes": ["Consumo de combustível alto", "IPVA e seguro mais caros"],
+          "argumentos_especificos": ["Dedutivelmente como bem de produção para PJ", "Alta durabilidade e baixa desvalorização"]
+        },
+        {
+          "nome": "Chevrolet Montana",
+          "segmento": "Picape compacta",
+          "perfil_cliente": "Jovens adultos, profissionais autônomos, quem quer estilo e praticidade",
+          "motorização": "1.2 Turbo 133cv flex",
+          "diferenciais": "Design moderno, interior sofisticado, tecnologia de picape grande em formato compacto",
+          "objecoes_frequentes": ["Caçamba menor que concorrentes", "Preço próximo de picapes maiores"],
+          "argumentos_especificos": ["Visual diferenciado, único em sua categoria", "Versão Trekking para aventureiros urbanos"]
+        }
+      ]
+    },
+    {
+      "id": "AT003",
+      "area": "Toyota — Modelos Principais",
+      "modelos": [
+        {
+          "nome": "Toyota Corolla",
+          "segmento": "Sedã médio / híbrido",
+          "perfil_cliente": "Profissionais de classe média-alta, executivos, empresas de frotas executivas",
+          "motorização": "2.0 flex 177cv ou híbrido 1.8 + motor elétrico 122cv",
+          "diferenciais": "Reputação de confiabilidade ímpar, versão híbrida com economia real, Toyota Safety Sense de série",
+          "objecoes_frequentes": ["Preço mais alto que concorrentes", "Design conservador para alguns"],
+          "argumentos_especificos": ["Menor taxa de desvalorização da categoria", "Sistema Toyota Safety Sense com 8 tecnologias de segurança"]
+        },
+        {
+          "nome": "Toyota Yaris",
+          "segmento": "Hatch e sedã compacto premium",
+          "perfil_cliente": "Jovens profissionais, casais, quem busca confiabilidade Toyota com preço menor",
+          "motorização": "1.5 flex 107cv",
+          "diferenciais": "Qualidade de acabamento Toyota, conectividade, baixo custo de manutenção",
+          "objecoes_frequentes": ["Preço superior a concorrentes do mesmo segmento", "Motor sem turbo"],
+          "argumentos_especificos": ["Reputação de durabilidade Toyota a preço acessível", "Custo total de propriedade menor em 5 anos"]
+        },
+        {
+          "nome": "Toyota SW4",
+          "segmento": "SUV grande diesel",
+          "perfil_cliente": "Famílias grandes, fazendeiros, aventureiros, executivos",
+          "motorização": "2.8 Diesel Turbo 204cv",
+          "diferenciais": "7 lugares, tração 4x4 robusta, altíssima reputação para off-road e uso pesado",
+          "objecoes_frequentes": ["Preço muito elevado", "Consumo alto"],
+          "argumentos_especificos": ["Veículo que valoriza ou mantém preço na tabela FIPE", "Referência absoluta em confiabilidade no segmento"]
+        },
+        {
+          "nome": "Toyota Hilux",
+          "segmento": "Picape média",
+          "perfil_cliente": "Agronegócio, construtoras, aventureiros, fazendeiros",
+          "motorização": "2.8 Diesel Turbo 204cv ou 2.7 flex 166cv",
+          "diferenciais": "Líder absoluta em confiabilidade no agronegócio, manutenção facilitada no interior do Brasil, altíssima revenda",
+          "objecoes_frequentes": ["Preço muito elevado", "Consumo de diesel"],
+          "argumentos_especificos": ["Maior rede de assistência para diesel no interior do Brasil", "Menor depreciação entre picapes médias"]
+        },
+        {
+          "nome": "Toyota Corolla Cross Hybrid",
+          "segmento": "SUV compacto híbrido",
+          "perfil_cliente": "Famílias conscientes, profissionais liberais, executivos que querem SUV com tecnologia híbrida",
+          "motorização": "Híbrido 1.8 + motor elétrico 182cv combinados",
+          "diferenciais": "Pioneiro no segmento SUV híbrido acessível no Brasil, Toyota Safety Sense, tração E-Four (elétrica nas rodas traseiras)",
+          "objecoes_frequentes": ["Preço acima da média do segmento", "Sem plug-in (não carrega na tomada)"],
+          "argumentos_especificos": ["Não precisa recarregar: a bateria se carrega pela própria frenagem e motor", "Economia de até 30% em combustível em relação a SUVs convencionais"]
+        }
+      ]
+    },
+    {
+      "id": "AT004",
+      "area": "Hyundai — Modelos Principais",
+      "modelos": [
+        {
+          "nome": "Hyundai HB20",
+          "segmento": "Hatch compacto",
+          "perfil_cliente": "Jovens adultos, primeiro carro, uso urbano, classe média",
+          "motorização": "1.0 Turbo 120cv flex ou 1.0 aspirado 80cv flex",
+          "diferenciais": "Garantia de 5 anos (maior da categoria), design coreano moderno, nível de equipamentos acima da média",
+          "objecoes_frequentes": ["Rede de assistência menor que Fiat e GM"],
+          "argumentos_especificos": ["Maior garantia de fábrica do segmento: 5 anos sem limite de km", "Acabamento interno premium para o preço"]
+        },
+        {
+          "nome": "Hyundai Creta",
+          "segmento": "SUV compacto",
+          "perfil_cliente": "Famílias jovens, profissionais liberais, consumidores de tecnologia",
+          "motorização": "1.0 Turbo 120cv flex ou 2.0 Aspirado 167cv flex",
+          "diferenciais": "Portfólio completo de versões, excelente nível de equipamentos, design moderno",
+          "objecoes_frequentes": ["Versão 1.0 com 7 lugares tem desempenho limitado"],
+          "argumentos_especificos": ["Opção de 7 lugares acessível no segmento SUV compacto", "Garantia de 5 anos"]
+        },
+        {
+          "nome": "Hyundai Tucson",
+          "segmento": "SUV médio",
+          "perfil_cliente": "Executivos, famílias estabelecidas, compradores de status",
+          "motorização": "1.6 Turbo 180cv flex + sistema híbrido leve disponível",
+          "diferenciais": "Design icônico premiado, tecnologia superior ao segmento, acabamento de luxo acessível",
+          "objecoes_frequentes": ["Preço elevado", "Custo de manutenção importado"],
+          "argumentos_especificos": ["Design premiado internacionalmente", "Tecnologia de SUV grande por preço de SUV médio"]
+        },
+        {
+          "nome": "Hyundai Ioniq 5",
+          "segmento": "SUV elétrico de luxo acessível",
+          "perfil_cliente": "Early adopters, profissionais de alta renda, entusiastas de tecnologia",
+          "motorização": "Motor elétrico de 217cv ou dual motor 305cv, bateria de 77,4kWh",
+          "diferenciais": "Carregamento de 800V (mais rápido do mercado), design retro-futurista premiado, autonomia de até 480 km",
+          "objecoes_frequentes": ["Preço muito elevado", "Disponibilidade de peças"],
+          "argumentos_especificos": ["Carregamento de 10% a 80% em 18 minutos com carregador rápido de 800V", "Vencedor de múltiplos prêmios de design mundial"]
+        },
+        {
+          "nome": "Hyundai Santa Fe",
+          "segmento": "SUV grande 7 lugares",
+          "perfil_cliente": "Famílias numerosas, executivos, compradores de SUV grande de luxo",
+          "motorização": "Híbrido plug-in 1.6 Turbo + elétrico, potência combinada 265cv",
+          "diferenciais": "7 lugares com conforto, tecnologia plug-in híbrida, espaço de carga generoso",
+          "objecoes_frequentes": ["Preço elevado", "Pouca rede de serviço no interior"],
+          "argumentos_especificos": ["Plug-in híbrido com autonomia elétrica de até 48 km para uso urbano", "Ideal para famílias que precisam de 7 lugares com conforto premium"]
+        }
+      ]
+    },
+    {
+      "id": "AT005",
+      "area": "Jeep — Modelos Principais",
+      "modelos": [
+        {
+          "nome": "Jeep Renegade",
+          "segmento": "SUV compacto",
+          "perfil_cliente": "Aventureiros urbanos, jovens adultos, clientes que buscam identidade de marca",
+          "motorização": "1.3 Turbo 185cv flex (versão T270 e T4) ou 1.0 Turbo 130cv",
+          "diferenciais": "Tração 4x4 disponível (única no segmento), identidade de marca Jeep, apelo aventureiro",
+          "objecoes_frequentes": ["Consumo mais alto", "Custo de manutenção percebido como caro"],
+          "argumentos_especificos": ["Único SUV compacto com 4x4 real no Brasil", "Identidade de marca incomparável, referência em aventura"]
+        },
+        {
+          "nome": "Jeep Compass",
+          "segmento": "SUV médio",
+          "perfil_cliente": "Famílias estabelecidas, executivos de classe média-alta, aventureiros de fim de semana",
+          "motorização": "1.3 Turbo 185cv flex ou 2.0 Diesel 170cv Trailhawk",
+          "diferenciais": "Líder do segmento SUV médio no Brasil, tecnologia e conforto premium, versão Trailhawk para off-road sério",
+          "objecoes_frequentes": ["Preço da versão diesel muito elevado"],
+          "argumentos_especificos": ["SUV médio mais vendido do Brasil", "Sistema Selec-Terrain com modos de tração para qualquer terreno"]
+        },
+        {
+          "nome": "Jeep Commander",
+          "segmento": "SUV médio-grande 7 lugares",
+          "perfil_cliente": "Famílias numerosas, executivos que precisam de 7 lugares com sofisticação",
+          "motorização": "1.3 Turbo 185cv flex ou 2.0 Diesel 170cv",
+          "diferenciais": "7 lugares com conforto real nas 3 fileiras, sistema de suspensão adaptável, tecnologia de ponta",
+          "objecoes_frequentes": ["Preço elevado", "Terceira fileira com espaço limitado"],
+          "argumentos_especificos": ["Único 7 lugares com qualidade Jeep acessível no Brasil", "Mais espaçoso que concorrentes no mesmo preço"]
+        },
+        {
+          "nome": "Jeep Wrangler",
+          "segmento": "Off-road icônico",
+          "perfil_cliente": "Entusiastas de off-road, colecionadores, alta renda, símbolo de status e estilo de vida",
+          "motorização": "3.6 V6 285cv gasolina ou Rubicon 392 V8 470cv",
+          "diferenciais": "Ícone mundial de off-road, teto removível, portas removíveis, desempenho incomparável em qualquer terreno",
+          "objecoes_frequentes": ["Preço muito elevado", "Consumo altíssimo", "Conforto urbano abaixo de SUVs convencionais"],
+          "argumentos_especificos": ["Status e identidade únicos", "Comunidade de proprietários extremamente fiel e ativa"]
+        },
+        {
+          "nome": "Jeep Avenger",
+          "segmento": "SUV compacto elétrico",
+          "perfil_cliente": "Compradores ecologicamente conscientes, amantes da marca Jeep, usuários urbanos",
+          "motorização": "Motor elétrico de 156cv, bateria de 54kWh",
+          "diferenciais": "Primeiro Jeep elétrico acessível no Brasil, design compacto urbano com DNA Jeep, autonomia de até 400 km",
+          "objecoes_frequentes": ["Preço de elétrico com porte compacto", "Sem tração 4x4 na versão elétrica atual"],
+          "argumentos_especificos": ["Isenção de IPI e incentivos estaduais para elétricos", "DNA Jeep com pegada sustentável"]
+        }
+      ]
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "id": "FC001",
+      "nome": "Fluxo de Primeiro Contato — WhatsApp",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Boas-vindas e identificação",
+          "mensagem": "Olá! Seja bem-vindo(a) à [Nome da Concessionária]. Sou [Nome do Agente], seu consultor digital. É um prazer te atender! Para que eu possa te ajudar da melhor forma, pode me dizer seu nome?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Identificar intenção",
+          "mensagem": "Olá, [Nome]! Que ótimo ter você aqui. Você está buscando um veículo novo, seminovo, ou quer saber sobre revisões e serviços?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Qualificação de necessidades",
+          "mensagem": "Para te ajudar a encontrar o veículo ideal, me conta: quantas pessoas costumam andar com você? Você usa mais em cidade, estrada ou os dois? E tem algum modelo ou marca em mente?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Identificação financeira",
+          "mensagem": "Perfeito! Uma última pergunta para te apresentar as melhores opções: você prefere pagar à vista, financiar, ou quer saber sobre o consórcio também?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Apresentação de modelos",
+          "mensagem": "Com base no que me contou, tenho ótimas opções para você! Vou te apresentar [Modelo A] e [Modelo B]. Posso enviar as fichas técnicas e as condições especiais do mês?"
+        },
+        {
+          "etapa": 6,
+          "acao": "Convite para test drive ou visita",
+          "mensagem": "A melhor forma de você se apaixonar pelo veículo ideal é experimentando. Que tal agendarmos um test drive? Tenho horários disponíveis amanhã pela manhã ou à tarde. Qual prefere?"
+        }
+      ]
+    },
+    {
+      "id": "FC002",
+      "nome": "Fluxo de Atendimento Presencial",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção",
+          "mensagem": "Bom dia/Boa tarde! Seja bem-vindo(a) à [Concessionária]. Meu nome é [Consultor]. Como posso te ajudar hoje?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Tour na loja e identificação de interesses",
+          "mensagem": "Você tem interesse em algum modelo específico que viu em nosso showroom, ou prefere que eu te mostre as novidades?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Levantamento de necessidades consultivo",
+          "mensagem": "Para que eu possa te recomendar o melhor veículo: você usa o carro principalmente para trabalho, família ou lazer? E qual é a sua quilometragem mensal aproximada?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Apresentação técnica do modelo",
+          "mensagem": "Baseado no que me contou, este modelo aqui é perfeito para seu perfil. Deixa eu te mostrar os principais diferenciais: [apresentar 3-5 pontos técnicos relevantes ao perfil levantado]."
+        },
+        {
+          "etapa": 5,
+          "acao": "Test drive",
+          "mensagem": "Que tal você mesmo sentir a diferença? Vamos fazer um test drive agora. Tenho um veículo disponível para você experimentar por 15-20 minutos na região."
+        },
+        {
+          "etapa": 6,
+          "acao": "Apresentação de proposta",
+          "mensagem": "Vou preparar uma proposta personalizada para você. Qual seria o valor de entrada que você tem disponível hoje e qual parcela mensal ficaria confortável?"
+        },
+        {
+          "etapa": 7,
+          "acao": "Negociação e fechamento",
+          "mensagem": "Excelente! Já tenho uma condição especial que posso apresentar. Vou mostrar a simulação completa e, se aprovada, podemos fechar hoje e você já sai com o veículo ou agendamos a entrega."
+        }
+      ]
+    },
+    {
+      "id": "FC003",
+      "nome": "Fluxo de Recuperação de Lead Frio",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recontato após 7 dias sem resposta",
+          "mensagem": "Olá, [Nome]! Tudo bem? Passei para ver se você ainda tem interesse no [Modelo]. Temos uma condição especial válida até o final desta semana que reservei para você. Posso te apresentar?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Recontato após 15 dias",
+          "mensagem": "Oi, [Nome]! Acabamos de receber [novidade: nova cor / desconto especial / condição de juros reduzidos] para o [Modelo]. Lembrei de você imediatamente e quis avisar em primeira mão. Ainda está no radar?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Recontato após 30 dias — última tentativa",
+          "mensagem": "Olá, [Nome]! Este é meu último contato sobre o [Modelo] para não ser inconveniente. Se surgir necessidade no futuro, estarei disponível. Mas antes de encerrar, preciso avisar: o estoque desta versão está acabando e há uma condição exclusiva que expira em 48h. Posso te enviar os detalhes?"
+        }
+      ]
+    },
+    {
+      "id": "FC004",
+      "nome": "Fluxo de Agendamento de Revisão",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Proatividade no agendamento",
+          "mensagem": "Olá, [Nome]! Aqui é [Consultor] da [Concessionária]. Notei que seu veículo está se aproximando da revisão dos [km ou período]. Para garantir a garantia de fábrica e o melhor desempenho, gostaria de agendar sua manutenção preventiva. Qual o melhor horário para você nesta semana?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Confirmação de agendamento",
+          "mensagem": "Agendamento confirmado: [data] às [hora]. Você pode levar o veículo diretamente à nossa área de recepção de serviços. Tempo médio estimado: [X horas]. Deseja que providenciemos um veículo reserva durante o período?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Pós-serviço e satisfação",
+          "mensagem": "Olá, [Nome]! Seu veículo está pronto e passou em todos os pontos de checagem. Na retirada, nosso técnico vai explicar tudo que foi realizado. Aproveito para perguntar: ficou satisfeito(a) com o atendimento desta vez?"
+        }
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "id": "GE001",
+      "gatilho": "Família e segurança",
+      "descricao": "O desejo de proteger filhos, cônjuge e pais é um dos gatilhos mais poderosos na decisão de compra de veículos.",
+      "como_ativar": "Perguntar sobre quem costuma andar no carro, mencionar sistemas de segurança ativa e passiva, notas de crash test, airbags e tecnologias de prevenção de acidentes. Conectar o veículo à proteção das pessoas mais importantes para o cliente.",
+      "frases_gatilho": [
+        "Este veículo tem nota máxima no crash test Latin NCAP — 5 estrelas para proteção de crianças.",
+        "A frenagem automática de emergência pode evitar um acidente que nenhuma apólice de seguro resolve.",
+        "Quando você coloca sua família neste carro, sabe que tem a melhor proteção disponível no segmento."
+      ]
+    },
+    {
+      "id": "GE002",
+      "gatilho": "Status e reconhecimento social",
+      "descricao": "Muitos clientes associam o veículo à sua identidade social e profissional.",
+      "como_ativar": "Destacar o design premiado, a percepção da marca no mercado, as celebridades ou perfis aspiracionais que usam o modelo, e como o veículo comunica sucesso e competência.",
+      "frases_gatilho": [
+        "Este é o veículo que você vê nas melhores garagens da sua cidade.",
+        "Design premiado internacionalmente — quando você chegar com este carro, vão notar.",
+        "Clientes que buscam algo diferente da maioria escolhem exatamente este modelo."
+      ]
+    },
+    {
+      "id": "GE003",
+      "gatilho": "Aventura e liberdade",
+      "descricao": "O desejo de explorar, viajar e escapar da rotina é forte especialmente entre clientes de SUVs e picapes.",
+      "como_ativar": "Apresentar capacidades off-road, mencionar viagens, acampamentos, trilhas e experiências que o veículo proporciona. Usar imagens e vídeos de destinos e cenários de aventura.",
+      "frases_gatilho": [
+        "Este veículo vai a lugares onde outros simplesmente não chegam.",
+        "Seu próximo destino de férias começa no momento em que você escolhe o veículo certo.",
+        "Tração 4x4 real: para quando a estrada acaba e a aventura começa."
+      ]
+    },
+    {
+      "id": "GE004",
+      "gatilho": "Economia e inteligência financeira",
+      "descricao": "Clientes racionais se motivam ao perceber que a compra é uma decisão financeiramente inteligente.",
+      "como_ativar": "Apresentar calculadoras de economia de combustível, custo de manutenção versus veículo atual, valorização na tabela FIPE, e comparar o custo mensal do financiamento com gastos alternativos (aplicativo, transporte).",
+      "frases_gatilho": [
+        "Em 24 meses, a economia em combustível já paga boa parte das parcelas.",
+        "Este veículo foi projetado para ser econômico — e isso fica no seu bolso todo mês.",
+        "Comprar o veículo certo agora é uma decisão financeira inteligente para os próximos 10 anos."
+      ]
+    },
+    {
+      "id": "GE005",
+      "gatilho": "Urgência e escassez",
+      "descricao": "O medo de perder uma oportunidade acelera decisões que estavam sendo adiadas.",
+      "como_ativar": "Comunicar disponibilidade limitada de estoque, prazo de validade de condições especiais, possibilidade de reajuste de preço, ou que outro cliente está interessado no mesmo veículo.",
+      "frases_gatilho": [
+        "Só temos 2 unidades desta cor nesta versão. Já recebi consulta de outro cliente hoje.",
+        "Esta taxa de juros especial é válida somente até o último dia do mês.",
+        "A montadora confirmou reajuste de tabela para o próximo mês — hoje é a melhor condição."
+      ]
+    },
+    {
+      "id": "GE006",
+      "gatilho": "Realização pessoal e conquista",
+      "descricao": "O veículo frequentemente representa uma conquista de vida — primeiro carro, carro dos sonhos, upgrade de vida.",
+      "como_ativar": "Reconhecer e celebrar a conquista do cliente, conectar o momento da compra à trajetória de vida e sucesso pessoal.",
+      "frases_gatilho": [
+        "Este é o carro que você merece depois de tanto trabalho.",
+        "Seu primeiro carro zero — um momento que você vai lembrar para sempre.",
+        "Você pesquisou, planejou e chegou até aqui. Este carro é a realização desse esforço."
+      ]
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "id": "CS001",
+      "titulo": "Cliente jovem comprando o primeiro carro zero",
+      "contexto": "Lucas, 26 anos, trabalha em TI, mora em São Paulo, quer seu primeiro carro zero para ir ao trabalho e viajar nos fins de semana.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "Oi, vi no Instagram que vocês têm o Argo. Qual é o preço?"
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Oi, Lucas! Que ótimo! O Fiat Argo é uma excelente escolha para primeiro carro. Temos algumas versões disponíveis, com preços a partir de R$ 95.900. Mas me conta: você vai usar mais em São Paulo mesmo ou também na estrada?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Os dois. Trabalho aqui, mas viajo bastante."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Perfeito! Para esse perfil, o Argo 1.0 Turbo é o ideal. Tem 130cv e vai muito bem tanto no trânsito quanto em viagem. Você prefere financiar ou tem entrada para fazer?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Tenho uns R$ 10.000 de entrada. Quanto ficaria a parcela?"
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Com R$ 10.000 de entrada, financiando em 60 meses na condição do mês, sua parcela ficaria em torno de R$ 1.680/mês. Mas posso rodar mais simulações para encontrar a parcela certa para você. Quanto você se sente confortável pagando por mês?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Acho que até R$ 1.500 está bom."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Conseguimos! Posso trabalhar em 72 meses ou buscar uma taxa um pouco menor no banco parceiro. Que tal você vir fazer um test drive e já simulamos o financiamento aqui pessoalmente? Tenho horário amanhã à tarde se quiser."
+        }
+      ]
+    },
+    {
+      "id": "CS002",
+      "titulo": "Família buscando SUV com 7 lugares",
+      "contexto": "Mariana e Paulo, casal com 3 filhos, procuram um SUV com 7 lugares confortáveis para viagens em família.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "Estamos precisando de um carro com 7 lugares. Temos 3 filhos e o carro atual não comporta mais."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Entendo perfeitamente! É uma fase importante da família. Para que eu te ajude melhor: qual é a faixa de investimento que estão pensando, e usam mais em cidade, estrada, ou os dois?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Viajamos bastante. Pensamos em gastar até R$ 200.000."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Ótimo orçamento! Com esse valor, vocês têm três excelentes opções: o Jeep Commander 7 lugares, o Hyundai Creta com 7 lugares e o Toyota Corolla Cross — mas esse tem 5 lugares, então vou focar nos dois primeiros. O Commander tem mais tecnologia e capacidade de carga, enquanto o Creta tem a vantagem da garantia de 5 anos. Posso apresentar os dois com simulação financeira?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Tem alguma diferença grande entre os dois em termos de segurança?"
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Ótima pergunta! Ambos têm frenagem automática de emergência e controle de estabilidade. O Commander leva vantagem no sistema Selec-Terrain para diferentes pisos — importante para quem viaja em estrada. O Creta tem o sistema de monitoramento de ponto cego de série em versões superiores. Para uma família que viaja bastante, o Commander tem uma vantagem relevante no conforto da terceira fileira para crianças maiores. Querem ver os dois pessoalmente?"
+        }
+      ]
+    },
+    {
+      "id": "CS003",
+      "titulo": "Cliente reclamando do pós-venda",
+      "contexto": "Carlos comprou um Corolla há 6 meses e voltou à concessionária com uma reclamação sobre demora na revisão.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "Trouxe o carro para revisão às 8h e agora são 15h e ainda não ficou pronto. Ninguém me avisou nada."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Carlos, eu entendo completamente sua frustração e peço desculpas pela falta de comunicação. Isso não é o padrão que queremos oferecer. Já vou verificar pessoalmente o status do seu veículo agora. Enquanto faço isso, posso te oferecer um café e um local mais confortável para aguardar?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Eu precisava do carro para uma reunião às 16h."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Entendi. Vou resolver isso agora. Duas opções para você: consigo um veículo reserva para sua reunião ainda hoje, ou verifico se podemos priorizar a finalização do seu Corolla para daqui a 40 minutos. Qual prefere que eu tente primeiro?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "O veículo reserva seria ótimo."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Perfeito. Já estou providenciando. Em 10 minutos você tem o carro. E Carlos, vou verificar o que aconteceu no processo de comunicação para que isso não se repita com você nem com nenhum outro cliente. Você receberá também um voucher para a próxima revisão sem custo pela inconveniência de hoje."
+        }
+      ]
+    },
+    {
+      "id": "CS004",
+      "titulo": "Cliente interessado em veículo elétrico pela primeira vez",
+      "contexto": "Fernanda, 38 anos, execeuta, mora em São Paulo, considera trocar seu Civic por um carro elétrico mas tem dúvidas.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "Estou pensando em elétrico mas tenho muito medo de ficar sem bateria no meio do caminho."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Fernanda, essa é a dúvida número 1 de quem está considerando elétrico — e é totalmente legítima. Me conta: qual é a sua rotina? Onde você mora e quais são os principais deslocamentos que faz?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Moro em Moema, trabalho no Itaim. Às vezes vou ao ABC ou a Campinas."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Perfeito! Para essa rotina, um elétrico é absolutamente seguro. De Moema ao Itaim e voltas, você usa menos de 30 km por dia. Um carregamento em casa à noite — na tomada normal ou com wallbox — devolve autonomia de 400-480 km. Campinas fica a 100 km: ida e volta sem precisar recarregar. Para viagens maiores, temos rede de carregadores rápidos. Posso te mostrar o mapa dos pontos próximos à sua rota?"
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "E se eu precisar viajar para longe num final de semana?"
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Ótima pergunta. Para quem viaja muito, o híbrido plug-in é frequentemente a melhor opção de transição: você usa elétrico na cidade (até 50 km só na bateria) e tem o motor a gasolina como backup para estradas longas. Sem ansiedade, sem limitação. Já o elétrico puro fica ideal para quem tem autonomia acima de 400 km — como o Ioniq 5 ou o Equinox EV. Posso te apresentar os dois perfis com simulação de custo mensal comparando com seu Civic atual?"
+        }
+      ]
+    },
+    {
+      "id": "CS005",
+      "titulo": "Negociação com cliente que recebeu proposta do concorrente",
+      "contexto": "Roberto quer comprar um Jeep Compass mas apresentou uma proposta de outra concessionária com R$ 3.000 a menos.",
+      "conversa": [
+        {
+          "papel": "Cliente",
+          "mensagem": "A outra concessionária me ofereceu o mesmo Compass R$ 3.000 mais barato. Você consegue igualar?"
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Roberto, agradeço pela transparência — isso me ajuda muito a trabalhar por você. Antes de qualquer coisa, a proposta deles especifica a mesma versão, cor e acessórios? Às vezes propostas menores excluem itens que estão inclusos aqui."
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Parece ser o mesmo. Mesma versão Longitude."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Entendido. Vou verificar alguns pontos: eles incluem o pacote de revisões dos primeiros 3 anos? E qual é o prazo de entrega prometido? Pergunto porque já vi casos em que o prazo era 90 dias e o cliente perdeu a condição de financiamento do mês. Aqui, tenho o veículo em estoque para entrega em 48 horas."
+        },
+        {
+          "papel": "Cliente",
+          "mensagem": "Não perguntei sobre revisões. E o prazo é de 60 dias."
+        },
+        {
+          "papel": "Consultor",
+          "mensagem": "Então precisamos calcular isso. As revisões dos 3 primeiros anos aqui incluídas valem em torno de R$ 2.400. Somando à entrega imediata versus 60 dias de espera, o valor real se equipara ou supera a diferença de preço. Mas para demonstrar meu comprometimento com você, vou verificar o que consigo fazer dentro da nossa política. Posso te retornar em 20 minutos com uma contraproposta?"
+        }
+      ]
+    }
+  ],
+
+  "faq_estruturado": [
+    {
+      "id": "FAQ001",
+      "pergunta": "Quais documentos preciso para financiar um veículo?",
+      "resposta": "Para pessoa física: RG e CPF (ou CNH), comprovante de residência atualizado (últimos 3 meses), comprovante de renda (holerite, extrato bancário, imposto de renda ou declaração de autônomo). Para pessoa jurídica: CNPJ, contrato social, documentos dos sócios e balanço patrimonial ou declaração de faturamento. O banco pode solicitar documentos adicionais conforme o perfil de crédito."
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "Qual é a garantia dos veículos novos?",
+      "resposta": "A garantia varia por marca: Fiat, Chevrolet e Jeep oferecem 3 anos de garantia de fábrica. Toyota oferece 3 anos. Hyundai oferece 5 anos — a maior do segmento. Honda oferece 3 anos. As garantias cobrem defeitos de fabricação. Desgaste natural, uso inadequado e danos por acidentes não são cobertos. É possível contratar garantia estendida de 1 a 2 anos adicionais."
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "O que é a tabela FIPE e como ela funciona?",
+      "resposta": "A tabela FIPE (Fundação Instituto de Pesquisas Econômicas) é o referencial de preços para veículos usados no Brasil, atualizada mensalmente. É usada para base de cálculo de IPVA, seguros e negociações. Um veículo pode ser vendido acima ou abaixo da FIPE dependendo do estado de conservação, quilometragem e demanda de mercado. Para veículos novos, o preço é definido pela montadora e pode estar acima ou abaixo do valor FIPE conforme o mercado."
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "Quanto custa o IPVA de um veículo zero?",
+      "resposta": "O IPVA é cobrado anualmente e varia por estado. Em São Paulo, a alíquota é de 4% sobre o valor venal do veículo para carros a gasolina e flex. No Rio de Janeiro é 4%. Para veículos elétricos, vários estados concedem isenção total ou parcial: São Paulo, Rio de Janeiro, Minas Gerais e vários outros estados. O cálculo é feito pela Secretaria da Fazenda estadual com base na tabela de referência."
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "Qual é a diferença entre CDC e Leasing?",
+      "resposta": "O CDC (Crédito Direto ao Consumidor) é o financiamento mais comum: o banco empresta o dinheiro e o cliente paga em parcelas com juros, tornando-se proprietário do veículo com alienação fiduciária até quitar. O Leasing é um arrendamento mercantil: a financeira mantém a propriedade do bem durante o contrato e o cliente paga parcelas de uso, com opção de compra ao final. O Leasing tem vantagens fiscais para empresas, mas é menos comum para pessoas físicas."
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "O que é o consórcio de veículos?",
+      "resposta": "O consórcio é uma modalidade de compra planejada onde um grupo de pessoas contribui mensalmente para um fundo comum. A cada mês, um ou mais participantes são contemplados por sorteio ou lance para receber a carta de crédito e comprar o veículo. Não há cobrança de juros (apenas taxa de administração), mas não há garantia de quando o cliente será contemplado. É ideal para quem não tem urgência e quer evitar juros."
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "Posso usar meu veículo atual como parte do pagamento?",
+      "resposta": "Sim! A troca (ou parte do pagamento) com veículo usado é uma das formas mais comuns de negociação. A concessionária realiza uma avaliação técnica do veículo, considerando o estado de conservação, quilometragem, modelo, ano e condição do mercado. O valor avaliado é abatido do preço do veículo novo. O cliente pode também vender o veículo de forma particular para obter um valor maior, e usar o dinheiro como entrada."
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Como funciona o recall? Tenho que pagar alguma coisa?",
+      "resposta": "O recall é um chamamento feito pela montadora para corrigir um defeito de fabricação que pode afetar a segurança. É totalmente gratuito — a montadora arca com peças e mão de obra. O cliente é notificado por carta, e-mail ou telefone. Também pode verificar se seu veículo tem recall pendente pelo site do DENATRAN informando o número do chassi (RENAVAM). A concessionária realiza o recall sem agendamento prioritário e sem custo."
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "Qual é a melhor época para comprar um carro?",
+      "resposta": "As melhores condições de compra costumam surgir em: final de ano (novembro/dezembro) para liquidação de estoque do modelo do ano corrente; meses de campanha das montadoras (março, julho); e períodos de baixa demanda (janeiro/fevereiro) quando as concessionárias estão mais dispostas a negociar. Eventos como Black Friday automotiva também oferecem condições especiais. Feiras e eventos de mídia também podem trazer condições exclusivas."
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "Veículo zero km tem defeito de fábrica. O que fazer?",
+      "resposta": "O veículo está coberto pela garantia de fábrica. O cliente deve acionar a concessionária autorizada da marca imediatamente. Se o defeito for identificado como de fabricação, o reparo é feito gratuitamente. Caso o problema seja recorrente, o Código de Defesa do Consumidor garante o direito de troca do veículo por outro igual após 3 tentativas frustradas de reparo do mesmo defeito dentro do prazo de garantia. O PROCON e o consumidor.gov.br são canais de recurso se a concessionária ou montadora não resolver."
+    },
+    {
+      "id": "FAQ011",
+      "pergunta": "Quanto tempo leva para transferir um veículo?",
+      "resposta": "A transferência de propriedade de veículo deve ser realizada em até 30 dias após a compra. O processo é feito pelo DETRAN do estado do comprador com apresentação de: DUT (Documento Único de Transferência) assinado, CRV, laudos de vistoria e pagamento das taxas. Para veículos novos (zero km), a concessionária já entrega o veículo emplacado no nome do comprador, processo que leva entre 24 horas e 7 dias úteis dependendo do estado."
+    },
+    {
+      "id": "FAQ012",
+      "pergunta": "O que é o seguro garantia estendida? Vale a pena?",
+      "resposta": "A garantia estendida é um produto adicional que prolonga a cobertura da garantia de fábrica por 1 a 3 anos após o fim da garantia original. Cobre defeitos mecânicos e elétricos, excluindo desgaste natural e danos por acidentes. Vale a pena especialmente para veículos com alta complexidade eletrônica, importados ou para motoristas que percorrem alta quilometragem anual. O custo médio varia de R$ 1.500 a R$ 5.000 dependendo do modelo e prazo."
+    },
+    {
+      "id": "FAQ013",
+      "pergunta": "Posso cancelar um financiamento já assinado?",
+      "resposta": "Sim. O Código de Defesa do Consumidor garante o direito de arrependimento em 7 dias corridos a partir da assinatura do contrato, sem multa, para contratos firmados fora do estabelecimento comercial (ex: online). Para contratos assinados na concessionária, o cancelamento depende das condições contratuais. É possível quitar antecipadamente o financiamento a qualquer momento, com redução proporcional dos juros futuros (conforme a lei 10.820/2003 e o CDC)."
+    },
+    {
+      "id": "FAQ014",
+      "pergunta": "Qual é o consumo médio de combustível dos SUVs compactos?",
+      "resposta": "O consumo médio dos SUVs compactos mais vendidos no Brasil varia de acordo com o ciclo e o motor: Fiat Pulse 1.0 Turbo — 13,4 km/l (cidade) a 15,2 km/l (estrada); Hyundai Creta 1.0 Turbo — 12,8 km/l (cidade) a 14,6 km/l (estrada); Chevrolet Tracker 1.0 Turbo — 13,1 km/l (cidade) a 15,0 km/l (estrada); Jeep Renegade 1.0 Turbo — 12,5 km/l (cidade) a 14,2 km/l (estrada). Dados de acordo com o INMETRO. O consumo real varia com o estilo de condução, trânsito e pressão dos pneus."
+    },
+    {
+      "id": "FAQ015",
+      "pergunta": "O que é o plano de revisões com preço fixo?",
+      "resposta": "É um pacote contratado no momento da compra que trava o preço das revisões programadas pelo período determinado (geralmente 3 a 5 anos ou até determinada quilometragem). Protege o cliente de reajustes de peças e mão de obra ao longo do tempo. O plano inclui as revisões do manual do proprietário (troca de óleo, filtros, fluidos, verificações gerais) e garante que o serviço seja realizado por técnicos certificados pela montadora, preservando a garantia de fábrica."
+    },
+    {
+      "id": "FAQ016",
+      "pergunta": "Posso fazer revisão em qualquer oficina sem perder a garantia?",
+      "resposta": "De acordo com o Código de Defesa do Consumidor e a Lei 8.078/90, o fabricante não pode exigir que as revisões sejam feitas exclusivamente na concessionária autorizada para manter a garantia, desde que as revisões sejam realizadas dentro das especificações do manual do proprietário, com peças originais ou equivalentes certificadas. No entanto, na prática, revisões em concessionárias autorizadas facilitam a comprovação em caso de acionamento de garantia."
+    },
+    {
+      "id": "FAQ017",
+      "pergunta": "Quais são as diferenças entre versões de entrada e topo de linha?",
+      "resposta": "Versões de entrada oferecem: motor básico, ar-condicionado manual, direção elétrica, rádio com entrada USB, vidros elétricos dianteiros e airbags frontais. Versões topo de linha adicionam: câmbio automático, motor mais potente, central multimídia touchscreen maior com CarPlay/Android Auto, câmera de ré, sensor de estacionamento, bancos em couro, teto solar, faróis full-LED, controle de cruzeiro adaptativo e sistemas de segurança ativa (ADAS). A diferença de preço costuma ser de 20% a 40% entre versão base e topo."
+    },
+    {
+      "id": "FAQ018",
+      "pergunta": "O que é o Apple CarPlay e o Android Auto?",
+      "resposta": "São sistemas que espelham o smartphone na central multimídia do veículo via cabo USB ou Bluetooth. Permitem acessar: Google Maps ou Apple Maps para navegação, Waze, músicas do Spotify e outras plataformas, chamadas telefônicas, mensagens (via assistente de voz) e outros aplicativos compatíveis. O controle é feito pela tela do carro ou por comandos de voz (Siri ou Google). É disponível na maioria dos veículos novos a partir de versões intermediárias."
+    },
+    {
+      "id": "FAQ019",
+      "pergunta": "O que é o sistema de frenagem automática de emergência (AEB)?",
+      "resposta": "O AEB (Autonomous Emergency Braking) é um sistema de segurança ativa que detecta obstáculos à frente (pedestres, veículos, objetos) por meio de câmeras e radares. Quando identifica iminência de colisão e o motorista não reage a tempo, o sistema aplica os freios automaticamente para reduzir ou evitar o impacto. É obrigatório para todos os veículos novos vendidos no Brasil a partir de 2026, conforme regulação do CONTRAN/DENATRAN."
+    },
+    {
+      "id": "FAQ020",
+      "pergunta": "Qual é a diferença entre veículo flex e veículo híbrido?",
+      "resposta": "O veículo flex (bicombustível) aceita gasolina, etanol ou qualquer mistura dos dois no mesmo tanque — mas sempre usa exclusivamente combustível líquido. O veículo híbrido combina um motor a combustão com um ou mais motores elétricos e uma bateria: em baixas velocidades usa mais eletricidade (menor consumo) e em alta velocidade o motor a gasolina assume. O híbrido plug-in também pode ser recarregado na tomada para ampliar a autonomia elétrica. O flex é mais simples e barato; o híbrido é mais eficiente mas custa mais."
+    },
+    {
+      "id": "FAQ021",
+      "pergunta": "Qual é a autonomia de um veículo elétrico no Brasil?",
+      "resposta": "A autonomia varia por modelo. Os principais elétricos disponíveis no Brasil em 2024/2025: BYD Dolphin Mini — até 310 km; BYD Dolphin — até 468 km; BYD Seal — até 520 km; Hyundai Ioniq 5 — até 480 km; Chevrolet Equinox EV — até 483 km; Volvo EX30 — até 480 km; BMW iX1 — até 449 km. A autonomia real costuma ser 15-20% menor que a declarada pelo fabricante, influenciada por temperatura, velocidade, uso de ar-condicionado e estilo de condução."
+    },
+    {
+      "id": "FAQ022",
+      "pergunta": "Quanto tempo leva para carregar um veículo elétrico?",
+      "resposta": "O tempo de recarga varia com o tipo de carregador: Tomada doméstica 127/220V (Modo 2) — 8 a 20 horas para carga completa; Wallbox residencial 7,4kW (Modo 3) — 6 a 10 horas; Carregador semi-rápido 22kW (AC) — 2 a 4 horas; Carregador rápido DC 50kW — 30 a 60 minutos para 80%; Carregador ultrarrápido 150-350kW — 15 a 30 minutos para 80%. Recomenda-se não carregar além de 80% no cotidiano para preservar a bateria."
+    },
+    {
+      "id": "FAQ023",
+      "pergunta": "Quais são os custos de manutenção de um veículo elétrico?",
+      "resposta": "Os veículos elétricos têm custo de manutenção geralmente 40-60% menor que os a combustão: não há troca de óleo, velas, correia dentada ou filtro de ar do motor. Os principais itens de manutenção são: freios (desgaste menor pelo sistema de frenagem regenerativa), pneus, fluido de freio, fluido do sistema de resfriamento da bateria e filtro de cabine. As revisões periódicas são mais simples e baratas. A bateria tem garantia de 8 anos ou 160.000 km na maioria dos fabricantes."
+    },
+    {
+      "id": "FAQ024",
+      "pergunta": "O que é o Latin NCAP e como ele avalia os veículos?",
+      "resposta": "O Latin NCAP é o programa de avaliação de segurança de veículos para América Latina e Caribe. Realiza testes de colisão frontal, lateral, de poste e capotamento, avaliando a proteção de adultos, crianças e pedestres, além de sistemas de segurança ativa. Atribui notas de 0 a 5 estrelas. Veículos com 5 estrelas têm o mais alto nível de segurança comprovado. Desde 2022, o programa tem requerimentos mais rigorosos, incluindo AEB como requisito para 5 estrelas."
+    },
+    {
+      "id": "FAQ025",
+      "pergunta": "Como funciona o seguro auto? Preciso contratar na concessionária?",
+      "resposta": "Não é obrigatório contratar o seguro pela concessionária, mas geralmente oferecem condições negociadas com seguradoras parceiras. O seguro auto cobre: colisão, roubo/furto, incêndio, danos a terceiros (RCF-V) e acidentes pessoais. O valor do prêmio depende do perfil do motorista (idade, sexo, histórico de sinistros), CEP de pernoite, uso do veículo e valor do bem. Recomendam-se cotações em pelo menos 3 seguradoras diferentes. O seguro obrigatório (DPVAT/SPVAT) já está incluído no licenciamento."
+    },
+    {
+      "id": "FAQ026",
+      "pergunta": "Qual é a diferença entre câmbio manual e automático?",
+      "resposta": "O câmbio manual exige que o motorista troque as marchas manualmente com embreagem — oferece maior controle e é mais econômico em consumo, porém requer mais habilidade. O câmbio automático troca as marchas sem intervenção do motorista — mais confortável no trânsito intenso. Existem variações: câmbio CVT (variação contínua, muito suave, comum em Hyundai e Honda), câmbio de dupla embreagem (DCT, mais rápido, comum em VW e Hyundai), e câmbio automatizado AMT (mais econômico, presente em modelos populares). A tendência é o crescimento do automático no mercado brasileiro."
+    },
+    {
+      "id": "FAQ027",
+      "pergunta": "O que é a ANFAVEA e qual é a importância dela?",
+      "resposta": "A ANFAVEA (Associação Nacional dos Fabricantes de Veículos Automotores) é a entidade que representa as montadoras instaladas no Brasil. Publica mensalmente os dados de produção, exportação e emplacamentos do setor — os dados mais confiáveis do mercado. Também representa o setor nas negociações com governo federal, na definição de políticas de incentivo fiscal e nas discussões sobre regulações de emissões e segurança."
+    },
+    {
+      "id": "FAQ028",
+      "pergunta": "Posso financiar um veículo usado em uma concessionária?",
+      "resposta": "Sim! Concessionárias oferecem linhas de financiamento para veículos seminovos (usados certificados). As taxas são ligeiramente maiores que para veículos novos e o prazo máximo costuma ser de 48 a 60 meses para veículos mais antigos. Os bancos estabelecem limites de ano/modelo para financiamento (geralmente até 10 anos de fabricação). Os documentos exigidos são os mesmos do financiamento de veículos novos. Veículos com baixa quilometragem e em bom estado têm aprovação mais fácil."
+    },
+    {
+      "id": "FAQ029",
+      "pergunta": "O que é o Programa Rota 2030 e como ele afeta os veículos?",
+      "resposta": "O Rota 2030 (Programa de Desenvolvimento Tecnológico da Indústria Automotiva) é uma política federal que oferece incentivos fiscais às montadoras em troca de investimentos em pesquisa e desenvolvimento, eficiência energética e segurança veicular no Brasil. Como consequência para o consumidor: veículos mais eficientes no consumo de combustível, adoção de tecnologias de segurança ativa (AEB obrigatório a partir de 2026), e manutenção da produção nacional com geração de empregos."
+    },
+    {
+      "id": "FAQ030",
+      "pergunta": "O que incluir na vistoria antes de comprar um veículo usado?",
+      "resposta": "Uma vistoria completa deve incluir: inspeção da lataria (manchas de óxido, amassados, repinturas não originais), verificação do motor (vazamentos, ruídos, qualidade do óleo), teste de todos os sistemas elétricos (vidros, travas, ar-condicionado, som), verificação de pneus (desgaste e alinhamento), teste de freios, verificação do histórico do veículo (débitos, multas, recall pendente, histórico de sinistros via laudos Molicar ou similar), e consulta da quilometragem versus desgaste aparente. Laudos de mecânico independente são recomendados."
+    },
+    {
+      "id": "FAQ031",
+      "pergunta": "Qual é a diferença entre versão hatch e sedã?",
+      "resposta": "O hatch tem carroceria sem projeção de porta-malas separado — o bagageiro é integrado ao habitáculo e acessado por uma quinta porta traseira. É mais compacto e ágil, ideal para cidade. O sedã tem porta-malas separado e fechado, acessado por uma tampa traseira — oferece mais privacidade para a carga e é geralmente mais silencioso. O sedã tem preferência entre clientes que percorrem estrada, executivos e quem carrega muito bagageiro. O hatch é mais popular em vendas absolutas no Brasil pelo tamanho menor e facilidade de estacionamento."
+    },
+    {
+      "id": "FAQ032",
+      "pergunta": "O que é o emplacamento do veículo e como funciona?",
+      "resposta": "O emplacamento é o registro oficial do veículo no DETRAN, quando o bem recebe a placa de identificação (no padrão Mercosul desde 2020: 3 letras, 1 número, 1 letra, 2 números). Para veículos novos, a concessionária realiza todo o processo de emplacamento, incluindo a coleta de documentos, pagamento de taxas (DETRAN + emissão de CRV) e a entrega do veículo com placa. O prazo varia de 1 a 7 dias úteis. Para veículos usados, o comprador tem 30 dias para transferir o registro no DETRAN."
+    },
+    {
+      "id": "FAQ033",
+      "pergunta": "O que é o DUT e onde consigo?",
+      "resposta": "O DUT (Documento Único de Transferência), também chamado de CRV (Certificado de Registro de Veículo), é o documento que acompanha o veículo e registra todas as transferências de propriedade. Para veículos novos, é emitido pelo DETRAN no momento do emplacamento. Para transferência de veículos usados, o vendedor assina o campo de transferência no DUT e o comprador usa esse documento para registrar a nova propriedade no DETRAN. O DUT digital pode ser acessado pelo app CNH Digital ou pelo portal do SENATRAN."
+    },
+    {
+      "id": "FAQ034",
+      "pergunta": "Como funcionam os juros no financiamento de veículos?",
+      "resposta": "O financiamento de veículos no Brasil usa o sistema PRICE (tabela de amortização com parcelas fixas). As taxas de juros são expressas em % ao mês (a.m.) ou % ao ano (a.a.). Para comparação real, deve-se verificar o CET (Custo Efetivo Total), que inclui juros, IOF, taxas de cadastro e seguros obrigatórios. O CET é o custo real do crédito e deve ser informado pelo banco. Taxas para veículos novos ficam entre 1,2% a.m. e 1,9% a.m. em condições normais de mercado."
+    },
+    {
+      "id": "FAQ035",
+      "pergunta": "Qual é o prazo máximo de financiamento para veículos novos?",
+      "resposta": "O prazo máximo para financiamento de veículos novos no Brasil é de 60 meses (5 anos) na maioria dos bancos, podendo chegar a 72 meses (6 anos) em algumas instituições financeiras ou em condições especiais. Prazos maiores reduzem o valor das parcelas mas aumentam o total pago em juros. Para veículos usados, o prazo máximo tende a ser menor, geralmente 48 meses, variando conforme a idade do veículo."
+    },
+    {
+      "id": "FAQ036",
+      "pergunta": "O que é o programa de revisões programadas?",
+      "resposta": "As revisões programadas são manutenções preventivas definidas pelo fabricante para serem realizadas em intervalos específicos de quilometragem ou tempo (o que ocorrer primeiro). Em geral: primeira revisão entre 5.000 e 10.000 km, e subsequentes a cada 10.000 ou 15.000 km. As revisões incluem troca de óleo, filtros, verificação de fluidos, ajuste de componentes e diagnóstico eletrônico. Realizá-las dentro do prazo é condição para manutenção da garantia de fábrica."
+    },
+    {
+      "id": "FAQ037",
+      "pergunta": "Posso personalizar um veículo novo na concessionária?",
+      "resposta": "Sim! As concessionárias oferecem acessórios e personalizações originais: películas, protetor de caçamba, estribos, rack de teto, tapetes personalizados, blindagem, película de proteção de pintura (PPF), películas coloridas de vinil (wrapping) e acessórios internos. Acessórios instalados pela concessionária com peças originais mantêm a garantia. Modificações estruturais ou mecânicas não autorizadas pelo fabricante podem comprometer a garantia e a segurança."
+    },
+    {
+      "id": "FAQ038",
+      "pergunta": "Como funciona a troca de um veículo com defeito recorrente (abuso de garantia)?",
+      "resposta": "O Código de Defesa do Consumidor (Art. 18) estabelece que, após 30 dias de veículo com defeito sem solução (ou 3 tentativas de reparo do mesmo defeito dentro da garantia), o consumidor pode exigir: substituição do produto por outro igual sem defeito, restituição do valor pago com correção monetária, ou abatimento proporcional do preço. O processo deve ser formalizado por escrito com a concessionária e montadora. PROCON e Juizado Especial Cível são as instâncias de reclamação caso a solução não seja oferecida."
+    },
+    {
+      "id": "FAQ039",
+      "pergunta": "O que é a blindagem automotiva e quais são os tipos?",
+      "resposta": "A blindagem automotiva protege o veículo contra disparos de armas de fogo. Os níveis são definidos pela norma ABNT NBR 15000: Nível I (pistolas 9mm), Nível II (pistolas 45mm e escopeta), Nível III-A (uzis e metralhadoras leves). As técnicas são: blindagem de vidros (vidros laminados de policarbonato) e blindagem da lataria (fibra cerâmica, aço especial ou polietileno de ultra-alta densidade). O custo varia de R$ 50.000 a R$ 200.000+ dependendo do nível e veículo. Peso adicionado exige avaliação de suspensão e freios."
+    },
+    {
+      "id": "FAQ040",
+      "pergunta": "Quais veículos têm isenção de IPI?",
+      "resposta": "O IPI (Imposto sobre Produtos Industrializados) incide sobre veículos novos com alíquotas variando de 0% a 25% conforme o motor e tipo de combustível. Isenções ou alíquotas reduzidas se aplicam a: portadores de deficiência (PcD) — isenção total de IPI; táxis — isenção parcial; veículos elétricos — alíquota 0% (com prazo determinado pelo governo); veículos com motor até 1.0 e flex — alíquota reduzida. Para PcD, também há isenção de ICMS em vários estados e de IOF sobre o financiamento."
+    },
+    {
+      "id": "FAQ041",
+      "pergunta": "Como funciona a compra de veículo para PcD (Pessoa com Deficiência)?",
+      "resposta": "A compra de veículo para PcD tem benefícios fiscais significativos: isenção de IPI, ICMS (na maioria dos estados) e IOF sobre financiamento. Para ter direito, o beneficiário deve obter laudo médico do DETRAN, emitir a Autorização de Isenção de IPI na Receita Federal e apresentar os documentos à concessionária. O veículo deve ser adaptado às necessidades do PcD quando necessário. O benefício é limitado a 1 veículo a cada 2 anos. Há limites de valor para o benefício do IPI conforme tabela da Receita Federal."
+    },
+    {
+      "id": "FAQ042",
+      "pergunta": "Quais são as vantagens de comprar veículo como pessoa jurídica?",
+      "resposta": "Empresas podem ter vantagens significativas: dedução do valor do veículo como ativo imobilizado (via depreciação); dedução dos custos de manutenção, combustível e seguro como despesas operacionais (dependendo do enquadramento fiscal); recuperação de créditos de PIS/COFINS em algumas situações; benefícios de isenção de IPI para determinadas categorias (ex: veículos de carga); e condições de financiamento diferenciadas para PJ em alguns bancos. Recomenda-se consultar o contador da empresa para avaliar o melhor enquadramento."
+    },
+    {
+      "id": "FAQ043",
+      "pergunta": "O que é o Webmotors e como ele funciona?",
+      "resposta": "O Webmotors é o maior portal de classificados de veículos do Brasil, pertencente ao Santander. Reúne anúncios de concessionárias e particulares de todo o país. O comprador pode filtrar por marca, modelo, ano, preço, cidade e quilometragem, e entrar em contato diretamente com o vendedor. Concessionárias utilizam o portal como canal digital de captação de leads. O portal também oferece simulação de financiamento e a tabela FIPE integrada para consulta rápida de preços de referência."
+    },
+    {
+      "id": "FAQ044",
+      "pergunta": "Qual é a diferença entre veículo 0 km, seminovo e usado?",
+      "resposta": "Veículo 0 km: saiu direto da fábrica, nunca foi emplacado, com garantia total de fábrica. Seminovo: veículo com até 3 anos de uso e quilometragem moderada (geralmente até 50.000 km), revisado e certificado pela concessionária, com possibilidade de garantia. Usado: veículo mais antigo ou com maior quilometragem, comprado no estado em que se encontra — risco maior de necessidade de manutenção imediata, mas com preço significativamente menor. Concessionárias autorizadas oferecem programas de seminovos certificados com procedência e revisão comprovadas."
+    },
+    {
+      "id": "FAQ045",
+      "pergunta": "Como funciona o test drive? Existe risco para o cliente?",
+      "resposta": "O test drive é um período de condução supervisionada do veículo de demonstração da concessionária para que o cliente possa avaliar o conforto, desempenho e tecnologias antes de decidir. O cliente conduz acompanhado do consultor de vendas em um roteiro pré-definido (geralmente 15-20 minutos). O veículo de test drive está segurado pela concessionária. Em caso de acidente por imprudência grave do cliente, pode haver responsabilidade civil. Documentos exigidos: CNH válida e CPF. O test drive é um direito do cliente e não cria nenhuma obrigação de compra."
+    },
+    {
+      "id": "FAQ046",
+      "pergunta": "O que é o sistema de câmbio CVT?",
+      "resposta": "O CVT (Continuously Variable Transmission) é um tipo de câmbio automático que não possui marchas fixas — usa correias e polias para variar continuamente a relação de transmissão, otimizando o consumo de combustível. Proporciona aceleração suave e silenciosa, sem os 'solavancos' de troca de marchas. É muito comum em Honda (Fit, City, HR-V) e em modelos Hyundai e Nissan. Pode soar como 'chiado' de motor acelerando sem resposta imediata — é o funcionamento normal. Ideal para uso urbano e quem prioriza conforto e economia."
+    },
+    {
+      "id": "FAQ047",
+      "pergunta": "Posso financiar o veículo e a blindagem juntos?",
+      "resposta": "Sim, é possível incluir o custo da blindagem no financiamento do veículo em algumas situações, dependendo da política do banco e da concessionária. Geralmente, o veículo é blindado após a compra e o cliente financia o custo da blindagem separadamente (crédito pessoal ou outro produto financeiro). Algumas concessionárias especializadas oferecem pacotes integrados com financiamento total. O veículo blindado pode ter valor de mercado superior ao não blindado dependendo do nível e qualidade da blindagem."
+    },
+    {
+      "id": "FAQ048",
+      "pergunta": "Qual é a importância do RENAVAM?",
+      "resposta": "O RENAVAM (Registro Nacional de Veículos Automotores) é um número único de 11 dígitos que identifica cada veículo registrado no Brasil. É usado em todos os documentos do veículo, pagamento de IPVA, DPVAT/SPVAT, licenciamento e multas. Pelo RENAVAM é possível verificar débitos pendentes, histórico do veículo, recall pendente e situação do registro. É diferente do número do chassi (VIN) — o chassi é da fabricação, o RENAVAM é do registro nacional."
+    },
+    {
+      "id": "FAQ049",
+      "pergunta": "Como funciona o programa de fidelidade de uma concessionária?",
+      "resposta": "Programas de fidelidade de concessionárias variam por grupo, mas geralmente oferecem: pontos por compra de veículo e serviços que podem ser trocados por descontos em revisões e acessórios; agendamento prioritário de serviços; condições especiais para troca de veículo; comunicação personalizada sobre promoções e lançamentos; acesso a eventos exclusivos da marca; e suporte preferencial em caso de acionamento de garantia. Clientes fidelizados têm taxa de recompra significativamente maior e são a principal fonte de indicações."
+    },
+    {
+      "id": "FAQ050",
+      "pergunta": "Quais são os próximos lançamentos previstos no mercado brasileiro?",
+      "resposta": "O mercado brasileiro aguarda com frequência novidades das principais montadoras. As tendências para os próximos ciclos incluem: expansão da linha de veículos elétricos e híbridos de todas as marcas; atualização de modelos populares como Onix, HB20 e Argo; novos SUVs compactos e médios; e entrada de marcas chinesas (BYD, GWM, Caoa Chery) com modelos cada vez mais completos. Recomendo verificar os canais oficiais das marcas e portais especializados como Autoesporte e Quatro Rodas para as confirmações mais atualizadas, pois os cronogramas podem mudar."
+    },
+    {
+      "id": "FAQ051",
+      "pergunta": "Qual veículo é melhor para motorista de aplicativo?",
+      "resposta": "Para motoristas de aplicativo, os critérios são: baixo custo de manutenção, baixo consumo de combustível, conforto para passageiros, espaço para bagageiro e boa liquidez de revenda. Os modelos mais recomendados são: Fiat Cronos (sedã, bagageiro grande, baixo consumo), Chevrolet Onix Plus (sedã popular e confiável), Toyota Yaris Sedan (baixa desvalorização), e Hyundai HB20S. Para quem faz mais de 5.000 km/mês, veículos flex a etanol oferecem economia adicional relevante."
+    },
+    {
+      "id": "FAQ052",
+      "pergunta": "O que é o sistema de piloto automático adaptativo (Cruise Control Adaptativo)?",
+      "resposta": "O cruise control adaptativo (ACC) mantém a velocidade definida pelo motorista e automaticamente ajusta essa velocidade para manter uma distância segura do veículo à frente, usando câmeras e radares. Em situações de trânsito lento, pode reduzir a velocidade até parar completamente e retomar o movimento (Stop & Go). É especialmente útil em rodovias e trechos de trânsito lento. Disponível em versões superiores de modelos como Corolla, Tucson, Jeep Compass e outros SUVs médios e grandes."
+    },
+    {
+      "id": "FAQ053",
+      "pergunta": "Como faço para verificar se o veículo tem débitos antes de comprar?",
+      "resposta": "Para verificar débitos de um veículo usado antes da compra: acesse o site do DETRAN do estado de emplacamento com o número do RENAVAM e placa — verifica multas e licenciamento; consulte a Receita Federal para débitos de IPVA e outros tributos estaduais; use serviços privados como Molicar, ClearSale ou Neurotech para verificar histórico de sinistros e roubo/furto; consulte o site do SENATRAN para recall pendente; e verifique o SERASA para restrições financeiras vinculadas ao veículo. Esses dados protegem o comprador de adquirir passivos ocultos."
+    }
+  ],
+
+  "cross_knowledge": [
+    {
+      "id": "CK001",
+      "topico": "Integração com seguros",
+      "descricao": "O consultor de veículos deve ter conhecimento básico sobre tipos de seguro auto, coberturas principais (colisão, roubo, RCF-V, ACF), franquias e o processo de acionamento, para orientar o cliente durante a negociação e agregar valor ao atendimento.",
+      "areas_relacionadas": ["Seguros", "Proteção veicular"]
+    },
+    {
+      "id": "CK002",
+      "topico": "Crédito e análise financeira",
+      "descricao": "O consultor deve compreender conceitos básicos de score de crédito, documentação para aprovação, modalidades de financiamento, cálculo de parcelas e o conceito de CET (Custo Efetivo Total) para orientar clientes e minimizar propostas recusadas pelos bancos.",
+      "areas_relacionadas": ["Financiamento", "Bancos parceiros", "Consórcio"]
+    },
+    {
+      "id": "CK003",
+      "topico": "LGPD na concessionária",
+      "descricao": "A LGPD (Lei Geral de Proteção de Dados) impõe obrigações sobre a coleta e uso de dados dos clientes. A concessionária deve: obter consentimento explícito para uso de dados, comunicar a finalidade do uso, garantir segurança das informações e permitir ao cliente acesso, correção e exclusão de seus dados.",
+      "areas_relacionadas": ["Compliance", "Jurídico", "Digital"]
+    },
+    {
+      "id": "CK004",
+      "topico": "Sustentabilidade e mobilidade elétrica",
+      "descricao": "Conhecimentos sobre emissão de CO2, pegada de carbono dos veículos, incentivos governamentais para elétricos, infraestrutura de carregamento e tendências de mobilidade sustentável são diferenciais competitivos para consultores que atendem um público cada vez mais consciente ambientalmente.",
+      "areas_relacionadas": ["Veículos elétricos", "Híbridos", "Regulações ambientais"]
+    },
+    {
+      "id": "CK005",
+      "topico": "Tecnologia e conectividade veicular",
+      "descricao": "O consultor deve conhecer os principais sistemas de conectividade embarcada (OTA updates, telemetria, aplicativos de fabricante), integração com smartphones, sistemas de rastreamento e as tendências de veículos autônomos e conectados para responder às demandas de clientes tecnófilos.",
+      "areas_relacionadas": ["Tecnologia automotiva", "IoT veicular", "Apps de mobilidade"]
+    },
+    {
+      "id": "CK006",
+      "topico": "Agronegócio e frotas rurais",
+      "descricao": "Clientes do agronegócio têm necessidades específicas: robustez para uso off-road intenso, capacidade de carga, disponibilidade de assistência técnica no interior e formas de aquisição como pessoa jurídica com benefícios fiscais. Picapes médias e grandes e SUVs robustos são os segmentos prioritários para este público.",
+      "areas_relacionadas": ["Picapes", "Diesel", "Pessoa Jurídica", "Interior do Brasil"]
+    }
+  ]
+}

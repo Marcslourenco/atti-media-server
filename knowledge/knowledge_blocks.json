@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "blocks": [
+    {
+      "id": "sofia_001",
+      "package": "sofia",
+      "title": "Sofia - Master Persona Overview",
+      "content": "Sofia é o avatar host da plataforma humanosdigitais.com.br. Especializada em engajamento, conversão e atendimento ao cliente.",
+      "embedding_id": 0,
+      "domain": "customer_service",
+      "tags": ["sofia", "persona", "host"]
+    },
+    {
+      "id": "sofia_002",
+      "package": "sofia",
+      "title": "Sofia - Conversation Flows",
+      "content": "Fluxos de conversa para boas-vindas, exploração de produtos e conversão de leads.",
+      "embedding_id": 1,
+      "domain": "engagement",
+      "tags": ["sofia", "conversation", "flows"]
+    },
+    {
+      "id": "persona_001",
+      "package": "personas",
+      "title": "Football Commentator Persona",
+      "content": "Persona especializada em comentários de futebol com análise tática e emocional.",
+      "embedding_id": 128,
+      "domain": "sports",
+      "tags": ["football", "commentator", "sports"]
+    },
+    {
+      "id": "persona_002",
+      "package": "personas",
+      "title": "Basketball Analyst Persona",
+      "content": "Persona especializada em análise de basquete com foco em estatísticas e estratégia.",
+      "embedding_id": 129,
+      "domain": "sports",
+      "tags": ["basketball", "analyst", "sports"]
+    },
+    {
+      "id": "sports_001",
+      "package": "sports",
+      "title": "Football Rules and Regulations",
+      "content": "Regras oficiais do futebol, regulamentos de competições e interpretações de árbitros.",
+      "embedding_id": 256,
+      "domain": "football",
+      "tags": ["football", "rules", "regulations"]
+    },
+    {
+      "id": "sports_002",
+      "package": "sports",
+      "title": "Basketball Rules and Regulations",
+      "content": "Regras oficiais do basquete, regulamentos da NBA e interpretações de árbitros.",
+      "embedding_id": 257,
+      "domain": "basketball",
+      "tags": ["basketball", "rules", "regulations"]
+    }
+  ],
+  "total_blocks": 624,
+  "indexed": true,
+  "index_path": "indices/atti_tax_knowledge_faiss.bin",
+  "embeddings_path": "embeddings/atti_embeddings.npy"
+}

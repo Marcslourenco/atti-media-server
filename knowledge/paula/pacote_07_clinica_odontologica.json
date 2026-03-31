@@ -1,0 +1,1216 @@
+{
+  "segmento": "Clínica Odontológica",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agentes de IA atuantes em clínicas odontológicas e redes de franquias odontológicas no mercado brasileiro. Cobre procedimentos clínicos e estéticos, planos odontológicos, agendamento e gestão da agenda, pós-tratamento, argumentos de confiança, manejo do medo e ansiedade dental, objeções financeiras, regulamentação CFO/CRO e FAQ completo com 53 perguntas. Referenciado nas práticas das principais redes: OdontoCompany (maior rede do Brasil, +1.000 clínicas), Sorridents (mais premiada da América Latina, 30 anos), Oral Sin (nº1 em implantes, +400 unidades), Odontoclinic, OrthoDontic Brasil e redes de planos Amil Dental, SulAmérica Odonto e Bradesco Dental.",
+
+  "nucleo_conhecimento": {
+
+    "contexto_mercado": [
+      {
+        "id": "CM001",
+        "titulo": "Panorama do mercado odontológico brasileiro",
+        "conteudo": "A odontologia movimenta cerca de R$ 38 bilhões por ano no Brasil, segundo o IPEA. O país tem o maior número de cirurgiões-dentistas do mundo — mais de 360 mil profissionais registrados no CFO (Conselho Federal de Odontologia). O setor registrou crescimento de 13,4% no faturamento entre 2021 e 2022 segundo a ABF. O Brasil realiza cerca de 800 mil implantes dentários por ano (Abimo). Em 2021 foram abertas 16.623 novas clínicas odontológicas, indicando expansão contínua do setor. O mercado global de implantes deve faturar US$ 18 bilhões até 2027 (Research and Markets). Os planos odontológicos exclusivos atingiram 30,5 milhões de beneficiários em 2022, alta de 7,6% no período."
+      },
+      {
+        "id": "CM002",
+        "titulo": "Principais redes de franquias odontológicas no Brasil",
+        "conteudo": "OdontoCompany: maior rede de clínicas odontológicas do Brasil e 2ª maior do mundo, com mais de 1.000 unidades abertas em todos os estados, +25 milhões de clientes atendidos e 1,5 milhão de atendimentos por mês. Fundada em 1992, pioneira em franchising odontológico no Brasil (2010). Sorridents: rede com 30 anos de mercado, mais premiada da América Latina, com centenas de unidades. Foco em atendimento humanizado: 'feita de sorrisos, feita de gente'. Oral Sin (Grupo OdontoCompany): nº1 em implantes dentários no Brasil, +400 unidades, 300 mil implantes anuais, 3 milhões de atendimentos por ano, pioneira em odontologia digital. Odontoclinic: rede com foco em múltiplas especialidades integradas (clínico geral, ortodontia, implantes, estética e próteses). OrthoDontic Brasil: especializada em ortodontia, com tipos de aparelhos detalhados (tradicional, autoligado, estético e alinhador transparente). Orthopride: foco em classes populares, faturamento de R$ 342 milhões em 2022, 210 unidades."
+      },
+      {
+        "id": "CM003",
+        "titulo": "Planos odontológicos — operadoras e coberturas",
+        "conteudo": "Os principais planos odontológicos no Brasil são: Amil Dental — oferece planos básicos até premium com ortodontia, próteses, implantes e clareamento; SulAmérica Odonto — excelente custo-benefício e boa rede credenciada; Bradesco Dental — forte integração com clientes do banco; Porto Seguro Odonto — planos com cobertura progressiva; Unimed Odonto; Metlife Dental; Dentalpar. Os planos são regulados pela ANS (Agência Nacional de Saúde Suplementar), que define o Rol de Procedimentos obrigatórios mínimos. Planos básicos custam de R$ 25 a R$ 80/mês per capita (individual). Planos que incluem ortodontia, próteses, implantes e clareamento podem ultrapassar R$ 300/mês. Planos empresariais costumam ser mais vantajosos e com carências reduzidas."
+      },
+      {
+        "id": "CM004",
+        "titulo": "Regulamentação — CFO, CRO e legislação odontológica",
+        "conteudo": "O Conselho Federal de Odontologia (CFO) e os Conselhos Regionais de Odontologia (CRO) regulamentam o exercício da profissão no Brasil. A Lei 5.081/66 define o exercício da odontologia. O Código de Ética Odontológica (CFO Resolução 118/2012) rege a conduta dos profissionais. Apenas cirurgiões-dentistas com registro no CRO podem realizar procedimentos odontológicos. As 19 especialidades reconhecidas pelo CFO incluem: Ortodontia e Ortopedia Facial, Implantodontia, Periodontia, Endodontia, Prótese Dentária, Dentística, Odontopediatria, Cirurgia e Traumatologia Bucomaxilofacial, Harmonização Orofacial (HOF), entre outras. O prontuário odontológico é obrigatório e deve ser mantido por mínimo 10 anos."
+      },
+      {
+        "id": "CM005",
+        "titulo": "Procedimentos mais procurados e tendências 2025-2026",
+        "conteudo": "Os tratamentos mais procurados no Brasil são: clareamento dental (crescimento de 840 milhões de dólares no mercado global em 2024), implantes dentários, aparelhos ortodônticos (especialmente alinhadores invisíveis), restaurações e tratamento de canal. Tendências em alta: odontologia digital (escaneamento intraoral, planejamento 3D, impressão CAD/CAM), ortodontia invisível (alinhadores transparentes crescendo mais de 30% ao ano), implantes de carga imediata (dente no mesmo dia), laserterapia (menos dor, menor sangramento), harmonização orofacial (HOF — toxina botulínica, preenchimento, bioestimuladores por dentistas habilitados pela CFO), sedação consciente, procedimentos minimamente invasivos e teledentistry (teleconsulta e telemonitoramento)."
+      },
+      {
+        "id": "CM006",
+        "titulo": "Perfil do paciente odontológico brasileiro",
+        "conteudo": "O paciente odontológico brasileiro tem perfis distintos: Preventivo — vai ao dentista regularmente, busca limpeza, check-up e orientações; estima-se que menos de 30% da população tem esse hábito. Urgência — procura a clínica apenas em situações de dor ou emergência. Estético — busca melhoria do sorriso: clareamento, facetas, alinhamento, harmonização orofacial. Reabilitador — perdeu dentes e precisa de próteses ou implantes; frequentemente pessoas acima de 40 anos. Ansioso — tem medo ou fobia de dentista (odontofobia), presente em estimados 15-20% da população adulta. Jovem digital — busca referências nas redes sociais, compara antes de decidir, valoriza antes/depois e avaliações de outros pacientes."
+      },
+      {
+        "id": "CM007",
+        "titulo": "Modelos de atendimento e estrutura de clínicas",
+        "conteudo": "As clínicas odontológicas operam em diferentes modelos: Consultório individual — um dentista, atendimento personalizado, sem multi-especialidades. Clínica multi-especialidades — várias especialidades em um único local, maior conveniência para o paciente. Franquia — padronização de marca, protocolos e fornecedores, com suporte da franqueadora. Centro cirúrgico odontológico — para procedimentos complexos com equipe ampla e equipamentos de alta tecnologia. Clínica digital — foco em tecnologia, planejamento digital, escaneamento intraoral e CAD/CAM. O horário estendido (até as 20h ou aos sábados) e a conveniência de local (shopping centers, galerias) são diferenciais para captação de pacientes com rotina ocupada."
+      },
+      {
+        "id": "CM008",
+        "titulo": "Precificação de procedimentos — referências de mercado",
+        "conteudo": "Referências de valores de mercado (variáveis por região, complexidade e profissional): Consulta/avaliação: gratuita a R$ 150 (muitas redes oferecem avaliação gratuita como chamariz); Limpeza/profilaxia: R$ 100 a R$ 300; Restauração (resina): R$ 150 a R$ 400 por dente; Clareamento de consultório (laser): R$ 400 a R$ 1.500 (por arcada ou sessão completa); Clareamento caseiro (kit): R$ 200 a R$ 600; Tratamento de canal (endodontia): R$ 600 a R$ 2.000 por dente; Aparelho fixo metálico: R$ 2.000 a R$ 6.000 (entrada + manutenções); Alinhador invisível: R$ 4.000 a R$ 20.000 (marcas como Invisalign são topo de mercado); Implante unitário (pino + coroa): R$ 3.000 a R$ 8.000; Protocolo (All-on-4 ou All-on-6): R$ 15.000 a R$ 80.000 por arcada; Faceta de porcelana: R$ 1.500 a R$ 4.000 por dente; Lente de contato dental: R$ 800 a R$ 3.000 por dente; Harmonização orofacial: R$ 800 a R$ 5.000 conforme os procedimentos."
+      },
+      {
+        "id": "CM009",
+        "titulo": "Sazonalidade e eventos que impactam a demanda odontológica",
+        "conteudo": "Dezembro e janeiro: alta demanda por clareamento (festas de fim de ano, casamentos, formaturas). Fevereiro e março: queda pós-festas, boa oportunidade de campanhas de prevenção. Abril a junho: período de maior procura por aparelhos ortodônticos (início do ano escolar e decisão de inicio de tratamentos). Julho: férias escolares, maior disponibilidade de tempo, oportunidades para odontopediatria e para adultos que têm dificuldade de conciliar agenda. Outubro: Dia Mundial de Saúde Bucal (20/10), mês de prevenção. Novembro: início de preparação para fim de ano, nova onda de clareamento. Datas especiais comerciais: Dia das Mães (maio), Dia dos Namorados (junho) são boas datas para campanhas de procedimentos estéticos."
+      }
+    ],
+
+    "problemas_comuns": [
+      {
+        "id": "PC001",
+        "problema": "Paciente com medo e ansiedade de dentista (odontofobia)",
+        "descricao": "Paciente relata medo intenso de sentir dor, de agulha de anestesia, de barulho dos equipamentos ou de experiências traumáticas anteriores. Pode chegar ao ponto de cancelar consultas ou evitar tratamento por anos.",
+        "solucao_sugerida": "Validar o sentimento sem minimizá-lo: 'Seu medo é completamente válido e muito comum'. Explicar os recursos da clínica para minimizar o desconforto: anestesia tópica antes da injeção (elimina a dor da picada), equipamentos modernos mais silenciosos, comunicação de parada a qualquer momento, opção de sedação consciente para casos severos. Não prometer que 'não vai doer nada' — prometer que o desconforto será gerenciado. Oferecer a primeira consulta como avaliação apenas, sem procedimentos."
+      },
+      {
+        "id": "PC002",
+        "problema": "Paciente que não aceita o valor do orçamento apresentado",
+        "descricao": "Paciente recebe o orçamento do tratamento e reage negativamente ao valor, questionando se está caro, comparando com outra clínica ou dizendo que não tem condições.",
+        "solucao_sugerida": "Não baixar o preço imediatamente — isso desvaloriza o serviço. Reapresentar o orçamento detalhando o valor de cada procedimento, os materiais utilizados e a garantia oferecida. Apresentar as formas de parcelamento (até 24x no cartão, financiamento odontológico). Oferecer um plano de tratamento por etapas, priorizando o que é urgente. Verificar se o paciente tem plano odontológico que cobre parte dos procedimentos. Demonstrar o custo de não tratar (agravamento, tratamentos mais caros no futuro)."
+      },
+      {
+        "id": "PC003",
+        "problema": "Paciente cancela ou não comparece à consulta agendada (no-show)",
+        "descricao": "Alta taxa de cancelamentos de última hora ou não comparecimento sem aviso prejudica a agenda da clínica e gera tempo improdutivo.",
+        "solucao_sugerida": "Implementar confirmação automática por WhatsApp 48h e 2h antes da consulta. Para procedimentos longos (implantes, cirurgias), solicitar sinal/reserva de horário reembolsável. Manter lista de espera ativa para ocupar slots vagos. Registrar padrão de no-show por paciente e, em casos recorrentes, ter conversa franca sobre a importância do compromisso. Cobrar taxa de reagendamento apenas para procedimentos de alta complexidade."
+      },
+      {
+        "id": "PC004",
+        "problema": "Paciente abandona o tratamento ortodôntico no meio",
+        "descricao": "Paciente que estava em tratamento com aparelho fixo ou alinhador interrompe as consultas de manutenção, colocando em risco o resultado do tratamento e gerando problemas futuros.",
+        "solucao_sugerida": "Contato proativo ao identificar ausência de 60 dias: 'Notamos que faz um tempo que não vemos você, e a saúde do seu sorriso é nossa prioridade — houve algum problema?'. Verificar se a causa é financeira (oferecer renegociação), de tempo (oferecer horários mais convenientes) ou insatisfação. Reforçar que interrupção do tratamento pode causar regressão da movimentação dentária e necessidade de recomeço. Documentar a orientação ao paciente sobre os riscos de abandono."
+      },
+      {
+        "id": "PC005",
+        "problema": "Dúvida ou insatisfação com resultado estético do tratamento",
+        "descricao": "Paciente que realizou clareamento, facetas ou restaurações não ficou satisfeito com o resultado e questiona ou reclama.",
+        "solucao_sugerida": "Ouvir a reclamação com atenção e sem se defender imediatamente. Solicitar que o paciente volte à clínica para avaliação presencial — muitos resultados aparentam diferentes na foto do que ao vivo. Verificar se o resultado está dentro do que foi combinado no planejamento inicial (comparar foto pré-tratamento). Se houver falha técnica real, corrigir sem custo adicional. Se a expectativa era irreal, explicar com clareza os fatores (cor natural do dente, limite do clareamento). Documentar sempre o planejamento com fotos e assinatura de termo de consentimento."
+      },
+      {
+        "id": "PC006",
+        "problema": "Paciente com dor ou intercorrência pós-operatória",
+        "descricao": "Paciente liga ou manda mensagem relatando dor intensa, inchaço, sangramento ou outro sintoma após uma extração, implante ou cirurgia.",
+        "solucao_sugerida": "Responder com agilidade — dentro de 1 hora em horário comercial. Fazer triagem rápida das características da dor e dos sintomas (intensidade, localização, se tomou a medicação prescrita). Diferenciar sintomas normais de pós-operatório (discreta dor, hematoma, leve inchaço nas primeiras 48h) de sinais de alerta (febre acima de 38°C, sangramento abundante que não para, dor crescente após 72h). Para sintomas de alerta, agendar retorno de urgência no mesmo dia. Para sintomas normais, tranquilizar e reforçar as orientações. Deixar sempre um número de plantão para emergências."
+      },
+      {
+        "id": "PC007",
+        "problema": "Paciente questiona a necessidade de um procedimento recomendado",
+        "descricao": "Dentista recomendou tratamento de canal, extração de siso ou implante e o paciente questiona se realmente é necessário ou busca segunda opinião.",
+        "solucao_sugerida": "Responder sem se sentir ameaçado pela segunda opinião — ela é um direito do paciente previsto no Código de Ética. Explicar de forma didática a indicação clínica, mostrando a radiografia ou imagem de tomografia, usando linguagem acessível ('esse nervo está comprometido — sem o tratamento de canal, o dente vai precisar ser extraído'). Oferecer esclarecimentos adicionais por escrito se o paciente desejar levar o prontuário. Mostrar disposição para esclarecer dúvidas quantas vezes forem necessárias."
+      },
+      {
+        "id": "PC008",
+        "problema": "Paciente com dificuldade para encaixar horário na agenda",
+        "descricao": "Paciente que trabalha em horário comercial não encontra horário disponível à noite ou nos fins de semana, e a clínica perde o agendamento.",
+        "solucao_sugerida": "Verificar se a clínica tem horários estendidos (7h ou 19h/20h) e oferecer esses horários prioritariamente. Para procedimentos longos como implantes e cirurgias, verificar se há disponibilidade às sextas-feiras à tarde (muitos profissionais tiram folgas neste período). Colocar o paciente em lista de espera para horários de cancellamento. Oferecer atendimento aos sábados se disponível. Registrar a preferência de horário no cadastro para contactar quando houver vaga ideal."
+      },
+      {
+        "id": "PC009",
+        "problema": "Paciente solicita cobertura pelo plano odontológico de procedimento não coberto",
+        "descricao": "Paciente acredita que o plano odontológico cobre clareamento, implante ou outro procedimento estético e fica insatisfeito ao descobrir que não está no Rol da ANS.",
+        "solucao_sugerida": "Explicar com clareza e empatia o que o Rol da ANS cobre e o que é exclusivamente particular: procedimentos estéticos (clareamento, facetas, implantes) geralmente não são cobertos pelos planos básicos. Ajudar o paciente a verificar o que exatamente seu plano cobre, consultando a tabela da operadora. Oferecer parcelamento para os procedimentos não cobertos. Apresentar comparativo de valores: o custo pelo plano versus particular para o que é coberto."
+      },
+      {
+        "id": "PC010",
+        "problema": "Paciente com bruxismo que danifica restaurações e desgasta dentes",
+        "descricao": "Paciente recorrentemente quebra restaurações, apresenta sensibilidade dental aumentada e desgaste dentário por hábito de ranger os dentes (bruxismo), e questiona por que os tratamentos 'não duram'.",
+        "solucao_sugerida": "Explicar o diagnóstico de bruxismo e sua causa multifatorial (estresse, ansiedade, má oclusão). Apresentar o tratamento complementar obrigatório: placa miorrelaxante (placa de bruxismo) para proteção das restaurações e dos dentes naturais. Orientar que sem a placa, qualquer restauração ou trabalho protético ficará comprometido mais rápido. Recomendar acompanhamento com psicólogo ou neurologista em casos severos. Registrar o diagnóstico no prontuário."
+      }
+    ],
+
+    "objeções_clientes": [
+      {
+        "id": "OB001",
+        "objecao": "Está caro — vi mais barato em outra clínica",
+        "categoria": "Preço",
+        "resposta_recomendada": "Entendo sua preocupação com o valor, e é natural comparar. O preço pode variar bastante pela qualidade dos materiais utilizados, pela experiência do profissional e pelas tecnologias disponíveis. Posso detalhar o que está incluído no nosso orçamento: [material do implante — titânio grau médico, marca [X]; radiografia; acompanhamento pós-operatório; garantia de [X anos]]. Além disso, oferecemos parcelamento em até [X]x sem juros. Clínicas com preços muito abaixo da média muitas vezes compensam nos materiais ou no tempo de atendimento. Sua saúde bucal merece um investimento seguro."
+      },
+      {
+        "id": "OB002",
+        "objecao": "Não tenho dinheiro agora para fazer o tratamento",
+        "categoria": "Condição financeira",
+        "resposta_recomendada": "Compreendo. Temos algumas soluções para não deixar sua saúde bucal esperar: parcelamento em até [X]x no cartão de crédito ou débito; financiamento odontológico via [Odontocred/ClinipAGO/Credidentista] com parcelas que cabem no bolso; plano de tratamento por etapas priorizando o que é mais urgente agora. Para o caso do implante, por exemplo, podemos começar pela avaliação e planejar as etapas financeiramente. Quer que eu monte um plano que se encaixe no seu orçamento?"
+      },
+      {
+        "id": "OB003",
+        "objecao": "Tenho medo de dentista e evito ir",
+        "categoria": "Odontofobia",
+        "resposta_recomendada": "Seu medo é muito mais comum do que você imagina — estima-se que 1 em cada 5 adultos sente ansiedade ou medo do dentista. E você fez algo importante: está aqui. Nossa clínica tem protocolos específicos para pacientes com essa sensibilidade: usamos anestesia tópica antes da injeção para você não sentir a picada, trabalhamos no seu ritmo com pausas quando precisar, e você pode nos sinalizar a qualquer momento para parar. Temos também a opção de sedação consciente para procedimentos mais invasivos. Que tal começarmos só com uma avaliação, sem nenhum procedimento hoje?"
+      },
+      {
+        "id": "OB004",
+        "objecao": "Não quero aparelho — fica muito feio",
+        "categoria": "Estética do tratamento",
+        "resposta_recomendada": "Entendo — e boa notícia: a ortodontia evoluiu muito! Hoje temos opções muito mais discretas: alinhadores transparentes (invisíveis ao olhar), aparelho autoligado (menor e mais eficiente que o tradicional), e aparelho estético (cerâmica ou safira, praticamente invisível). Cada opção tem indicações específicas e faixas de preço diferentes. O alinhador transparente, por exemplo, é quase imperceptível e pode ser removido para comer e escovar os dentes. Quer que eu mostre fotos e explique qual seria a melhor indicação para o seu caso?"
+      },
+      {
+        "id": "OB005",
+        "objecao": "Aparelho demora muito — não quero passar anos com isso",
+        "categoria": "Tempo de tratamento",
+        "resposta_recomendada": "Compreendo a preocupação com o tempo. A duração varia muito de acordo com a complexidade do caso: casos simples de alinhamento podem ser resolvidos em 8 a 12 meses com alinhadores modernos. Casos mais complexos com mordida cruzada ou dentes muito desalinhados levam de 18 a 30 meses. Mas pense assim: o tempo que parece longo durante o tratamento será seguido de décadas com um sorriso alinhado, saudável e funcional. Podemos fazer a avaliação e estimar um prazo real para o seu caso antes de decidir?"
+      },
+      {
+        "id": "OB006",
+        "objecao": "Meu plano não cobre esse procedimento",
+        "categoria": "Plano odontológico",
+        "resposta_recomendada": "Vou verificar exatamente o que seu plano cobre para este procedimento. Planos básicos geralmente cobrem consulta, limpeza, restauração e extração simples — procedimentos estéticos e implantes costumam ser particulares. Se o procedimento não for coberto, posso apresentar o valor particular e as formas de parcelamento disponíveis. Em alguns casos, a cobertura do plano pode ser combinada com um complemento particular para procedimentos que têm cobertura parcial."
+      },
+      {
+        "id": "OB007",
+        "objecao": "Quero pesquisar mais antes de decidir pelo implante",
+        "categoria": "Indecisão",
+        "resposta_recomendada": "Faz todo sentido pesquisar — implante é uma decisão importante. O que posso fazer agora é garantir sua avaliação gratuita, que vai trazer informações precisas sobre o seu caso específico: condição do osso, necessidade de enxerto prévio, número de implantes necessários. Essa avaliação tem prazo de validade de [X dias] para o orçamento que apresentamos. Com o diagnóstico em mãos, você compara opções com muito mais segurança. Quer agendar?"
+      },
+      {
+        "id": "OB008",
+        "objecao": "Prefiro uma prótese removível — implante parece invasivo",
+        "categoria": "Resistência ao procedimento",
+        "resposta_recomendada": "Compreendo. A prótese removível é uma opção, mas posso apresentar algumas diferenças importantes para você decidir com mais informação: a prótese removível exige adaptação (fala, mastigação), pode cair em momentos inapropriados e acelera a perda óssea na região. O implante, por sua vez, funciona como um dente natural, preserva o osso e tem vida útil de décadas — com bom cuidado, dura a vida toda. A cirurgia de implante é feita sob anestesia local e a maioria dos pacientes relata desconforto menor do que imaginava. Quer conhecer mais detalhes do procedimento antes de decidir?"
+      },
+      {
+        "id": "OB009",
+        "objecao": "Clareamento não funciona nos meus dentes — já tentei",
+        "categoria": "Experiência negativa anterior",
+        "resposta_recomendada": "Que pena que a experiência anterior não trouxe o resultado esperado. O resultado do clareamento depende muito do tipo de mancha e da técnica utilizada. Manchas por tetraciclina ou fluorose, por exemplo, respondem menos ao clareamento convencional. Nosso protocolo faz uma avaliação prévia para determinar a técnica mais adequada para o seu tipo de dente e de mancha. Em alguns casos, a melhor alternativa estética pode ser lentes de contato ou facetas, que trazem resultado imediato e permanente. Posso fazer uma avaliação gratuita para indicar a melhor solução para o seu caso?"
+      },
+      {
+        "id": "OB010",
+        "objecao": "Não gosto de ir ao dentista — só vou quando está doendo",
+        "categoria": "Resistência preventiva",
+        "resposta_recomendada": "Você não está sozinho — muitas pessoas só procuram o dentista em situações de dor. O problema é que quando a dor aparece, o problema já evoluiu bastante: uma cárie pequena que custaria R$ [X] para tratar pode virar canal ou extração que custa 10x mais. A limpeza semestral e o check-up regular são exatamente para identificar e tratar problemas quando ainda são simples e baratos. Nossa avaliação é gratuita e você não precisa fazer nada além de deixarmos olhar — nenhum procedimento é feito sem sua aprovação."
+      },
+      {
+        "id": "OB011",
+        "objecao": "Já fui em outra clínica e me senti pressionado a fazer tudo de uma vez",
+        "categoria": "Experiência negativa / confiança",
+        "resposta_recomendada": "Lamento que tenha passado por isso — ninguém merece se sentir pressionado ao tratar a própria saúde. Nossa filosofia é diferente: apresentamos o diagnóstico completo e o plano de tratamento, mas a decisão e o ritmo são sempre seus. Você pode fazer as etapas à medida que sua disponibilidade financeira e de tempo permitirem. O que não podemos deixar de te orientar são os casos urgentes — quando há risco de agravamento. Mas a última palavra sempre será sua."
+      },
+      {
+        "id": "OB012",
+        "objecao": "Como sei que posso confiar nesta clínica?",
+        "categoria": "Confiança e credibilidade",
+        "resposta_recomendada": "Ótima pergunta — e você tem todo o direito de verificar. Nossa clínica é credenciada no CRO [número] e todos os nossos profissionais têm registro ativo. Você pode verificar o CRO de qualquer dentista nosso no site do Conselho Regional do seu estado. Temos [X] anos de atuação, [X] pacientes atendidos e avaliações [nota] no Google e no Reclame Aqui. Oferecemos garantia de [X anos/meses] nos procedimentos realizados. Posso te mostrar nosso portfólio de casos antes/depois e depoimentos de pacientes que realizaram o mesmo tratamento que está considerando."
+      }
+    ],
+
+    "argumentos_venda": [
+      {
+        "id": "AV001",
+        "argumento": "Avaliação gratuita e sem compromisso",
+        "descricao": "A avaliação gratuita elimina a barreira de entrada para pacientes que estão em dúvida ou com medo. O paciente conhece a clínica, o dentista e o ambiente sem precisar se comprometer financeiramente. Isso aumenta significativamente a taxa de conversão pois quebra a resistência inicial e cria vínculo de confiança.",
+        "quando_usar": "Para todos os primeiros contatos. É o chamariz universal que transforma curiosidade em consulta presencial."
+      },
+      {
+        "id": "AV002",
+        "argumento": "Especialistas registrados no CRO e qualificação do corpo clínico",
+        "descricao": "Apresentar o currículo e as especializações dos dentistas da clínica. Mencionar pós-graduações, especializações reconhecidas pelo CFO, participação em congressos e uso de técnicas atualizadas. Para procedimentos específicos (implantes, ortodontia, endodontia), destacar que o profissional é especialista registrado naquela área.",
+        "quando_usar": "Quando o paciente questiona a qualificação, compara com clínicas concorrentes ou demonstra insegurança."
+      },
+      {
+        "id": "AV003",
+        "argumento": "Tecnologia de ponta para tratamentos mais precisos e confortáveis",
+        "descricao": "Apresentar os equipamentos e tecnologias disponíveis: radiografia digital (menos radiação, imagem imediata), tomografia cone beam (planejamento preciso de implantes), scanner intraoral (sem moldagem com aquele material desconfortável), CAD/CAM para coroas no mesmo dia, laser (menos dor, cicatrização mais rápida), aparelhos de autoclave para esterilização. Cada tecnologia resolve um problema real do paciente.",
+        "quando_usar": "Para pacientes que valorizam modernidade, que têm experiências traumáticas com moldagens ou que questionam a precisão dos tratamentos."
+      },
+      {
+        "id": "AV004",
+        "argumento": "Parcelamento e financiamento facilitado",
+        "descricao": "Apresentar todas as formas de pagamento disponíveis: cartão de crédito em até 24x, financiamento odontológico (Odontocred, Credidentista, ClinipAGO), desconto para pagamento à vista. Calcular o valor da parcela específica para o tratamento do paciente: 'o implante que está orçado em R$ 5.000 fica em R$ 208/mês por 24 meses'. Tornar o valor concreto e comparável ao gasto mensal do paciente.",
+        "quando_usar": "Sempre que o valor do tratamento for citado como obstáculo. O parcelamento é o principal instrumento de conversão para procedimentos de alto valor."
+      },
+      {
+        "id": "AV005",
+        "argumento": "Garantia dos procedimentos realizados",
+        "descricao": "Apresentar a política de garantia da clínica: restaurações (geralmente 1 a 2 anos), próteses (2 a 5 anos), implantes (vida útil do pino de titânio geralmente garantida pelo fabricante; acompanhamento por no mínimo 1 ano). A garantia transmite confiança e responsabilidade profissional. Diferencia a clínica de serviços de menor qualidade.",
+        "quando_usar": "Para pacientes que questionam a durabilidade dos procedimentos ou que foram mal atendidos em outra clínica."
+      },
+      {
+        "id": "AV006",
+        "argumento": "Antes e depois — resultados reais de pacientes",
+        "descricao": "Portfólio fotográfico de casos reais tratados na clínica, com autorização dos pacientes. Fotos de antes e depois de clareamento, ortodontia, implantes, facetas e harmonização orofacial. Mostrar casos com perfil similar ao do paciente em consideração. O resultado visual é o argumento mais poderoso para tratamentos estéticos.",
+        "quando_usar": "Para todos os procedimentos estéticos e para implantes. A visualização do resultado transforma intenção em decisão."
+      },
+      {
+        "id": "AV007",
+        "argumento": "Conveniência de localização e horários",
+        "descricao": "Destacar: localização (próximo ao trabalho, shopping, metrô), estacionamento gratuito ou conveniado, horários estendidos (manhã cedo, noite até 20h, sábados), agendamento online pelo WhatsApp ou aplicativo, confirmação automática, facilidade de remarcar.",
+        "quando_usar": "Para pacientes com agenda cheia, que trabalham em horário comercial ou que moram longe de clínicas especializadas."
+      },
+      {
+        "id": "AV008",
+        "argumento": "Impacto na autoestima e qualidade de vida",
+        "descricao": "Apresentar a dimensão transformadora do tratamento além da saúde bucal: sorriso alinhado e branco aumenta autoconfiança em entrevistas, relacionamentos e vida social; implante devolve a mastigação e a fala normal; tratamento de bruxismo melhora a qualidade do sono. Conectar o tratamento com o impacto real na vida do paciente.",
+        "quando_usar": "Para pacientes indecisos ou que veem o tratamento como gasto. Transforma a perspectiva de custo em investimento em si mesmo."
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "id": "AT001",
+      "area": "Clínica Geral e Preventiva",
+      "procedimentos": [
+        {
+          "procedimento": "Consulta e Check-up Odontológico",
+          "descricao": "Avaliação clínica completa: inspeção visual de dentes e gengiva, palpação, sondagem periodontal, análise de radiografias periapicais e panorâmica. Inclui anamnese (histórico médico e medicamentos), registro fotográfico e elaboração do plano de tratamento. Em redes como OdontoCompany e Oral Sin, a avaliação inicial é gratuita.",
+          "indicacao": "Todos os pacientes, mínimo a cada 6 meses.",
+          "duracao_media": "30 a 60 minutos",
+          "observacoes_clinicas": "Identificação precoce de cáries, doença periodontal, lesões de mucosa (triagem para câncer bucal) e alterações oclusais."
+        },
+        {
+          "procedimento": "Profilaxia (Limpeza Dental) e Raspagem",
+          "descricao": "Remoção de placa bacteriana e tártaro supragengival com aparelho de ultrassom e curetas manuais. Aplicação de flúor ao final. Raspagem subgengival (radicular) para casos de periodontite, com anestesia local.",
+          "indicacao": "Prevenção (cada 6 meses) ou controle periodontal (cada 3 meses para periodontites).",
+          "duracao_media": "45 a 90 minutos",
+          "plano_dental": "Geralmente coberta pelos planos odontológicos."
+        },
+        {
+          "procedimento": "Restauração (Obturação) em Resina Composta",
+          "descricao": "Remoção do tecido cariado e preenchimento da cavidade com resina composta, material fotopolimerizável que imita a cor e translucidez do dente. Restaurações modernas são altamente estéticas e duráveis.",
+          "indicacao": "Cáries de todos os tamanhos, fraturas dentárias, substituição de restaurações de amálgama.",
+          "duracao_media": "30 a 60 minutos por dente",
+          "plano_dental": "Coberta pelos planos na maioria das modalidades."
+        },
+        {
+          "procedimento": "Extração Dentária Simples e Complexa",
+          "descricao": "Extração simples: dentes com boa acessibilidade e mínima retenção óssea. Extração complexa (cirúrgica): dentes impactados ou com forte retenção óssea — inclui incisão, descolamento de retalho e sutura. Extração de sisos (terceiros molares) frequentemente é cirúrgica.",
+          "indicacao": "Dentes sem possibilidade de restauração, dentes impactados, necessidade de espaço ortodôntico.",
+          "duracao_media": "20 a 90 minutos",
+          "pos_operatorio": "Sangramento leve normal até 12h, gelo nas primeiras 24h, alimentação pastosa, evitar o local com a língua, medicação prescrita."
+        },
+        {
+          "procedimento": "Endodontia (Tratamento de Canal)",
+          "descricao": "Remoção da polpa dentária comprometida, limpeza e modelagem dos canais radiculares e obturação com material inerte (guta-percha). Pode ser realizado em 1 a 3 sessões dependendo da infecção. Indicado para salvar dentes que seriam extraídos.",
+          "indicacao": "Polpa infectada ou mortificada, abscessos, traumatismos dentários com comprometimento pulpar.",
+          "duracao_media": "60 a 120 minutos por sessão",
+          "plano_dental": "Coberto pelos planos em dentes permanentes.",
+          "pos_tratamento": "Restauração ou coroa após conclusão do canal para proteger o dente."
+        },
+        {
+          "procedimento": "Urgência Odontológica",
+          "descricao": "Atendimento de emergências: dor aguda, fratura dentária, dente avulsionado (arrancado), abscesso, sangramento. Intervenção imediata para alívio da dor e estabilização. Não se trata de tratamento completo — é primeiro socorro odontológico.",
+          "indicacao": "Dor intensa, trauma dental, abscesso com febre.",
+          "duracao_media": "30 a 60 minutos",
+          "observacoes_clinicas": "Dente avulsionado: guardar em leite integral ou soro fisiológico e ir à clínica em até 1 hora para possibilidade de reimplante."
+        },
+        {
+          "procedimento": "Odontopediatria",
+          "descricao": "Atendimento odontológico especializado para crianças de 0 a 12 anos. Inclui: orientação para pais sobre higiene bucal de bebês, prevenção de cáries da primeira infância, restaurações em dentes de leite, selantes, fluoretação e adaptação ao ambiente odontológico. Abordagem lúdica e técnicas de manejo comportamental.",
+          "indicacao": "Crianças de qualquer idade — primeira consulta recomendada quando nasce o primeiro dente.",
+          "plano_dental": "Coberto pelos planos com cobertura para dependentes."
+        }
+      ]
+    },
+    {
+      "id": "AT002",
+      "area": "Ortodontia e Ortopedia Facial",
+      "tipos_aparelhos": [
+        {
+          "tipo": "Aparelho Fixo Metálico (Tradicional)",
+          "descricao": "Bráquetes metálicos colados nos dentes, conectados por fio metálico que guia a movimentação. O tipo mais utilizado, mais econômico e indicado para todos os tipos de má oclusão. Requer manutenção mensal ou bimestral para substituição dos elásticos e ajuste do fio.",
+          "indicacao": "Todo tipo de caso ortodôntico, incluindo os mais complexos.",
+          "duracao_tratamento": "18 a 36 meses dependendo do caso",
+          "custo_referencia": "R$ 2.000 a R$ 6.000 (entrada) + R$ 80 a R$ 200/mês de manutenção",
+          "vantagens": "Menor custo, controle preciso do profissional, indicado para casos complexos.",
+          "limitacoes": "Mais visível, restrições alimentares (duros, pegajosos), higienização mais trabalhosa."
+        },
+        {
+          "tipo": "Aparelho Autoligado",
+          "descricao": "Similar ao metálico, mas os bráquetes têm mecanismo de fechamento próprio que elimina o uso de elásticos coloridos. Gera menos atrito, permite movimentos mais suaves e rápidos e requer manutenções menos frequentes (a cada 2 a 3 meses).",
+          "indicacao": "Maioria dos casos ortodônticos.",
+          "duracao_tratamento": "15 a 30 meses",
+          "custo_referencia": "R$ 3.000 a R$ 8.000 total",
+          "vantagens": "Tratamento mais rápido, menor pressão, manutenções menos frequentes.",
+          "limitacoes": "Custo maior que o tradicional, menor variedade de bráquetes estéticos."
+        },
+        {
+          "tipo": "Aparelho Estético (Cerâmica ou Safira)",
+          "descricao": "Bráquetes de material cerâmico ou cristal de safira na cor do dente ou transparente. Funcionamento idêntico ao metálico, mas com muito menor visibilidade. Opção intermediária entre o metálico e o alinhador.",
+          "indicacao": "Pacientes que desejam discrição mas precisam de aparelho fixo.",
+          "duracao_tratamento": "18 a 36 meses",
+          "custo_referencia": "R$ 4.000 a R$ 10.000 total",
+          "vantagens": "Estética superior ao metálico, eficácia similar.",
+          "limitacoes": "Pode manchar com alimentos pigmentados (café, vinho), fratura mais fácil que o metálico, custo maior."
+        },
+        {
+          "tipo": "Alinhador Transparente (Invisalign, Sorridents Aligner, OrthoFix, F22)",
+          "descricao": "Série de placas removíveis de plástico transparente termoformado que movem os dentes progressivamente. Cada placa é usada por 1 a 2 semanas. Praticamente invisível, removível para comer e higienizar.",
+          "indicacao": "Apinhamentos leves a moderados, espaçamentos, pequenas rotações. Casos complexos têm limitações.",
+          "duracao_tratamento": "6 a 24 meses",
+          "custo_referencia": "R$ 4.000 a R$ 20.000 dependendo da marca e complexidade",
+          "vantagens": "Invisível, removível, sem restrições alimentares, higienização fácil, conforto superior.",
+          "limitacoes": "Eficácia limitada em casos muito complexos, exige disciplina (uso mínimo de 22h/dia), custo maior, exige trocas frequentes."
+        },
+        {
+          "tipo": "Contenção Ortodôntica",
+          "descricao": "Dispositivo utilizado após o término do tratamento ativo para manter os dentes na posição corrigida. Pode ser fixa (fio colado atrás dos dentes — invisível externamente) ou removível (placa de Hawley ou alinhador de retenção). O uso da contenção é para sempre.",
+          "indicacao": "Obrigatória ao término de qualquer tratamento ortodôntico.",
+          "observacoes": "Interrupção do uso da contenção causa recidiva (os dentes voltam à posição anterior). Deve ser orientada com toda ênfase ao término do tratamento."
+        }
+      ]
+    },
+    {
+      "id": "AT003",
+      "area": "Implantodontia",
+      "procedimentos": [
+        {
+          "procedimento": "Implante Dental Unitário",
+          "descricao": "Substituição de um dente perdido por pino de titânio (implante) que integra ao osso (osseointegração) e recebe uma coroa protética na superfície. O implante é o tratamento de referência para substituição de dentes perdidos pela sua durabilidade, estética e preservação do osso alveolar.",
+          "etapas": "1. Avaliação + tomografia; 2. Extração + eventual enxerto (se necessário); 3. Cirurgia de instalação do implante; 4. Período de osseointegração (3 a 6 meses); 5. Instalação da coroa protética (prótese sobre implante).",
+          "custo_referencia": "R$ 3.000 a R$ 8.000 por implante completo (pino + coroa)",
+          "duracao_tratamento": "4 a 8 meses do início à prótese final",
+          "plano_dental": "Geralmente não coberto por planos básicos; planos premium podem ter cobertura parcial.",
+          "garantia": "Pino de titânio com garantia de integração (varia por clínica); coroa com 2 a 5 anos"
+        },
+        {
+          "procedimento": "Implante com Carga Imediata ('Dente no Mesmo Dia')",
+          "descricao": "Técnica em que a prótese provisória é instalada no mesmo dia da cirurgia de implante, permitindo que o paciente saia da clínica com 'dentes'. Indicada para casos específicos com volume ósseo adequado e planejamento digital prévio. Oral Sin é pioneira nessa técnica no Brasil.",
+          "indicacao": "Ausência dentária com bom volume ósseo, reabilitação de múltiplos dentes.",
+          "custo_referencia": "20 a 30% acima do implante convencional",
+          "vantagens": "Sem período sem dentes, resultado imediato, menos consultas.",
+          "limitacoes": "Nem todos os casos são elegíveis; requer avaliação criteriosa."
+        },
+        {
+          "procedimento": "Protocolo All-on-4 / All-on-6",
+          "descricao": "Reabilitação de arcada completa (todos os dentes) sobre 4 ou 6 implantes estrategicamente posicionados. O paciente que não tem dentes em uma arcada inteira recebe uma prótese fixa parafusada sobre os implantes. Resultado estético e funcional equivalente a dentes naturais.",
+          "indicacao": "Edentulismo total (arcada sem dentes), usuários de prótese total removível insatisfeitos.",
+          "custo_referencia": "R$ 15.000 a R$ 80.000 por arcada",
+          "duracao_tratamento": "4 a 6 meses para o protocolo final",
+          "impacto_paciente": "Transforma completamente a qualidade de vida — mastigação, fala, autoestima e saúde geral."
+        },
+        {
+          "procedimento": "Enxerto Ósseo",
+          "descricao": "Procedimento para aumentar o volume e a densidade do osso alveolar quando este está insuficiente para receber o implante. Pode ser feito com osso do próprio paciente (autógeno), osso liofilizado (banco de ossos) ou substitutos ósseos sintéticos. Realizado como etapa prévia ou simultânea ao implante.",
+          "indicacao": "Pacientes com perda óssea por extração antiga, periodontite ou trauma.",
+          "custo_referencia": "R$ 1.500 a R$ 5.000 dependendo da extensão",
+          "observacoes_clinicas": "Aumenta o tempo total do tratamento em 3 a 6 meses para maturação do enxerto antes de receber o implante."
+        },
+        {
+          "procedimento": "Sedação Consciente para Cirurgia de Implante",
+          "descricao": "Técnica de sedação por via inalatória (óxido nitroso — 'gás do riso') ou intravenosa que induz estado de relaxamento e reduz a ansiedade sem perda total de consciência. O paciente coopera e respira normalmente, mas fica relaxado e pode não ter memória do procedimento.",
+          "indicacao": "Pacientes com odontofobia, procedimentos longos (múltiplos implantes, cirurgias extensas).",
+          "observacoes": "Exige avaliação médica prévia e acompanhante para voltar para casa. Custo adicional de R$ 500 a R$ 1.500."
+        }
+      ]
+    },
+    {
+      "id": "AT004",
+      "area": "Prótese Dentária",
+      "tipos_protese": [
+        {
+          "tipo": "Coroa (Prótese Unitária Fixa)",
+          "descricao": "Recobrimento total do dente natural desgastado ou implante. Materiais: porcelana pura (mais estética, ideal para dentes anteriores), metalocerâmica (mais resistente, ideal para dentes posteriores), zircônia (alta resistência e estética — padrão-ouro atual), resina (provisória ou definitiva de menor custo).",
+          "custo_referencia": "R$ 800 a R$ 3.500 por coroa",
+          "indicacao": "Dentes tratados com canal, dentes fraturados, implantes."
+        },
+        {
+          "tipo": "Prótese Fixa (Bridge / Ponte)",
+          "descricao": "Substituição de dentes ausentes através de prótese apoiada nos dentes vizinhos (pilares). Solução sem cirurgia, mas que exige o desgaste dos dentes naturais adjacentes.",
+          "custo_referencia": "R$ 2.000 a R$ 6.000 por elemento",
+          "indicacao": "Espaços edêntulos com dentes vizinhos hígidos, quando implante não é viável."
+        },
+        {
+          "tipo": "Prótese Removível Parcial (PPR)",
+          "descricao": "Prótese de metal com acrílico que substitui vários dentes perdidos e é retida nos dentes remanescentes por grampos metálicos. Removível para higienização.",
+          "custo_referencia": "R$ 1.500 a R$ 4.000",
+          "indicacao": "Múltiplos dentes perdidos com dentes remanescentes."
+        },
+        {
+          "tipo": "Prótese Total (Dentadura)",
+          "descricao": "Substitui todos os dentes de uma arcada. Retida por sucção (superior) ou apoio nos rebordos ósseos (inferior). Apresenta limitações funcionais e estéticas em relação aos implantes, além de acelerar a reabsorção óssea.",
+          "custo_referencia": "R$ 1.000 a R$ 3.500",
+          "indicacao": "Edentulismo total quando implante não é viável."
+        },
+        {
+          "tipo": "Overdenture (Prótese sobre Implantes Encaixada)",
+          "descricao": "Prótese removível retida por 2 a 4 implantes com sistema de encaixe (bola, barra ou magneto). Maior estabilidade que a dentadura convencional, menor custo que o protocolo fixo. Removível para higienização.",
+          "custo_referencia": "R$ 8.000 a R$ 25.000",
+          "indicacao": "Pacientes que não podem usar prótese total convencional ou que querem maior conforto."
+        }
+      ]
+    },
+    {
+      "id": "AT005",
+      "area": "Odontologia Estética",
+      "procedimentos": [
+        {
+          "procedimento": "Clareamento Dental de Consultório (Laser / LED)",
+          "descricao": "Aplicação de gel clareador (peróxido de hidrogênio 35-40%) ativado por luz LED ou laser de alta potência sobre os dentes. Resultado imediato — clareia de 2 a 8 tons em 1 sessão de 60 a 90 minutos. Pode ser combinado com clareamento caseiro para potencializar.",
+          "custo_referencia": "R$ 400 a R$ 1.500 por sessão (arcadas superior e inferior)",
+          "duracao_resultado": "6 meses a 2 anos dependendo dos hábitos (café, vinho, cigarro)",
+          "efeitos_colaterais": "Sensibilidade transitória nas primeiras 24-48h — normal e esperada.",
+          "indicacao": "Dentes com manchas extrínsecas (café, vinho, cigarro, chá), manchas intrínsecas leves."
+        },
+        {
+          "procedimento": "Clareamento Caseiro Supervisionado",
+          "descricao": "Moldeiras personalizadas para o paciente com gel clareador de baixa concentração (peróxido de carbamida 10-22%). Uso noturno por 2 a 3 semanas. Resultado mais suave e progressivo que o de consultório, menos sensibilidade.",
+          "custo_referencia": "R$ 200 a R$ 600 (inclui moldeiras e géis para 1 tratamento)",
+          "indicacao": "Todos os tipos de manchas, pacientes com alta sensibilidade."
+        },
+        {
+          "procedimento": "Facetas de Porcelana",
+          "descricao": "Lâminas ultrafinas de porcelana (0,3 a 0,7 mm) cimentadas na face anterior dos dentes. Corrigem cor, formato, tamanho e posição dos dentes com mínimo desgaste. Resultado permanente e de altíssima estética — reproduzem fielmente a translucidez do esmalte natural.",
+          "custo_referencia": "R$ 1.500 a R$ 4.000 por dente",
+          "duracao_tratamento": "2 a 3 sessões (moldagem, provisório, cimentação)",
+          "indicacao": "Dentes com manchas resistentes ao clareamento, dentes pequenos, espaçamentos, irregularidades de forma.",
+          "garantia": "5 a 10 anos com boas práticas de higiene e uso."
+        },
+        {
+          "procedimento": "Lentes de Contato Dental",
+          "descricao": "Versão ainda mais fina das facetas (0,1 a 0,3 mm), com desgaste mínimo ou nenhum do esmalte dental (no-prep ou minimal-prep). Indicadas para casos com espaço suficiente. Resultado estético imediato com preservação da estrutura dentária.",
+          "custo_referencia": "R$ 800 a R$ 3.000 por dente",
+          "indicacao": "Dentes com espaçamentos, manchas externas, irregularidades leves.",
+          "limitacoes": "Não indicadas para dentes muito girados, mordidas cruzadas ou bruxismo severo."
+        },
+        {
+          "procedimento": "Gengivoplastia (Contorno Gengival)",
+          "descricao": "Remodelação do contorno gengival com laser ou bisturi para corrigir o 'sorriso gengival' (exposição excessiva da gengiva ao sorrir) ou gengiva irregular. Procedimento ambulatorial, com anestesia local e recuperação rápida.",
+          "custo_referencia": "R$ 500 a R$ 2.000 dependendo da extensão",
+          "duracao_tratamento": "Sessão única (30 a 60 minutos)",
+          "recuperacao": "Discreta sensibilidade por 3 a 7 dias, cicatrização completa em 2 a 4 semanas."
+        },
+        {
+          "procedimento": "Harmonização Orofacial (HOF)",
+          "descricao": "Conjunto de procedimentos minimamente invasivos realizados por dentistas habilitados pelo CFO (Resolução CFO 198/2019): toxina botulínica (Botox) para bruxismo, rugas e sorriso gengival; preenchimento com ácido hialurônico para lábios, sulco nasolabial e bigode chinês; bioestimuladores de colágeno; rinoplastia não cirúrgica; bichectomia.",
+          "custo_referencia": "R$ 800 a R$ 5.000 por procedimento ou por área tratada",
+          "duracao_resultado": "Botox: 4 a 6 meses; ácido hialurônico: 6 a 18 meses; bioestimuladores: 2 a 3 anos",
+          "indicacao": "Pacientes que buscam rejuvenescimento facial, proporções mais harmoniosas e correção de assimetrias."
+        }
+      ]
+    },
+    {
+      "id": "AT006",
+      "area": "Periodontia e Endodontia",
+      "procedimentos": [
+        {
+          "procedimento": "Raspagem e Alisamento Radicular (RAR)",
+          "descricao": "Tratamento da periodontite (doença das gengivas com comprometimento ósseo). Raspagem profunda com instrumentos manuais e ultrassônico, sob anestesia local, para remover o biofilme e o tártaro abaixo da linha da gengiva. Realizada por quadrante.",
+          "indicacao": "Periodontite moderada a grave, bolsas periodontais acima de 4mm.",
+          "sessoes": "2 a 4 sessões por quadrante",
+          "plano_dental": "Coberto pelos planos na maioria das modalidades.",
+          "manutencao": "Consultas de manutenção periodontal a cada 3 meses são essenciais para controle."
+        },
+        {
+          "procedimento": "Cirurgia Periodontal",
+          "descricao": "Para casos de periodontite grave com bolsas profundas que não respondem ao tratamento clínico. Inclui retalho mucoperiostal, raspagem a céu aberto e, quando indicado, regeneração óssea guiada (ROG) com membranas e enxerto.",
+          "indicacao": "Periodontite grave, defeitos ósseos, furca.",
+          "plano_dental": "Cobertura variável por plano."
+        },
+        {
+          "procedimento": "Retratamento de Canal (Endodontia Cirúrgica)",
+          "descricao": "Quando o canal já tratado anteriormente apresenta reinfecção ou insucesso. Remoção do material de obturação anterior, retratamento dos canais e nova obturação. Em casos de insucesso persistente, cirurgia parendodôntica (apicectomia) pode ser necessária.",
+          "indicacao": "Infecção persistente em dente previamente tratado com canal."
+        },
+        {
+          "procedimento": "Placa Miorrelaxante (Bruxismo)",
+          "descricao": "Dispositivo acrílico removível confeccionado sob medida para ser usado durante o sono. Protege os dentes do desgaste causado pelo bruxismo, reduz a tensão muscular e previsa a fratura de restaurações e próteses.",
+          "custo_referencia": "R$ 400 a R$ 1.500",
+          "indicacao": "Bruxismo, DTM (Disfunção Temporomandibular), pacientes com histórico de fratura de restaurações."
+        }
+      ]
+    },
+    {
+      "id": "AT007",
+      "area": "Planos Odontológicos — Rol ANS e Coberturas",
+      "descricao": "O Rol de Procedimentos e Eventos em Saúde da ANS (Agência Nacional de Saúde Suplementar) define a cobertura mínima obrigatória de todos os planos odontológicos.",
+      "coberturas_obrigatorias_rol_ANS": [
+        "Consulta e avaliação odontológica",
+        "Procedimentos preventivos (profilaxia, aplicação de flúor, selante)",
+        "Restaurações em dentes anteriores e posteriores",
+        "Endodontia (tratamento de canal em dentes permanentes)",
+        "Exodontia simples (extração simples)",
+        "Tratamento periodontal básico (raspagem supra e subgengival)",
+        "Radiografias periapicais e panorâmica",
+        "Urgência e emergência odontológica",
+        "Próteses removíveis (em planos que cobrem próteses)"
+      ],
+      "geralmente_NAO_cobertos_por_planos_basicos": [
+        "Clareamento dental (procedimento estético)",
+        "Implantes dentários (exceto planos premium específicos)",
+        "Facetas e lentes de contato dental",
+        "Harmonização Orofacial",
+        "Ortodontia (alguns planos premium cobrem parcialmente)",
+        "Próteses sobre implantes",
+        "Sedação consciente (exceto casos de necessidade médica)",
+        "Gengivoplastia estética"
+      ],
+      "principais_operadoras": [
+        {
+          "operadora": "Amil Dental",
+          "destaque": "Maior variedade de planos, do básico ao premium com implantes e ortodontia"
+        },
+        {
+          "operadora": "SulAmérica Odonto",
+          "destaque": "Excelente custo-benefício, boa rede credenciada nacional"
+        },
+        {
+          "operadora": "Bradesco Dental",
+          "destaque": "Forte integração com base de clientes do banco, atendimento corporativo"
+        },
+        {
+          "operadora": "Porto Seguro Odonto",
+          "destaque": "Planos com cobertura progressiva, inclui opções com estética e ortodontia"
+        },
+        {
+          "operadora": "Unimed Odonto",
+          "destaque": "Cooperativa com forte presença regional, planos empresariais competitivos"
+        }
+      ]
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "id": "FC001",
+      "nome": "Fluxo de Primeiro Contato — Agendamento de Avaliação",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Recepção e identificação",
+          "mensagem": "Olá! 😊 Seja bem-vindo(a) à [Nome da Clínica]! Sou [Nome], do nosso time de atendimento. Ficamos muito felizes com seu contato! Para te ajudar melhor: o que motivou sua busca hoje — você está sentindo alguma dor, quer melhorar o sorriso ou quer fazer uma consulta de rotina?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Qualificação do motivo e perfil",
+          "mensagem": "Entendido! Para facilitar o agendamento: você tem algum plano odontológico? [Se sim] Qual a operadora? [Se não] Sem problemas — nossa avaliação inicial é gratuita independentemente disso. Já teve alguma experiência anterior com esse tipo de tratamento?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Oferta de horário",
+          "mensagem": "Ótimo! Tenho os seguintes horários disponíveis esta semana: [opção 1 — data e hora], [opção 2 — data e hora] ou [opção 3 — data e hora]. Qual encaixa melhor na sua rotina? Atendemos de [horário de abertura] às [horário de fechamento], de segunda a [dia], com opções aos sábados."
+        },
+        {
+          "etapa": 4,
+          "acao": "Confirmação e preparação da visita",
+          "mensagem": "Perfeito! Sua avaliação está marcada para [data] às [hora] com o Dr(a). [Nome]. Você receberá uma confirmação por WhatsApp 24h antes. Para a consulta, por favor traga: documento de identidade, carteira do plano odontológico (se tiver) e, se tiver algum exame recente (radiografia panorâmica), leve também — isso agiliza muito. Alguma dúvida até lá?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Confirmação automática pré-consulta (24h antes)",
+          "mensagem": "Olá, [Nome]! 🦷 Lembrando que sua consulta de avaliação é amanhã, [data], às [hora], na [Clínica] — [endereço]. Confirmamos sua presença? Responda SIM para confirmar ou NÃO se precisar reagendar. Estamos te esperando!"
+        }
+      ]
+    },
+    {
+      "id": "FC002",
+      "nome": "Fluxo de Apresentação de Orçamento e Conversão",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Apresentação do diagnóstico e plano de tratamento",
+          "mensagem": "Olá, [Nome]! Conforme conversado na avaliação com o Dr(a). [Nome], o diagnóstico identificou [descrição do problema]. O plano de tratamento recomendado é [tratamento], que inclui [etapas do tratamento]. O investimento total é de R$ [valor]. Posso te explicar cada item?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Detalhamento do orçamento",
+          "mensagem": "O orçamento inclui: ✅ [Procedimento 1] — R$ [X] (material: [detalhe]) ✅ [Procedimento 2] — R$ [Y] ✅ Acompanhamento por [período] — incluso ✅ Garantia de [X anos/meses]. Todos os nossos materiais são [marca/procedência], reconhecidos internacionalmente pela qualidade e durabilidade."
+        },
+        {
+          "etapa": 3,
+          "acao": "Apresentação das formas de pagamento",
+          "mensagem": "Para facilitar, temos várias formas de pagamento: 💳 Parcelamento em até [X]x no cartão de crédito = R$ [parcela]/mês 💰 Desconto de [X]% para pagamento à vista (Pix ou dinheiro) = R$ [valor com desconto] 📄 Financiamento via [operadora] = parcelas a partir de R$ [valor] em até [X] meses. Qual dessas opções encaixa melhor para você?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Gestão da objeção de preço",
+          "mensagem": "Entendo que o valor pode parecer alto à primeira vista. Deixa eu colocar em perspectiva: em [X] parcelas de R$ [Y], é o custo de [comparativo cotidiano — ex: 'um café por dia']. E o mais importante: este tratamento vai resolver [problema] de uma vez por todas, evitando que ele evolua para algo mais complexo e caro no futuro. Quer que eu monte um plano por etapas priorizando o mais urgente?"
+        },
+        {
+          "etapa": 5,
+          "acao": "Fechamento",
+          "mensagem": "Ótimo! Para confirmar o início do tratamento, precisamos apenas de: [documentos/exames se necessário] e o agendamento da primeira sessão. Tenho disponibilidade na [data/hora]. Posso confirmar para você?"
+        }
+      ]
+    },
+    {
+      "id": "FC003",
+      "nome": "Fluxo de Atendimento ao Paciente Ansioso",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Acolhimento da ansiedade",
+          "mensagem": "Entendo completamente o que você está sentindo — e saiba que o medo de dentista é muito mais comum do que você imagina, quase 1 em cada 5 adultos sente isso. O mais importante é que você entrou em contato, e isso já é um grande passo. Aqui, você está no controle — nenhum procedimento é feito sem você saber e aprovar antes."
+        },
+        {
+          "etapa": 2,
+          "acao": "Explicação das estratégias anti-ansiedade",
+          "mensagem": "Nossa equipe tem protocolos específicos para pacientes com sensibilidade: 🟢 Anestesia tópica (pomada) antes da injeção — você não vai sentir a picada 🟢 Comunicação de parada: combinamos um sinal (ex: levantar a mão) e paramos imediatamente se precisar 🟢 Explicamos tudo antes de fazer — sem surpresas 🟢 Ambiente calmo, com música se você preferir 🟢 Opção de sedação consciente para procedimentos mais longos"
+        },
+        {
+          "etapa": 3,
+          "acao": "Proposta de primeira visita segura",
+          "mensagem": "Que tal começarmos com uma visita de apresentação? Você vem conhecer a clínica, nosso dentista e o ambiente. Não fazemos nenhum procedimento — só conversamos, tiramos suas dúvidas e você nos conta o que precisa. Sem pressão, sem dor. Isso ajuda muito a diminuir a ansiedade para as próximas visitas. Posso agendar para você?"
+        }
+      ]
+    },
+    {
+      "id": "FC004",
+      "nome": "Fluxo de Pós-Tratamento e Fidelização",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Mensagem de pós-procedimento (no mesmo dia)",
+          "mensagem": "Olá, [Nome]! 🦷 Passando para saber como você está se sentindo após o procedimento de hoje. É normal ter [sintoma esperado — ex: 'leve sensibilidade nas próximas 24h'] — isso faz parte do processo de cicatrização. Se precisar de qualquer orientação ou tiver alguma dúvida, estou disponível aqui. Lembre-se das orientações: [principais cuidados pós-procedimento]."
+        },
+        {
+          "etapa": 2,
+          "acao": "Follow-up de 48h (pós-cirurgia ou procedimento complexo)",
+          "mensagem": "Oi, [Nome]! Como está se sentindo 2 dias após o procedimento? O inchaço e a sensibilidade devem estar diminuindo gradualmente. Você está tomando a medicação prescrita? Se notar [sinais de alerta — febre acima de 38°C, sangramento intenso, dor crescente], entre em contato conosco imediatamente. Caso tudo esteja bem, seu retorno está agendado para [data]."
+        },
+        {
+          "etapa": 3,
+          "acao": "Agendamento de retorno preventivo (6 meses)",
+          "mensagem": "Olá, [Nome]! O seu retorno para limpeza e avaliação de rotina está próximo — faz 6 meses desde sua última consulta! 😊 A manutenção regular é fundamental para garantir a saúde e a durabilidade dos seus tratamentos. Tenho disponibilidade em: [opção 1] e [opção 2]. Qual prefere?"
+        },
+        {
+          "etapa": 4,
+          "acao": "Solicitação de indicação e avaliação",
+          "mensagem": "Ficamos muito felizes com sua evolução, [Nome]! Sua saúde bucal está muito melhor. Se você ficou satisfeito(a) com nosso atendimento, ficaríamos imensamente gratos se você pudesse compartilhar sua experiência no Google ou no Instagram — isso ajuda outros pacientes a nos encontrarem. E se conhecer alguém que precisa de tratamento, pode nos indicar! Nosso programa de indicação oferece [benefício] para você. 🙏"
+        }
+      ]
+    },
+    {
+      "id": "FC005",
+      "nome": "Fluxo de Urgência Odontológica",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Triagem de urgência",
+          "mensagem": "Olá! Entendo que está com dor — vamos resolver isso o mais rápido possível. Para encaminhar da melhor forma: a dor está localizada em um dente específico? Você sente dor ao morder, ao tomar líquido frio/quente ou ela é contínua mesmo sem estímulo? Tem inchaço no rosto? Febre? Isso me ajuda a priorizar o atendimento."
+        },
+        {
+          "etapa": 2,
+          "acao": "Classificação e encaminhamento",
+          "mensagem_urgencia_alta": "Com os sintomas que você descreveu — [febre + inchaço + dor intensa] — precisamos te ver HOJE. Esse quadro pode ser um abscesso e não deve aguardar. Temos um horário de urgência disponível às [hora]. Você consegue vir?",
+          "mensagem_urgencia_media": "Sua dor parece relacionada a [cárie profunda / sensibilidade / problema periodontal]. Vou encaixar você o mais breve possível — tenho uma vaga amanhã às [hora]. Enquanto isso, você pode tomar [ibuprofeno / paracetamol] conforme a dosagem da bula para controlar a dor. Evite alimentos muito quentes ou frios na região."
+        },
+        {
+          "etapa": 3,
+          "acao": "Orientação pré-consulta de emergência",
+          "mensagem": "Perfeito! Sua urgência está confirmada para [hora] de hoje. Enquanto vem, para aliviar a dor: aplique compressa de gelo (não calor) externamente, tome o analgésico que tiver em casa e evite alimentos na área. Qualquer piora no caminho, entre em contato. Te esperamos em breve!"
+        }
+      ]
+    },
+    {
+      "id": "FC006",
+      "nome": "Fluxo de Reativação de Paciente Inativo",
+      "etapas": [
+        {
+          "etapa": 1,
+          "acao": "Contato proativo (paciente sem consulta há 12+ meses)",
+          "mensagem": "Olá, [Nome]! 🦷 Sentimos sua falta aqui na [Clínica]! Faz um tempinho que não nos vemos, e queremos saber se está tudo bem com você. Aproveito para lembrar que a consulta semestral de rotina é fundamental para prevenir problemas maiores. Posso verificar os melhores horários disponíveis para você?"
+        },
+        {
+          "etapa": 2,
+          "acao": "Oferta de benefício para retorno",
+          "mensagem": "Como forma de te dar as boas-vindas de volta, temos uma condição especial para quem está retornando: [limpeza com desconto / avaliação gratuita inclusa / procedimento com condição especial]. Válido para agendamentos até [data]. Que tal aproveitarmos?"
+        },
+        {
+          "etapa": 3,
+          "acao": "Investigação do motivo da ausência",
+          "mensagem": "Antes de agendar, só quero checar: houve alguma razão específica para a pausa? Se foi algum problema com o atendimento, adoraria ouvir para melhorar. Se foi questão de tempo ou financeira, tenho soluções para te ajudar. Seu sorriso é importante demais para ficar sem cuidado! 😊"
+        }
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "id": "GE001",
+      "gatilho": "Autoestima e confiança transformadas pelo sorriso",
+      "descricao": "O sorriso é um dos primeiros elementos notados numa interação. Pacientes com sorriso bonito relatam maior confiança em entrevistas de emprego, relacionamentos, apresentações e momentos sociais.",
+      "como_ativar": "Mostrar fotos de antes e depois de casos reais. Perguntar sobre situações em que o paciente se sentiu constrangido pelo sorriso. Conectar o tratamento com o impacto concreto na vida pessoal e profissional.",
+      "frases_gatilho": [
+        "Imagine chegar à sua próxima entrevista sorrindo com confiança plena.",
+        "Quando você se sente bem com o seu sorriso, isso muda como você se apresenta para o mundo.",
+        "Nossos pacientes nos dizem que a transformação vai muito além dos dentes."
+      ]
+    },
+    {
+      "id": "GE002",
+      "gatilho": "Medo de agravamento e custo futuro maior",
+      "descricao": "O paciente que posterga o tratamento geralmente acaba pagando muito mais no futuro. Uma cárie pequena vira canal, o canal vira extração, a extração vira implante.",
+      "como_ativar": "Mostrar de forma educativa a progressão do problema sem tratamento. Usar linguagem clara e não alarmista: 'Este dente hoje precisa de uma restauração simples. Se esperarmos mais 6 meses, o nervo pode ser atingido e vai precisar de canal — o custo é 5 vezes maior'.",
+      "frases_gatilho": [
+        "Tratar hoje custa R$ [X]. Se esperarmos, pode custar R$ [5X].",
+        "A janela para o tratamento mais simples está se fechando — e queremos aproveitar enquanto é possível.",
+        "Saúde bucal é exatamente como a manutenção do carro: ignorar o pequeno problema hoje cria o problema grande amanhã."
+      ]
+    },
+    {
+      "id": "GE003",
+      "gatilho": "Saúde geral conectada à saúde bucal",
+      "descricao": "A boca é a porta de entrada do organismo. Doenças periodontais estão clinicamente associadas a maior risco de doenças cardiovasculares, diabetes descompensada, problemas respiratórios e complicações na gravidez.",
+      "como_ativar": "Para pacientes diabéticos, hipertensos ou com histórico cardiovascular: destacar a relação comprovada entre periodontite e controle da glicemia, inflamação sistêmica e saúde do coração. Usar a saúde bucal como motivação de saúde geral.",
+      "frases_gatilho": [
+        "A gengivite crônica aumenta significativamente o risco cardiovascular — tratar a gengiva é cuidar do coração.",
+        "Pacientes diabéticos com periodontite têm mais dificuldade de controlar a glicemia — o tratamento periodontal pode ajudar.",
+        "Sua saúde começa pela boca — é literalmente a porta de entrada do seu corpo."
+      ]
+    },
+    {
+      "id": "GE004",
+      "gatilho": "Alívio da dor e recuperação da qualidade de vida",
+      "descricao": "Paciente com dor crônica (dente, gengiva, DTM) tem qualidade de vida comprometida: dificuldade para comer, dormir, concentrar e se relacionar.",
+      "como_ativar": "Reconhecer o sofrimento com empatia genuína. Demonstrar que o tratamento vai resolver a causa da dor, não apenas mascarar com analgésicos. Descrever como será a vida sem a dor.",
+      "frases_gatilho": [
+        "Você não precisa continuar convivendo com essa dor — existe solução.",
+        "Imagine poder comer o que gosta sem dor, dormir bem e acordar disposto.",
+        "Nosso objetivo é que você saia daqui sem dor e com um plano claro para o tratamento completo."
+      ]
+    },
+    {
+      "id": "GE005",
+      "gatilho": "Aprovação social e impacto nos relacionamentos",
+      "descricao": "Dentes desalinhados, escurecidos ou com mau hálito geram constrangimento social e impactam relacionamentos pessoais e profissionais.",
+      "como_ativar": "Abordar com delicadeza e sem julgamento — a queixa muitas vezes é não verbalizada. Perguntar abertamente: 'Há algo no seu sorriso que te incomoda ou que você já quis mudar?'. Apresentar a transformação como investimento em bem-estar social.",
+      "frases_gatilho": [
+        "Muitos dos nossos pacientes nos dizem que se sentiram mais à vontade para sorrir em fotos e em momentos especiais após o tratamento.",
+        "Um sorriso saudável e harmônico comunica cuidado e autoestima — as pessoas percebem isso.",
+        "Você merece se sentir confortável para sorrir em qualquer situação."
+      ]
+    },
+    {
+      "id": "GE006",
+      "gatilho": "Urgência positiva — oportunidade que se encerra",
+      "descricao": "Promoções com prazo, vagas limitadas em agenda ou condição especial para decisão imediata criam urgência legítima que acelera a conversão sem pressionar indevidamente.",
+      "como_ativar": "Usar urgência real e ética: 'Esta promoção de clareamento com 30% de desconto vai até o final do mês'; 'Temos apenas 2 vagas disponíveis na agenda do especialista em implantes neste mês'; 'O valor do orçamento é válido por 30 dias'.",
+      "frases_gatilho": [
+        "Esta é nossa campanha de clareamento de final de ano — disponível apenas até [data].",
+        "O Dr. [Nome], especialista em implantes, tem apenas 2 vagas disponíveis neste mês.",
+        "O orçamento que preparamos tem validade de 30 dias — posso garantir os valores e a disponibilidade enquanto é o momento."
+      ]
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "id": "CS001",
+      "titulo": "Paciente com medo de dentista querendo fazer canal",
+      "contexto": "Pedro, 38 anos, está com dor de dente há 4 dias e postergou a ida ao dentista por medo. Manda mensagem pelo WhatsApp relatando dor intensa.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Boa tarde. Estou com muita dor num dente faz 4 dias. Tenho muito medo de dentista, mas a dor tá insuportável. O que fazem no tratamento de canal? Dói muito?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Boa tarde, Pedro! Que bom que entrou em contato — 4 dias com dor é muito tempo e você fez certo em buscar ajuda agora. Entendo completamente o medo de dentista — é muito mais comum do que você imagina. Primeiro, vou te tranquilizar sobre o canal: o tratamento é feito com anestesia local e é completamente indolor durante o procedimento. A maioria dos pacientes diz que a expectativa é muito pior que a realidade. O desconforto vem antes — que é a dor que você já está sentindo. Pode me contar mais: a dor é constante ou acontece com algo específico (frio, quente, mastigar)? Você tem febre ou inchaço no rosto?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "É constante, mesmo sem mastigar. Não tenho febre nem inchaço. Mas tenho pavor de agulha de anestesia."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendido, Pedro. Pela dor constante sem estímulo, é bem provável que o nervo esteja comprometido e o canal realmente seja necessário. Mas antes de qualquer coisa, precisamos avaliar. Sobre a agulha — temos uma solução específica para isso: antes de qualquer injeção, aplicamos uma pomada anestésica tópica diretamente na gengiva por alguns minutos. Quando fazemos a anestesia, você praticamente não sente a picada — só uma leve pressão. Muitos pacientes com pavor de agulha ficam surpresos com o quanto é diferente do que imaginavam. Posso te encaixar hoje ainda — tenho uma vaga às 17h. O Dr. [Nome] tem muita experiência com pacientes ansiosos. Consegue vir?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Tudo bem, vou tentar. Mas se ficar com medo posso parar?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Pode e vai poder! Vamos combinar um sinal antes de começar — você levanta a mão e paramos imediatamente, sem perguntas. Você está no controle o tempo todo. Anote o endereço: [endereço]. Estacionamento disponível [info]. Te vejo às 17h, Pedro. Você está fazendo a coisa certa — essa dor vai acabar muito em breve. 👊"
+        }
+      ]
+    },
+    {
+      "id": "CS002",
+      "titulo": "Paciente interessada em clareamento e facetas para casamento",
+      "contexto": "Juliana, 29 anos, vai se casar em 5 meses e quer ter um sorriso perfeito. Manda foto do sorriso desejado por WhatsApp.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Oi! Vou me casar em outubro e quero muito melhorar meu sorriso antes. Tenho dentes um pouco amarelados e uns levemente tortos na frente. Vi fotos de facetas e adorei. Vocês fazem?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Que emoção — parabéns pelo casamento que se aproxima! 🎉 E você veio no momento perfeito: 5 meses é o prazo ideal para planejar a transformação do sorriso com calma. Sim, fazemos facetas e temos casos lindos para te mostrar! Mas antes de indicar qual é a melhor solução para você, precisamos de uma avaliação — porque dependendo do grau de inclinação dos dentes e da cor desejada, o caminho ideal pode ser facetas de porcelana, lentes de contato dental, clareamento combinado com alinhamento, ou uma combinação. Você pode agendar a avaliação gratuita? E se quiser, já pode enviar uma foto do seu sorriso por aqui para eu ter uma ideia inicial."
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "[envia foto] O que você acha? Dá para ter um resultado assim até outubro?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Que sorriso bonito você já tem! Olhando a foto, consigo ver que os incisivos centrais têm uma leve inclinação e o tom está um pouco mais amarelado — nada que não tenha solução com o planejamento certo. Para outubro, temos duas opções que conseguimos dentro do prazo: 1️⃣ Clareamento de consultório + alinhador transparente para a parte de posicionamento — mais tempo e processo, mas resultado mais natural e sem desgaste do dente. 2️⃣ Facetas de porcelana nos 6 ou 8 dentes frontais — resultado imediato e transformador, mas com um grau de desgaste do dente. Para te indicar o melhor, preciso te ver presencialmente. A avaliação é gratuita. Tenho amanhã às 18h — consegue vir?"
+        }
+      ]
+    },
+    {
+      "id": "CS003",
+      "titulo": "Paciente comparando preço de implante com outra clínica",
+      "contexto": "Marcos, 54 anos, perdeu um dente molar. Recebeu orçamento de R$ 3.500 em outra clínica e nosso orçamento foi de R$ 5.500.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Fui avaliado em outra clínica e o orçamento para o implante foi de R$ 3.500. Aqui ficou R$ 5.500. É muita diferença — por que tão mais caro aqui?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Marcos, é uma diferença relevante mesmo e você tem razão em questionar — faz todo sentido comparar. Posso te explicar o que está incluído no nosso orçamento e assim você pode comparar com igualdade? No nosso orçamento de R$ 5.500 estão incluídos: ✅ Implante de titânio [Marca — ex: Straumann / Neodent], com certificação internacional ✅ Coroa de zircônia (material mais estético e resistente) ✅ Tomografia cone beam para planejamento cirúrgico ✅ Acompanhamento por 12 meses ✅ Garantia de osseointegração. Vale perguntar na outra clínica: qual a marca do implante? O material da coroa é zircônia ou resina? Inclui a tomografia e o acompanhamento? Com essas informações você compara com base igual."
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Faz sentido. Não sei qual é a marca deles. Mas mesmo assim R$ 2.000 de diferença é muito."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Entendo. Implante é para a vida — vai ficar no seu maxilar por décadas. A diferença de R$ 2.000 entre um implante que dura 30 anos e um que apresenta problema em 5 representa muito mais custo no longo prazo. Além disso, se precisar de intervenção ou correção, o custo é ainda maior. Dito isso, posso verificar se existe alguma condição especial disponível para você: parcelamento estendido que reduza muito o valor da parcela mensal. No cartão em 24x, fica R$ [X] por mês — e você garante um implante com material e garantia comprovados. Quer que eu calcule para você?"
+        }
+      ]
+    },
+    {
+      "id": "CS004",
+      "titulo": "Mãe preocupada com o filho de 10 anos precisando de aparelho",
+      "contexto": "Ana, mãe de Lucas (10 anos), liga preocupada após o dentista da escola indicar que Lucas precisa de ortodontia. Quer saber se a idade é certa e o custo.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Boa tarde. O dentista da escola disse que meu filho de 10 anos precisa de aparelho. Ele ainda tem dentes de leite. Isso é cedo demais? E quanto custa?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Boa tarde! Que bom que você está acompanhando de perto a saúde bucal do Lucas. A indicação precoce faz muito sentido em crianças: aos 10 anos, ainda com mistura de dentes de leite e permanentes, é possível realizar a ortopedia facial — que corrige o crescimento dos maxilares enquanto o osso ainda está em formação. Isso pode resolver problemas de mordida que seriam muito mais complexos e caros de tratar na vida adulta, às vezes evitando até cirurgias. Não é necessariamente um aparelho completo — pode ser um aparelho ortopédico (placa ou expansor) para guiar o crescimento. O custo varia conforme o caso específico, mas geralmente começa em R$ [X] para aparelhos ortopédicos infantis. Para saber exatamente o que o Lucas precisa, precisamos de uma avaliação. Ela é gratuita. Posso agendar para vocês dois?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Sim! Esse aparelho vai quanto tempo? Ele vai ter que usar até adulto?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Ótima pergunta. O tratamento ortopédico infantil geralmente dura de 6 a 18 meses. Depois, dependendo da evolução, há um período de observação até que os dentes permanentes estejam todos erupcionados — geralmente entre 12 e 14 anos. Aí sim pode ser necessário um aparelho ortodôntico convencional por mais 12 a 24 meses. O tratamento precoce tende a encurtar o tempo total e reduzir a complexidade do tratamento posterior. O mais importante é a avaliação para ver exatamente o que o Lucas precisa agora. Consigo uma vaga para vocês às [data/hora]. Funciona?"
+        }
+      ]
+    },
+    {
+      "id": "CS005",
+      "titulo": "Paciente idosa buscando reabilitação total — protocolo All-on-4",
+      "contexto": "Dona Conceição, 68 anos, perdeu quase todos os dentes e usa dentadura há 10 anos. Viu propaganda do implante fixo e quer entender se é para ela.",
+      "conversa": [
+        {
+          "papel": "Paciente",
+          "mensagem": "Oi filha, vi uma propaganda de implante de todos os dentes. Uso dentadura há 10 anos e sofro muito — ela cai, não consigo mastigar direito. Isso é possível para uma pessoa de 68 anos?"
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "Dona Conceição, que ótimo que entrou em contato! Sim, o procedimento que viu é o Protocolo All-on-4 ou All-on-6 — uma prótese fixa parafusada sobre implantes. E 68 anos não é nenhuma limitação! Temos muitos pacientes nessa faixa etária e além. O que importa não é a idade, mas a condição do osso e a saúde geral. Entendo muito bem o que a senhora descreve: dentadura que cai, dificuldade para mastigar. Isso impacta demais na qualidade de vida, na nutrição e na autoestima. Com o protocolo fixo, a senhora vai poder mastigar qualquer alimento, sorrir com confiança e nunca mais se preocupar com isso. Para saber se é viável, precisamos de uma avaliação com tomografia — que fazemos aqui mesmo. A avaliação inicial é gratuita. Posso agendar?"
+        },
+        {
+          "papel": "Paciente",
+          "mensagem": "Quanto vai custar isso? Tenho medo de ser muito caro."
+        },
+        {
+          "papel": "Agente",
+          "mensagem": "O Protocolo tem um investimento mais robusto, sim. O valor varia conforme o número de implantes e o material da prótese — a faixa é de R$ [X] a R$ [Y] por arcada. Parece muito à primeira vista, mas quando vemos que é uma solução definitiva para décadas, o custo por ano fica muito menor do que uma dentadura convencional com suas manutenções, adesivos e incômodos. E trabalhamos com parcelamento em até [X]x. Mas o mais importante: vamos primeiro avaliar o caso da senhora para saber exatamente o que é necessário e o valor real. Às vezes é possível fazer só uma arcada por vez. Posso agendar a avaliação gratuita e, com o diagnóstico em mãos, a senhora tem todas as informações para decidir com tranquilidade?"
+        }
+      ]
+    }
+  ],
+
+  "faq_estruturado": [
+    {
+      "id": "FAQ001",
+      "pergunta": "Com que frequência devo ir ao dentista?",
+      "resposta": "A recomendação é consultar o dentista a cada 6 meses para pacientes sem problemas bucais ativos. Para pacientes com histórico de cáries frequentes, doença periodontal, diabetes ou tratamentos em andamento (como implantes e ortodontia), a frequência pode ser de 3 em 3 meses. A consulta regular previne problemas maiores — uma cárie identificada cedo custa muito menos para tratar do que uma que já atingiu o nervo."
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "A avaliação inicial é gratuita?",
+      "resposta": "Sim, em nossa clínica (e nas principais redes como OdontoCompany e Oral Sin), a avaliação inicial é gratuita e sem compromisso. Na consulta, o dentista faz o exame clínico, verifica a condição dos dentes e gengiva, solicita radiografias se necessário e apresenta o plano de tratamento com orçamento detalhado. Você tem total liberdade para decidir se quer ou não prosseguir."
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "O que é tratamento de canal e ele é muito doloroso?",
+      "resposta": "O tratamento de canal (endodontia) é o procedimento de remoção da polpa dentária (nervo) quando ela está infectada ou mortificada, seguido de limpeza, modelagem e obturação dos canais. É realizado com anestesia local eficiente — o procedimento em si é indolor. O desconforto que o paciente já sente antes (dor de dente) é muito maior. Após o tratamento, pode haver leve sensibilidade nos primeiros 2-3 dias, controlada com analgésicos prescritos. O canal salva o dente e elimina definitivamente a dor da infecção."
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "Qual a diferença entre aparelho fixo metálico, autoligado, estético e alinhador transparente?",
+      "resposta": "Metálico tradicional: mais acessível, indicado para qualquer caso, inclusive complexos. Autoligado: mesma função do metálico, mas com bráquetes que não usam elásticos — tratamento geralmente mais rápido e manutenções menos frequentes. Estético (cerâmica/safira): mesma eficácia do fixo, mas com material claro que imita a cor do dente — mais discreto. Alinhador transparente (Invisalign, Sorridents Aligner): placas removíveis e invisíveis, sem restrições alimentares e higienização fácil — indicado para casos leves a moderados, com maior custo."
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "Por quanto tempo preciso usar o aparelho ortodôntico?",
+      "resposta": "O tempo varia conforme a complexidade do caso. Apinhamentos leves com alinhador transparente: 6 a 12 meses. Casos moderados com aparelho fixo: 18 a 24 meses. Casos complexos com mordidas cruzadas ou dentes muito desalinhados: 24 a 36 meses. Após o término, é obrigatório o uso da contenção (fio fixo atrás dos dentes ou placa removível) — para sempre — para manter o resultado. Interromper a contenção causa recidiva (os dentes voltam à posição anterior)."
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "Quanto tempo dura um clareamento dental e qual o resultado esperado?",
+      "resposta": "O clareamento de consultório (laser/LED) tem resultado imediato — 1 sessão de 60 a 90 minutos. O resultado esperado é de 2 a 8 tons mais claro, dependendo da cor original e do tipo de mancha. O resultado dura de 6 meses a 2 anos, influenciado pelo consumo de café, vinho, refrigerantes coloridos e cigarro. O clareamento caseiro supervisionado (moldeiras + gel) exige uso por 2 a 3 semanas e tem resultado mais gradual. A combinação dos dois métodos potencializa o resultado."
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "O implante dentário dura a vida toda?",
+      "resposta": "O pino de titânio (fixtura) tem vida útil prolongada — quando integrado ao osso com sucesso, pode durar décadas ou toda a vida, desde que o paciente mantenha boa higiene bucal e acompanhamento regular. A coroa protética (parte visível) tem vida útil de 10 a 20 anos dependendo do material e dos hábitos. Tabagismo, diabetes descontrolada, periodontite e higiene deficiente são os principais fatores de risco para falha do implante."
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Existe limite de idade para fazer implante?",
+      "resposta": "Para o limite inferior: implantes são contraindicados em jovens cujo desenvolvimento ósseo ainda não foi completado — geralmente antes dos 18 anos em mulheres e 20 anos em homens. Para o limite superior: não existe limite máximo de idade. O critério decisivo é a condição de saúde geral (doenças controladas, condição óssea adequada) e não a idade cronológica. Muitos pacientes acima de 80 anos realizam implantes com sucesso."
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "O que é o Protocolo All-on-4 e qual a diferença para uma dentadura?",
+      "resposta": "O Protocolo All-on-4 (ou All-on-6) é uma prótese fixa, parafusada em 4 ou 6 implantes estrategicamente posicionados, que substitui todos os dentes de uma arcada completa. Ao contrário da dentadura convencional (prótese removível), o protocolo é fixo — não pode ser removido pelo paciente, funcionando como dentes naturais. Vantagens: mastigação plena de qualquer alimento, estabilidade total (sem cair), preservação do osso, estética natural e eliminação do desconforto das dentaduras. Pacientes descrevem como uma transformação completa de qualidade de vida."
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "Como é o pós-operatório de uma cirurgia de implante?",
+      "resposta": "Nas primeiras 24-48h: inchaço e hematoma são normais — compressas de gelo (20 minutos a cada 1 hora) nas primeiras 24h. Sangramento leve normal nas primeiras horas. Alimentação pastosa (sopas, purês) por 7 a 10 dias. Não fumar pelo menos 15 dias (o fumo compromete a osseointegração). Tomar a medicação prescrita (antibiótico e anti-inflamatório) conforme orientação. Não fazer esforço físico intenso nos primeiros 3 dias. Retorno para remoção dos pontos geralmente em 7-10 dias. Sinais de alerta que exigem retorno imediato: febre acima de 38°C, sangramento que não cede em 2 horas, dor crescente após 72h."
+    },
+    {
+      "id": "FAQ011",
+      "pergunta": "O que são facetas de porcelana e quem pode usar?",
+      "resposta": "Facetas de porcelana são lâminas ultrafinas cimentadas na face anterior dos dentes, corrigindo cor, formato, tamanho e leve posicionamento com mínimo desgaste dental. São indicadas para: manchas resistentes ao clareamento, dentes pequenos ou com formatos irregulares, espaçamentos, bordas desgastadas e correção estética de até 2-3 mm de desalinhamento. Não são indicadas para: mordidas muito profundas, bruxismo severo sem controle, alinhamento ortodôntico necessário para casos moderados a severos."
+    },
+    {
+      "id": "FAQ012",
+      "pergunta": "O que é a harmonização orofacial e dentistas podem fazer?",
+      "resposta": "A Harmonização Orofacial (HOF) é um conjunto de procedimentos minimamente invasivos para melhoria estética facial. Desde 2019, a Resolução CFO 198/2019 autoriza dentistas habilitados a realizar: aplicação de toxina botulínica (Botox) para rugas, sorriso gengival e bruxismo; preenchimento com ácido hialurônico para lábios e sulcos; bioestimuladores de colágeno; rinoplastia não cirúrgica e bichectomia. O dentista deve ser habilitado pelo CFO — verifique o registro."
+    },
+    {
+      "id": "FAQ013",
+      "pergunta": "O que meu plano odontológico cobre?",
+      "resposta": "O Rol mínimo obrigatório da ANS inclui: consulta, profilaxia (limpeza), restaurações, endodontia (canal), exodontia simples, periodontia básica, radiografias e urgências. O que geralmente NÃO está coberto nos planos básicos: clareamento dental (estético), implantes, facetas e lentes, harmonização orofacial, ortodontia. Planos premium podem incluir ortodontia e implantes com cobertura parcial. Para saber exatamente o que seu plano cobre, consulte a tabela de procedimentos da sua operadora ou ligue para a central de atendimento."
+    },
+    {
+      "id": "FAQ014",
+      "pergunta": "Quando devo levar meu filho ao dentista pela primeira vez?",
+      "resposta": "A Sociedade Brasileira de Odontopediatria recomenda a primeira consulta quando o primeiro dente de leite erupcionar, geralmente entre 6 e 8 meses de vida. O objetivo é orientar os pais sobre higienização bucal do bebê, hábitos de sucção e prevenção da cárie de primeira infância. A visita precoce normaliza o ambiente odontológico para a criança, evitando o desenvolvimento de medo. A limpeza dos dentes de leite começa com gaze úmida antes dos dentes (para a gengiva), e passa para escova macia e creme dental com flúor quando surgem os primeiros dentes."
+    },
+    {
+      "id": "FAQ015",
+      "pergunta": "O que é periodontite e como ela é tratada?",
+      "resposta": "Periodontite é a inflamação e destruição dos tecidos de suporte do dente (gengiva e osso alveolar) causada por bactérias. Progride silenciosamente — o paciente muitas vezes não sente dor. Sinais: gengiva avermelhada, sangrando ao escovar, mau hálito persistente, dentes que parecem ter ficado 'maiores' (recessão gengival), mobilidade dentária. Tratamento: raspagem e alisamento radicular (RAR) — procedimento não cirúrgico sob anestesia; nos casos graves, cirurgia periodontal. Manutenção trimestral após o tratamento é obrigatória. Sem tratamento, leva à perda dentária."
+    },
+    {
+      "id": "FAQ016",
+      "pergunta": "O que causa o mau hálito (halitose) e como tratar?",
+      "resposta": "90% dos casos de halitose têm origem bucal: acúmulo de bactérias na língua (principal causa), doença periodontal, cáries, próteses mal higienizadas e boca seca (xerostomia). Os 10% restantes têm causas sistêmicas (diabetes, distúrbios gástricos, doenças renais, problemas respiratórios). Tratamento: higienização da língua com limpador específico (não a escova), tratamento da doença periodontal ou cáries, hidratação adequada, uso de enxaguante sem álcool (o álcool resseca a boca) e consulta ao dentista para avaliação. Enxaguantes bucais apenas mascaram — não tratam a causa."
+    },
+    {
+      "id": "FAQ017",
+      "pergunta": "O que é bruxismo e quais os tratamentos disponíveis?",
+      "resposta": "Bruxismo é o hábito involuntário de apertar ou ranger os dentes, geralmente durante o sono, relacionado a estresse, ansiedade e fatores oclusais. Consequências: desgaste do esmalte dental, fratura de restaurações e dentes, dores de cabeça e musculares, sensibilidade dental aumentada e problemas na articulação temporomandibular (DTM). Tratamento principal: placa miorrelaxante (placa de bruxismo) personalizada, usada durante o sono. Tratamentos complementares: toxina botulínica (Botox) nos músculos masseteres para redução da força de mordida, fisioterapia, acompanhamento psicológico/psiquiátrico para controle do estresse."
+    },
+    {
+      "id": "FAQ018",
+      "pergunta": "O que é a sedação consciente e quando é indicada?",
+      "resposta": "A sedação consciente é uma técnica que induz um estado de relaxamento e redução da ansiedade sem perda total de consciência. O paciente permanece desperto, coopera e respira normalmente. Modalidades: inalatória (óxido nitroso, 'gás do riso') e intravenosa (midazolam ou propofol em doses menores que a anestesia geral). Indicada para: pacientes com odontofobia severa, portadores de deficiências que dificultam a cooperação, procedimentos longos (múltiplos implantes, cirurgias extensas) e pacientes com reflexo de vômito exacerbado. Requer avaliação prévia e acompanhante para o retorno."
+    },
+    {
+      "id": "FAQ019",
+      "pergunta": "Qual a diferença entre prótese total (dentadura) e protocolo fixo (All-on-4)?",
+      "resposta": "Dentadura convencional: removível, retida por sucção ou adesivo; pode cair, dificulta a mastigação de alimentos duros, estimula a perda óssea progressiva, exige higienização diária fora da boca. Protocolo All-on-4/6: prótese fixa parafusada em implantes; não pode ser removida pelo paciente; permite mastigar qualquer alimento como dentes naturais; preserva o osso; estética superior; limpeza feita da mesma forma que os dentes naturais. Custo do protocolo: significativamente maior (R$ 15.000 a R$ 80.000 por arcada), mas com durabilidade e qualidade de vida incomparavelmente superiores."
+    },
+    {
+      "id": "FAQ020",
+      "pergunta": "É normal sentir sensibilidade após o clareamento?",
+      "resposta": "Sim, a sensibilidade pós-clareamento é um efeito colateral transitório e esperado, especialmente nas primeiras 24-48 horas após o clareamento de consultório. O mecanismo é a ação do peróxido de hidrogênio nos túbulos dentinários. Na maioria dos pacientes, desaparece completamente em 24 a 72h. Para minimizar: dentifrícios dessensibilizantes (com nitrato de potássio ou flúor) antes e após o procedimento, gel dessensibilizante aplicado pelo dentista ao final da sessão, evitar alimentos muito quentes ou frios nas primeiras 48h. Para pacientes com sensibilidade prévia, o clareamento caseiro com concentração menor é uma alternativa."
+    },
+    {
+      "id": "FAQ021",
+      "pergunta": "Quantas sessões são necessárias para o clareamento dental?",
+      "resposta": "Clareamento de consultório (laser/LED): 1 a 3 sessões de 60-90 minutos. A maioria dos casos atinge o resultado desejado em 1 sessão. Clareamento caseiro supervisionado: uso diário por 2 a 4 semanas com as moldeiras. Protocolo combinado (consultório + caseiro): 1 sessão no consultório + 1 a 2 semanas de caseiro para potencializar e estabilizar o resultado. A frequência de sessões depende da intensidade do manchamento e do resultado esperado."
+    },
+    {
+      "id": "FAQ022",
+      "pergunta": "O que é enxerto ósseo e quando é necessário antes do implante?",
+      "resposta": "O enxerto ósseo é o procedimento de aumento do volume e densidade óssea no local onde será colocado o implante, quando o osso está insuficiente para fixar o pino de titânio com segurança. A perda óssea ocorre após extração dentária (começa em semanas e avança ao longo dos anos), periodontite grave ou trauma. Tipos de enxerto: osso autógeno (do próprio paciente — mento ou ramo da mandíbula), osso bovino liofilizado (mais comum), membranas de colágeno e substitutos sintéticos (hidroxiapatita). Após o enxerto, aguarda-se 3 a 6 meses para maturação antes de instalar o implante."
+    },
+    {
+      "id": "FAQ023",
+      "pergunta": "Como funciona a lente de contato dental e qual a diferença para a faceta?",
+      "resposta": "A lente de contato dental (laminate veneer) é uma versão ultra-fina da faceta de porcelana, com espessura de apenas 0,1 a 0,3 mm versus 0,5 a 0,7 mm da faceta convencional. Por ser mais fina, exige desgaste mínimo ou nenhum do esmalte dental (preparações no-prep ou minimal-prep). Indicada para casos com espaço disponível (dentes com diastema, forma irregular), sem a necessidade de corrigir grandes assimetrias. Para casos que exigem maior transformação de cor, forma ou rotação, a faceta convencional tem indicação mais ampla. O resultado estético de ambas é de alto padrão."
+    },
+    {
+      "id": "FAQ024",
+      "pergunta": "Quando um siso deve ser extraído?",
+      "resposta": "Os terceiros molares (sisos) devem ser avaliados radiograficamente a partir dos 16-18 anos. Indicações para extração: siso impactado (preso no osso sem espaço para erupcionar) com risco de infecção (pericoronarite), pressão sobre os dentes vizinhos causando dor ou apinhamento, cárie no siso ou no dente vizinho por dificuldade de higienização, cisto folicular (saco pericoronário). Quando há espaço adequado e o siso erupciona na posição correta e higienizável, pode ser mantido. A extração é mais simples quanto mais jovem o paciente — osso menos denso, raízes menos formadas."
+    },
+    {
+      "id": "FAQ025",
+      "pergunta": "O que é carga imediata no implante e para quem é indicada?",
+      "resposta": "Carga imediata é a técnica em que a prótese provisória é instalada no mesmo dia da cirurgia de implante, antes do período de osseointegração (que dura 3 a 6 meses). O paciente sai da clínica com 'dentes'. A carga imediata é possível quando há volume e densidade óssea adequados (que garantem estabilidade primária do implante) e planejamento digital prévio (tomografia + guia cirúrgico). Não é indicada em todos os casos: ausência de estabilidade primária, infecção ativa ou volume ósseo insuficiente contraindicam a técnica. A Oral Sin é pioneira nessa técnica no Brasil."
+    },
+    {
+      "id": "FAQ026",
+      "pergunta": "Como devo higienizar o aparelho ortodôntico fixo?",
+      "resposta": "A higienização com aparelho fixo exige cuidado extra para evitar cáries e manchamento do esmalte. Recomendações: escovação após cada refeição (mínimo 3x ao dia) com escova de dente convencional + escova interdental (ortodôntica) para limpar ao redor dos bráquetes; fio dental com passador de fio (flosser de aparelho) ou fio dental específico para aparelho; escovas interdentais (proxy brush) para espaços entre bráquete e gengiva; enxaguante bucal sem álcool. Alimentos a evitar: duros (noz, gelo, milho inteiro), pegajosos (caramelo, chiclete), muito açucarados (que favorecem cárie). Visitas de manutenção a cada 4 a 8 semanas."
+    },
+    {
+      "id": "FAQ027",
+      "pergunta": "O dentista pode realizar harmonização orofacial?",
+      "resposta": "Sim. A Resolução CFO 198/2019 regulamentou a harmonização orofacial como área de atuação dos cirurgiões-dentistas, desde que devidamente habilitados por curso de especialização ou aperfeiçoamento reconhecido. Os procedimentos autorizados incluem: toxina botulínica (Botox), preenchimento com ácido hialurônico, bioestimuladores de colágeno, bichectomia e rinoplastia não cirúrgica. O dentista especialista em HOF tem formação específica na anatomia facial e possui habilidades diferenciadas para procedimentos na região orofacial."
+    },
+    {
+      "id": "FAQ028",
+      "pergunta": "O que é a DTM (Disfunção Temporomandibular) e como é tratada?",
+      "resposta": "A DTM é um conjunto de alterações que afetam a articulação temporomandibular (ATM) e os músculos mastigatórios. Sintomas: dor ou cansaço na mandíbula, estalos ou crepitação ao abrir a boca, dificuldade para abrir ou fechar a boca, dores de cabeça, dor nos ouvidos e pescoço. Causas: bruxismo, estresse, trauma, problemas oclusais. Tratamento: placa miorrelaxante (principal), fisioterapia (para desbloqueio articular), toxina botulínica nos masseteres (para reduzir força de mordida), acupuntura, psicoterapia para controle do estresse. Em casos graves: cirurgia articular."
+    },
+    {
+      "id": "FAQ029",
+      "pergunta": "Qual é o papel do selante dental e em que situação é indicado?",
+      "resposta": "O selante dental é um material resinoso aplicado nos sulcos e fissuras dos dentes posteriores (molares e pré-molares) para selar essas irregularidades e impedir o acúmulo de bactérias e placa. É um procedimento preventivo simples, indolor (sem anestesia) e de baixo custo. Indicado principalmente para crianças e adolescentes logo após a erupção dos molares permanentes (geralmente entre 6 e 14 anos). Em adultos com fissuras profundas e histórico de cáries em fossas e sulcos também pode ser indicado. Eficácia preventiva comprovada de até 70-80% para cáries nas áreas seladas."
+    },
+    {
+      "id": "FAQ030",
+      "pergunta": "Existe financiamento específico para tratamentos odontológicos?",
+      "resposta": "Sim. As principais opções de financiamento odontológico no Brasil são: Odontocred — financia procedimentos odontológicos em parceiros, com análise de crédito e parcelas fixas; Credidentista — financiamento específico para odontologia com condições diferenciadas; ClinipAGO — plataforma de parcelamento para clínicas de saúde; Pravaler — extensão para saúde bucal em IES parceiras; Cartão de crédito — parcelamento em até 24x na maioria das clínicas de redes. Além disso, muitas clínicas oferecem parcelamento direto (boleto) para tratamentos de maior valor como implantes e protocolos."
+    },
+    {
+      "id": "FAQ031",
+      "pergunta": "O que é gengivite e como ela difere da periodontite?",
+      "resposta": "Gengivite é a inflamação da gengiva causada pelo acúmulo de placa bacteriana. É reversível com limpeza profissional e melhora da higiene bucal. Sinais: gengiva vermelha, inchada e que sangra ao escovar. Não há destruição do osso alveolar. Periodontite é a evolução da gengivite não tratada para estágios mais avançados com formação de bolsas periodontais, destruição do osso e mobilidade dentária. É irreversível — o osso perdido não se regenera completamente. Tratamento da periodontite exige raspagem profunda (RAR) e, em casos graves, cirurgia. A gengivite é controlada com profilaxia regular."
+    },
+    {
+      "id": "FAQ032",
+      "pergunta": "Qual creme dental e escova de dente usar?",
+      "resposta": "Creme dental: adultos devem usar creme com no mínimo 1.000 ppm de flúor (verifique a embalagem) — o flúor é o principal agente preventivo de cáries. Para sensibilidade: cremes com nitrato de potássio ou citrato de potássio. Para clareamento: cremes clareadores têm ação superficial moderada. Crianças menores de 3 anos: creme com 1.000 ppm na quantidade de um grão de arroz. Crianças de 3 a 6 anos: tamanho de uma ervilha. Acima de 6 anos: creme adulto com flúor. Escova: cerdas macias ou extra-macias (cerdas duras danificam o esmalte e causam recessão gengival); cabeça pequena para acesso aos dentes posteriores; troque a cada 3 meses ou quando as cerdas aberrirem."
+    },
+    {
+      "id": "FAQ033",
+      "pergunta": "Devo usar fio dental? Qual a técnica correta?",
+      "resposta": "Sim — o fio dental é indispensável. A escova não acessa as superfícies interproximais (entre os dentes), onde 40% das cáries se desenvolvem. Técnica: corte 45 cm de fio; enrole nas pontas dos dedos médios; guie com polegar e indicador; insira entre os dentes com movimento de 'serra' suave; contorne em C ao redor de cada dente e deslize para cima e para baixo. Use fio ou escovas interdentais também. O fio dental deve ser passado 1x ao dia — geralmente à noite antes de dormir. Alternativas: fio tipo tape (mais largo), flossette (suporte plástico), interdental brush (escovinhas)."
+    },
+    {
+      "id": "FAQ034",
+      "pergunta": "O que é radiografia panorâmica e quando é solicitada?",
+      "resposta": "A radiografia panorâmica (ortopantomografia) é um exame que captura toda a arcada dentária (dentes superiores e inferiores), maxila, mandíbula e articulações temporomandibulares em uma única imagem. Indicações: avaliação geral dos dentes, diagnóstico de sisos impactados, planejamento ortodôntico e de implantes, identificação de cistos e lesões ósseas, avaliação de trauma facial. É um exame de rotina recomendado a cada 2-3 anos em adultos e a cada 1-2 anos em crianças. A dose de radiação é muito baixa — equivale a 1 a 2 horas de exposição à radiação ambiental natural."
+    },
+    {
+      "id": "FAQ035",
+      "pergunta": "O que é a tomografia cone beam e quando é necessária?",
+      "resposta": "A tomografia computadorizada de feixe cônico (CBCT ou cone beam) é o exame de imagem tridimensional da odontologia. Mostra estruturas ósseas, dentes e nervos em três planos simultâneos (axial, coronal e sagital), com muito mais detalhes que a radiografia convencional. Indicações obrigatórias: planejamento cirúrgico de implantes (para avaliar volume ósseo, localização do nervo alveolar inferior e seio maxilar), sisos impactados próximos a nervos, ortopedia facial e casos de DTM. A dose de radiação é maior que a panorâmica, mas muito menor que a tomografia médica convencional."
+    },
+    {
+      "id": "FAQ036",
+      "pergunta": "O que é o Código de Ética Odontológico e quais os direitos do paciente?",
+      "resposta": "O Código de Ética Odontológica (Resolução CFO 118/2012) rege a conduta ética dos profissionais. Direitos do paciente: ser atendido com respeito, sem discriminação; receber informações claras sobre diagnóstico e tratamento; dar consentimento informado antes de qualquer procedimento; recusar tratamento proposto; solicitar segundo parecer profissional; ter sigilo das informações do prontuário; solicitar cópia do prontuário; ser informado dos custos antes do início do tratamento; receber tratamento de urgência mesmo em situação de impossibilidade de pagamento imediato. Qualquer irregularidade pode ser denunciada ao CRO do estado."
+    },
+    {
+      "id": "FAQ037",
+      "pergunta": "Quanto tempo o dentista tem para guardar o prontuário do paciente?",
+      "resposta": "Segundo a Resolução CFO 118/2012 (Código de Ética) e a CFO 91/2009 (prontuário odontológico), o prontuário deve ser mantido pelo prazo mínimo de 20 anos para pacientes adultos e por 20 anos após a maioridade (18 anos) para pacientes que iniciaram o tratamento como menores de idade. O prontuário inclui: ficha clínica, radiografias, modelos de estudo, fotografias, termos de consentimento e todos os registros do tratamento. O paciente tem direito a solicitar cópia de todo o seu prontuário a qualquer momento."
+    },
+    {
+      "id": "FAQ038",
+      "pergunta": "O que acontece se eu não tratar uma cárie?",
+      "resposta": "A progressão de uma cárie não tratada segue um curso previsível: 1. Cárie inicial (esmalte) — mancha branca, tratável com remineralização ou restauração pequena, sem dor; 2. Cárie na dentina — cavidade formada, sensibilidade a doces e frio, restauração necessária; 3. Cárie próxima à polpa — dor ao quente, pulsante, indica comprometimento do nervo — canal necessário; 4. Polpa comprometida — dor espontânea intensa, abscesso possível — canal ou extração; 5. Abscessão — infecção com inchaço e febre — emergência, possível internação em casos graves. Custo: restauração simples (R$ 150) → canal + coroa (R$ 2.000) → extração + implante (R$ 5.000+)."
+    },
+    {
+      "id": "FAQ039",
+      "pergunta": "O que é o escaneamento intraoral e como funciona?",
+      "resposta": "O scanner intraoral é um dispositivo que captura a forma dos dentes e da boca em formato digital 3D, substituindo as moldagens convencionais (com aquele material de alginato que muitos pacientes acham desconfortável). O dentista passa o scanner dentro da boca e o software cria um modelo tridimensional em segundos. Usos: planejamento de alinhadores (Invisalign e similares), coroas CAD/CAM (no mesmo dia), planejamento de implantes, confecção de próteses e aparelhos retentores. Vantagens: mais confortável, mais preciso, mais rápido, sem risco de engolir material de moldagem."
+    },
+    {
+      "id": "FAQ040",
+      "pergunta": "Quanto custa um aparelho ortodôntico completo?",
+      "resposta": "Os valores variam por tipo e complexidade do caso: Aparelho metálico tradicional: R$ 2.000 a R$ 6.000 (inclui entrada + documentação + manutenções de 18 a 24 meses); Aparelho autoligado: R$ 3.000 a R$ 8.000 total; Aparelho estético (cerâmica): R$ 4.000 a R$ 10.000; Alinhadores transparentes (Invisalign Level 1): R$ 8.000 a R$ 20.000; Alinhadores de marcas nacionais: R$ 4.000 a R$ 10.000. As manutenções (consultas de acompanhamento) geralmente estão incluídas no valor total em pacotes fechados, ou variam de R$ 80 a R$ 200 por consulta quando cobradas separadamente."
+    },
+    {
+      "id": "FAQ041",
+      "pergunta": "O que é a Overdenture e quem é o candidato ideal?",
+      "resposta": "A Overdenture é uma prótese removível (como uma dentadura) retida por 2 a 4 implantes com sistema de encaixe (o'ring, barra ou magneto). Ao contrário da dentadura convencional, que 'flutua' na boca, a Overdenture 'encaixa' nos implantes — muito mais estável, sem risco de cair. Candidatos ideais: pacientes que não querem usar prótese total removível convencional por falta de estabilidade, mas cujo orçamento não comporta o protocolo fixo (All-on-4); pacientes idosos com volume ósseo insuficiente para múltiplos implantes; pacientes com reflexo de vômito que dificulta uso de prótese convencional."
+    },
+    {
+      "id": "FAQ042",
+      "pergunta": "Meu filho de 12 anos pode fazer clareamento?",
+      "resposta": "Clareamento dental não é recomendado para menores de 14-15 anos (dependendo do autor, até 18 anos) porque os túbulos dentinários são mais largos na infância e adolescência, tornando os dentes mais permeáveis ao agente clareador e mais suscetíveis à sensibilidade. Além disso, nessa fase a polpa dos dentes é mais volumosa, aumentando o risco de danos. Para adolescentes com manchas que causem constrangimento social, a avaliação individualizada é recomendada — em alguns casos pode ser considerado após desenvolvimento completo dos dentes. A melhor solução preventiva para manchas leves é o uso de creme dental de alta concentração de flúor e limpeza profissional regular."
+    },
+    {
+      "id": "FAQ043",
+      "pergunta": "O que é a cárie de mamadeira e como prevenir?",
+      "resposta": "A cárie de primeira infância (popularmente chamada 'cárie de mamadeira') é a cárie que afeta bebês e crianças pequenas por contato prolongado dos dentes de leite com líquidos açucarados (leite, sucos, fórmulas). É potencializada pelo uso noturno de mamadeira ou amamentação sob demanda noturna prolongada. Prevenção: limpar as gengivas do bebê com gaze úmida desde os primeiros dias; introduzir escovação quando nascerem os primeiros dentes; não adormecer o bebê com mamadeira açucarada; realizar a primeira consulta ao dentista quando nascer o primeiro dente; usar creme dental com flúor na quantidade correta para a idade."
+    },
+    {
+      "id": "FAQ044",
+      "pergunta": "O que é o flúor e por que é importante?",
+      "resposta": "O flúor é o mineral mais eficaz na prevenção de cáries. Atua de três formas: 1. Remineralização: o flúor se incorpora ao esmalte tornando-o mais resistente ao ataque ácido das bactérias; 2. Ação bacteriostática: reduz a capacidade das bactérias de produzir ácidos; 3. Reversão de lesões iniciais: manchas brancas (lesões de mancha branca) podem ser revertidas com flúor antes de virar cavidade. Fontes de flúor: água fluoretada (São Paulo tem desde 1953), creme dental fluoretado, enxaguante fluoretado e aplicação tópica profissional na clínica. A fluorose dental (manchas brancas) ocorre por excesso de flúor na fase de formação dos dentes — daí a importância de usar a quantidade correta de creme para crianças."
+    },
+    {
+      "id": "FAQ045",
+      "pergunta": "Posso fazer implante se tiver diabetes?",
+      "resposta": "Sim, pacientes diabéticos podem fazer implantes, desde que a diabetes esteja controlada (hemoglobina glicada HbA1c abaixo de 7% geralmente é o critério). Diabetes descontrolada aumenta significativamente o risco de falha do implante porque compromete a cicatrização e a resposta imunológica. Cuidados especiais: avaliação médica prévia, hemoglobina glicada recente, uso de antibioticoterapia profilática, controle rigoroso da glicemia no período pós-operatório e acompanhamento periodontal mais frequente. Pacientes diabéticos também têm maior risco de periodontite — que por sua vez dificulta o controle da glicemia (relação bidirecional)."
+    },
+    {
+      "id": "FAQ046",
+      "pergunta": "O que fazer quando um dente é avulsionado (arrancado por trauma)?",
+      "resposta": "Um dente permanente avulsionado pode ser reimplantado se o paciente agir rapidamente — é uma emergência odontológica. Passo a passo: 1. Pegue o dente pela coroa (parte branca), nunca pela raiz; 2. Se estiver sujo, lave rapidamente em água corrente por 10 segundos — sem esfregar; 3. Tente recolocar o dente no alvéolo imediatamente (se o paciente cooperar); 4. Se não conseguir reimplantar, guarde em leite integral, soro fisiológico ou entre a bochecha e a gengiva do próprio paciente (nunca em água); 5. Vá IMEDIATAMENTE à clínica odontológica — o tempo máximo para reimplante bem-sucedido é de 30 a 60 minutos. Dentes de leite avulsionados NÃO devem ser reimplantados (risco de comprometer o dente permanente)."
+    },
+    {
+      "id": "FAQ047",
+      "pergunta": "O que é odontologia digital e quais procedimentos ela abrange?",
+      "resposta": "Odontologia digital é o conjunto de tecnologias que substituem etapas convencionais por processos computadorizados. Inclui: escaneamento intraoral (substitui moldagem), tomografia cone beam (imagem 3D), planejamento cirúrgico digital com software (para implantes e ortodontia), guia cirúrgica impressa em 3D para posicionamento preciso do implante, CAD/CAM para confecção de coroas e próteses no consultório (mesmo dia), alinhadores gerados por software (Clear Aligner Technology), teledentistry (teleconsulta e telemonitoramento). A Oral Sin é pioneira em odontologia digital no Brasil. Vantagens: maior precisão, menos tentativas, resultado mais previsível e experiência mais confortável para o paciente."
+    },
+    {
+      "id": "FAQ048",
+      "pergunta": "Quem pode registrar queixa sobre um dentista ou clínica?",
+      "resposta": "O paciente pode registrar queixa sobre um dentista ou clínica nas seguintes instâncias: CRO (Conselho Regional de Odontologia) do estado — para questões de ética profissional, exercício ilegal da profissão ou má conduta; Procon — para questões de relação de consumo, publicidade enganosa, cobrança indevida; Vigilância Sanitária (VISA) — para irregularidades sanitárias nas instalações; Reclame Aqui — plataforma digital para reclamações públicas; ANS — se o problema envolver plano odontológico. Antes de registrar queixa formal, recomenda-se tentar resolver diretamente com a clínica pela ouvidoria interna."
+    },
+    {
+      "id": "FAQ049",
+      "pergunta": "É verdade que o café e o vinho mancham os dentes?",
+      "resposta": "Sim. Alimentos e bebidas ricas em pigmentos cromogênicos (taninos e corantes) causam manchas extrínsecas nos dentes. Os principais culpados: café (forte pigmentação — especialmente espresso sem açúcar), vinho tinto (taninos intensos), chá preto e verde, refrigerantes de cola, molho de soja e molho de tomate concentrado, açaí, beterraba e mirtilo. A nicotina do cigarro também causa manchamento intenso. Como minimizar: enxaguar com água após consumo, usar canudinho para bebidas pigmentadas (reduz contato com os dentes), escovar após 30 minutos da última refeição. O clareamento dental remove manchas externas, mas os hábitos determinam a durabilidade do resultado."
+    },
+    {
+      "id": "FAQ050",
+      "pergunta": "O que é a Resolução CFO 198/2019 sobre harmonização orofacial?",
+      "resposta": "A Resolução CFO 198/2019 regulamentou formalmente a Harmonização Orofacial como área de atuação dos cirurgiões-dentistas. Antes, havia controvérsia sobre a legalidade de dentistas realizarem procedimentos faciais como Botox e preenchimento. A resolução estabelece: dentistas habilitados em HOF podem realizar toxina botulínica, preenchimento com ácido hialurônico, bioestimuladores de colágeno, bichectomia, rinoplastia não cirúrgica e outros procedimentos na região orofacial e perifacial; a habilitação requer curso de especialização ou aperfeiçoamento reconhecido; o registro de especialista em HOF não é obrigatório para realizar os procedimentos, mas o profissional deve ter habilitação. Consulte o CRO para verificar a habilitação do profissional."
+    },
+    {
+      "id": "FAQ051",
+      "pergunta": "Como é feita a LGPD nas clínicas odontológicas?",
+      "resposta": "A LGPD (Lei 13.709/2018) se aplica integralmente às clínicas odontológicas. O prontuário odontológico contém dados pessoais sensíveis (dados de saúde). As obrigações da clínica: obter consentimento explícito do paciente para coleta e uso dos dados; usar as informações apenas para as finalidades declaradas (diagnóstico, tratamento, faturamento); proteger o prontuário com medidas de segurança (acesso restrito, senha, backup); não compartilhar dados com terceiros sem autorização (exceto seguradoras e planos com cobertura); garantir ao paciente o direito de acessar, corrigir e solicitar exclusão dos dados pessoais; notificar a ANPD em caso de vazamento. Fotos de antes e depois para fins de marketing exigem autorização específica e por escrito do paciente."
+    },
+    {
+      "id": "FAQ052",
+      "pergunta": "Qual a diferença entre o clareamento a laser e o LED?",
+      "resposta": "Ambos são técnicas de clareamento de consultório que utilizam uma fonte de luz para ativar o gel clareador (peróxido de hidrogênio), potencializando sua ação. A diferença está na fonte de luz: Laser de alta potência (diodo ou argônio): maior intensidade, pode agir mais rapidamente e em pontos precisos; maior custo do equipamento. LED (Light-Emitting Diode): ativa o gel de forma mais homogênea em toda a arcada; equipamentos mais acessíveis e amplamente difundidos. Na prática clínica atual, os resultados são comparáveis e a diferença de eficácia entre os dois métodos não é clinicamente significativa na maioria dos casos. O resultado depende mais da concentração do gel e da cor inicial dos dentes do que da fonte de luz utilizada."
+    },
+    {
+      "id": "FAQ053",
+      "pergunta": "Com que frequência devo trocar a escova de dentes?",
+      "resposta": "A recomendação dos principais conselhos de odontologia é trocar a escova de dentes a cada 3 meses ou quando as cerdas começarem a se abrir (ficarem tortas ou desfiadas), o que pode ocorrer antes dos 3 meses em pessoas que escovam com muita pressão. Cerdas abertas perdem eficácia de remoção de placa em até 30%. Além do desgaste, as cerdas acumulam bactérias ao longo do tempo. Atenção especial: trocar imediatamente após episódios de gripe, faringite ou estomatite (aftas); sempre ter uma escova reserva para viagens. Para crianças: trocar a cada 2 meses, pois tendem a morder a escova, abrindo as cerdas mais rapidamente."
+    }
+  ],
+
+  "cross_knowledge": [
+    {
+      "id": "CK001",
+      "topico": "Saúde sistêmica e saúde bucal — correlações clínicas",
+      "descricao": "O agente deve conhecer as principais correlações entre saúde bucal e sistêmica para argumentar com base científica: periodontite e risco cardiovascular aumentado; periodontite e dificuldade de controle glicêmico em diabéticos; doença periodontal e parto prematuro; apneia obstrutiva do sono e bruxismo; xerostomia (boca seca) como efeito colateral de mais de 400 medicamentos.",
+      "areas_relacionadas": ["Periodontia", "Implantodontia", "Saúde sistêmica", "Captação de pacientes"]
+    },
+    {
+      "id": "CK002",
+      "topico": "LGPD e prontuário odontológico",
+      "descricao": "Prontuário odontológico contém dados sensíveis (saúde). Mínimo de conservação: 20 anos. Fotos de pacientes para uso em redes sociais e marketing requerem autorização específica e escrita. O paciente tem direito de acesso integral ao prontuário. Segurança de dados (acesso restrito, prontuário eletrônico com senha) é obrigação legal.",
+      "areas_relacionadas": ["Prontuário", "Fotos antes/depois", "Marketing", "Ética profissional"]
+    },
+    {
+      "id": "CK003",
+      "topico": "Código de Ética Odontológica — direitos do paciente",
+      "descricao": "Todo paciente tem direito a: consentimento informado antes de qualquer procedimento; recusar o tratamento proposto; receber o orçamento por escrito antes do início; solicitar segundo parecer; ter sigilo das suas informações; atendimento de urgência mesmo sem condição de pagamento imediato. O descumprimento pode ser denunciado ao CRO.",
+      "areas_relacionadas": ["Orçamento", "Termo de consentimento", "Urgência", "Relacionamento com paciente"]
+    },
+    {
+      "id": "CK004",
+      "topico": "Manejo do medo e ansiedade dental (odontofobia)",
+      "descricao": "O agente deve saber identificar pacientes com odontofobia e aplicar estratégias de acolhimento: validar o sentimento sem minimizar, não usar palavras que aumentam a ansiedade (evitar 'agulha', 'cortar', 'arrancar' — substituir por 'aplicar anestesia', 'procedimento', 'retirar'), informar passo a passo antes de cada ação, respeitar o ritmo do paciente, sempre combinar o sinal de parada.",
+      "areas_relacionadas": ["Primeiro atendimento", "Triagem", "Agendamento", "Urgência"]
+    },
+    {
+      "id": "CK005",
+      "topico": "Planos odontológicos — Rol ANS e prazos de carência",
+      "descricao": "O agente deve conhecer as carências dos planos: urgências e emergências — sem carência; consultas básicas — geralmente 30 dias; procedimentos complexos — até 180 dias; ortodontia (quando coberta) — carência de até 24 meses. A reclamação de negativa indevida pode ser feita diretamente à ANS pelo Disque ANS 0800 701 9656. Procedimentos não cobertos devem ser claramente informados ao paciente antes do início.",
+      "areas_relacionadas": ["Planos odontológicos", "Orçamento", "Negativa de cobertura"]
+    },
+    {
+      "id": "CK006",
+      "topico": "Fidelização e recorrência do paciente",
+      "descricao": "O custo de manter um paciente é 5 a 7 vezes menor que o de captar um novo. Estratégias de fidelização: contato proativo de pós-procedimento (24h e 48h), sistema de lembretes de retorno semestral, programa de indicação (paciente indica um amigo e recebe benefício), comunicação personalizada via WhatsApp, aniversário do paciente com mensagem e desconto, pesquisa de satisfação periódica (NPS).",
+      "areas_relacionadas": ["Pós-tratamento", "Recorrência", "Indicação", "NPS"]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "name": "atti-knowledge-packages",
+  "description": "Consolidated knowledge base for ATTI influencer agents",
+  "packages": [
+    {
+      "id": "sofia",
+      "name": "Sofia Master Persona",
+      "version": "1.0.0",
+      "embeddings": 128,
+      "documents": 8,
+      "domains": ["customer_service", "engagement", "conversion"]
+    },
+    {
+      "id": "personas",
+      "name": "Persona Library",
+      "version": "1.0.0",
+      "embeddings": 256,
+      "documents": 12,
+      "domains": ["sports", "entertainment", "corporate"]
+    },
+    {
+      "id": "sports",
+      "name": "Sports Knowledge Base",
+      "version": "1.0.0",
+      "embeddings": 240,
+      "documents": 15,
+      "domains": ["football", "basketball", "general_sports"]
+    },
+    {
+      "id": "general",
+      "name": "General Knowledge",
+      "version": "1.0.0",
+      "embeddings": 0,
+      "documents": 0,
+      "domains": ["fallback"]
+    }
+  ],
+  "total_embeddings": 624,
+  "embedding_dimension": 384,
+  "vector_db": "FAISS",
+  "created_at": "2026-03-15T00:00:00Z",
+  "last_updated": "2026-03-15T00:00:00Z"
+}

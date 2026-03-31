@@ -1,0 +1,791 @@
+{
+  "segmento": "Estudante de Medicina",
+  "versao": "1.0",
+  "descricao": "Base de conhecimento estruturada para agente de IA de suporte educacional a estudantes de medicina. Cobre a grade curricular completa do curso de Medicina (12 termos), com exemplos didáticos, técnicas de estudo, mapas mentais explicativos, casos clínicos simplificados, dicionário médico e disclaimer ético obrigatório. Referência curricular: Faculdade de Medicina de Jaú - UNOESTE.",
+
+  "disclaimer_medico": {
+    "versao": "1.0",
+    "texto_obrigatorio": "AVISO IMPORTANTE: Todo o conteúdo desta base de conhecimento tem finalidade EXCLUSIVAMENTE EDUCACIONAL e destina-se ao auxílio de estudantes de medicina em seu processo de aprendizado acadêmico. As informações aqui contidas NÃO substituem a formação médica formal, o julgamento clínico do profissional habilitado, as orientações de professores e preceptores, nem a consulta a literatura científica primária. Nenhuma informação desta base deve ser usada para diagnóstico, tratamento, prescrição ou qualquer conduta clínica em pacientes reais. O exercício da medicina exige habilitação legal (CRM ativo) e é regulamentado pelo Conselho Federal de Medicina. Em caso de emergência médica, ligue imediatamente para o SAMU (192) ou Bombeiros (193).",
+    "publico_alvo": "Estudantes de medicina regularmente matriculados em curso reconhecido pelo MEC",
+    "limitacoes": [
+      "Não substituir aulas presenciais e práticas laboratoriais",
+      "Não substituir orientação de professores e preceptores",
+      "Não utilizar para conduta clínica em pacientes",
+      "Não substituir livros-texto e artigos científicos primários",
+      "Não interpretar exames laboratoriais ou de imagem de pacientes reais",
+      "Não prescrever ou recomendar medicamentos"
+    ],
+    "aviso_saude_mental": "A medicina é um curso de alta exigência cognitiva e emocional. Se você está enfrentando dificuldades emocionais, burnout ou pensamentos de desistência, busque apoio no Centro de Apoio ao Estudante (CAE) da sua instituição ou no CVV (Centro de Valorização da Vida): ligue 188 (24h/dia)."
+  },
+
+  "nucleo_conhecimento": {
+    "contexto_mercado": [
+      "O curso de medicina no Brasil tem duração mínima de 6 anos (12 semestres/termos), conforme Diretrizes Curriculares Nacionais (DCN) de 2014.",
+      "O Brasil formou mais de 50.000 médicos em 2023, segundo dados do CFM, com tendência de crescimento pela abertura de novas faculdades.",
+      "O REVALIDA é o exame obrigatório para médicos formados no exterior que desejam exercer a medicina no Brasil.",
+      "A Residência Médica é a principal via de especialização e exige aprovação em concursos altamente competitivos como USP, UNIFESP, FMUSP e programas estaduais.",
+      "O CRM (Conselho Regional de Medicina) é o órgão regulador estadual que habilita o médico para o exercício profissional após a colação de grau.",
+      "A grade curricular baseada nas DCN 2014 prioriza a formação em Atenção Primária à Saúde, habilidades de comunicação, medicina baseada em evidências e humanização.",
+      "Disciplinas do ciclo básico (1° ao 4° termo) constroem a base morfofuncional. O ciclo clínico (5° ao 8°) integra patologia e clínica. O internato (9° ao 12°) é a prática supervisionada em serviço.",
+      "A carga horária mínima do curso é de 7.200 horas segundo a Resolução CNE/CES nº 3/2014.",
+      "O Exame Nacional de Residência (Enare) e provas de programas de residência concentram grande aderência dos formandos brasileiros.",
+      "A síndrome de burnout afeta estimativas de 30 a 50% dos estudantes de medicina no Brasil, tornando estratégias de saúde mental parte essencial da formação."
+    ],
+    "problemas_comuns": [
+      "Volume excessivo de conteúdo por semestre, especialmente no ciclo básico com anatomia, fisiologia e bioquímica simultâneas.",
+      "Dificuldade em integrar conhecimentos básicos com a prática clínica, especialmente na transição do ciclo básico para o clínico.",
+      "Síndrome do impostor: sensação de não estar preparado suficientemente, comum no internato.",
+      "Gestão inadequada do tempo, levando à procrastinação e estudo concentrado antes das provas.",
+      "Dificuldade com a memorização de terminologia anatômica e farmacológica.",
+      "Ansiedade em simulações de anamnese e exame físico com pacientes reais.",
+      "Dificuldade em compreender mecanismos fisiopatológicos de forma integrada.",
+      "Baixa performance em questões de múltipla escolha por falta de treinamento específico para o formato.",
+      "Falta de materiais de estudo em português atualizados e alinhados ao currículo nacional.",
+      "Dificuldades financeiras que limitam acesso a cursinhos, livros e materiais complementares.",
+      "Conflito entre vida pessoal/social e as demandas acadêmicas intensas do curso.",
+      "Dificuldade em interpretar artigos científicos no contexto de medicina baseada em evidências.",
+      "Insegurança ao realizar procedimentos no internato pela primeira vez.",
+      "Falta de orientação sobre como se preparar para residência médica desde os primeiros anos."
+    ],
+    "objeções_clientes": [
+      {
+        "objecao": "Tenho dificuldade em memorizar anatomia.",
+        "resposta": "Anatomia é mais eficaz quando estudada com tridimensionalidade. Use atlas digitais (Netter, Sobotta, Gray), aplicativos 3D como Complete Anatomy ou Visible Body, modelos em peça cadavérica quando disponível e mnemônicos para estruturas com nomenclatura complexa. Estudar por sistemas (ao invés de região isolada) facilita a correlação clínica."
+      },
+      {
+        "objecao": "Não consigo integrar bioquímica com a prática clínica.",
+        "resposta": "Bioquímica é a base de muitas doenças metabólicas. Ao estudar cada via metabólica, pergunte-se: 'Qual doença ocorre quando essa enzima é deficiente?' Por exemplo, a deficiência de G6PD causa anemia hemolítica. Estudar a bioquímica orientada por doenças torna o conteúdo muito mais significativo e memorável."
+      },
+      {
+        "objecao": "Farmacologia tem muita coisa para memorizar.",
+        "resposta": "Estude farmacologia por classes, não por drogas individuais. Entenda o mecanismo de ação da classe e depois aplique às drogas específicas. Use tabelas comparativas e mnemônicos. Correlacione sempre com o contexto clínico: para qual doença esse fármaco é usado? Quais são os efeitos colaterais mais perigosos?"
+      },
+      {
+        "objecao": "Fisiologia é muito abstrata para mim.",
+        "resposta": "Fisiologia precisa ser visualizada. Use animações (YouTube - Ninja Nerd, Professor Fink), quadros brancos e desenhos próprios. Estude por mecanismos de feedback: como o corpo responde a uma alteração? Simule situações clínicas: o que acontece fisiologicamente num paciente com insuficiência cardíaca?"
+      },
+      {
+        "objecao": "Tenho medo de errar no internato.",
+        "resposta": "O internato é um espaço protegido de aprendizagem sob supervisão. Todo estudante erra e aprende. A chave é nunca tomar decisões sem o preceptor, comunicar dúvidas ativamente e usar cada situação como oportunidade de aprendizado. Prepare-se lendo sobre os casos mais comuns antes de cada rodízio."
+      }
+    ],
+    "argumentos_venda": [
+      "O agente de IA está disponível 24 horas por dia, 7 dias por semana, ideal para tirar dúvidas às 2h da manhã antes de uma prova.",
+      "Explicações em linguagem adaptada ao nível do estudante, desde o básico até o avançado.",
+      "Integração de conteúdo entre disciplinas para facilitar a compreensão sistêmica.",
+      "Geração de casos clínicos simplificados para treino de raciocínio diagnóstico.",
+      "Criação de mapas mentais e resumos personalizados para qualquer tema do currículo.",
+      "Dicionário médico integrado para esclarecimento rápido de termos técnicos.",
+      "Suporte emocional e orientação sobre técnicas de estudo baseadas em evidências.",
+      "Preparação para formatos de questões de provas e residência médica."
+    ]
+  },
+
+  "grade_curricular": {
+    "instituicao": "Faculdade de Medicina de Jaú - UNOESTE",
+    "duracao": "12 termos (6 anos)",
+    "carga_horaria_total": "7.200+ horas (incluindo atividades complementares de 200h)",
+    "estrutura": [
+      {
+        "termo": 1,
+        "modulo": "Morfofuncional I",
+        "carga_horaria_total": 600,
+        "disciplinas": [
+          {"nome": "Anatomia I", "carga_horaria": 100, "descricao": "Bases da anatomia humana: nomenclatura, planos, cavidades corporais. Sistema musculoesquelético geral, osteologia e artrologia dos membros e coluna."},
+          {"nome": "Histologia e Embriologia I", "carga_horaria": 100, "descricao": "Células, tecidos básicos (epitelial, conjuntivo, muscular, nervoso). Embriologia geral: fecundação, segmentação, implantação, formação dos folhetos germinativos."},
+          {"nome": "Fisiologia I", "carga_horaria": 100, "descricao": "Fisiologia celular, membranas, potencial de ação. Fisiologia do sistema nervoso periférico e autônomo. Homeostase."},
+          {"nome": "Saúde Coletiva I", "carga_horaria": 60, "descricao": "Determinantes sociais de saúde, SUS, epidemiologia básica, indicadores de saúde."},
+          {"nome": "Bioquímica", "carga_horaria": 80, "descricao": "Aminoácidos, proteínas, enzimas, carboidratos, lipídeos, vitaminas, metabolismo energético, ciclo de Krebs, glicólise, cadeia respiratória."},
+          {"nome": "Ética, Política e Sociedade", "carga_horaria": 40, "descricao": "Fundamentos de ética, cidadania, política e medicina social."},
+          {"nome": "Comunicação em Saúde", "carga_horaria": 40, "descricao": "Habilidades de comunicação médico-paciente, escuta ativa, comunicação de más notícias."},
+          {"nome": "Prog. Apr. Progressiva à Prática - AT. Primária I", "carga_horaria": 80, "descricao": "Primeiro contato com Atenção Primária à Saúde. Visitas a UBS, NASF, CAPS."},
+          {"nome": "Programa de Prática Médica I", "carga_horaria": 0, "descricao": "Integração prática de habilidades clínicas básicas no laboratório de habilidades."}
+        ]
+      },
+      {
+        "termo": 2,
+        "modulo": "Morfofuncional I (continuação)",
+        "carga_horaria_total": 660,
+        "disciplinas": [
+          {"nome": "Anatomia II", "carga_horaria": 80, "descricao": "Anatomia do tórax, abdome e pelve: órgãos, vasos e nervos. Neuroanatomia introdutória."},
+          {"nome": "Fisiologia II", "carga_horaria": 160, "descricao": "Fisiologia cardiovascular, respiratória e renal. Regulação da pressão arterial, hematose, filtração glomerular."},
+          {"nome": "Histologia e Embriologia II", "carga_horaria": 80, "descricao": "Histologia de órgãos e sistemas: cardiovascular, respiratório, digestório, urinário, reprodutor. Organogênese específica."},
+          {"nome": "Psicologia Médica", "carga_horaria": 40, "descricao": "Relação médico-paciente, aspectos psicológicos da doença, comunicação empática, morte e luto."},
+          {"nome": "Genética e Biologia Molecular", "carga_horaria": 80, "descricao": "DNA, RNA, replicação, transcrição, tradução, mutações, herança genética, doenças genéticas, cromossomopatias."},
+          {"nome": "Saúde Coletiva II", "carga_horaria": 60, "descricao": "Políticas públicas de saúde, programas do SUS, saúde da família, NASF."},
+          {"nome": "Prog. Apr. Progressiva à Prática - AT. Primária II", "carga_horaria": 80, "descricao": "Prática em atenção primária: acompanhamento de famílias, visitas domiciliares."},
+          {"nome": "Programa de Prática Médica II", "carga_horaria": 80, "descricao": "Habilidades clínicas: anamnese básica, sinais vitais, postura profissional."}
+        ]
+      },
+      {
+        "termo": 3,
+        "modulo": "Morfofuncional II",
+        "carga_horaria_total": 680,
+        "disciplinas": [
+          {"nome": "Patologia Geral I", "carga_horaria": 80, "descricao": "Lesão e morte celular, inflamação aguda e crônica, reparo tecidual, distúrbios hemodinâmicos (edema, trombose, embolia, infarto)."},
+          {"nome": "Farmacologia I", "carga_horaria": 80, "descricao": "Farmacocinética, farmacodinâmica, interações medicamentosas, farmacologia do sistema nervoso autônomo."},
+          {"nome": "Fisiologia III", "carga_horaria": 160, "descricao": "Fisiologia do sistema endócrino, digestório, reprodutor. Metabolismo, regulação hormonal."},
+          {"nome": "Saúde do Trabalhador", "carga_horaria": 60, "descricao": "Doenças ocupacionais, legislação trabalhista em saúde, NRs, PCMSO, PPRA."},
+          {"nome": "Anatomia III", "carga_horaria": 100, "descricao": "Neuroanatomia detalhada: SNC, SNP, vias sensitivas e motoras, órgãos dos sentidos."},
+          {"nome": "Met. Científica - MBE I", "carga_horaria": 40, "descricao": "Medicina Baseada em Evidências: busca bibliográfica, tipos de estudo, níveis de evidência, bioestatística básica."},
+          {"nome": "Prog. Apr. Progressiva à Prática - AT. Primária III", "carga_horaria": 80, "descricao": "Prática em UBS: consulta supervisionada, prevenção primária, rastreamentos."},
+          {"nome": "Programa de Prática Médica III", "carga_horaria": 80, "descricao": "Exame físico geral e por sistemas. Semiologia básica."}
+        ]
+      },
+      {
+        "termo": 4,
+        "modulo": "Ataque e Defesa I",
+        "carga_horaria_total": 700,
+        "disciplinas": [
+          {"nome": "Patologia Geral II", "carga_horaria": 80, "descricao": "Neoplasias: classificação, carcinogênese, invasão e metástase, marcadores tumorais. Distúrbios do crescimento celular."},
+          {"nome": "Imunologia", "carga_horaria": 120, "descricao": "Imunidade inata e adaptativa, células do sistema imune, anticorpos, complexo principal de histocompatibilidade, hipersensibilidades, doenças autoimunes, imunodeficiências, vacinas."},
+          {"nome": "Microbiologia", "carga_horaria": 80, "descricao": "Bacteriologia, virologia, micologia: morfologia, fisiopatologia da infecção, mecanismos de resistência, principais patógenos humanos."},
+          {"nome": "Parasitologia", "carga_horaria": 60, "descricao": "Principais parasitoses humanas: protozooses (malária, leishmaniose, doença de Chagas, amebíase, giardíase), helmintíases (ascaridíase, esquistossomose, filariose)."},
+          {"nome": "Farmacologia II", "carga_horaria": 80, "descricao": "Farmacologia cardiovascular, renal, respiratória, analgésicos, anti-inflamatórios, antimicrobianos."},
+          {"nome": "Epidemiologia", "carga_horaria": 60, "descricao": "Medidas de frequência (incidência, prevalência), risco relativo, odds ratio, vieses, tipos de estudo epidemiológico."},
+          {"nome": "Met. Científica - MBE II", "carga_horaria": 40, "descricao": "Leitura crítica de artigos, metanálises, revisões sistemáticas, aplicação clínica da MBE."},
+          {"nome": "Prog. Apr. Progressiva à Prática - AT. Primária IV", "carga_horaria": 80, "descricao": "Atenção primária: doenças crônicas não transmissíveis, prevenção e promoção de saúde."},
+          {"nome": "Programa de Prática Médica IV", "carga_horaria": 80, "descricao": "Semiologia por sistemas. Elaboração de hipóteses diagnósticas."}
+        ]
+      },
+      {
+        "termo": 5,
+        "modulo": "Ataque e Defesa II",
+        "carga_horaria_total": 700,
+        "disciplinas": [
+          {"nome": "Patologia dos Órgãos e Sistemas", "carga_horaria": 140, "descricao": "Anatomia patológica dos principais órgãos: coração, pulmão, fígado, rim, SNC, trato gastrointestinal, sistema reprodutor."},
+          {"nome": "Fisiopatologia", "carga_horaria": 160, "descricao": "Mecanismos de doenças dos principais sistemas: choque, insuficiência orgânica, fisiopatologia cardiovascular, respiratória, renal, hepática, endócrina."},
+          {"nome": "Farmacologia III", "carga_horaria": 80, "descricao": "Farmacologia do SNC, oncológica, hormonal, anticoagulantes, imunomoduladores, quimioterápicos."},
+          {"nome": "Doenças Infectocontagiosas", "carga_horaria": 80, "descricao": "Principais doenças infecciosas: HIV/AIDS, tuberculose, dengue, hepatites virais, sífilis, meningites, pneumonias, sepse."},
+          {"nome": "Ética e Bioética", "carga_horaria": 40, "descricao": "Princípios bioéticos (autonomia, beneficência, não maleficência, justiça), Código de Ética Médica, sigilo médico, eutanásia, aborto."},
+          {"nome": "Prog. Apr. Progressiva à Prática - AT. Primária V", "carga_horaria": 80, "descricao": "Prática em saúde: manejo de doenças crônicas, grupos especiais, saúde do idoso."},
+          {"nome": "Programa de Prática Médica V", "carga_horaria": 80, "descricao": "Semiologia avançada, apresentação de casos, raciocínio diagnóstico."},
+          {"nome": "TCC I", "carga_horaria": 20, "descricao": "Definição do tema, revisão de literatura, elaboração do projeto de pesquisa."},
+          {"nome": "Fundamentos da Técnica Operatória", "carga_horaria": 100, "descricao": "Assepsia, antissepsia, paramentação cirúrgica, nós cirúrgicos, suturas, curativos, acessos venosos, drenos."}
+        ]
+      },
+      {
+        "termo": 6,
+        "modulo": "Apresentações Clínicas Médicas",
+        "carga_horaria_total": 720,
+        "disciplinas": [
+          {"nome": "Sistemas Biológicos em Clínica Médica I", "carga_horaria": 260, "descricao": "Clínica médica: cardiologia, pneumologia, nefrologia. Diagnóstico, tratamento e urgências das principais doenças."},
+          {"nome": "Sistemas Biológicos em Clínica Médica II", "carga_horaria": 140, "descricao": "Clínica médica: gastroenterologia, hepatologia, endocrinologia e diabetes."},
+          {"nome": "Sistemas Biológicos em Clínica Médica III", "carga_horaria": 140, "descricao": "Clínica médica: neurologia, psiquiatria, reumatologia, hematologia."},
+          {"nome": "TCC II", "carga_horaria": 20, "descricao": "Coleta de dados, metodologia, análise preliminar."},
+          {"nome": "Radiologia", "carga_horaria": 60, "descricao": "Principios de radiologia: RX, TC, RM, USG. Interpretação de imagens dos principais órgãos e condições clínicas."},
+          {"nome": "Tópicos Especiais em Medicina I", "carga_horaria": 60, "descricao": "Medicina integrativa, nutrição clínica, dermatologia, oftalmologia, otorrinolaringologia."},
+          {"nome": "Empreendedorismo e Inovação", "carga_horaria": 40, "descricao": "Gestão em saúde, startups de saúde, telemedicina, inovação no sistema de saúde."},
+          {"nome": "LIBRAS (Optativa)", "carga_horaria": 40, "descricao": "Língua Brasileira de Sinais para comunicação com pacientes surdos."}
+        ]
+      },
+      {
+        "termo": 7,
+        "modulo": "Apresentações Clínicas Médicas e Cirúrgicas",
+        "carga_horaria_total": 600,
+        "disciplinas": [
+          {"nome": "Sist. Biológicos em Clínica Médica e Cirúrgica I", "carga_horaria": 140, "descricao": "Cirurgia geral: trauma, abdome agudo, hérnias. Clínica médica: urgências metabólicas."},
+          {"nome": "Sist. Biológicos em Clínica Médica e Cirúrgica II", "carga_horaria": 240, "descricao": "Ortopedia e traumatologia, cirurgia vascular, urologia, otorrinolaringologia, oftalmologia, dermatologia."},
+          {"nome": "Sist. Biológicos em Clínica Médica e Cirúrgica III", "carga_horaria": 140, "descricao": "Oncologia clínica e cirúrgica, cirurgia plástica, cirurgia torácica e cardiovascular."},
+          {"nome": "Medicina Legal", "carga_horaria": 60, "descricao": "Lesões corporais, morte e seus documentos, responsabilidade médica, perícias, notificações compulsórias, violência sexual."},
+          {"nome": "TCC III", "carga_horaria": 20, "descricao": "Análise de resultados, discussão, revisão do manuscrito."},
+          {"nome": "Tópicos Especiais em Medicina II", "carga_horaria": 40, "descricao": "Medicina esportiva, reabilitação, geriatria, cuidados paliativos avançados."}
+        ]
+      },
+      {
+        "termo": 8,
+        "modulo": "Atenção Integral à Saúde",
+        "carga_horaria_total": 680,
+        "disciplinas": [
+          {"nome": "Atenção Integral à Saúde da Criança", "carga_horaria": 200, "descricao": "Pediatria: crescimento e desenvolvimento, puericultura, neonatologia, doenças da infância, vacinas, AIDPI."},
+          {"nome": "Atenção Integral à Saúde da Mulher", "carga_horaria": 200, "descricao": "Ginecologia e obstetrícia: pré-natal, parto, puerpério, planejamento familiar, rastreamento de câncer ginecológico, infecções genitais."},
+          {"nome": "Atenção Integral à Saúde do Adulto e Idoso", "carga_horaria": 200, "descricao": "Gerontologia, síndrome de fragilidade, polifarmácia, doenças crônicas no idoso, avaliação geriátrica ampla."},
+          {"nome": "TCC IV", "carga_horaria": 20, "descricao": "Finalização e defesa do trabalho de conclusão de curso."},
+          {"nome": "Cuidados Paliativos", "carga_horaria": 60, "descricao": "Princípios de cuidados paliativos, controle de sintomas, comunicação de más notícias, planejamento antecipado de cuidados, suporte à família."}
+        ]
+      },
+      {
+        "termo": 9,
+        "modulo": "Estágio em Serviço Supervisionado I",
+        "carga_horaria_total": 750,
+        "disciplinas": [
+          {"nome": "Medicina de Família e Comunidade e Saúde Coletiva", "carga_horaria": 250, "descricao": "Internato em UBS e ESF: consultas de saúde do adulto, prevenção e promoção, visitas domiciliares, gestão em saúde coletiva."},
+          {"nome": "Atenção Básica em Ginecologia e Obstetrícia", "carga_horaria": 250, "descricao": "Internato em ambulatório de GO: pré-natal de baixo risco, rastreamento, planejamento familiar, urgências obstétricas básicas."},
+          {"nome": "Atenção Básica em Pediatria", "carga_horaria": 250, "descricao": "Internato em puericultura e pediatria ambulatorial: consultas de rotina, vacinação, doenças prevalentes na infância."}
+        ]
+      },
+      {
+        "termo": 10,
+        "modulo": "Estágio em Serviço Supervisionado II",
+        "carga_horaria_total": 750,
+        "disciplinas": [
+          {"nome": "Clínica Médica I", "carga_horaria": 250, "descricao": "Internato em enfermaria de clínica médica: admissão, evolução diária, prescrição supervisionada, alta hospitalar."},
+          {"nome": "Clínica Cirúrgica I", "carga_horaria": 250, "descricao": "Internato em cirurgia geral: avaliação pré-operatória, participação em cirurgias, cuidados pós-operatórios."},
+          {"nome": "Urgência e Emergência I", "carga_horaria": 250, "descricao": "Internato em UPA e pronto-socorro: atendimento de urgências clínicas e cirúrgicas, triagem de Manchester, ACLS básico."}
+        ]
+      },
+      {
+        "termo": 11,
+        "modulo": "Estágio em Serviço Supervisionado III",
+        "carga_horaria_total": 750,
+        "disciplinas": [
+          {"nome": "Ginecologia-Obstetrícia", "carga_horaria": 250, "descricao": "Internato hospitalar em GO: parto normal e cesárea supervisionados, emergências obstétricas, cirurgias ginecológicas."},
+          {"nome": "Pediatria", "carga_horaria": 250, "descricao": "Internato em enfermaria pediátrica e UTI neonatal: neonatos, doenças respiratórias, infecções, RCP pediátrico."},
+          {"nome": "Saúde Mental", "carga_horaria": 250, "descricao": "Internato em psiquiatria: avaliação psiquiátrica, psicofármacos, internação compulsória, CAPS, emergência psiquiátrica."}
+        ]
+      },
+      {
+        "termo": 12,
+        "modulo": "Estágio em Serviço Supervisionado IV",
+        "carga_horaria_total": 750,
+        "disciplinas": [
+          {"nome": "Clínica Médica II", "carga_horaria": 250, "descricao": "Internato avançado: UTI clínica, subespecialidades, preparo para a prova de residência."},
+          {"nome": "Clínica Cirúrgica II", "carga_horaria": 250, "descricao": "Internato avançado: subespecialidades cirúrgicas, cirurgia de urgência, oncologia cirúrgica."},
+          {"nome": "Urgência e Emergência II", "carga_horaria": 250, "descricao": "Internato avançado em emergência: politrauma, atendimento ao grande queimado, intoxicações, ATLS e ACLS aplicados."}
+        ]
+      }
+    ]
+  },
+
+  "areas_tecnicas": [
+    {
+      "area": "Técnicas de Estudo para Medicina",
+      "conteudo": {
+        "metodo_pomodoro": {
+          "descricao": "Estudo em blocos de 25 minutos focados, seguidos de 5 minutos de pausa. A cada 4 ciclos, pausa de 15-30 minutos.",
+          "aplicacao_medicina": "Ideal para revisão de conteúdo denso como farmacologia e anatomia. Evita fadiga cognitiva durante longas sessões."
+        },
+        "espacamento_revisao": {
+          "descricao": "Revisão do conteúdo em intervalos crescentes: 1 dia, 3 dias, 1 semana, 2 semanas, 1 mês.",
+          "ferramentas": ["Anki (flashcards com algoritmo de repetição espaçada)", "Notion com calendário de revisão", "Cronogramas semanais"],
+          "aplicacao_medicina": "Excelente para memorização de nomenclatura anatômica, diagnósticos diferenciais e protocolos."
+        },
+        "aprendizagem_ativa": {
+          "descricao": "Técnicas que exigem processamento ativo do conteúdo ao invés de leitura passiva.",
+          "tecnicas": [
+            "Método Feynman: explicar o conteúdo como se fosse ensinar a uma criança",
+            "Mind mapping: criar mapas mentais do conteúdo estudado",
+            "Autoexplicação: formular e responder perguntas sobre o material",
+            "Estudo por casos clínicos: contextualizar teoria em situações práticas",
+            "Ensino a colegas: grupos de estudo com apresentações rotativas"
+          ]
+        },
+        "estudo_por_sistemas": {
+          "descricao": "Integrar disciplinas em torno de um sistema orgânico ao mesmo tempo.",
+          "exemplo": "Ao estudar o sistema cardiovascular: anatomia do coração (Anatomia), histologia do miocárdio (Histologia), fisiologia cardíaca (Fisiologia), patologia cardiovascular (Patologia), farmacologia cardiovascular (Farmacologia) e casos clínicos de infarto (Fisiopatologia).",
+          "vantagem": "Elimina o estudo fragmentado e prepara o estudante para o pensamento clínico integrado."
+        },
+        "preparacao_provas": {
+          "tipos_questao": ["Múltipla escolha (MC)", "Questões discursivas", "OSCE (Exame Clínico Estruturado Objetivo)"],
+          "dicas_mc": [
+            "Ler o enunciado até o fim antes de olhar as alternativas",
+            "Identificar a palavra-chave do enunciado",
+            "Eliminar alternativas claramente incorretas",
+            "Cuidado com absolutos: 'sempre', 'nunca', 'todos' — raramente corretos em medicina",
+            "Treinar com bancos de questões como Medcof, SanarFlix, Qconcursos"
+          ],
+          "preparacao_residencia": [
+            "Iniciar a preparação a partir do 7° termo",
+            "Fazer questões diariamente (pelo menos 20 questões/dia no internato)",
+            "Revisar os Grandes Temas: cardiologia, pneumologia, clínica médica, cirurgia de urgência, GO, pediatria",
+            "Fazer simulados completos mensalmente no 11° e 12° termos",
+            "Conhecer o perfil das principais provas: USP, UNIFESP, SUS-SP, Enare"
+          ]
+        },
+        "saude_mental_produtividade": {
+          "descricao": "Estratégias para manter a saúde mental durante a formação médica.",
+          "praticas": [
+            "Sono regular: mínimo 7-8 horas; privação de sono compromete memória e raciocínio",
+            "Exercício físico: pelo menos 150 minutos/semana; melhora cognição e reduz burnout",
+            "Mindfulness e meditação: 10-15 minutos/dia para redução de ansiedade",
+            "Limites saudáveis: não estudar nos momentos de lazer e socialização",
+            "Buscar apoio psicológico quando necessário, sem estigma"
+          ]
+        }
+      }
+    },
+    {
+      "area": "Mapas Mentais por Sistema",
+      "conteudo": {
+        "sistema_cardiovascular": {
+          "topico_central": "Sistema Cardiovascular",
+          "ramos_principais": [
+            {
+              "ramo": "Anatomia",
+              "subitens": ["Coração: 4 câmaras, valvas, coronárias", "Grandes vasos: aorta, pulmonares, cavas", "Circulação sistêmica vs pulmonar"]
+            },
+            {
+              "ramo": "Fisiologia",
+              "subitens": ["Potencial de ação cardíaco", "Ciclo cardíaco (sístole/diástole)", "Débito cardíaco = FC × VS", "Regulação da PA: SRAA, barorreceptores", "Curvas de Frank-Starling"]
+            },
+            {
+              "ramo": "Patologia/Fisiopatologia",
+              "subitens": ["Doença arterial coronariana → IAM", "Insuficiência cardíaca: diastólica vs sistólica", "Valvopatias: estenose vs insuficiência", "Arritmias: FA, flutter, TVSP, FV"]
+            },
+            {
+              "ramo": "Farmacologia",
+              "subitens": ["Anti-hipertensivos: IECA, BRA, BCC, β-bloqueador, diurético", "Anticoagulantes: heparina, varfarina, NOACs", "Antiarrítmicos: classes I-IV", "Trombolíticos: alteplase"]
+            },
+            {
+              "ramo": "Clínica",
+              "subitens": ["Síndrome coronariana aguda: IAMCSST vs IAMSST vs AI", "Critérios diagnósticos de IC: Framingham", "ECG: ler ritmo → eixo → intervalo PR → QRS → ST/T", "Ecocardiograma: FE, alterações valvares"]
+            }
+          ]
+        },
+        "sistema_respiratorio": {
+          "topico_central": "Sistema Respiratório",
+          "ramos_principais": [
+            {
+              "ramo": "Anatomia/Histologia",
+              "subitens": ["Via aérea superior: nariz, faringe, laringe", "Via aérea inferior: traqueia, brônquios, alvéolos", "Epitélio respiratório ciliado → transição → alvéolo", "Pleura: visceral vs parietal"]
+            },
+            {
+              "ramo": "Fisiologia",
+              "subitens": ["Volumes pulmonares: VT, VR, CRF, CPT", "Espirometria: CVF, VEF1, relação VEF1/CVF", "Troca gasosa: lei de Fick, difusão", "Controle da respiração: quimiorreceptores centrais e periféricos", "Equilíbrio ácido-base: pH, pCO2, HCO3"]
+            },
+            {
+              "ramo": "Patologia",
+              "subitens": ["Pneumonia: lobar (Streptococcus) vs atípica (Mycoplasma)", "DPOC: enfisema vs bronquite crônica", "Asma: reversível, inflamação eosinofílica", "Tromboembolismo pulmonar: triada de Virchow"]
+            },
+            {
+              "ramo": "Farmacologia",
+              "subitens": ["Broncodilatadores: β2-agonistas, anticolinérgicos, metilxantinas", "Corticoides inalatórios e sistêmicos", "Antibióticos para pneumonia comunitária"]
+            }
+          ]
+        },
+        "sistema_nervoso": {
+          "topico_central": "Sistema Nervoso",
+          "ramos_principais": [
+            {
+              "ramo": "Neuroanatomia",
+              "subitens": ["SNC: encéfalo (telencéfalo, diencéfalo, tronco, cerebelo) + medula", "Meninges: dura-máter → aracnoide → pia-máter", "Nervos cranianos: I ao XII (funções e testes)", "Vias: piramidal, extrapiramidal, sensitivas ascendentes"]
+            },
+            {
+              "ramo": "Neurofisiologia",
+              "subitens": ["Potencial de ação: Na+ entra → K+ sai", "Sinapses: neurotransmissores (ACh, DA, 5-HT, NE, GABA)", "Reflexos medulares: monossináptico (patelar)", "Barreira hematoencefálica"]
+            },
+            {
+              "ramo": "Neurologia Clínica",
+              "subitens": ["AVC isquêmico vs hemorrágico: diagnóstico e janela terapêutica", "Cefaleias: migrânea (com e sem aura) vs tensional vs em salvas", "Epilepsia: focal vs generalizada, status epilepticus", "Meningite: bacteriana (urgência) vs viral"]
+            },
+            {
+              "ramo": "Psiquiatria",
+              "subitens": ["Depressão: critérios DSM-5, ISRS como 1ª linha", "Transtorno bipolar: manias e depressões, lítio", "Esquizofrenia: sintomas positivos e negativos, antipsicóticos", "Ansiedade: TAG, pânico, fobia social"]
+            }
+          ]
+        },
+        "sistema_endocrino": {
+          "topico_central": "Sistema Endócrino",
+          "ramos_principais": [
+            {
+              "ramo": "Hipófise e Hipotálamo",
+              "subitens": ["Eixo hipotálamo-hipófise: hormônios reguladores", "Adeno-hipófise: GH, TSH, ACTH, FSH, LH, PRL", "Neuro-hipófise: ADH, ocitocina", "Diabetes insipidus: central vs nefrogênico"]
+            },
+            {
+              "ramo": "Tireoide",
+              "subitens": ["T3/T4: síntese, transporte, efeitos", "Hipotireoidismo: TSH alto, T4 baixo → levotiroxina", "Hipertireoidismo: TSH baixo, T4 alto → Graves (anticorpo anti-TSH-R)", "Nódulos tireoidianos: BETHESDA, PAAF"]
+            },
+            {
+              "ramo": "Pâncreas Endócrino",
+              "subitens": ["DM tipo 1: autoimune, deficiência absoluta de insulina", "DM tipo 2: resistência + deficiência relativa", "Critérios diagnósticos: glicemia jejum ≥126 mg/dL, HbA1c ≥6,5%", "Complicações: cetoacidose (DM1) vs SGHHNC (DM2)", "Hipoglicemia: Whipple tríade"]
+            },
+            {
+              "ramo": "Adrenal",
+              "subitens": ["Córtex: mineralocorticoides (aldosterona), glicocorticoides (cortisol), androgênios", "Medula: catecolaminas (adrenalina, noradrenalina)", "Insuficiência adrenal: primária (Addison) vs secundária", "Hipercortisolismo: síndrome de Cushing"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "area": "Exemplos Didáticos por Disciplina",
+      "conteudo": {
+        "anatomia": [
+          {
+            "tema": "Plexo Braquial",
+            "mnenonico": "C5 a T1: 'Eu Realmente Amo Minha Mão' (Raiz → Troncos → Divisões → Fascículos → Ramos terminais). Mnemônico para lesões: 'Erb-Duchenne = C5-C6 = braço de garçom pedindo gorjeta'. 'Klumpke = C8-T1 = mão do garçom'.",
+            "correlacao_clinica": "Fratura da clavícula → lesar fascículo lateral → comprometer nervo musculocutâneo e parte do mediano."
+          },
+          {
+            "tema": "Nervos Cranianos",
+            "mnenonico": "Para lembrar os 12 pares: 'Oh, Oh, Oh, To Touch And Feel Very Good Velvet Heaven' (Olfatório, Óptico, Oculomotor, Troclear, Trigêmeo, Abducente, Facial, Vestibulococlear, Glossofaríngeo, Vago, Acessório, Hipoglosso).",
+            "correlacao_clinica": "Paralisia de Bell = lesão do NC VII periférico → hemifacial ipsilateral. Neuralgia do trigêmeo = NC V."
+          }
+        ],
+        "fisiologia": [
+          {
+            "tema": "Equilíbrio Ácido-Base",
+            "exemplo_didatico": "Pense no corpo como uma gangorra: CO2 (ácido volátil) de um lado, HCO3 (base) do outro. O pH é o centro. Acidose respiratória = CO2 sobe → gangorra desce no lado ácido → rim compensa retendo HCO3 (demora dias). Acidose metabólica = HCO3 cai → pulmão compensa soprando CO2 para fora (Kussmaul, minutos a horas).",
+            "regra_pratica": "pH < 7,35 = acidose. pH > 7,45 = alcalose. Olhe o CO2: se vai na mesma direção do pH = distúrbio primário metabólico. Se vai em direção oposta = respiratório."
+          },
+          {
+            "tema": "Ciclo de Starling",
+            "exemplo_didatico": "A filtragem capilar é como uma torneira com dois lados: pressão hidrostática capilar (força para fora) vs pressão oncótica (puxa para dentro). Na hipoalbuminemia, a pressão oncótica cai → edema generalizado (ascite, anasarca)."
+          }
+        ],
+        "bioquimica": [
+          {
+            "tema": "Glicólise e Doenças",
+            "exemplo_didatico": "A glicose entra na célula → vira piruvato (10 reações). Com O2, piruvato entra na mitocôndria → Krebs → 36 ATP. Sem O2, vira lactato. Choque = hipóxia = lactato sobe = acidose lática. Correlação clínica direta: paciente em choque séptico com lactato > 2 mmol/L = pior prognóstico."
+          },
+          {
+            "tema": "Enzimas",
+            "mnenonico": "Km alto = baixa afinidade pelo substrato. Km baixo = alta afinidade. Pense: 'Km é como o ponto de equilíbrio de um balanço — quanto mais alto, mais substrato precisa para ativar a enzima.'"
+          }
+        ],
+        "farmacologia": [
+          {
+            "tema": "IECA vs BRA",
+            "exemplo_didatico": "IECA (ex: enalapril): bloqueia a ECA → não converte angiotensina I em II → menos vasoconstrição + menos aldosterona + mais bradicinina. Problema: bradicinina causa tosse seca em ~15% dos pacientes. BRA (ex: losartana): bloqueia receptor da angiotensina II diretamente → mesmo efeito sem aumentar bradicinina → sem tosse. Indique BRA para quem não tolera IECA por tosse."
+          },
+          {
+            "tema": "Antibióticos por Mecanismo",
+            "tabela_resumo": {
+              "parede_celular": ["Penicilinas", "Cefalosporinas", "Carbapenêmicos", "Vancomicina (glicopeptídeo)"],
+              "membrana_celular": ["Polimixinas", "Anfotericina B (fúngica)"],
+              "sintese_proteica_30S": ["Aminoglicosídeos", "Tetraciclinas"],
+              "sintese_proteica_50S": ["Macrolídeos", "Clindamicina", "Cloranfenicol", "Linezolida"],
+              "sintese_DNA": ["Fluoroquinolonas (DNA girase)", "Metronidazol (DNA direto)"],
+              "antimetabolitos": ["Sulfonamidas + Trimetoprim (ácido fólico)"]
+            }
+          }
+        ],
+        "patologia": [
+          {
+            "tema": "Inflamação Aguda vs Crônica",
+            "exemplo_didatico": "Cortou o dedo? Inflamação aguda: dor (dolor), calor, rubor, tumor (edema) e perda de função. Células: neutrófilos chegam primeiro (6-12h), depois monócitos viram macrófagos. Se não resolve em 1-2 semanas → inflamação crônica com linfócitos, macrófagos e formação de granuloma (ex: tuberculose)."
+          }
+        ]
+      }
+    }
+  ],
+
+  "fluxos_conversa": [
+    {
+      "nome": "Dúvida Conceitual Simples",
+      "descricao": "Estudante pergunta sobre um conceito específico.",
+      "etapas": [
+        "1. Identificar o termo e o contexto (qual disciplina, qual semestre)",
+        "2. Explicar o conceito em linguagem simples e progressiva",
+        "3. Dar um exemplo didático ou analogia",
+        "4. Correlacionar com prática clínica quando possível",
+        "5. Sugerir recursos complementares (livro, vídeo, flashcard)"
+      ]
+    },
+    {
+      "nome": "Ajuda com Caso Clínico",
+      "descricao": "Estudante apresenta um caso clínico para análise.",
+      "etapas": [
+        "1. Solicitar os dados do caso: idade, sexo, queixa principal, história, exame físico, exames",
+        "2. Identificar as hipóteses diagnósticas (diferencial)",
+        "3. Discutir a fisiopatologia de cada hipótese",
+        "4. Sugerir exames para confirmar/excluir diagnósticos",
+        "5. Discutir o tratamento esperado para o diagnóstico mais provável",
+        "6. Emitir disclaimer: 'Este caso é de uso educacional; nunca aplicar sem supervisão em pacientes reais'"
+      ]
+    },
+    {
+      "nome": "Criação de Mapa Mental",
+      "descricao": "Estudante solicita um mapa mental de um tema.",
+      "etapas": [
+        "1. Identificar o tema central",
+        "2. Mapear as 4-6 ramificações principais do tema",
+        "3. Para cada ramo, detalhar 3-5 subitens relevantes",
+        "4. Incluir correlações clínicas nos ramos finais",
+        "5. Sugerir como transformar o mapa em flashcards Anki"
+      ]
+    },
+    {
+      "nome": "Técnica de Estudo Personalizada",
+      "descricao": "Estudante pede orientação sobre como estudar uma disciplina difícil.",
+      "etapas": [
+        "1. Identificar a disciplina e o nível de dificuldade atual",
+        "2. Perguntar sobre método de estudo atual e tempo disponível",
+        "3. Sugerir método de estudo baseado em evidências",
+        "4. Indicar recursos específicos (livros, vídeos, apps)",
+        "5. Propor cronograma de revisão com repetição espaçada"
+      ]
+    },
+    {
+      "nome": "Busca no Dicionário Médico",
+      "descricao": "Estudante busca o significado de um termo técnico.",
+      "etapas": [
+        "1. Identificar o termo solicitado",
+        "2. Fornecer definição clara em português",
+        "3. Explicar a etimologia quando relevante (grego/latim)",
+        "4. Contextualizar o uso clínico do termo",
+        "5. Relacionar o termo a outros conceitos da grade curricular"
+      ]
+    }
+  ],
+
+  "gatilhos_emocionais": [
+    {
+      "gatilho": "Síndrome do impostor",
+      "resposta_sugerida": "É muito comum sentir que não sabe o suficiente. Lembre-se: você está em formação. Até os melhores médicos sentem insegurança. O que diferencia um bom médico não é saber tudo, mas saber o que não sabe e buscar ajuda. Continue estudando, peça orientação e confie no processo."
+    },
+    {
+      "gatilho": "Medo de provas e reprovação",
+      "resposta_sugerida": "Uma prova ruim não define sua competência como médico. O que define é a consistência ao longo do tempo. Revise o que errou, ajuste o método de estudo e siga em frente. Muitos médicos excelentes tiveram dificuldades acadêmicas no início."
+    },
+    {
+      "gatilho": "Sensação de sobrecarga",
+      "resposta_sugerida": "Medicina é um curso que exige muito, mas dividir o conteúdo em partes menores torna tudo mais gerenciável. Priorize, use técnicas de estudo eficientes e não esqueça de cuidar de você. A sua saúde é tão importante quanto a do seu futuro paciente."
+    },
+    {
+      "gatilho": "Primeiro dia de internato",
+      "resposta_sugerida": "O internato é o momento mais transformador da formação. Ninguém espera que você saiba tudo; esperam que você seja curioso, humilde e dedicado. Pergunte muito, observe, escute os pacientes e sempre confirme suas ações com o preceptor."
+    }
+  ],
+
+  "cenarios_simulacao": [
+    {
+      "titulo": "Caso Clínico 1 - IAM com Supra de ST",
+      "nivel": "7° ao 12° termo",
+      "apresentacao": "Homem, 58 anos, tabagista, hipertenso, obeso. Chega ao pronto-socorro com dor precordial em aperto irradiando para o membro superior esquerdo há 1 hora, sudorese fria e dispneia. PA 160/100 mmHg, FC 102 bpm, SpO2 94%.",
+      "questoes_orientadoras": [
+        "Qual a hipótese diagnóstica principal?",
+        "Quais exames solicitar de imediato?",
+        "Como interpretar o ECG neste contexto?",
+        "Qual o manejo inicial (MONABCH)?",
+        "Qual a janela para trombólise vs angioplastia primária?"
+      ],
+      "resposta_educacional": {
+        "diagnostico_principal": "Síndrome Coronariana Aguda - IAMCSST (Infarto Agudo do Miocárdio com Supra de ST)",
+        "fatores_risco": "Tabagismo, HAS, obesidade, sexo masculino, idade > 45 anos",
+        "exames_imediatos": ["ECG em até 10 minutos do atendimento", "Troponina (I ou T ultrassensível) + CK-MB", "Hemograma, coagulograma, glicemia, eletrólitos", "Radiografia de tórax"],
+        "manejo_mnemonico": "MONABCH: Morfina (dor), Oxigênio (se SpO2 < 94%), Nitrato (dor/isquemia), AAS 200-300 mg VO, Betabloqueador (se sem contraindicação), Clopidogrel ou Ticagrelor, Heparina",
+        "reperfusao": "Angioplastia primária preferida se disponível em <120 min do diagnóstico. Trombólise se ICP não disponível em tempo e não contraindicada (<12h de dor, sem contraindicações absolutas).",
+        "disclaimer": "Este caso é de uso educacional exclusivamente. A conduta em pacientes reais exige avaliação presencial por médico habilitado."
+      }
+    },
+    {
+      "titulo": "Caso Clínico 2 - Meningite Bacteriana",
+      "nivel": "5° ao 10° termo",
+      "apresentacao": "Adolescente de 16 anos, trazido pelos pais com febre alta (39,8°C) há 12 horas, cefaleia intensa, rigidez de nuca e sonolência. Há 4 horas surgiram manchas avermelhadas que não desvanecem à vitropressão.",
+      "questoes_orientadoras": [
+        "Qual a tríade clássica da meningite bacteriana?",
+        "O que é o sinal de Kernig e de Brudzinski?",
+        "O que significa não desvanecer à vitropressão?",
+        "Quais os agentes etiológicos mais comuns nessa faixa etária?",
+        "Deve-se realizar punção lombar antes de iniciar o antibiótico?"
+      ],
+      "resposta_educacional": {
+        "diagnostico_principal": "Meningite bacteriana com provável meningococcemia (petéquias/púrpura non-blanching)",
+        "triade_classica": "Febre + cefaleia intensa + rigidez de nuca",
+        "sinais_meningeos": "Kernig: resistência à extensão do joelho com coxa fletida. Brudzinski: flexão involuntária dos joelhos ao flexionar o pescoço.",
+        "vitropressao": "Lesões que não desvanecem à pressão com copo = púrpura = extravasamento de sangue = meningococcemia com CIVD potencial = emergência absoluta.",
+        "agentes_faixa_etaria": "Neisseria meningitidis (adolescentes/adultos jovens) e Streptococcus pneumoniae (todas as idades)",
+        "antibiotico_primeiro": "SIM. Nunca atrasar o antibiótico esperando a punção lombar em paciente instável. Iniciar ceftriaxona imediatamente. Punção lombar após estabilização se não houver sinais de hipertensão intracraniana.",
+        "tratamento": "Ceftriaxona 4g/dia IV + dexametasona 0,15 mg/kg/dose a cada 6h por 4 dias (reduz sequelas neurológicas)",
+        "disclaimer": "Este caso é de uso educacional exclusivamente."
+      }
+    },
+    {
+      "titulo": "Caso Clínico 3 - Crise Hipoglicêmica",
+      "nivel": "3° ao 9° termo",
+      "apresentacao": "Mulher, 72 anos, diabética tipo 2 em uso de glibenclamida e insulina NPH. Encontrada pela família confusa, sudoreica, taquicárdica e com tremores. Glicemia capilar: 38 mg/dL.",
+      "questoes_orientadoras": [
+        "Quais são os sintomas adrenérgicos e neuroglicopênicos da hipoglicemia?",
+        "O que é a tríade de Whipple?",
+        "Qual o tratamento imediato?",
+        "Por que a glibenclamida é perigosa em idosos?",
+        "Quando a hipoglicemia recorrente indica risco de vida?"
+      ],
+      "resposta_educacional": {
+        "diagnostico": "Hipoglicemia grave com neuroglicopenia",
+        "triade_whipple": "1) Sintomas compatíveis com hipoglicemia, 2) Glicemia baixa medida, 3) Resolução dos sintomas após correção da glicose",
+        "sintomas_adrenergicos": "Tremores, sudorese, taquicardia, ansiedade, palidez (resposta do SNA simpático à hipoglicemia)",
+        "sintomas_neuroglicogenicos": "Confusão, sonolência, diplopia, convulsão, coma (SNC privado de glicose)",
+        "tratamento": "Consciente: 15g de carboidrato simples (3 tabletes de glicose, ½ copo de suco). Inconsciente: Glucagon 1 mg IM ou Glicose 50% 50 mL IV. Monitorar por pelo menos 24h (glibenclamida tem meia-vida longa).",
+        "risco_idoso_glibenclamida": "Sulfonilureias de longa duração são perigosas em idosos porque a insulina continua sendo secretada mesmo em hipoglicemia. Preferir glipizida ou glicazida de liberação prolongada, ou metformina.",
+        "disclaimer": "Este caso é de uso educacional exclusivamente."
+      }
+    },
+    {
+      "titulo": "Caso Clínico 4 - Asma Aguda",
+      "nivel": "4° ao 9° termo",
+      "apresentacao": "Criança de 9 anos, asmática, chega à UPA com sibilância, dispneia, uso de musculatura acessória e SpO2 92%. FC 118 bpm, FR 32 irpm. Não melhora com 2 puffs de salbutamol em casa.",
+      "questoes_orientadoras": [
+        "Como classificar a gravidade da crise de asma?",
+        "Qual o mecanismo fisiopatológico do broncoespasmo?",
+        "Qual é o tratamento escalonado da crise?",
+        "Quando indicar intubação orotraqueal?",
+        "Como diferenciar asma de bronquiolite em criança pequena?"
+      ],
+      "resposta_educacional": {
+        "classificacao_crise": "Leve: sibilos leves, fala em frases completas. Moderada: sibilos moderados, dispneia em repouso, uso de acessórios. Grave: sibilos graves ou ausência (pulmão silencioso = pior sinal), cianose, SpO2 < 90%, confusão.",
+        "fisiopatologia": "Broncoespasmo (musculatura lisa) + edema mucoso + hipersecreção → aumento da resistência ao fluxo aéreo → aprisionamento de ar → hiperinsuflação → aumento do trabalho respiratório",
+        "tratamento_escalonado": [
+          "O2 para manter SpO2 > 94%",
+          "Salbutamol 2,5 mg nebulizado a cada 20 min na 1ª hora",
+          "Brometo de ipratrópio 0,5 mg associado ao salbutamol",
+          "Corticoide sistêmico: prednisolona 1-2 mg/kg/dia VO ou metilprednisolona IV",
+          "Se não melhora: sulfato de magnésio IV, considerar VNI ou IOT"
+        ],
+        "intubacao": "Indicar se: apneia, exaustão, rebaixamento de consciência, SpO2 < 90% sem melhora. A IOT em asma tem alto risco de barotrauma.",
+        "disclaimer": "Este caso é de uso educacional exclusivamente."
+      }
+    }
+  ],
+
+  "dicionario_medico": {
+    "descricao": "Dicionário de termos técnicos médicos com definição, etimologia e contexto de uso. Curado para a grade curricular UNOESTE-Jaú.",
+    "termos": [
+      {"termo": "Acromegalia", "definicao": "Hipersecreção de GH na vida adulta, após o fechamento das epífises. Causa aumento das extremidades, prognatismo, visceromegalias.", "etimologia": "Grego: akros (extremidade) + megas (grande)", "disciplina_relacionada": "Endocrinologia / Fisiologia III"},
+      {"termo": "Adenoma", "definicao": "Neoplasia benigna de origem epitelial glandular.", "etimologia": "Grego: aden (glândula) + -oma (tumor)", "disciplina_relacionada": "Patologia Geral II"},
+      {"termo": "Aferente", "definicao": "Que conduz impulsos para um centro: fibras sensoriais aferentes levam informações ao SNC.", "etimologia": "Latim: ad (para) + ferre (carregar)", "disciplina_relacionada": "Anatomia III / Fisiologia I"},
+      {"termo": "Alcalose", "definicao": "Aumento do pH sanguíneo acima de 7,45. Pode ser respiratória (redução de CO2) ou metabólica (aumento de HCO3).", "etimologia": "Árabe: al-qaly (cinzas de plantas)", "disciplina_relacionada": "Fisiologia III"},
+      {"termo": "Alelo", "definicao": "Uma das formas alternativas de um gene que ocupa o mesmo lócus em cromossomos homólogos.", "etimologia": "Grego: allélon (um do outro)", "disciplina_relacionada": "Genética e Biologia Molecular"},
+      {"termo": "Anamnese", "definicao": "Coleta sistematizada da história clínica do paciente, incluindo queixa principal, HDA, HPMP, antecedentes, história familiar e social.", "etimologia": "Grego: ana (de volta) + mnesis (memória)", "disciplina_relacionada": "Programa de Prática Médica I e II"},
+      {"termo": "Apoptose", "definicao": "Morte celular programada, fisiológica, sem inflamação. Contrasta com necrose (patológica, com inflamação).", "etimologia": "Grego: apo (de) + ptosis (queda)", "disciplina_relacionada": "Patologia Geral I"},
+      {"termo": "Aterosclerose", "definicao": "Doença inflamatória crônica das artérias de médio e grande calibre, com formação de placa aterosclerótica (lipídeos, células inflamatórias, células musculares lisas).", "etimologia": "Grego: athero (papa, mingau) + sclerosis (endurecimento)", "disciplina_relacionada": "Fisiopatologia / Sistemas Biológicos em Clínica Médica I"},
+      {"termo": "Autoimunidade", "definicao": "Resposta imune direcionada contra componentes do próprio organismo (autoantígenos), causando doenças autoimunes.", "etimologia": "Grego: autos (próprio) + latim: immunis (isento)", "disciplina_relacionada": "Imunologia"},
+      {"termo": "Bacteremia", "definicao": "Presença de bactérias viáveis na corrente sanguínea, com ou sem manifestações clínicas.", "etimologia": "Grego: bakterion (bastão) + haima (sangue)", "disciplina_relacionada": "Microbiologia / Doenças Infectocontagiosas"},
+      {"termo": "Bradicardia", "definicao": "Frequência cardíaca abaixo de 60 bpm no adulto.", "etimologia": "Grego: bradys (lento) + kardia (coração)", "disciplina_relacionada": "Fisiologia II / Clínica Médica"},
+      {"termo": "Carcinoma", "definicao": "Neoplasia maligna de origem epitelial.", "etimologia": "Grego: karkinos (caranguejo) + -oma (tumor)", "disciplina_relacionada": "Patologia Geral II / Patologia dos Órgãos"},
+      {"termo": "Cianose", "definicao": "Coloração azulada da pele e mucosas por aumento de hemoglobina desoxigenada (>5 g/dL) no sangue capilar.", "etimologia": "Grego: kyanos (azul escuro)", "disciplina_relacionada": "Semiologia / Sistemas Biológicos em Clínica Médica I"},
+      {"termo": "Coagulação intravascular disseminada (CIVD)", "definicao": "Síndrome adquirida caracterizada por ativação sistêmica da coagulação, formação de trombos e consumo de fatores de coagulação, resultando em sangramentos paradoxais.", "etimologia": "Latim: coagulatio (coagulação)", "disciplina_relacionada": "Fisiopatologia / Urgência e Emergência"},
+      {"termo": "Diplopia", "definicao": "Visão dupla, resultante de desalinhamento ocular por paralisia de músculos extraoculares ou lesão de nervos cranianos III, IV ou VI.", "etimologia": "Grego: diploos (duplo) + opsis (visão)", "disciplina_relacionada": "Neurologia / Oftalmologia"},
+      {"termo": "Disfagia", "definicao": "Dificuldade de deglutição, podendo ser orofaríngea (alta) ou esofagiana (baixa).", "etimologia": "Grego: dys (dificuldade) + phagein (comer)", "disciplina_relacionada": "Gastroenterologia / Sistemas Biológicos em Clínica Médica II"},
+      {"termo": "Diurese", "definicao": "Volume de urina produzido em determinado período. Diurese normal: ~1 mL/kg/hora.", "etimologia": "Grego: dia (através) + ourein (urinar)", "disciplina_relacionada": "Fisiologia II / Nefrologia"},
+      {"termo": "Dispneia", "definicao": "Sensação subjetiva de falta de ar ou dificuldade respiratória.", "etimologia": "Grego: dys (difícil) + pnoia (respiração)", "disciplina_relacionada": "Semiologia / Pneumologia"},
+      {"termo": "Edema", "definicao": "Acúmulo anormal de líquido no espaço intersticial, podendo ser localizado (ex: trombose venosa) ou generalizado (ex: ICC, síndrome nefrótica).", "etimologia": "Grego: oidema (inchaço)", "disciplina_relacionada": "Fisiopatologia / Patologia Geral I"},
+      {"termo": "Embolia", "definicao": "Oclusão de um vaso por material levado pela corrente sanguínea (êmbolo): trombo, gordura, ar, líquido amniótico.", "etimologia": "Grego: embolos (cunha, tampão)", "disciplina_relacionada": "Patologia Geral I"},
+      {"termo": "Emese/Êmese", "definicao": "Vômito. Ato de expulsão do conteúdo gástrico pela boca.", "etimologia": "Grego: emesis (vômito)", "disciplina_relacionada": "Gastroenterologia"},
+      {"termo": "Epistaxe", "definicao": "Sangramento nasal, podendo ser anterior (mais comum, ponto de Kiesselbach) ou posterior (mais grave).", "etimologia": "Grego: epi (sobre) + stazein (gotejar)", "disciplina_relacionada": "Otorrinolaringologia / Urgência"},
+      {"termo": "Eritema", "definicao": "Vermelhidão da pele por vasodilatação, que desvanece à vitropressão (diferente de púrpura).", "etimologia": "Grego: erythros (vermelho)", "disciplina_relacionada": "Dermatologia / Semiologia"},
+      {"termo": "Estenose", "definicao": "Estreitamento de um órgão tubular ou orifício.", "etimologia": "Grego: stenosis (estreitamento)", "disciplina_relacionada": "Cardiologia / Cirurgia"},
+      {"termo": "Fibrilação", "definicao": "Atividade elétrica desorganizada e caótica. Fibrilação ventricular: sem débito cardíaco, parada cardiorrespiratória. Fibrilação atrial: irregular, sem onda P.", "etimologia": "Latim: fibrilla (fibra pequena)", "disciplina_relacionada": "Cardiologia / Urgência e Emergência"},
+      {"termo": "Gangrena", "definicao": "Necrose de tecidos em grande extensão, geralmente por isquemia ou infecção grave.", "etimologia": "Grego: gangraina (ulceração)", "disciplina_relacionada": "Cirurgia Vascular / Patologia"},
+      {"termo": "Glicosúria", "definicao": "Presença de glicose na urina, ocorre quando a glicemia supera o limiar renal (~180 mg/dL) ou em tubulopatias renais.", "etimologia": "Grego: glykys (doce) + ouron (urina)", "disciplina_relacionada": "Endocrinologia / Nefrologia"},
+      {"termo": "Hematúria", "definicao": "Presença de sangue na urina. Macroscópica: visível a olho nu. Microscópica: detectada somente no exame.", "etimologia": "Grego: haima (sangue) + ouron (urina)", "disciplina_relacionada": "Nefrologia / Urologia"},
+      {"termo": "Hemoptise", "definicao": "Expectoração de sangue proveniente das vias aéreas inferiores.", "etimologia": "Grego: haima (sangue) + ptysis (cuspir)", "disciplina_relacionada": "Pneumologia / Diagnóstico Diferencial"},
+      {"termo": "Hepatomegalia", "definicao": "Aumento do fígado além dos limites normais (> 12-15 cm na linha hemiclavicular direita à percussão).", "etimologia": "Grego: hepar (fígado) + megas (grande)", "disciplina_relacionada": "Gastroenterologia / Hepatologia"},
+      {"termo": "Hipóxia", "definicao": "Redução do fornecimento ou utilização de O2 pelos tecidos. Hipoxemia = baixo O2 no sangue; hipóxia = baixo O2 no tecido.", "etimologia": "Grego: hypo (baixo) + oxys (ácido/oxigênio)", "disciplina_relacionada": "Fisiopatologia / Urgência"},
+      {"termo": "Hipertrofia", "definicao": "Aumento do tamanho celular (não do número — isso é hiperplasia). Hipertrofia cardíaca: cardiomiócitos maiores por sobrecarga de pressão.", "etimologia": "Grego: hyper (acima) + trophé (nutrição)", "disciplina_relacionada": "Patologia Geral I"},
+      {"termo": "Icterícia", "definicao": "Coloração amarelada da pele, escleróticas e mucosas por acúmulo de bilirrubina (total > 2-3 mg/dL).", "etimologia": "Latim: icterus (grego: ikteros, ave amarela)", "disciplina_relacionada": "Hepatologia / Gastroenterologia"},
+      {"termo": "Infarto", "definicao": "Área de necrose isquêmica causada por oclusão arterial. Infarto branco (anêmico): em órgãos compactos. Infarto vermelho (hemorrágico): em pulmão ou órgãos com dupla circulação.", "etimologia": "Latim: infarctus (entupido)", "disciplina_relacionada": "Patologia Geral I / Cardiologia"},
+      {"termo": "Isquemia", "definicao": "Redução do fluxo sanguíneo arterial para um tecido, com consequente privação de O2 e nutrientes.", "etimologia": "Grego: ischein (segurar) + haima (sangue)", "disciplina_relacionada": "Fisiopatologia / Cardiologia / Neurologia"},
+      {"termo": "Lipemia", "definicao": "Excesso de lipídeos (colesterol, triglicérides, etc.) no sangue.", "etimologia": "Grego: lipos (gordura) + haima (sangue)", "disciplina_relacionada": "Endocrinologia / Bioquímica"},
+      {"termo": "Linfadenomegalia", "definicao": "Aumento dos linfonodos, podendo ser localizado (infecção, neoplasia regional) ou generalizado (linfomas, doenças sistêmicas).", "etimologia": "Grego: lympha + adén (glândula) + megas (grande)", "disciplina_relacionada": "Hematologia / Oncologia"},
+      {"termo": "Melanoma", "definicao": "Neoplasia maligna dos melanócitos. Critérios ABCDE: Assimetria, Bordas irregulares, Cor variada, Diâmetro > 6mm, Evolução.", "etimologia": "Grego: melas (negro) + -oma (tumor)", "disciplina_relacionada": "Dermatologia / Patologia dos Órgãos"},
+      {"termo": "Metástase", "definicao": "Disseminação de células neoplásicas malignas do tumor primário para sítios distantes via corrente sanguínea, linfática ou por contiguidade.", "etimologia": "Grego: meta (além) + stasis (posição, estação)", "disciplina_relacionada": "Patologia Geral II / Oncologia"},
+      {"termo": "Mialgia", "definicao": "Dor muscular, podendo ser difusa (miosite viral, polimiosite) ou localizada (tensão muscular, trauma).", "etimologia": "Grego: mys (músculo) + algos (dor)", "disciplina_relacionada": "Reumatologia / Clínica Médica"},
+      {"termo": "Nefropatia", "definicao": "Qualquer doença do rim. Nefropatia diabética é a principal causa de doença renal crônica terminal no Brasil.", "etimologia": "Grego: nephros (rim) + pathos (doença)", "disciplina_relacionada": "Nefrologia / Endocrinologia"},
+      {"termo": "Neuropatia", "definicao": "Doença ou disfunção dos nervos periféricos. Polineuropatia: acomete múltiplos nervos (ex: diabética, alcoólica).", "etimologia": "Grego: neuron (nervo) + pathos (doença)", "disciplina_relacionada": "Neurologia"},
+      {"termo": "Oligúria", "definicao": "Diurese inferior a 0,5 mL/kg/hora ou < 400 mL/24h no adulto. Indica comprometimento renal ou hipoperfusão.", "etimologia": "Grego: oligos (pouco) + ouron (urina)", "disciplina_relacionada": "Nefrologia / Urgência e Emergência"},
+      {"termo": "Ortopneia", "definicao": "Dispneia que piora em decúbito dorsal e melhora sentado/de pé. Clássico da insuficiência cardíaca esquerda.", "etimologia": "Grego: orthos (reto) + pnoia (respiração)", "disciplina_relacionada": "Cardiologia / Semiologia"},
+      {"termo": "Parestesia", "definicao": "Sensação anormal (formigamento, dormência, queimação) sem estímulo aparente, por disfunção de nervos sensitivos.", "etimologia": "Grego: para (além) + aisthesis (sensação)", "disciplina_relacionada": "Neurologia / Clínica Médica"},
+      {"termo": "Petéquia", "definicao": "Lesão hemorrágica puntiforme (<3 mm) que não desvanece à vitropressão, por extravasamento de hemácias.", "etimologia": "Italiano: petecchia", "disciplina_relacionada": "Hematologia / Infectologia"},
+      {"termo": "Pirexia", "definicao": "Elevação da temperatura corporal acima de 37,8°C axilar ou 38,0°C retal. Sinônimo de febre.", "etimologia": "Grego: pyrexis (febre)", "disciplina_relacionada": "Fisiopatologia / Clínica Médica"},
+      {"termo": "Pneumotórax", "definicao": "Presença de ar no espaço pleural. Espontâneo primário: jovem alto e magro. Secundário: DPOC, tuberculose. Hipertensivo: emergência com desvio de mediastino.", "etimologia": "Grego: pneuma (ar) + thorax (tórax)", "disciplina_relacionada": "Pneumologia / Urgência e Emergência"},
+      {"termo": "Policitemia", "definicao": "Aumento da massa eritrocitária. Vera: neoplasia mieloproliferativa com Hb > 16,5 g/dL (H) ou > 16 g/dL (M).", "etimologia": "Grego: polys (muito) + kytos (célula) + haima (sangue)", "disciplina_relacionada": "Hematologia"},
+      {"termo": "Poliúria", "definicao": "Diurese superior a 3 litros em 24 horas. Causas: DM descompensado, diabetes insipidus, hipercalcemia.", "etimologia": "Grego: polys (muito) + ouron (urina)", "disciplina_relacionada": "Endocrinologia / Nefrologia"},
+      {"termo": "Profilaxia", "definicao": "Medidas preventivas para evitar o surgimento ou progressão de doenças. Profilaxia primária: antes da doença. Secundária: após exposição ou diagnóstico precoce.", "etimologia": "Grego: prophylassein (guardar)", "disciplina_relacionada": "Saúde Coletiva / Medicina de Família e Comunidade"},
+      {"termo": "Proteinúria", "definicao": "Excreção urinária de proteínas acima do normal (> 150 mg/24h). Síndrome nefrótica: > 3,5 g/24h + hipoalbuminemia + edema + hiperlipidemia.", "etimologia": "Grego: proteios (primário) + ouron (urina)", "disciplina_relacionada": "Nefrologia"},
+      {"termo": "Púrpura", "definicao": "Lesão hemorrágica entre 3 e 10 mm que não desvanece à vitropressão. Acima de 10 mm: equimose.", "etimologia": "Grego: porphyra (molusco que produzia tinta púrpura)", "disciplina_relacionada": "Hematologia / Dermatologia"},
+      {"termo": "Rábula médico-legal", "definicao": "Profissional leigo que atua ilegalmente como advogado ou perito sem habilitação. Não confundir com perito médico legalmente habilitado.", "etimologia": "Italiano: rabulista (advogado de má reputação)", "disciplina_relacionada": "Medicina Legal"},
+      {"termo": "Sepse", "definicao": "Disfunção orgânica ameaçadora à vida causada por resposta desregulada do hospedeiro à infecção (definição Sepsis-3, 2016). SOFA score ≥ 2.", "etimologia": "Grego: sepsis (putrefação)", "disciplina_relacionada": "Doenças Infectocontagiosas / Urgência e Emergência"},
+      {"termo": "Síncope", "definicao": "Perda transitória da consciência por hipoperfusão cerebral global, com início súbito, breve e recuperação espontânea.", "etimologia": "Grego: synkope (colapso)", "disciplina_relacionada": "Cardiologia / Neurologia"},
+      {"termo": "Taquicardia", "definicao": "Frequência cardíaca acima de 100 bpm no adulto em repouso.", "etimologia": "Grego: tachys (rápido) + kardia (coração)", "disciplina_relacionada": "Cardiologia / Semiologia"},
+      {"termo": "Teratogênese", "definicao": "Processo de formação de malformações congênitas por agentes teratogênicos (físicos, químicos ou biológicos) que atuam durante o desenvolvimento embrionário.", "etimologia": "Grego: teras (monstro) + genesis (origem)", "disciplina_relacionada": "Embriologia / Ginecologia-Obstetrícia"},
+      {"termo": "Trombose", "definicao": "Formação de um coágulo (trombo) dentro de um vaso sanguíneo ou câmara cardíaca em indivíduo vivo. Tríade de Virchow: estase, hipercoagulabilidade, lesão endotelial.", "etimologia": "Grego: thrombos (grumo)", "disciplina_relacionada": "Patologia Geral I / Clínica Médica"},
+      {"termo": "Uremia", "definicao": "Síndrome clínica por acúmulo de produtos nitrogenados (ureia, creatinina) no sangue, na insuficiência renal grave. Manifestações: encefalopatia, pericardite, prurido, anemia.", "etimologia": "Grego: ouron (urina) + haima (sangue)", "disciplina_relacionada": "Nefrologia"},
+      {"termo": "Vasodilatação", "definicao": "Aumento do calibre dos vasos sanguíneos, reduzindo a resistência vascular periférica e a pressão arterial.", "etimologia": "Latim: vas (vaso) + dilatatio (alargamento)", "disciplina_relacionada": "Fisiologia II / Farmacologia"},
+      {"termo": "Viremia", "definicao": "Presença de vírus na corrente sanguínea.", "etimologia": "Latim: virus + grego: haima (sangue)", "disciplina_relacionada": "Microbiologia / Infectologia"},
+      {"termo": "Zoonose", "definicao": "Doença infecciosa que pode ser transmitida entre animais e seres humanos. Exemplos: raiva, leptospirose, febre amarela, brucelose.", "etimologia": "Grego: zoon (animal) + nosos (doença)", "disciplina_relacionada": "Epidemiologia / Infectologia"}
+    ]
+  },
+
+  "faq_estruturado": [
+    {"id": 1, "pergunta": "Como estudar anatomia de forma eficiente?", "resposta": "Combine atlas 3D (Netter, Sobotta), modelos anatômicos, vídeos cirúrgicos e mnemônicos. Estude por região e depois correlacione com sistemas. Aplicativos como Visible Body e Complete Anatomy são excelentes."},
+    {"id": 2, "pergunta": "Qual a diferença entre inflamação aguda e crônica?", "resposta": "Aguda: início súbito, predomínio de neutrófilos, exsudato, duração de dias a semanas. Crônica: linfócitos e macrófagos, formação de granuloma possível, pode causar fibrose. A tuberculose é o exemplo clássico de inflamação crônica granulomatosa."},
+    {"id": 3, "pergunta": "O que é farmacocinética?", "resposta": "É o estudo do que o organismo faz com o fármaco: Absorção, Distribuição, Metabolismo e Excreção (ADME). Difere da farmacodinâmica, que estuda o que o fármaco faz com o organismo."},
+    {"id": 4, "pergunta": "Como funciona o sistema complemento?", "resposta": "Sistema de proteínas plasmáticas ativadas em cascata (clássica, alternativa ou das lectinas). Funções: opsonização (facilita fagocitose), anafilatoxinas (C3a, C5a → inflamação), lise do patógeno (complexo de ataque à membrana - MAC)."},
+    {"id": 5, "pergunta": "O que é medicina baseada em evidências (MBE)?", "resposta": "Integração da melhor evidência científica disponível com a experiência clínica do médico e os valores e preferências do paciente na tomada de decisão clínica. Pirâmide de evidências: metanálise > ensaio clínico randomizado > coorte > caso-controle > série de casos > opinião de especialista."},
+    {"id": 6, "pergunta": "Qual a diferença entre sensibilidade e especificidade?", "resposta": "Sensibilidade: capacidade do teste de identificar verdadeiros positivos (SnNout — teste sensível negativo exclui a doença). Especificidade: capacidade de identificar verdadeiros negativos (SpPin — teste específico positivo confirma a doença)."},
+    {"id": 7, "pergunta": "O que é o ciclo de Krebs?", "resposta": "Via metabólica mitocondrial que oxida acetil-CoA para produzir CO2, NADH, FADH2 e GTP. Ocorre 2 vezes por molécula de glicose. Os produtos (NADH e FADH2) alimentam a cadeia respiratória para produzir ATP."},
+    {"id": 8, "pergunta": "O que é o potencial de ação?", "resposta": "Evento elétrico nos neurônios e células musculares por alteração na permeabilidade iônica da membrana. Fases: repouso (-70 mV) → despolarização (Na+ entra) → repolarização (K+ sai) → hiperpolarização → repouso."},
+    {"id": 9, "pergunta": "O que é a tríade de Virchow?", "resposta": "Três fatores que predispõem à trombose: 1) Estase sanguínea (ex: imobilização), 2) Hipercoagulabilidade (ex: câncer, gravidez, trombofilias), 3) Lesão endotelial (ex: aterosclerose, trauma). Necessário pelo menos um fator, mas a presença de dois ou três aumenta muito o risco."},
+    {"id": 10, "pergunta": "Quais são os critérios de diagnóstico para diabetes mellitus?", "resposta": "Qualquer um dos seguintes: 1) Glicemia de jejum ≥ 126 mg/dL (2x), 2) Glicemia 2h após 75g de glicose ≥ 200 mg/dL (TOTG), 3) HbA1c ≥ 6,5%, 4) Glicemia aleatória ≥ 200 mg/dL com sintomas clássicos (poliúria, polidipsia, emagrecimento)."},
+    {"id": 11, "pergunta": "Como funciona o SRAA?", "resposta": "Eixo renina-angiotensina-aldosterona: hipoperfusão renal → células justaglomerulares liberam renina → renina converte angiotensinogênio em Ang I → ECA converte Ang I em Ang II → vasoconstrição + aldosterona (retenção de Na+/água) + ADH → aumento da PA."},
+    {"id": 12, "pergunta": "Qual a diferença entre vírus DNA e RNA?", "resposta": "Vírus DNA: replicam no núcleo, mais estáveis, menor taxa de mutação (HPV, herpes, adenovírus, HBV). Vírus RNA: replicam no citoplasma, RNA polimerase dependente de RNA é error-prone, maior taxa de mutação (HIV usa transcriptase reversa, influenza, SARS-CoV-2, dengue)."},
+    {"id": 13, "pergunta": "O que é choque e quais são os tipos?", "resposta": "Choque = hipoperfusão tecidual. Tipos: 1) Hipovolêmico (perda de volume: hemorragia, desidratação), 2) Distributivo (má distribuição: séptico, anafilático, neurogênico), 3) Cardiogênico (falha de bomba: IAM, IC aguda), 4) Obstrutivo (obstrução mecânica: TEP, tamponamento cardíaco)."},
+    {"id": 14, "pergunta": "O que é o teste de Apgar e como interpretar?", "resposta": "Score do recém-nascido avaliado no 1° e 5° minuto de vida. Avalia 5 parâmetros (0-2 cada): FC, respiração, tônus, irritabilidade reflexa, cor. Pontuação: ≥7 normal, 4-6 depressão moderada, <4 depressão grave."},
+    {"id": 15, "pergunta": "O que é neoplasia benigna vs maligna?", "resposta": "Benigna: diferenciada, crescimento lento, expansivo (com cápsula), não invade, não metastatiza, nomenclatura com -oma (lipoma, adenoma). Maligna: pouco diferenciada, crescimento rápido, infiltrativo, invade tecidos e metastatiza."},
+    {"id": 16, "pergunta": "Como funciona o sistema ABO de sangue?", "resposta": "Tipo A: antígeno A na hemácia, anticorpo anti-B no plasma. Tipo B: antígeno B, anticorpo anti-A. Tipo AB: ambos antígenos, nenhum anticorpo (doador universal de plasma). Tipo O: nenhum antígeno, ambos anticorpos (doador universal de hemácias)."},
+    {"id": 17, "pergunta": "O que são curvas de Frank-Starling?", "resposta": "O coração funciona como um fole: quanto mais o ventrículo é preenchido (maior pré-carga), mais forte é a contração (até certo limite). Na insuficiência cardíaca, a curva se desloca para baixo e para direita, significando que para cada pré-carga, o débito cardíaco é menor."},
+    {"id": 18, "pergunta": "O que são citocinas?", "resposta": "Moléculas de sinalização do sistema imune: interleucinas (IL), interferons (IFN), TNF, fatores de crescimento. IL-1, IL-6 e TNF-α = pirógenos endógenos (causam febre). IFN-γ = ativa macrófagos. IL-10 = anti-inflamatória."},
+    {"id": 19, "pergunta": "O que é glomerulonefrite?", "resposta": "Inflamação dos glomérulos renais. Apresentação: hematúria, proteinúria, hipertensão, edema, azotemia. Principal causa de GN pós-infecciosa: Streptococcus β-hemolítico grupo A (pós-estreptocócica). Síndrome nefrítica: hematúria + hipertensão + oligúria + cilindros eritrocitários."},
+    {"id": 20, "pergunta": "Como ler um ECG de forma sistemática?", "resposta": "Siga a ordem: 1) Frequência (intervalo R-R), 2) Ritmo (regular vs irregular, onda P antes de cada QRS), 3) Eixo (derivações D1 e aVF), 4) Intervalo PR (0,12-0,20s), 5) QRS (< 0,12s = normal), 6) Segmento ST (supra ou infradesnivelamento), 7) Onda T (inversão?), 8) Intervalo QT corrigido."},
+    {"id": 21, "pergunta": "O que é coagulação intravascular disseminada (CIVD)?", "resposta": "Ativação sistêmica descontrolada da coagulação com formação de microtrombos e consumo de fatores e plaquetas, resultando em sangramento paradoxal. Causas: sepse, trauma grave, complicações obstétricas, neoplasias. Lab: plaquetas baixas, TP e TTPA altos, fibrinogênio baixo, D-dímero alto."},
+    {"id": 22, "pergunta": "Qual a diferença entre célula T CD4+ e CD8+?", "resposta": "CD4+ (T auxiliar/helper): reconhece MHC classe II (APCs), coordena a resposta imune adaptativa, libera citocinas. CD8+ (T citotóxico): reconhece MHC classe I (todas as células), mata células infectadas por vírus e células tumorais. HIV destrói principalmente células CD4+."},
+    {"id": 23, "pergunta": "O que é tuberculose e como diagnosticar?", "resposta": "Infecção pelo Mycobacterium tuberculosis. Transmissão: gotículas. Pulmão é o principal órgão. Diagnóstico: baciloscopia (2 amostras), cultura (padrão-ouro, demora 4-8 semanas), GeneXpert MTB/RIF (molecular, rápido), RX de tórax. PPD/Mantoux indica exposição, não doença ativa."},
+    {"id": 24, "pergunta": "O que é o Índice de Apgar fetal (bem-estar)?", "resposta": "O Apgar do RN avalia bem-estar ao nascimento (não fetal). Para bem-estar fetal durante o trabalho de parto usamos: cardiotocografia (CTG), contagem de movimentos fetais, perfil biofísico fetal (5 parâmetros: MNF, 4 parâmetros de US + CTG) e dopplervelocimetria."},
+    {"id": 25, "pergunta": "Quais as principais causas de síndrome nefrótica no adulto?", "resposta": "Glomerulosclerose segmentar e focal (GESF) e nefropatia membranosa são as principais em adultos. Síndrome nefrótica secundária: diabetes (nefropatia diabética), lúpus, amiloidose, neoplasias. Em crianças: lesão mínima (80% dos casos) — respondem bem a corticoides."},
+    {"id": 26, "pergunta": "O que é aprendizado baseado em problemas (PBL)?", "resposta": "Metodologia ativa em que estudantes aprendem a partir da análise de situações-problema (casos), em grupos tutoriais. Permite integração horizontal (entre disciplinas do mesmo semestre) e vertical (entre ciclos). Muito utilizado em faculdades de medicina com currículo integrado, como a UNOESTE."},
+    {"id": 27, "pergunta": "O que é o OSCE?", "resposta": "Objective Structured Clinical Examination (Exame Clínico Objetivo Estruturado). Avaliação prática em estações cronometradas onde o estudante demonstra habilidades clínicas (anamnese, exame físico, procedimentos) em pacientes simulados (padronizados). Muito utilizado nas provas de residência internacionais e crescendo no Brasil."},
+    {"id": 28, "pergunta": "Como funciona a coagulação sanguínea?", "resposta": "Via extrínseca: fator tecidual (III) + VIIa → ativa X. Via intrínseca: XII → XI → IX → VIII → ativa X. Via comum: X ativado + V → protrombinase → trombina → fibrinogênio → fibrina. Teste: TP monitora via extrínseca (varfarina); TTPA monitora via intrínseca (heparina)."},
+    {"id": 29, "pergunta": "O que é o ciclo celular?", "resposta": "G1 (crescimento, síntese proteica) → S (síntese/replicação do DNA) → G2 (verificação, crescimento) → M (mitose: prófase, metáfase, anáfase, telófase). G0 = saída do ciclo. Pontos de verificação (checkpoints) controlam progressão. Mutações nos checkpoints → câncer."},
+    {"id": 30, "pergunta": "Quais são os sinais de alerta (red flags) na cefaleia?", "resposta": "SNOOP4: Sintomas sistêmicos (febre, perda de peso), Neoplasia ou imunossupressão, Onset súbito (cefaleia em trovão), Older patient (> 50 anos, arterite), Papilledema ou alteração postural, Progressiva e nova, Prior headache history change (mudança do padrão)."},
+    {"id": 31, "pergunta": "O que é síndrome de Down?", "resposta": "Trissomia do cromossomo 21 (95% dos casos), ou translocação robertsoniana (4%) ou mosaicismo (1%). Características: hipotonia, braquicefalia, fissura palpebral oblíqua, prega palmar única, cardiopatia congênita (50%), retardo mental variável. Rastreamento: translucência nucal + duplo marcador no 1° trimestre."},
+    {"id": 32, "pergunta": "O que é o gradiente alvéolo-arterial de O2 (P[A-a]O2)?", "resposta": "Diferença entre a PO2 alveolar calculada e a PO2 arterial medida. Normal: < 15 mmHg em ar ambiente. Aumentado indica distúrbio de ventilação/perfusão (V/Q), shunt ou distúrbio de difusão. Distingue hipoxemia por hipoventilação (P(A-a) normal) de hipoxemia por doença pulmonar (P(A-a) aumentado)."},
+    {"id": 33, "pergunta": "Como classificar hipertensão arterial sistêmica?", "resposta": "Segundo as Diretrizes Brasileiras (2020): Normal: < 120/80. Pré-hipertensão: 120-139/80-89. HAS Estágio 1: 140-159/90-99. Estágio 2: 160-179/100-109. Estágio 3: ≥ 180/110. Hipertensão sistólica isolada: PAS ≥ 140 + PAD < 90."},
+    {"id": 34, "pergunta": "O que é o mecanismo de ação da aspirina (AAS)?", "resposta": "Inibe irreversivelmente a COX-1 e COX-2 por acetilação. COX-1 nas plaquetas produz TXA2 (vasoconstritor e pró-agregante). A inibição irreversível da COX-1 plaquetária dura toda a vida da plaqueta (7-10 dias), por isso a dose antiagregante é baixa (100-325 mg/dia)."},
+    {"id": 35, "pergunta": "O que é a lei de Laplace aplicada ao coração?", "resposta": "Tensão de parede = Pressão × Raio / (2 × Espessura). Aplicação clínica: ventrículo dilatado (raio aumentado) precisa de maior tensão de parede para mesma pressão → maior consumo de O2 → pior prognóstico na IC dilatada. A hipertrofia (espessura aumentada) é uma adaptação que normaliza a tensão."},
+    {"id": 36, "pergunta": "Quais são os critérios de Framingham para ICC?", "resposta": "Critérios maiores: DPN, reflexo hepatojugular, estertores pulmonares, cardiomegalia no RX, edema agudo de pulmão, galope por B3, PVC > 16 cmH2O, perda > 4,5 kg em 5 dias com tratamento. Critérios menores: edema bilateral de MMII, tosse noturna, dispneia aos esforços, hepatomegalia, derrame pleural. Diagnóstico: 2 maiores ou 1 maior + 2 menores."},
+    {"id": 37, "pergunta": "O que é a síndrome de Horner?", "resposta": "Tríade: ptose palpebral + miose + anidrose ipsilateral. Por lesão da via simpática (1ª, 2ª ou 3ª neurônio). Causas: tumor apical de pulmão (Pancoast), dissecção de carótida, síndrome medular lateral (Wallenberg). A anidrose ajuda a localizar o nível da lesão."},
+    {"id": 38, "pergunta": "Quais são os critérios diagnósticos para sepse (Sepsis-3)?", "resposta": "Sepse: disfunção orgânica ameaçadora à vida por resposta desregulada à infecção. SOFA ≥ 2. Choque séptico: sepse + vasopressor para manter PAM ≥ 65 mmHg + lactato > 2 mmol/L após reposição volêmica adequada. Mortalidade do choque séptico: 40-50%."},
+    {"id": 39, "pergunta": "O que é o exame de papanicolau e quando indicar?", "resposta": "Coleta de células do colo uterino para rastreamento de câncer cervical e lesões precursoras (NIC). Indicação: mulheres sexualmente ativas dos 25 aos 64 anos. Periodicidade: anual nos 2 primeiros exames normais, depois a cada 3 anos. HPV 16 e 18 são responsáveis por ~70% dos cânceres cervicais."},
+    {"id": 40, "pergunta": "O que é a escala de Glasgow?", "resposta": "Avalia nível de consciência em 3 parâmetros: Abertura ocular (4-1), Resposta verbal (5-1), Resposta motora (6-1). Total: 15 (normal) a 3 (sem resposta). TCE leve: 13-15; moderado: 9-12; grave: ≤ 8 (indicação de IOT). Mnemônico: 4+5+6 = 15."},
+    {"id": 41, "pergunta": "Qual a diferença entre AVC isquêmico e hemorrágico?", "resposta": "Isquêmico (80%): oclusão arterial por trombose ou embolia → área de infarto. TC sem contraste normal nas primeiras horas (RM-DWI positiva cedo). Tratamento: trombólise (alteplase) em até 4,5h se sem contraindicações, ou trombectomia mecânica em até 24h em casos selecionados. Hemorrágico (20%): ruptura de vaso → sangue no parênquima. TC mostra hiperdensidade imediatamente. Sem trombólise. Controle de PA e cirurgia em casos específicos."},
+    {"id": 42, "pergunta": "O que é a lei bioética da autonomia?", "resposta": "Princípio que reconhece o direito do paciente de tomar decisões sobre sua própria saúde, após informação adequada (consentimento livre e esclarecido). Implica respeitar recusas de tratamento de paciente capaz, mesmo que o médico discorde. Conflita com beneficência quando o paciente rejeita tratamento benéfico."},
+    {"id": 43, "pergunta": "Como funciona a insulina no metabolismo?", "resposta": "Insulina (liberada pelas células β pancreáticas em resposta à hiperglicemia): ativa receptores tirosina-quinase → sinalização PI3K/AKT → translocação do GLUT-4 para membrana celular (músculo e gordura) → captação de glicose. Também estimula glicogênese, lipogênese e síntese proteica. Inibe glicogenólise, gliconeogênese e lipólise."},
+    {"id": 44, "pergunta": "O que é bradicinina e por que causa tosse nos IECA?", "resposta": "Bradicinina é um peptídeo vasodilatador e inflamatório. A ECA (enzima conversora de angiotensina) também degrada bradicinina. Os IECAs bloqueiam a ECA → aumentam bradicinina → broncoconstrição e tosse seca em ~10-15% dos pacientes. Por isso, os BRAs (que bloqueiam o receptor de AT-II sem afetar a ECA) não causam tosse."},
+    {"id": 45, "pergunta": "O que é o hemograma completo e como interpretar?", "resposta": "Série vermelha: Hemoglobina (VR: H 13-17, M 12-16), Hematócrito, VCM (80-100 = normocítica; <80 microcítica; >100 macrocítica), HCM, CHCM, RDW. Série branca: leucócitos totais (4.000-11.000) + diferencial. Plaquetas: 150.000-400.000. Anemia microcítica hipocrômica: deficiência de ferro, talassemia. Macrocítica: B12/folato."},
+    {"id": 46, "pergunta": "Quais são os nervos cranianos motores puros?", "resposta": "NC III (oculomotor), IV (troclear) e VI (abducente) → motricidade ocular. NC XI (acessório) → trapézio e esternocleidomastoideo. NC XII (hipoglosso) → musculatura da língua. Paralisia do XII: língua desvia para o lado da lesão."},
+    {"id": 47, "pergunta": "O que é o processo de socialização médica no internato?", "resposta": "Processo de incorporação de valores, normas e identidade profissional médica durante a formação prática. Inclui aprender hierarquias hospitalares, terminologia, rituais da medicina (visitas, rounds) e a lidar com sofrimento e morte. A relação com preceptores é central nesse processo."},
+    {"id": 48, "pergunta": "O que é a síndrome de Cushing?", "resposta": "Excesso de glicocorticoides. Exógena (mais comum): uso de corticoides. Endógena: adenoma hipofisário (doença de Cushing = ACTH alto), tumor adrenal (ACTH baixo) ou carcinoma de pequenas células (ACTH ectópico). Manifestações: obesidade centrípeta, estrias violáceas, diabetes, osteoporose, hipertensão, hirsutismo, face em lua cheia."},
+    {"id": 49, "pergunta": "Quando indicar UTI para um paciente?", "resposta": "Critérios gerais: instabilidade hemodinâmica (necessidade de vasopressores), insuficiência respiratória aguda (necessidade de ventilação mecânica), rebaixamento de consciência, arritmias graves, falência orgânica múltipla. Escores como SOFA e APACHE II são usados para avaliar gravidade em UTI."},
+    {"id": 50, "pergunta": "O que é a síndrome do QT longo?", "resposta": "Prolongamento do intervalo QTc (> 450 ms em homens, > 460 ms em mulheres) que predispõe a arritmias graves como torsades de pointes e fibrilação ventricular. Congênita (mutações em canais iônicos) ou adquirida (hipocalemia, hipomagnesemia, medicamentos: macrolídeos, antipsicóticos, metadona, antiarrítmicos classe IA e III)."},
+    {"id": 51, "pergunta": "O que é transferência e contratransferência na relação médico-paciente?", "resposta": "Transferência: o paciente projeta emoções de relações passadas (pais, figuras de autoridade) no médico. Contratransferência: o médico projeta suas próprias emoções no paciente. Reconhecer esses processos é fundamental para uma relação terapêutica saudável, especialmente em psiquiatria."},
+    {"id": 52, "pergunta": "Como funcionam os antibióticos β-lactâmicos?", "resposta": "Inibem a síntese da parede bacteriana ligando-se e inativando as PBPs (penicillin binding proteins), enzimas que catalisam a síntese do peptidoglicano. A ação é bactericida e dependente do tempo (eficácia quando concentração > CIM por >50% do intervalo de dosagem). Resistência: β-lactamases."},
+    {"id": 53, "pergunta": "Quais são os principais tipos de hipersensibilidade?", "resposta": "Tipo I (imediata/anafilática): IgE + mastócito + basófilo → histamina (asma, rinite, anafilaxia). Tipo II (citotóxica): anticorpos IgG/IgM contra antígenos de superfície → complemento ou ADCC (hemólise autoimune, Goodpasture). Tipo III (por imunocomplexos): deposição de complexos Ag-Ac (lúpus, vasculite). Tipo IV (tardia/celular): linfócitos T (tuberculose, dermatite de contato, rejeição de enxerto)."},
+    {"id": 54, "pergunta": "O que é o índice de massa corporal (IMC) e como classificar?", "resposta": "IMC = peso (kg) / altura² (m). Classificação OMS: < 18,5 = baixo peso; 18,5-24,9 = eutrófico; 25-29,9 = sobrepeso; 30-34,9 = obesidade grau I; 35-39,9 = grau II; ≥ 40 = grau III (mórbida). Limitação: não avalia composição corporal (músculo vs gordura)."},
+    {"id": 55, "pergunta": "Como preparar uma apresentação de caso clínico (round)?", "resposta": "Estrutura padrão: 1) Identificação (idade, sexo, procedência), 2) QP e HDA (OPQQRST: onset, provocação, qualidade, quantificação, região, sintomas associados, tempo), 3) HPP e HPF, 4) Exame físico (sinais vitais, geral, por sistemas), 5) Hipóteses diagnósticas (da mais provável à menos), 6) Exames complementares e interpretação, 7) Plano terapêutico, 8) Evolução e desfecho."}
+  ],
+
+  "cross_knowledge": [
+    {
+      "segmento_relacionado": "Saúde Mental e Bem-Estar",
+      "relevancia": "Alta. O estudante de medicina é um profissional em formação sujeito a alta pressão. O agente deve estar preparado para identificar sinais de burnout, síndrome do impostor, ansiedade e depressão e direcionar para recursos de apoio sem substituir acompanhamento profissional.",
+      "recursos_sugeridos": ["CVV: 188 (24h)", "CAE da instituição", "CFM tem programas de saúde do médico", "Aplicativos: Headspace, Insight Timer para mindfulness"]
+    },
+    {
+      "segmento_relacionado": "Preparação para Residência Médica",
+      "relevancia": "Alta. A partir do 5° termo, o estudante já deve pensar na especialidade desejada e no método de preparação. O agente pode fornecer informações sobre as principais provas, especialidades mais concorridas e plano de estudo orientado.",
+      "conteudo_relacionado": ["Perfil das provas: USP, UNIFESP, SUS-SP, Enare", "Especialidades mais concorridas: Dermatologia, Oftalmologia, Ortopedia", "Bancos de questões: Medcof, SanarFlix, Qconcursos, MEDCEL"]
+    },
+    {
+      "segmento_relacionado": "Medicina Baseada em Evidências e Pesquisa",
+      "relevancia": "Média-Alta. O TCC e as disciplinas de MBE exigem compreensão de metodologia científica. O agente pode auxiliar na leitura crítica de artigos, entendimento de estatística básica e elaboração do projeto.",
+      "conteudo_relacionado": ["GRADE (Grading of Recommendations, Assessment, Development and Evaluations)", "Ferramentas: PubMed, BVS, Cochrane Library, UpToDate", "Bioestatística: RR, OR, NNT, NNH, IC 95%, valor p"]
+    },
+    {
+      "segmento_relacionado": "Habilidades de Comunicação",
+      "relevancia": "Alta. A comunicação médico-paciente é transversal a todo o curso e fundamental para a prática clínica. O agente pode treinar o estudante em técnicas de comunicação empática e entrevista clínica.",
+      "conteudo_relacionado": ["Calgary-Cambridge Guide to the Medical Interview", "Comunicação de más notícias: Protocolo SPIKES", "Anamnese pediátrica e geriátrica: particularidades"]
+    },
+    {
+      "segmento_relacionado": "Farmacologia e Prescrição Racional",
+      "relevancia": "Alta. A prescrição segura é uma das competências mais críticas do médico. Conhecimento integrado de mecanismos, indicações, contraindicações e interações medicamentosas é essencial.",
+      "conteudo_relacionado": ["Bulário eletrônico ANVISA", "Anvisa: lista de medicamentos de uso controlado", "Programa OMS de Uso Racional de Medicamentos"]
+    },
+    {
+      "segmento_relacionado": "Tecnologia em Saúde e Telemedicina",
+      "relevancia": "Crescente. O médico do futuro precisará dominar prontuário eletrônico, telemedicina, IA diagnóstica e wearables. O agente pode orientar sobre as principais plataformas e regulamentações.",
+      "conteudo_relacionado": ["Resolução CFM 2.314/2022 sobre telemedicina", "Prontuários eletrônicos: MV, Tasy, Soul MV", "Apps médicos: Epocrates, Medscape, UpToDate, Drug Interactions Checker"]
+    }
+  ]
+}
