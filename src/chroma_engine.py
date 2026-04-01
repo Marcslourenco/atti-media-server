@@ -171,13 +171,27 @@ class AvatarRAGEngine:
     
     def _load_knowledge_base(self):
         """Carrega base de conhecimento dos arquivos JSON"""
-        knowledge_dir = Path("./knowledge")
+        # Tentar múltiplos caminhos possíveis
+        possible_paths = [
+            Path("./knowledge"),
+            Path("/app/knowledge"),
+            Path(os.path.dirname(os.path.abspath(__file__))).parent.parent / "knowledge",
+        ]
         
-        if not knowledge_dir.exists():
-            logger.warning(f"⚠️ Diretório de conhecimento não encontrado: {knowledge_dir}")
+        knowledge_dir = None
+        for path in possible_paths:
+            logger.info(f"🔍 Verificando path: {path.absolute()}")
+            if path.exists():
+                knowledge_dir = path
+                logger.info(f"✅ Encontrado em: {knowledge_dir.absolute()}")
+                break
+        
+        if not knowledge_dir:
+            logger.error(f"❌ Diretório de conhecimento NÃO encontrado!")
+            logger.error(f"Paths testados: {[str(p.absolute()) for p in possible_paths]}")
             return
         
-        logger.info(f"📚 Carregando base de conhecimento de {knowledge_dir}")
+        logger.info(f"📚 Carregando base de conhecimento de {knowledge_dir.absolute()}")
         
         for avatar_dir in knowledge_dir.iterdir():
             if not avatar_dir.is_dir() or avatar_dir.name.startswith('_'):
