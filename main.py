@@ -43,12 +43,19 @@ except Exception as e:
     viseme_sync = None
 
 try:
-    from src.rag_engine import rag_engine
-    logger.info("RAG engine carregado com sucesso")
+    from src.chroma_engine import AvatarRAGEngine
+    rag_engine = AvatarRAGEngine()
+    logger.info("✅ CHROMA_ENGINE carregado com sucesso - EMBEDDINGS ATIVADOS")
+    logger.info(f"✅ ChromaDB inicializado com persistência")
 except Exception as e:
-    logger.error(f"Erro ao importar RAG engine: {e}", exc_info=True)
-    rag_engine = None
-    viseme_sync = None
+    logger.error(f"❌ Erro ao importar CHROMA_ENGINE: {e}", exc_info=True)
+    logger.warning("⚠️ Fallback para rag_engine simples")
+    try:
+        from src.rag_engine import rag_engine
+        logger.info("⚠️ RAG engine simples carregado (sem embeddings)")
+    except Exception as e2:
+        logger.error(f"❌ Erro ao importar RAG engine fallback: {e2}", exc_info=True)
+        rag_engine = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -133,6 +140,12 @@ async def avatar_speak(request: SpeakRequest):
     
     logger.info(f"Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
     
+    # VALIDACAO CRITICA: Verificar se ChromaDB esta ativo
+    if rag_engine and hasattr(rag_engine, "collections"):
+        logger.info(f"✅ USANDO CHROMA_ENGINE EM RUNTIME")
+        logger.info(f"✅ Colecoes ChromaDB: {list(rag_engine.collections.keys())}")
+    else:
+        logger.warning(f"⚠️ RAG Engine nao eh ChromaDB (tipo: {type(rag_engine).__name__})")
     # ===== DIAGNOSTICO RAG =====
     logger.info("=" * 50)
     logger.info("🔍 DIAGNOSTICO RAG - INICIO")
