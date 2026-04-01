@@ -230,6 +230,73 @@ class AvatarRAGEngine:
         
         return formatted_results
     
+    def generate_response(self, query_text: str, avatar_id: str = None, language: str = "pt-BR") -> str:
+        """
+        Gera resposta inteligente baseada em busca vetorial (ChromaDB)
+        
+        Args:
+            query_text: Pergunta do usuário
+            avatar_id: ID do avatar (opcional)
+            language: Idioma (pt-BR, en, es)
+        
+        Returns:
+            Resposta gerada baseada na base de conhecimento
+        """
+        try:
+            # Se avatar_id não fornecido, usar sofia como padrão
+            if not avatar_id or avatar_id not in self.AVATARS:
+                avatar_id = "sofia"
+            
+            logger.info(f"✅ CHROMA_ENGINE.generate_response() chamado")
+            logger.info(f"✅ Query: {query_text[:100]}")
+            logger.info(f"✅ Avatar: {avatar_id}")
+            logger.info(f"✅ Language: {language}")
+            
+            # Buscar documentos relevantes usando embeddings
+            results = self.query(avatar_id, query_text, top_k=3)
+            
+            logger.info(f"✅ ChromaDB retornou {len(results)} resultados")
+            
+            if not results:
+                logger.warning(f"⚠️ Nenhum resultado encontrado, usando resposta padrão")
+                return self._get_default_response(avatar_id, language)
+            
+            # Combinar os resultados em uma resposta
+            response_parts = []
+            for result in results:
+                text = result.get('text', '')
+                score = result.get('distance', 1.0)
+                
+                # Apenas incluir resultados com score bom (distância pequena)
+                if score < 0.7 and text:
+                    logger.info(f"✅ Incluindo resultado: {text[:80]}... (score: {score:.3f})")
+                    response_parts.append(text)
+            
+            if response_parts:
+                # Combinar até 2 partes
+                response = " ".join(response_parts[:2])
+                logger.info(f"✅ Resposta gerada: {response[:100]}...")
+                return response
+            else:
+                logger.warning(f"⚠️ Nenhum resultado com score bom, usando resposta padrão")
+                return self._get_default_response(avatar_id, language)
+                
+        except Exception as e:
+            logger.error(f"❌ ERRO em generate_response: {e}", exc_info=True)
+            return self._get_default_response(avatar_id or "sofia", language)
+    
+    def _get_default_response(self, avatar_id: str, language: str = "pt-BR") -> str:
+        """Retorna resposta padrão do avatar"""
+        avatar_info = self.AVATARS.get(avatar_id, self.AVATARS["sofia"])
+        
+        default_responses = {
+            "pt-BR": f"Olá, sou {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}",
+            "en": f"Hello, I'm {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}",
+            "es": f"Hola, soy {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}"
+        }
+        
+        return default_responses.get(language, default_responses["pt-BR"])
+    
     def get_avatar_info(self, avatar_id: str) -> Dict:
         """Retorna informações do avatar"""
         if avatar_id not in self.AVATARS:
