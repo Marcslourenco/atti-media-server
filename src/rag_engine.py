@@ -70,42 +70,70 @@ class RAGEngine:
             Resposta gerada
         """
         try:
+            logger.info("=" * 60)
+            logger.info("🔍 RAG GENERATE_RESPONSE - INICIO")
+            logger.info(f"🔍 Query: {text}")
+            logger.info(f"🔍 Avatar ID: {avatar_id}")
+            logger.info(f"🔍 Language: {language}")
+            logger.info(f"🔍 Avatar knowledge carregado: {len(self.avatar_knowledge)} avatares")
+            logger.info(f"🔍 Knowledge blocks carregado: {len(self.knowledge_blocks)} blocos")
+            
             # Se não há conhecimento, retornar resposta padrão
             if not self.avatar_knowledge and not self.knowledge_blocks:
-                logger.warning("Nenhuma base de conhecimento carregada, retornando eco")
+                logger.warning("🔍 Nenhuma base de conhecimento carregada, retornando eco")
+                logger.info("=" * 60)
                 return text
             
             # Buscar conhecimento relevante
+            logger.info("🔍 Iniciando busca de conhecimento relevante...")
             relevant_knowledge = self._search_relevant_knowledge(text, avatar_id, language)
+            logger.info(f"🔍 Busca concluída: {len(relevant_knowledge)} itens encontrados")
             
             # Gerar resposta baseada no conhecimento
+            logger.info("🔍 Iniciando geração de resposta...")
             response = self._generate_from_knowledge(text, relevant_knowledge, avatar_id, language)
+            logger.info(f"🔍 Resposta gerada: {response[:100]}...")
+            logger.info("🔍 RAG GENERATE_RESPONSE - FIM")
+            logger.info("=" * 60)
             
             return response
         except Exception as e:
-            logger.error(f"Erro ao gerar resposta: {e}")
+            logger.error(f"🔍 ERRO ao gerar resposta: {e}", exc_info=True)
+            logger.info("=" * 60)
             return text
     
     def _search_relevant_knowledge(self, text: str, avatar_id: str = None, language: str = "pt-BR"):
         """Busca conhecimento relevante para a pergunta"""
         relevant = []
         
+        logger.info(f"🔍 RAG SEARCH - Buscando conhecimento para query: '{text[:80]}'")
+        logger.info(f"🔍 RAG SEARCH - Avatar ID: {avatar_id}")
+        logger.info(f"🔍 RAG SEARCH - Avatar knowledge disponível: {list(self.avatar_knowledge.keys())}")
+        
         # Buscar em conhecimento específico do avatar
         if avatar_id and avatar_id in self.avatar_knowledge:
             avatar_data = self.avatar_knowledge[avatar_id]
-            for item in avatar_data:
+            logger.info(f"🔍 RAG SEARCH - Buscando em conhecimento específico de {avatar_id} ({len(avatar_data)} itens)")
+            for idx, item in enumerate(avatar_data):
                 if self._is_relevant(text, item):
+                    logger.info(f"🔍 RAG SEARCH - Item {idx} é relevante")
                     relevant.append(item)
+        
+        logger.info(f"🔍 RAG SEARCH - Encontrados {len(relevant)} itens relevantes no avatar específico")
         
         # Se não encontrou, buscar em todos os avatares
         if not relevant:
+            logger.info(f"🔍 RAG SEARCH - Nenhum item encontrado, buscando em todos os avatares")
             for avatar_id_key, avatar_data in self.avatar_knowledge.items():
+                logger.info(f"🔍 RAG SEARCH - Buscando em {avatar_id_key} ({len(avatar_data)} itens)")
                 for item in avatar_data:
                     if self._is_relevant(text, item):
                         relevant.append(item)
+                        logger.info(f"🔍 RAG SEARCH - Item encontrado em {avatar_id_key}")
                         if len(relevant) >= 3:  # Limitar a 3 itens
                             break
         
+        logger.info(f"🔍 RAG SEARCH - Retornando {len(relevant[:3])} itens relevantes")
         return relevant[:3]  # Retornar top 3
     
     def _is_relevant(self, query: str, item) -> bool:
@@ -127,28 +155,39 @@ class RAGEngine:
     def _generate_from_knowledge(self, query: str, knowledge: list, avatar_id: str = None, language: str = "pt-BR") -> str:
         """Gera resposta baseada no conhecimento encontrado"""
         
+        logger.info(f"🔍 RAG GENERATE - Gerando resposta com {len(knowledge)} itens de conhecimento")
+        
         # Se não há conhecimento relevante, usar resposta padrão
         if not knowledge:
+            logger.info(f"🔍 RAG GENERATE - Nenhum conhecimento, usando resposta padrão")
             return self._get_default_response(query, avatar_id, language)
         
         # Construir resposta a partir do conhecimento
         response_parts = []
         
-        for item in knowledge:
+        for idx, item in enumerate(knowledge):
+            logger.info(f"🔍 RAG GENERATE - Processando item {idx}: tipo={type(item).__name__}")
             if isinstance(item, dict):
-                # Procurar por campos de resposta
-                for key in ['answer', 'response', 'description', 'content', 'text']:
+                logger.info(f"🔍 RAG GENERATE - Chaves disponíveis: {list(item.keys())}")
+                # Procurar por campos de resposta (CORRIGIDO: adicionar 'conteudo')
+                for key in ['answer', 'response', 'description', 'content', 'conteudo', 'text']:
                     if key in item and isinstance(item[key], str):
+                        logger.info(f"🔍 RAG GENERATE - Encontrado campo '{key}' com {len(item[key])} caracteres")
                         response_parts.append(item[key])
                         break
             elif isinstance(item, str):
+                logger.info(f"🔍 RAG GENERATE - Item é string com {len(item)} caracteres")
                 response_parts.append(item)
+        
+        logger.info(f"🔍 RAG GENERATE - Extraídos {len(response_parts)} partes de resposta")
         
         if response_parts:
             # Combinar respostas
             response = " ".join(response_parts[:2])  # Limitar a 2 respostas
+            logger.info(f"🔍 RAG GENERATE - Resposta final: {response[:150]}...")
             return response[:200]  # Limitar comprimento
         
+        logger.info(f"🔍 RAG GENERATE - Nenhuma parte de resposta extraída, usando padrão")
         return self._get_default_response(query, avatar_id, language)
     
     def _get_default_response(self, query: str, avatar_id: str = None, language: str = "pt-BR") -> str:
