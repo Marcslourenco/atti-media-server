@@ -6,6 +6,7 @@ Suporta 16 avatares com bases de conhecimento especializadas.
 
 import os
 import json
+from pathlib import Path
 from typing import List, Dict, Optional
 import chromadb
 from chromadb.config import Settings
@@ -143,7 +144,11 @@ class AvatarRAGEngine:
         self.collections = {}
         self._init_collections()
         
+        # Carregar documentos de conhecimento
+        self._load_knowledge_base()
+        
         logger.info(f"✅ RAG Engine inicializado com {len(self.AVATARS)} avatares")
+        logger.info(f"✅ Embeddings carregados e indexados")
     
     def _init_collections(self):
         """Inicializa coleções ChromaDB para cada avatar"""
@@ -163,6 +168,118 @@ class AvatarRAGEngine:
                 logger.info(f"✅ Coleção {collection_name} criada")
             
             self.collections[avatar_id] = collection
+    
+    def _load_knowledge_base(self):
+        """Carrega base de conhecimento dos arquivos JSON"""
+        knowledge_dir = Path("./knowledge")
+        
+        if not knowledge_dir.exists():
+            logger.warning(f"⚠️ Diretório de conhecimento não encontrado: {knowledge_dir}")
+            return
+        
+        logger.info(f"📚 Carregando base de conhecimento de {knowledge_dir}")
+        
+        for avatar_dir in knowledge_dir.iterdir():
+            if not avatar_dir.is_dir() or avatar_dir.name.startswith('_'):
+                continue
+            
+            avatar_id = avatar_dir.name
+            if avatar_id not in self.AVATARS:
+                logger.warning(f"⚠️ Avatar {avatar_id} não reconhecido")
+                continue
+            
+            documents = []
+            doc_count = 0
+            
+            # Carregar todos os arquivos JSON do avatar
+            for json_file in avatar_dir.glob("*.json"):
+                try:
+                    with open(json_file, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    # Extrair documentos da estrutura real
+                    if isinstance(data, dict):
+                        # Extrair FAQ
+                        if 'faq_estruturado' in data:
+                            for idx, faq in enumerate(data['faq_estruturado']):
+                                doc_id = f"{avatar_id}_faq_{idx}"
+                                text = f"{faq.get('pergunta', '')} - {faq.get('resposta', '')}"
+                                if text.strip():
+                                    documents.append({
+                                        'id': doc_id,
+                                        'text': text,
+                                        'metadata': {'type': 'faq', 'file': json_file.name}
+                                    })
+                                    doc_count += 1
+                        
+                        # Extrair núcleo de conhecimento
+                        if 'nucleo_conhecimento' in data:
+                            nucleo = data['nucleo_conhecimento']
+                            
+                            # Problemas comuns
+                            for idx, item in enumerate(nucleo.get('problemas_comuns', [])):
+                                doc_id = f"{avatar_id}_problema_{idx}"
+                                text = f"{item.get('problema', '')} - {item.get('solucao_sugerida', '')}"
+                                if text.strip():
+                                    documents.append({
+                                        'id': doc_id,
+                                        'text': text,
+                                        'metadata': {'type': 'problema', 'file': json_file.name}
+                                    })
+                                    doc_count += 1
+                            
+                            # Objeções
+                            for idx, item in enumerate(nucleo.get('objeções_clientes', [])):
+                                doc_id = f"{avatar_id}_objecao_{idx}"
+                                text = f"{item.get('objecao', '')} - {item.get('resposta', '')}"
+                                if text.strip():
+                                    documents.append({
+                                        'id': doc_id,
+                                        'text': text,
+                                        'metadata': {'type': 'objecao', 'file': json_file.name}
+                                    })
+                                    doc_count += 1
+                            
+                            # Argumentos de venda
+                            for idx, item in enumerate(nucleo.get('argumentos_venda', [])):
+                                doc_id = f"{avatar_id}_argumento_{idx}"
+                                text = f"{item.get('argumento', '')} - {item.get('descricao', '')}"
+                                if text.strip():
+                                    documents.append({
+                                        'id': doc_id,
+                                        'text': text,
+                                        'metadata': {'type': 'argumento', 'file': json_file.name}
+                                    })
+                                    doc_count += 1
+                        
+                        # Extrair áreas técnicas
+                        if 'areas_tecnicas' in data:
+                            for area_idx, area in enumerate(data['areas_tecnicas']):
+                                if 'detalhes' in area:
+                                    for detail_key, detail_val in area['detalhes'].items():
+                                        if isinstance(detail_val, dict):
+                                            doc_id = f"{avatar_id}_area_{area_idx}_{detail_key}"
+                                            text = detail_val.get('descricao', '')
+                                            if text.strip():
+                                                documents.append({
+                                                    'id': doc_id,
+                                                    'text': text,
+                                                    'metadata': {'type': 'area_tecnica', 'file': json_file.name}
+                                                })
+                                                doc_count += 1
+                    
+                except Exception as e:
+                    logger.warning(f"⚠️ Erro ao carregar {json_file}: {e}")
+            
+            # Adicionar documentos ao ChromaDB
+            if documents:
+                try:
+                    self.add_documents(avatar_id, documents)
+                    logger.info(f"✅ Avatar {avatar_id}: {doc_count} documentos indexados")
+                except Exception as e:
+                    logger.error(f"❌ Erro ao adicionar documentos para {avatar_id}: {e}", exc_info=True)
+            else:
+                logger.warning(f"⚠️ Nenhum documento encontrado para {avatar_id}")
     
     def add_documents(self, avatar_id: str, documents: List[Dict[str, str]]):
         """
@@ -255,7 +372,7 @@ class AvatarRAGEngine:
             # Buscar documentos relevantes usando embeddings
             results = self.query(avatar_id, query_text, top_k=3)
             
-            logger.info(f"✅ ChromaDB retornou {len(results)} resultados")
+            logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(results)} documentos encontrados")
             
             if not results:
                 logger.warning(f"⚠️ Nenhum resultado encontrado, usando resposta padrão")
