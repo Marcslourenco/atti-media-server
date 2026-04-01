@@ -133,14 +133,55 @@ async def avatar_speak(request: SpeakRequest):
     
     logger.info(f"Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
     
-    # 1️⃣ PRIMEIRO: Processar RAG para obter resposta inteligente
+    # ===== DIAGNOSTICO RAG =====
+    logger.info("=" * 50)
+    logger.info("🔍 DIAGNOSTICO RAG - INICIO")
+    logger.info(f"🔍 Query do usuario: {text}")
+    logger.info(f"🔍 Avatar ID: {avatar_id}")
+    logger.info(f"🔍 Language: {language}")
+    
+    # Verificar se rag_engine existe
+    if rag_engine is not None:
+        logger.info("🔍 rag_engine: OBJETO EXISTE")
+    else:
+        logger.info("🔍 rag_engine: NAO EXISTE")
+        logger.info("=" * 50)
+    
+    # Verificar se o metodo generate_response existe
+    if rag_engine and hasattr(rag_engine, 'generate_response'):
+        logger.info("🔍 Metodo generate_response: EXISTE")
+    else:
+        logger.info("🔍 Metodo generate_response: NAO EXISTE")
+        logger.info("=" * 50)
+    
+    # Chamar o RAG e logar cada passo
     response_text = text
-    if rag_engine:
-        try:
-            response_text = rag_engine.generate_response(text, avatar_id, language)
-            logger.info(f"Resposta RAG: '{response_text[:100]}...'")
-        except Exception as e:
-            logger.warning(f"Erro no RAG: {e}")
+    try:
+        if rag_engine:
+            logger.info("🔍 Chamando rag_engine.generate_response...")
+            result = rag_engine.generate_response(text, avatar_id, language)
+            logger.info(f"🔍 Resultado bruto do RAG: {result}")
+            
+            if result and isinstance(result, dict):
+                response_text = result.get("response", "")
+                logger.info(f"🔍 Resposta extraida: '{response_text[:100]}'")
+                logger.info(f"🔍 Tamanho da resposta: {len(response_text)}")
+            elif isinstance(result, str):
+                response_text = result
+                logger.info(f"🔍 Resultado e string: '{response_text[:100]}'")
+                logger.info(f"🔍 Tamanho: {len(response_text)}")
+            else:
+                logger.info(f"🔍 Resultado nao e dicionario ou string: {type(result)} - {result}")
+        else:
+            logger.info("🔍 rag_engine nao inicializado, usando texto original")
+            
+    except Exception as e:
+        logger.error(f"🔍 ERRO no RAG: {e}", exc_info=True)
+        response_text = text
+    
+    logger.info("🔍 DIAGNOSTICO RAG - FIM")
+    logger.info("=" * 50)
+    # ===== FIM DIAGNOSTICO ====
     
     # 2️⃣ DEPOIS: Gerar áudio e visemes com a resposta inteligente
     audio_data = None
