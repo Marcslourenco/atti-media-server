@@ -153,39 +153,98 @@ class RAGEngine:
         return False
     
     def _generate_from_knowledge(self, query: str, knowledge: list, avatar_id: str = None, language: str = "pt-BR") -> str:
-        """Gera resposta baseada no conhecimento encontrado"""
+        """Gera resposta baseada no conhecimento encontrado - ESTRUTURA REAL"""
         
         logger.info(f"🔍 RAG GENERATE - Gerando resposta com {len(knowledge)} itens de conhecimento")
+        logger.info(f"🔍 RAG GENERATE - Query: {query[:80]}")
         
         # Se não há conhecimento relevante, usar resposta padrão
         if not knowledge:
             logger.info(f"🔍 RAG GENERATE - Nenhum conhecimento, usando resposta padrão")
             return self._get_default_response(query, avatar_id, language)
         
-        # Construir resposta a partir do conhecimento
-        response_parts = []
+        resposta_partes = []
+        query_lower = query.lower()
         
         for idx, item in enumerate(knowledge):
             logger.info(f"🔍 RAG GENERATE - Processando item {idx}: tipo={type(item).__name__}")
-            if isinstance(item, dict):
-                logger.info(f"🔍 RAG GENERATE - Chaves disponíveis: {list(item.keys())}")
-                # Procurar por campos de resposta (CORRIGIDO: adicionar 'conteudo')
-                for key in ['answer', 'response', 'description', 'content', 'conteudo', 'text']:
-                    if key in item and isinstance(item[key], str):
-                        logger.info(f"🔍 RAG GENERATE - Encontrado campo '{key}' com {len(item[key])} caracteres")
-                        response_parts.append(item[key])
-                        break
-            elif isinstance(item, str):
-                logger.info(f"🔍 RAG GENERATE - Item é string com {len(item)} caracteres")
-                response_parts.append(item)
+            
+            if not isinstance(item, dict):
+                logger.info(f"🔍 RAG GENERATE - Item {idx} não é dicionário, pulando")
+                continue
+            
+            logger.info(f"🔍 RAG GENERATE - Chaves disponíveis: {list(item.keys())}")
+            
+            # 1. FAQ estruturado (prioridade máxima)
+            if 'faq_estruturado' in item:
+                logger.info(f"🔍 RAG GENERATE - Buscando em faq_estruturado ({len(item['faq_estruturado'])} itens)")
+                for faq in item['faq_estruturado']:
+                    pergunta = faq.get('pergunta', '').lower()
+                    # Busca por palavras-chave com comprimento > 3
+                    if any(word in pergunta for word in query_lower.split() if len(word) > 3):
+                        resposta = faq.get('resposta', '')
+                        if resposta:
+                            logger.info(f"🔍 RAG GENERATE - FAQ encontrado: {resposta[:80]}")
+                            resposta_partes.append(resposta)
+            
+            # 2. Buscar em nucleo_conhecimento
+            if 'nucleo_conhecimento' in item:
+                logger.info(f"🔍 RAG GENERATE - Buscando em nucleo_conhecimento")
+                nucleo = item['nucleo_conhecimento']
+                
+                # Problemas comuns
+                for problema in nucleo.get('problemas_comuns', []):
+                    texto = problema.get('problema', '').lower()
+                    if any(word in texto for word in query_lower.split() if len(word) > 3):
+                        solucao = problema.get('solucao_sugerida', '')
+                        if solucao:
+                            logger.info(f"🔍 RAG GENERATE - Problema comum encontrado: {solucao[:80]}")
+                            resposta_partes.append(solucao)
+                
+                # Objeções de clientes
+                for objecao in nucleo.get('objeções_clientes', []):
+                    texto = objecao.get('objecao', '').lower()
+                    if any(word in texto for word in query_lower.split() if len(word) > 3):
+                        resposta = objecao.get('resposta', '')
+                        if resposta:
+                            logger.info(f"🔍 RAG GENERATE - Objeção encontrada: {resposta[:80]}")
+                            resposta_partes.append(resposta)
+                
+                # Argumentos de venda
+                for arg in nucleo.get('argumentos_venda', []):
+                    texto = arg.get('argumento', '').lower()
+                    if any(word in texto for word in query_lower.split() if len(word) > 3):
+                        descricao = arg.get('descricao', '')
+                        if descricao:
+                            logger.info(f"🔍 RAG GENERATE - Argumento encontrado: {descricao[:80]}")
+                            resposta_partes.append(descricao)
+            
+            # 3. Buscar em areas_tecnicas
+            if 'areas_tecnicas' in item:
+                logger.info(f"🔍 RAG GENERATE - Buscando em areas_tecnicas ({len(item['areas_tecnicas'])} áreas)")
+                for area in item['areas_tecnicas']:
+                    if 'detalhes' in area:
+                        for key, val in area['detalhes'].items():
+                            if isinstance(val, dict):
+                                texto = str(val.get('descricao', '')).lower()
+                                if any(word in texto for word in query_lower.split() if len(word) > 3):
+                                    descricao = val.get('descricao', '')
+                                    if descricao:
+                                        logger.info(f"🔍 RAG GENERATE - Área técnica encontrada: {descricao[:80]}")
+                                        resposta_partes.append(descricao)
+            
+            # 4. Fallback: descrição do avatar
+            if 'descricao' in item and not resposta_partes:
+                logger.info(f"🔍 RAG GENERATE - Usando descrição como fallback")
+                resposta_partes.append(item['descricao'])
         
-        logger.info(f"🔍 RAG GENERATE - Extraídos {len(response_parts)} partes de resposta")
+        logger.info(f"🔍 RAG GENERATE - Extraídas {len(resposta_partes)} partes de resposta")
         
-        if response_parts:
-            # Combinar respostas
-            response = " ".join(response_parts[:2])  # Limitar a 2 respostas
+        if resposta_partes:
+            # Limitar a 3 partes e juntar
+            response = " ".join(resposta_partes[:3])
             logger.info(f"🔍 RAG GENERATE - Resposta final: {response[:150]}...")
-            return response[:200]  # Limitar comprimento
+            return response
         
         logger.info(f"🔍 RAG GENERATE - Nenhuma parte de resposta extraída, usando padrão")
         return self._get_default_response(query, avatar_id, language)
