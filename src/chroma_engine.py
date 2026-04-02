@@ -128,9 +128,9 @@ class AvatarRAGEngine:
         self.persist_dir = persist_dir
         os.makedirs(persist_dir, exist_ok=True)
         
-        # Configurar ChromaDB com nova API (v0.5+)
+        # Configurar ChromaDB com nova API (v0.5+) - SEM FALLBACK
+        logger.info(f"🔍 Inicializando ChromaDB com PersistentClient...")
         try:
-            # Nova API do ChromaDB
             self.client = chromadb.PersistentClient(
                 path=persist_dir,
                 settings=chromadb.config.Settings(
@@ -140,19 +140,9 @@ class AvatarRAGEngine:
             )
             logger.info(f"✅ ChromaDB inicializado com PersistentClient (nova API)")
         except Exception as e:
-            logger.warning(f"⚠️ Erro com nova API, tentando API antiga: {e}")
-            try:
-                # API antiga (fallback)
-                settings = Settings(
-                    chroma_db_impl="duckdb+parquet",
-                    persist_directory=persist_dir,
-                    anonymized_telemetry=False
-                )
-                self.client = chromadb.Client(settings)
-                logger.info(f"✅ ChromaDB inicializado com API antiga")
-            except Exception as e2:
-                logger.error(f"❌ Erro ao inicializar ChromaDB: {e2}", exc_info=True)
-                raise
+            logger.error(f"❌ ERRO CRÍTICO ao inicializar ChromaDB: {e}", exc_info=True)
+            logger.error(f"❌ ChromaDB NÃO será inicializado. Verifique a versão e configuração.")
+            raise ValueError(f"ChromaDB initialization failed: {e}")
         
         # Modelo de embeddings
         self.embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
