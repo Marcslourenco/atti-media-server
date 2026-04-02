@@ -125,6 +125,7 @@ class AvatarRAGEngine:
         Args:
             persist_dir: Diretório para armazenar dados do ChromaDB
         """
+        logger.info(f"🔍 ARQUIVO CHROMA EM USO: {__file__}")
         self.persist_dir = persist_dir
         os.makedirs(persist_dir, exist_ok=True)
         
