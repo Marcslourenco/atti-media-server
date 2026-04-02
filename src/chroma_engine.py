@@ -145,8 +145,10 @@ class AvatarRAGEngine:
             logger.error(f"❌ ChromaDB NÃO será inicializado. Verifique a versão e configuração.")
             raise ValueError(f"ChromaDB initialization failed: {e}")
         
-        # Modelo de embeddings
-        self.embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        # Modelo de embeddings - LAZY LOADING (carrega sob demanda)
+        self.embedding_model = None
+        self._embedding_model_name = 'sentence-transformers/paraphrase-MiniLM-L3-v2'
+        logger.info(f"🔍 Embeddings configurados para lazy loading: {self._embedding_model_name}")
         
         # Coleções por avatar
         self.collections = {}
@@ -156,8 +158,20 @@ class AvatarRAGEngine:
         self._load_knowledge_base()
         
         logger.info(f"✅ RAG Engine inicializado com {len(self.AVATARS)} avatares")
-        logger.info(f"✅ Embeddings carregados e indexados")
+        logger.info(f"✅ Embeddings serão carregados sob demanda (lazy loading)")
     
+    
+    def _get_embedding_model(self):
+        """Carrega SentenceTransformer sob demanda (lazy loading)"""
+        if self.embedding_model is None:
+            logger.info(f"📥 Carregando modelo de embeddings: {self._embedding_model_name}")
+            try:
+                self.embedding_model = SentenceTransformer(self._embedding_model_name)
+                logger.info(f"✅ Modelo de embeddings carregado com sucesso")
+            except Exception as e:
+                logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
+                raise
+        return self.embedding_model
     def _init_collections(self):
         """Inicializa coleções ChromaDB para cada avatar"""
         for avatar_id in self.AVATARS.keys():
@@ -318,7 +332,7 @@ class AvatarRAGEngine:
         
         # Extrair textos e embeddings
         texts = [doc['text'] for doc in documents]
-        embeddings = self.embedding_model.encode(texts).tolist()
+        embeddings = self._get_embedding_model().encode(texts).tolist()
         
         # Adicionar ao ChromaDB
         collection.add(
@@ -348,7 +362,7 @@ class AvatarRAGEngine:
         collection = self.collections[avatar_id]
         
         # Gerar embedding da query
-        query_embedding = self.embedding_model.encode([query_text])[0].tolist()
+        query_embedding = self._get_embedding_model().encode([query_text])[0].tolist()
         
         # Buscar no ChromaDB
         results = collection.query(
