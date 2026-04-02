@@ -128,14 +128,31 @@ class AvatarRAGEngine:
         self.persist_dir = persist_dir
         os.makedirs(persist_dir, exist_ok=True)
         
-        # Configurar ChromaDB com persistência
-        settings = Settings(
-            chroma_db_impl="duckdb+parquet",
-            persist_directory=persist_dir,
-            anonymized_telemetry=False
-        )
-        
-        self.client = chromadb.Client(settings)
+        # Configurar ChromaDB com nova API (v0.5+)
+        try:
+            # Nova API do ChromaDB
+            self.client = chromadb.PersistentClient(
+                path=persist_dir,
+                settings=chromadb.config.Settings(
+                    anonymized_telemetry=False,
+                    allow_reset=True
+                )
+            )
+            logger.info(f"✅ ChromaDB inicializado com PersistentClient (nova API)")
+        except Exception as e:
+            logger.warning(f"⚠️ Erro com nova API, tentando API antiga: {e}")
+            try:
+                # API antiga (fallback)
+                settings = Settings(
+                    chroma_db_impl="duckdb+parquet",
+                    persist_directory=persist_dir,
+                    anonymized_telemetry=False
+                )
+                self.client = chromadb.Client(settings)
+                logger.info(f"✅ ChromaDB inicializado com API antiga")
+            except Exception as e2:
+                logger.error(f"❌ Erro ao inicializar ChromaDB: {e2}", exc_info=True)
+                raise
         
         # Modelo de embeddings
         self.embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
