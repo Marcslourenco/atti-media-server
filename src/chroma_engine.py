@@ -235,6 +235,22 @@ class AvatarRAGEngine:
                     
                     # Extrair documentos da estrutura real
                     if isinstance(data, dict):
+                        # Estrutura tipo Sofia (items com pergunta/resposta_base)
+                        if 'items' in data and isinstance(data['items'], list):
+                            for idx, item in enumerate(data['items']):
+                                if isinstance(item, dict):
+                                    doc_id = f"{avatar_id}_item_{idx}"
+                                    pergunta = item.get('pergunta', '')
+                                    resposta = item.get('resposta_base', '')
+                                    text = f"{pergunta} - {resposta}"
+                                    if text.strip():
+                                        documents.append({
+                                            'id': doc_id,
+                                            'text': text,
+                                            'metadata': {'type': 'qa', 'file': json_file.name}
+                                        })
+                                        doc_count += 1
+                        
                         # Extrair FAQ
                         if 'faq_estruturado' in data:
                             for idx, faq in enumerate(data['faq_estruturado']):
