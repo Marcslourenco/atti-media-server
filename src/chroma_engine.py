@@ -2,12 +2,32 @@ import chromadb
 import json
 import os
 import logging
+import threading
 from pathlib import Path
 from typing import List, Dict, Optional
-from sentence_transformers import SentenceTransformer
 import uuid
 
 logger = logging.getLogger(__name__)
+
+# FASE 4: Singleton thread-safe para lazy loading de embeddings
+_embedding_model = None
+_embedding_model_lock = threading.Lock()
+
+def _get_embedding_model_singleton():
+    """Carrega SentenceTransformer sob demanda (thread-safe singleton)"""
+    global _embedding_model
+    if _embedding_model is None:
+        with _embedding_model_lock:
+            if _embedding_model is None:
+                logger.info("📥 Carregando modelo de embeddings (singleton)...")
+                try:
+                    from sentence_transformers import SentenceTransformer
+                    _embedding_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
+                    logger.info("✅ Modelo de embeddings carregado com sucesso (singleton)")
+                except Exception as e:
+                    logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
+                    raise
+    return _embedding_model
 
 class AvatarRAGEngine:
     """
@@ -56,24 +76,16 @@ class AvatarRAGEngine:
         self.collections = {}
         self._init_collections()
         
-        # Carregar documentos de conhecimento
-        self._load_knowledge_base()
-        
-        logger.info(f"✅ RAG Engine inicializado com {len(self.AVATARS)} avatares")
-        logger.info(f"✅ Embeddings serão carregados sob demanda (lazy loading)")
+        # FASE 3: NÃO carregar documentos no startup
+        # Documentos já foram indexados no Docker build
+        logger.info(f"✅ RAG Engine inicializado em modo LEITURA")
+        logger.info(f"✅ Coleções carregadas: {len(self.collections)}")
+        logger.info(f"✅ Embeddings: lazy loading (carregam sob demanda)")
     
     
     def _get_embedding_model(self):
-        """Carrega SentenceTransformer sob demanda (lazy loading)"""
-        if self.embedding_model is None:
-            logger.info(f"📥 Carregando modelo de embeddings: {self._embedding_model_name}")
-            try:
-                self.embedding_model = SentenceTransformer(self._embedding_model_name)
-                logger.info(f"✅ Modelo de embeddings carregado com sucesso")
-            except Exception as e:
-                logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
-                raise
-        return self.embedding_model
+        """Usa singleton thread-safe para lazy loading"""
+        return _get_embedding_model_singleton()
     
     def _init_collections(self):
         """Inicializa coleções ChromaDB para cada avatar"""
