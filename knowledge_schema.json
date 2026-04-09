@@ -1,0 +1,117 @@
+{
+  "knowledge_schema": {
+    "description": "Referência de estrutura de dados aceita pelo RAG",
+    "version": "1.0",
+    "supported_formats": [
+      {
+        "name": "Sofia Format (items)",
+        "description": "Estrutura com array de items contendo pergunta e resposta_base",
+        "example": {
+          "meta": {
+            "avatar": "Sofia",
+            "idioma": "pt-BR"
+          },
+          "items": [
+            {
+              "id": "health_01",
+              "pergunta": "Como um humano digital pode ajudar?",
+              "resposta_base": "Ele pode fazer a primeira coleta de contexto...",
+              "variacoes": ["...", "..."],
+              "tom": "consultivo"
+            }
+          ]
+        }
+      },
+      {
+        "name": "FAQ Estruturado",
+        "description": "Array de FAQs com pergunta e resposta",
+        "example": {
+          "faq_estruturado": [
+            {
+              "pergunta": "Como funciona?",
+              "resposta": "Funciona assim..."
+            }
+          ]
+        }
+      },
+      {
+        "name": "Núcleo de Conhecimento",
+        "description": "Estrutura com problemas_comuns, objeções_clientes e argumentos_venda",
+        "example": {
+          "nucleo_conhecimento": {
+            "problemas_comuns": [
+              {
+                "problema": "Qual é o problema?",
+                "solucao_sugerida": "A solução é..."
+              }
+            ],
+            "objeções_clientes": [
+              {
+                "objecao": "Qual é a objeção?",
+                "resposta": "A resposta é..."
+              }
+            ],
+            "argumentos_venda": [
+              {
+                "argumento": "Qual é o argumento?",
+                "descricao": "A descrição é..."
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Áreas Técnicas",
+        "description": "Estrutura com detalhes técnicos por área",
+        "example": {
+          "areas_tecnicas": [
+            {
+              "area": "Integração",
+              "detalhes": {
+                "api": {
+                  "descricao": "Descrição da API..."
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "ignored_files": [
+      "embeddings.json",
+      "estrutura_chunks.json",
+      "dataset_variacoes.json"
+    ],
+    "processing_rules": {
+      "chunking": {
+        "size_min": 300,
+        "size_max": 500,
+        "overlap_percent": 15
+      },
+      "embeddings": {
+        "model": "sentence-transformers/paraphrase-MiniLM-L3-v2",
+        "loading": "lazy",
+        "similarity_threshold": 0.20
+      },
+      "error_handling": "warn_and_continue"
+    },
+    "avatars": [
+      "sofia",
+      "rafael",
+      "clara",
+      "lucas",
+      "amanda",
+      "fernanda",
+      "marina",
+      "roberto",
+      "luisa",
+      "lais",
+      "paula",
+      "bruno",
+      "giovana",
+      "marcos",
+      "carol",
+      "english"
+    ]
+  }
+}
