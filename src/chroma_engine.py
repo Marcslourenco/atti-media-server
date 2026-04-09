@@ -1,122 +1,24 @@
-"""
-ChromaDB RAG Engine para Avatares ATTI
-
-Suporta 16 avatares com bases de conhecimento especializadas.
-"""
-
-import os
+import chromadb
 import json
+import os
+import logging
 from pathlib import Path
 from typing import List, Dict, Optional
-import chromadb
-from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
-import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
-
 class AvatarRAGEngine:
-    """Engine RAG com ChromaDB para cada avatar"""
+    """
+    Motor de RAG para avatares com suporte a múltiplos formatos de dados
+    """
     
-    AVATARS = {
-        "sofia": {
-            "name": "Sofia",
-            "specialty": "Host Completa",
-            "description": "Avatar host com acesso a todas as ferramentas",
-            "color": "#FF6B6B"
-        },
-        "rafael": {
-            "name": "Rafael",
-            "specialty": "Tributário",
-            "description": "Especialista em legislação tributária (800+ Q&A)",
-            "color": "#4ECDC4"
-        },
-        "clara": {
-            "name": "Clara",
-            "specialty": "Saúde",
-            "description": "Consultora em saúde e bem-estar",
-            "color": "#95E1D3"
-        },
-        "lucas": {
-            "name": "Lucas",
-            "specialty": "Educação",
-            "description": "Especialista em educação e treinamento",
-            "color": "#F38181"
-        },
-        "amanda": {
-            "name": "Amanda",
-            "specialty": "RH",
-            "description": "Consultora em recursos humanos",
-            "color": "#AA96DA"
-        },
-        "fernanda": {
-            "name": "Fernanda",
-            "specialty": "Financeiro",
-            "description": "Analista financeira",
-            "color": "#FCBAD3"
-        },
-        "marina": {
-            "name": "Marina",
-            "specialty": "Marketing",
-            "description": "Estrategista de marketing",
-            "color": "#A8D8EA"
-        },
-        "roberto": {
-            "name": "Roberto",
-            "specialty": "Operações",
-            "description": "Gerente de operações",
-            "color": "#AA96DA"
-        },
-        "luisa": {
-            "name": "Luisa",
-            "specialty": "Jurídico",
-            "description": "Consultora jurídica",
-            "color": "#FFD3B6"
-        },
-        "lais": {
-            "name": "Lais",
-            "specialty": "Tecnologia",
-            "description": "Especialista em tecnologia",
-            "color": "#FFAAA5"
-        },
-        "paula": {
-            "name": "Paula",
-            "specialty": "Sustentabilidade",
-            "description": "Consultora em sustentabilidade",
-            "color": "#FF8B94"
-        },
-        "bruno": {
-            "name": "Bruno",
-            "specialty": "Vendas",
-            "description": "Especialista em vendas",
-            "color": "#A8E6CF"
-        },
-        "giovana": {
-            "name": "Giovana",
-            "specialty": "Atendimento",
-            "description": "Especialista em atendimento ao cliente",
-            "color": "#FFD3B6"
-        },
-        "marcos": {
-            "name": "Marcos",
-            "specialty": "Estratégia",
-            "description": "Consultor estratégico",
-            "color": "#FFAAA5"
-        },
-        "carol": {
-            "name": "Carol",
-            "specialty": "Inovação",
-            "description": "Especialista em inovação",
-            "color": "#FF8B94"
-        },
-        "english": {
-            "name": "English",
-            "specialty": "Multilíngue",
-            "description": "Avatar multilíngue",
-            "color": "#A8E6CF"
-        }
-    }
+    AVATARS = [
+        'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
+        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno',
+        'giovana', 'marcos', 'carol', 'english'
+    ]
     
     def __init__(self, persist_dir: str = "./chroma_db"):
         """
@@ -172,27 +74,124 @@ class AvatarRAGEngine:
                 logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
                 raise
         return self.embedding_model
+    
     def _init_collections(self):
         """Inicializa coleções ChromaDB para cada avatar"""
-        for avatar_id in self.AVATARS.keys():
+        for avatar_id in self.AVATARS:
             collection_name = f"{avatar_id}_knowledge"
-            
             try:
-                # Tenta obter coleção existente
+                # Tentar obter coleção existente
                 collection = self.client.get_collection(name=collection_name)
-                logger.info(f"✅ Coleção {collection_name} carregada")
+                logger.info(f"📦 Coleção existente: {collection_name}")
             except:
-                # Cria nova coleção
+                # Criar nova coleção
                 collection = self.client.create_collection(
                     name=collection_name,
-                    metadata={"avatar": avatar_id}
+                    metadata={"hnsw:space": "cosine"}
                 )
-                logger.info(f"✅ Coleção {collection_name} criada")
+                logger.info(f"✨ Coleção criada: {collection_name}")
             
             self.collections[avatar_id] = collection
     
+    def _chunk_text(self, text: str, chunk_size: int = 400, overlap: int = 60) -> List[str]:
+        """
+        Divide texto em chunks com overlap
+        
+        Args:
+            text: Texto a dividir
+            chunk_size: Tamanho máximo do chunk
+            overlap: Tamanho do overlap entre chunks
+        
+        Returns:
+            Lista de chunks
+        """
+        if len(text) <= chunk_size:
+            return [text]
+        
+        chunks = []
+        start = 0
+        while start < len(text):
+            end = min(start + chunk_size, len(text))
+            chunk = text[start:end]
+            if chunk.strip():
+                chunks.append(chunk)
+            start = end - overlap
+        
+        return chunks
+    
+    def _parse_nucleo_conhecimento(self, nucleo: dict, avatar_id: str, file_name: str) -> List[Dict]:
+        """
+        Parse flexível para nucleo_conhecimento (aceita strings ou dicts)
+        """
+        documents = []
+        
+        # Problemas comuns
+        for idx, item in enumerate(nucleo.get('problemas_comuns', [])):
+            try:
+                if isinstance(item, dict):
+                    doc_id = f"{avatar_id}_problema_{idx}"
+                    text = f"{item.get('problema', '')} - {item.get('solucao_sugerida', '')}"
+                elif isinstance(item, str):
+                    doc_id = f"{avatar_id}_problema_{idx}"
+                    text = item
+                else:
+                    continue
+                
+                if text.strip():
+                    documents.append({
+                        'id': doc_id,
+                        'text': text,
+                        'metadata': {'type': 'problema', 'file': file_name}
+                    })
+            except Exception as e:
+                logger.warning(f"⚠️ Erro ao processar problema_comum em {file_name}: {e}")
+        
+        # Objeções
+        for idx, item in enumerate(nucleo.get('objeções_clientes', [])):
+            try:
+                if isinstance(item, dict):
+                    doc_id = f"{avatar_id}_objecao_{idx}"
+                    text = f"{item.get('objecao', '')} - {item.get('resposta', '')}"
+                elif isinstance(item, str):
+                    doc_id = f"{avatar_id}_objecao_{idx}"
+                    text = item
+                else:
+                    continue
+                
+                if text.strip():
+                    documents.append({
+                        'id': doc_id,
+                        'text': text,
+                        'metadata': {'type': 'objecao', 'file': file_name}
+                    })
+            except Exception as e:
+                logger.warning(f"⚠️ Erro ao processar objeção em {file_name}: {e}")
+        
+        # Argumentos de venda
+        for idx, item in enumerate(nucleo.get('argumentos_venda', [])):
+            try:
+                if isinstance(item, dict):
+                    doc_id = f"{avatar_id}_argumento_{idx}"
+                    text = f"{item.get('argumento', '')} - {item.get('descricao', '')}"
+                elif isinstance(item, str):
+                    doc_id = f"{avatar_id}_argumento_{idx}"
+                    text = item
+                else:
+                    continue
+                
+                if text.strip():
+                    documents.append({
+                        'id': doc_id,
+                        'text': text,
+                        'metadata': {'type': 'argumento', 'file': file_name}
+                    })
+            except Exception as e:
+                logger.warning(f"⚠️ Erro ao processar argumento em {file_name}: {e}")
+        
+        return documents
+    
     def _load_knowledge_base(self):
-        """Carrega base de conhecimento dos arquivos JSON"""
+        """Carrega base de conhecimento dos arquivos JSON com parser unificado"""
         # Tentar múltiplos caminhos possíveis
         possible_paths = [
             Path("./knowledge"),
@@ -229,6 +228,11 @@ class AvatarRAGEngine:
             
             # Carregar todos os arquivos JSON do avatar
             for json_file in avatar_dir.glob("*.json"):
+                # Ignorar arquivos legados
+                if json_file.name in ['embeddings.json', 'estrutura_chunks.json', 'dataset_variacoes.json']:
+                    logger.info(f"⏭️ Ignorando arquivo legado: {json_file.name}")
+                    continue
+                
                 try:
                     with open(json_file, 'r', encoding='utf-8') as f:
                         data = json.load(f)
@@ -237,6 +241,7 @@ class AvatarRAGEngine:
                     if isinstance(data, dict):
                         # Estrutura tipo Sofia (items com pergunta/resposta_base)
                         if 'items' in data and isinstance(data['items'], list):
+                            logger.info(f"📋 Formato detectado: Sofia (items)")
                             for idx, item in enumerate(data['items']):
                                 if isinstance(item, dict):
                                     doc_id = f"{avatar_id}_item_{idx}"
@@ -253,6 +258,7 @@ class AvatarRAGEngine:
                         
                         # Extrair FAQ
                         if 'faq_estruturado' in data:
+                            logger.info(f"📋 Formato detectado: FAQ estruturado")
                             for idx, faq in enumerate(data['faq_estruturado']):
                                 doc_id = f"{avatar_id}_faq_{idx}"
                                 text = f"{faq.get('pergunta', '')} - {faq.get('resposta', '')}"
@@ -266,46 +272,18 @@ class AvatarRAGEngine:
                         
                         # Extrair núcleo de conhecimento
                         if 'nucleo_conhecimento' in data:
-                            nucleo = data['nucleo_conhecimento']
-                            
-                            # Problemas comuns
-                            for idx, item in enumerate(nucleo.get('problemas_comuns', [])):
-                                doc_id = f"{avatar_id}_problema_{idx}"
-                                text = f"{item.get('problema', '')} - {item.get('solucao_sugerida', '')}"
-                                if text.strip():
-                                    documents.append({
-                                        'id': doc_id,
-                                        'text': text,
-                                        'metadata': {'type': 'problema', 'file': json_file.name}
-                                    })
-                                    doc_count += 1
-                            
-                            # Objeções
-                            for idx, item in enumerate(nucleo.get('objeções_clientes', [])):
-                                doc_id = f"{avatar_id}_objecao_{idx}"
-                                text = f"{item.get('objecao', '')} - {item.get('resposta', '')}"
-                                if text.strip():
-                                    documents.append({
-                                        'id': doc_id,
-                                        'text': text,
-                                        'metadata': {'type': 'objecao', 'file': json_file.name}
-                                    })
-                                    doc_count += 1
-                            
-                            # Argumentos de venda
-                            for idx, item in enumerate(nucleo.get('argumentos_venda', [])):
-                                doc_id = f"{avatar_id}_argumento_{idx}"
-                                text = f"{item.get('argumento', '')} - {item.get('descricao', '')}"
-                                if text.strip():
-                                    documents.append({
-                                        'id': doc_id,
-                                        'text': text,
-                                        'metadata': {'type': 'argumento', 'file': json_file.name}
-                                    })
-                                    doc_count += 1
+                            logger.info(f"📋 Formato detectado: Núcleo de conhecimento")
+                            nucleo_docs = self._parse_nucleo_conhecimento(
+                                data['nucleo_conhecimento'],
+                                avatar_id,
+                                json_file.name
+                            )
+                            documents.extend(nucleo_docs)
+                            doc_count += len(nucleo_docs)
                         
                         # Extrair áreas técnicas
                         if 'areas_tecnicas' in data:
+                            logger.info(f"📋 Formato detectado: Áreas técnicas")
                             for area_idx, area in enumerate(data['areas_tecnicas']):
                                 if 'detalhes' in area:
                                     for detail_key, detail_val in area['detalhes'].items():
@@ -319,15 +297,15 @@ class AvatarRAGEngine:
                                                     'metadata': {'type': 'area_tecnica', 'file': json_file.name}
                                                 })
                                                 doc_count += 1
-                    
+                
                 except Exception as e:
-                    logger.warning(f"⚠️ Erro ao carregar {json_file}: {e}")
+                    logger.warning(f"⚠️ WARN: Erro ao carregar {json_file.name}: {e}")
             
             # Adicionar documentos ao ChromaDB
             if documents:
                 try:
                     self.add_documents(avatar_id, documents)
-                    logger.info(f"✅ Avatar {avatar_id}: {doc_count} documentos indexados")
+                    logger.info(f"✅ Avatar {avatar_id}: {doc_count} documentos indexados na coleção {avatar_id}_knowledge")
                 except Exception as e:
                     logger.error(f"❌ Erro ao adicionar documentos para {avatar_id}: {e}", exc_info=True)
             else:
@@ -346,19 +324,30 @@ class AvatarRAGEngine:
         
         collection = self.collections[avatar_id]
         
+        # Chunking: dividir textos longos
+        chunked_documents = []
+        for doc in documents:
+            chunks = self._chunk_text(doc['text'])
+            for chunk_idx, chunk in enumerate(chunks):
+                chunked_documents.append({
+                    'id': f"{doc['id']}_chunk_{chunk_idx}",
+                    'text': chunk,
+                    'metadata': {**doc.get('metadata', {}), 'chunk': chunk_idx}
+                })
+        
         # Extrair textos e embeddings
-        texts = [doc['text'] for doc in documents]
+        texts = [doc['text'] for doc in chunked_documents]
         embeddings = self._get_embedding_model().encode(texts).tolist()
         
         # Adicionar ao ChromaDB
         collection.add(
-            ids=[doc['id'] for doc in documents],
+            ids=[doc['id'] for doc in chunked_documents],
             embeddings=embeddings,
             documents=texts,
-            metadatas=[doc.get('metadata', {}) for doc in documents]
+            metadatas=[doc.get('metadata', {}) for doc in chunked_documents]
         )
         
-        logger.info(f"✅ {len(documents)} documentos adicionados para {avatar_id}")
+        logger.info(f"✅ {len(chunked_documents)} chunks adicionados para {avatar_id}")
     
     def query(self, avatar_id: str, query_text: str, top_k: int = 5) -> List[Dict]:
         """
@@ -387,178 +376,48 @@ class AvatarRAGEngine:
         )
         
         # Formatar resultados
-        formatted_results = []
-        if results['documents'] and len(results['documents']) > 0:
-            for i, doc in enumerate(results['documents'][0]):
-                formatted_results.append({
-                    'id': results['ids'][0][i],
+        documents = []
+        if results and results['documents'] and len(results['documents']) > 0:
+            for idx, (doc, distance, metadata) in enumerate(zip(
+                results['documents'][0],
+                results['distances'][0],
+                results['metadatas'][0]
+            )):
+                # ChromaDB retorna distância, converter para similaridade
+                similarity = 1 - distance
+                documents.append({
+                    'id': results['ids'][0][idx],
                     'text': doc,
-                    'distance': results['distances'][0][i],
-                    'metadata': results['metadatas'][0][i] if results['metadatas'] else {}
+                    'score': similarity,
+                    'metadata': metadata
                 })
         
-        return formatted_results
+        return documents
     
-    def generate_response(self, query_text: str, avatar_id: str = None, language: str = "pt-BR") -> str:
+    def generate_response(self, query_text: str, avatar_id: str, language: str = 'pt-BR') -> str:
         """
-        Gera resposta inteligente baseada em busca vetorial (ChromaDB)
+        Gera resposta usando RAG
         
         Args:
             query_text: Pergunta do usuário
-            avatar_id: ID do avatar (opcional)
-            language: Idioma (pt-BR, en, es)
+            avatar_id: ID do avatar
+            language: Idioma da resposta
         
         Returns:
-            Resposta gerada baseada na base de conhecimento
+            Resposta gerada
         """
         try:
-            # Se avatar_id não fornecido, usar sofia como padrão
-            if not avatar_id or avatar_id not in self.AVATARS:
-                avatar_id = "sofia"
+            # Buscar documentos relevantes
+            documents = self.query(avatar_id, query_text, top_k=3)
             
-            logger.info(f"✅ CHROMA_ENGINE.generate_response() chamado")
-            logger.info(f"✅ Query: {query_text[:100]}")
-            logger.info(f"✅ Avatar: {avatar_id}")
-            logger.info(f"✅ Language: {language}")
-            
-            # Buscar documentos relevantes usando embeddings
-            results = self.query(avatar_id, query_text, top_k=3)
-            
-            logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(results)} documentos encontrados")
-            
-            if not results:
-                logger.warning(f"⚠️ Nenhum resultado encontrado, usando resposta padrão")
-                return self._get_default_response(avatar_id, language)
-            
-            # Combinar os resultados em uma resposta
-            response_parts = []
-            for result in results:
-                text = result.get('text', '')
-                score = result.get('distance', 1.0)
-                
-                # Apenas incluir resultados com score bom (distância pequena)
-                if score < 0.7 and text:
-                    logger.info(f"✅ Incluindo resultado: {text[:80]}... (score: {score:.3f})")
-                    response_parts.append(text)
-            
-            if response_parts:
-                # Combinar até 2 partes
-                response = " ".join(response_parts[:2])
-                logger.info(f"✅ Resposta gerada: {response[:100]}...")
-                return response
+            if documents and documents[0]['score'] > 0.20:
+                logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(documents)} documentos encontrados")
+                # Retornar o documento mais relevante
+                return documents[0]['text']
             else:
-                logger.warning(f"⚠️ Nenhum resultado com score bom, usando resposta padrão")
-                return self._get_default_response(avatar_id, language)
-                
+                logger.info(f"⚠️ RAG: Nenhum documento com score > 0.20")
+                return None
+        
         except Exception as e:
-            logger.error(f"❌ ERRO em generate_response: {e}", exc_info=True)
-            return self._get_default_response(avatar_id or "sofia", language)
-    
-    def _get_default_response(self, avatar_id: str, language: str = "pt-BR") -> str:
-        """Retorna resposta padrão do avatar"""
-        avatar_info = self.AVATARS.get(avatar_id, self.AVATARS["sofia"])
-        
-        default_responses = {
-            "pt-BR": f"Olá, sou {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}",
-            "en": f"Hello, I'm {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}",
-            "es": f"Hola, soy {avatar_info['name']}, {avatar_info['specialty'].lower()}. {avatar_info['description']}"
-        }
-        
-        return default_responses.get(language, default_responses["pt-BR"])
-    
-    def get_avatar_info(self, avatar_id: str) -> Dict:
-        """Retorna informações do avatar"""
-        if avatar_id not in self.AVATARS:
-            raise ValueError(f"Avatar {avatar_id} não encontrado")
-        
-        avatar = self.AVATARS[avatar_id]
-        collection = self.collections.get(avatar_id)
-        
-        # Contar documentos
-        doc_count = 0
-        if collection:
-            try:
-                doc_count = collection.count()
-            except:
-                pass
-        
-        return {
-            **avatar,
-            'id': avatar_id,
-            'documents_count': doc_count
-        }
-    
-    def list_avatars(self) -> List[Dict]:
-        """Lista todos os avatares com informações"""
-        return [self.get_avatar_info(avatar_id) for avatar_id in self.AVATARS.keys()]
-    
-    def export_collection(self, avatar_id: str, output_file: str):
-        """Exporta coleção para JSON"""
-        if avatar_id not in self.collections:
-            raise ValueError(f"Avatar {avatar_id} não encontrado")
-        
-        collection = self.collections[avatar_id]
-        
-        # Obter todos os dados
-        all_data = collection.get()
-        
-        # Salvar em JSON
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(all_data, f, ensure_ascii=False, indent=2)
-        
-        logger.info(f"✅ Coleção {avatar_id} exportada para {output_file}")
-    
-    def import_collection(self, avatar_id: str, input_file: str):
-        """Importa coleção de JSON"""
-        if avatar_id not in self.collections:
-            raise ValueError(f"Avatar {avatar_id} não encontrado")
-        
-        with open(input_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        collection = self.collections[avatar_id]
-        
-        # Adicionar dados
-        collection.add(
-            ids=data['ids'],
-            documents=data['documents'],
-            embeddings=data['embeddings'],
-            metadatas=data['metadatas']
-        )
-        
-        logger.info(f"✅ Coleção {avatar_id} importada de {input_file}")
-
-
-if __name__ == "__main__":
-    # Teste
-    logging.basicConfig(level=logging.INFO)
-    
-    engine = AvatarRAGEngine()
-    
-    # Listar avatares
-    print("\n📋 Avatares Disponíveis:")
-    for avatar in engine.list_avatars():
-        print(f"  - {avatar['name']} ({avatar['specialty']}): {avatar['documents_count']} docs")
-    
-    # Adicionar documentos de teste
-    print("\n➕ Adicionando documentos de teste...")
-    test_docs = [
-        {
-            'id': 'rafael_001',
-            'text': 'A reforma tributária 2026 introduz novas alíquotas de ICMS',
-            'metadata': {'source': 'legislacao', 'year': 2026}
-        },
-        {
-            'id': 'rafael_002',
-            'text': 'Contribuintes devem se registrar no novo sistema até 31 de março',
-            'metadata': {'source': 'regulamento', 'deadline': '2026-03-31'}
-        }
-    ]
-    
-    engine.add_documents('rafael', test_docs)
-    
-    # Testar busca
-    print("\n🔍 Testando busca...")
-    results = engine.query('rafael', 'reforma tributária', top_k=2)
-    for result in results:
-        print(f"  - {result['text']} (score: {result['distance']:.3f})")
+            logger.error(f"❌ Erro no RAG: {e}", exc_info=True)
+            return None
