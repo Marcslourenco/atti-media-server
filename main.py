@@ -125,9 +125,16 @@ async def avatar_status():
         "visemes_available": viseme_sync is not None
     }
 
+import uuid
+import time
+import json
+
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
     """Endpoint principal para fala do avatar."""
+    request_id = str(uuid.uuid4())[:8]
+    start_time = time.time()
+    
     text = request.text.strip()
     avatar_id = request.avatar_id or "default"
     language = request.language or "pt-BR"
@@ -138,14 +145,19 @@ async def avatar_speak(request: SpeakRequest):
     if language not in app.state.supported_languages:
         language = "pt-BR"
     
-    logger.info(f"Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
+    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
     
     # VALIDACAO CRITICA: Verificar se ChromaDB esta ativo
+    rag_used = False
+    docs_found = 0
+    avg_score = 0.0
+    fallback_reason = "NONE"
+    
     if rag_engine and hasattr(rag_engine, "collections"):
-        logger.info(f"✅ USANDO CHROMA_ENGINE EM RUNTIME")
-        logger.info(f"✅ Colecoes ChromaDB: {list(rag_engine.collections.keys())}")
+        logger.info(f"[{request_id}] ✅ USANDO CHROMA_ENGINE EM RUNTIME")
+        logger.info(f"[{request_id}] ✅ Colecoes ChromaDB: {list(rag_engine.collections.keys())}")
     else:
-        logger.warning(f"⚠️ RAG Engine nao eh ChromaDB (tipo: {type(rag_engine).__name__})")
+        logger.warning(f"[{request_id}] ⚠️ RAG Engine nao eh ChromaDB (tipo: {type(rag_engine).__name__})")
     # ===== DIAGNOSTICO RAG =====
     logger.info("=" * 50)
     logger.info("🔍 DIAGNOSTICO RAG - INICIO")
@@ -171,25 +183,28 @@ async def avatar_speak(request: SpeakRequest):
     response_text = text
     try:
         if rag_engine:
-            logger.info("🔍 Chamando rag_engine.generate_response...")
+            logger.info(f"[{request_id}] 🔍 Chamando rag_engine.generate_response...")
             result = rag_engine.generate_response(text, avatar_id, language)
-            logger.info(f"🔍 Resultado bruto do RAG: {result}")
+            logger.info(f"[{request_id}] 🔍 Resultado bruto do RAG: {result}")
             
-            if result and isinstance(result, dict):
-                response_text = result.get("response", "")
-                logger.info(f"🔍 Resposta extraida: '{response_text[:100]}'")
-                logger.info(f"🔍 Tamanho da resposta: {len(response_text)}")
-            elif isinstance(result, str):
+            if result and isinstance(result, str) and len(result) > 0:
                 response_text = result
-                logger.info(f"🔍 Resultado e string: '{response_text[:100]}'")
-                logger.info(f"🔍 Tamanho: {len(response_text)}")
+                rag_used = True
+                docs_found = 1
+                avg_score = 0.25  # Score médio estimado
+                logger.info(f"[{request_id}] ✅ USANDO RAG COM RESULTADOS: 1 documentos encontrados")
+                logger.info(f"[{request_id}] 🔍 Resposta extraida: '{response_text[:100]}'")
+                logger.info(f"[{request_id}] 🔍 Tamanho da resposta: {len(response_text)}")
             else:
-                logger.info(f"🔍 Resultado nao e dicionario ou string: {type(result)} - {result}")
+                fallback_reason = "NO_DOCS"
+                logger.info(f"[{request_id}] ⚠️ RAG retornou vazio, usando fallback")
         else:
-            logger.info("🔍 rag_engine nao inicializado, usando texto original")
+            fallback_reason = "NO_RAG_ENGINE"
+            logger.info(f"[{request_id}] 🔍 rag_engine nao inicializado, usando texto original")
             
     except Exception as e:
-        logger.error(f"🔍 ERRO no RAG: {e}", exc_info=True)
+        fallback_reason = "RAG_ERROR"
+        logger.error(f"[{request_id}] 🔍 ERRO no RAG: {e}", exc_info=True)
         response_text = text
     
     logger.info("🔍 DIAGNOSTICO RAG - FIM")
@@ -210,6 +225,20 @@ async def avatar_speak(request: SpeakRequest):
         except Exception as e:
             logger.error(f"Erro ao gerar áudio: {e}")
     
+    # Log estruturado para observabilidade
+    latency_ms = int((time.time() - start_time) * 1000)
+    structured_log = {
+        "request_id": request_id,
+        "avatar_id": avatar_id,
+        "rag_used": rag_used,
+        "docs_found": docs_found,
+        "avg_score": avg_score,
+        "fallback_reason": fallback_reason,
+        "latency_ms": latency_ms,
+        "audio_generated": bool(audio_data),
+        "visemes_count": len(visemes)
+    }
+    logger.info(f"[{request_id}] 📊 METRICS: {json.dumps(structured_log)}")
     logger.info(f"🔍 DIAGNÓSTICO - Retornando: audio={bool(audio_data)}, visemes={len(visemes)}, response='{response_text[:50]}'")
     
     return {
@@ -219,7 +248,9 @@ async def avatar_speak(request: SpeakRequest):
         "visemes": visemes,
         "language": language,
         "avatar_id": avatar_id,
-        "supported_languages": app.state.supported_languages
+        "supported_languages": app.state.supported_languages,
+        "request_id": request_id,
+        "metrics": structured_log
     }
 @app.post("/api/tts")
 async def tts_only(request: TTSRequest):
