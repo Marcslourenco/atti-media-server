@@ -57,6 +57,13 @@ except Exception as e:
         logger.error(f"❌ Erro ao importar RAG engine fallback: {e2}", exc_info=True)
         rag_engine = None
 
+try:
+    from src.validation_endpoint import setup_validation_endpoint
+    validation_available = True
+except Exception as e:
+    logger.warning(f"Validação endpoint não disponível: {e}")
+    validation_available = False
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Iniciando humanos-digitais-tts-rag-llm v{BACKEND_VERSION}")
@@ -81,6 +88,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Setup validation endpoint
+if validation_available and rag_engine:
+    setup_validation_endpoint(app, rag_engine)
+    logger.info("✅ Endpoint /api/validate-rag disponível")
+
 # ==================== CORS ====================
 origins_str = os.getenv("CORS_ALLOW_ORIGINS", "")
 origins = [origin.strip() for origin in origins_str.split(",") if origin.strip()]
@@ -94,6 +106,16 @@ app.add_middleware(
 )
 
 # ==================== ENDPOINTS ====================
+
+@app.get("/api/health")
+async def health():
+    """Health check com status do RAG"""
+    return {
+        "status": "online",
+        "version": BACKEND_VERSION,
+        "rag_available": rag_engine is not None,
+        "validation_available": validation_available
+    }
 
 @app.get("/")
 async def root():
