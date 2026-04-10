@@ -31,7 +31,7 @@ def _get_embedding_model_singleton():
 
 class AvatarRAGEngine:
     """
-    Motor de RAG para avatares com suporte a múltiplos formatos de dados
+    Motor de RAG para avatares com parser unificado e contrato de dados
     """
     
     AVATARS = [
@@ -39,6 +39,12 @@ class AvatarRAGEngine:
         'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno',
         'giovana', 'marcos', 'carol', 'english'
     ]
+    
+    # Mapeamento de pastas com nomes compostos
+    AVATAR_FOLDER_MAP = {
+        'bruno_giovana': ['bruno', 'giovana'],
+        'marcos_carol': ['marcos', 'carol']
+    }
     
     def __init__(self, persist_dir: str = "./chroma_db"):
         """
@@ -51,7 +57,7 @@ class AvatarRAGEngine:
         self.persist_dir = persist_dir
         os.makedirs(persist_dir, exist_ok=True)
         
-        # Configurar ChromaDB com nova API (v0.5+) - SEM FALLBACK
+        # Configurar ChromaDB com nova API (v0.5+)
         logger.info(f"🔍 Inicializando ChromaDB com PersistentClient...")
         try:
             self.client = chromadb.PersistentClient(
@@ -64,10 +70,9 @@ class AvatarRAGEngine:
             logger.info(f"✅ ChromaDB inicializado com PersistentClient (nova API)")
         except Exception as e:
             logger.error(f"❌ ERRO CRÍTICO ao inicializar ChromaDB: {e}", exc_info=True)
-            logger.error(f"❌ ChromaDB NÃO será inicializado. Verifique a versão e configuração.")
             raise ValueError(f"ChromaDB initialization failed: {e}")
         
-        # Modelo de embeddings - LAZY LOADING (carrega sob demanda)
+        # Modelo de embeddings - LAZY LOADING
         self.embedding_model = None
         self._embedding_model_name = 'sentence-transformers/paraphrase-MiniLM-L3-v2'
         logger.info(f"🔍 Embeddings configurados para lazy loading: {self._embedding_model_name}")
@@ -76,12 +81,11 @@ class AvatarRAGEngine:
         self.collections = {}
         self._init_collections()
         
-        # FASE 3: NÃO carregar documentos no startup
-        # Documentos já foram indexados no Docker build
-        logger.info(f"✅ RAG Engine inicializado em modo LEITURA")
-        logger.info(f"✅ Coleções carregadas: {len(self.collections)}")
+        # FASE 2: Carregar documentos de conhecimento com ingestão
+        self._load_knowledge_base()
+        
+        logger.info(f"✅ RAG Engine inicializado com {len(self.AVATARS)} avatares")
         logger.info(f"✅ Embeddings: lazy loading (carregam sob demanda)")
-    
     
     def _get_embedding_model(self):
         """Usa singleton thread-safe para lazy loading"""
@@ -107,15 +111,7 @@ class AvatarRAGEngine:
     
     def _chunk_text(self, text: str, chunk_size: int = 400, overlap: int = 60) -> List[str]:
         """
-        Divide texto em chunks com overlap
-        
-        Args:
-            text: Texto a dividir
-            chunk_size: Tamanho máximo do chunk
-            overlap: Tamanho do overlap entre chunks
-        
-        Returns:
-            Lista de chunks
+        Divide texto em chunks com overlap (300-500 chars, 15% overlap)
         """
         if len(text) <= chunk_size:
             return [text]
@@ -141,10 +137,10 @@ class AvatarRAGEngine:
         for idx, item in enumerate(nucleo.get('problemas_comuns', [])):
             try:
                 if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_problema_{idx}"
+                    doc_id = f"{avatar_id}_problema_{idx}_{uuid.uuid4().hex[:8]}"
                     text = f"{item.get('problema', '')} - {item.get('solucao_sugerida', '')}"
                 elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_problema_{idx}"
+                    doc_id = f"{avatar_id}_problema_{idx}_{uuid.uuid4().hex[:8]}"
                     text = item
                 else:
                     continue
@@ -156,16 +152,16 @@ class AvatarRAGEngine:
                         'metadata': {'type': 'problema', 'file': file_name}
                     })
             except Exception as e:
-                logger.warning(f"⚠️ Erro ao processar problema_comum em {file_name}: {e}")
+                logger.warning(f"⚠️ WARN: Erro ao processar problema_comum em {file_name}: {e}")
         
         # Objeções
         for idx, item in enumerate(nucleo.get('objeções_clientes', [])):
             try:
                 if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_objecao_{idx}"
+                    doc_id = f"{avatar_id}_objecao_{idx}_{uuid.uuid4().hex[:8]}"
                     text = f"{item.get('objecao', '')} - {item.get('resposta', '')}"
                 elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_objecao_{idx}"
+                    doc_id = f"{avatar_id}_objecao_{idx}_{uuid.uuid4().hex[:8]}"
                     text = item
                 else:
                     continue
@@ -177,16 +173,16 @@ class AvatarRAGEngine:
                         'metadata': {'type': 'objecao', 'file': file_name}
                     })
             except Exception as e:
-                logger.warning(f"⚠️ Erro ao processar objeção em {file_name}: {e}")
+                logger.warning(f"⚠️ WARN: Erro ao processar objeção em {file_name}: {e}")
         
         # Argumentos de venda
         for idx, item in enumerate(nucleo.get('argumentos_venda', [])):
             try:
                 if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_argumento_{idx}"
+                    doc_id = f"{avatar_id}_argumento_{idx}_{uuid.uuid4().hex[:8]}"
                     text = f"{item.get('argumento', '')} - {item.get('descricao', '')}"
                 elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_argumento_{idx}"
+                    doc_id = f"{avatar_id}_argumento_{idx}_{uuid.uuid4().hex[:8]}"
                     text = item
                 else:
                     continue
@@ -198,12 +194,12 @@ class AvatarRAGEngine:
                         'metadata': {'type': 'argumento', 'file': file_name}
                     })
             except Exception as e:
-                logger.warning(f"⚠️ Erro ao processar argumento em {file_name}: {e}")
+                logger.warning(f"⚠️ WARN: Erro ao processar argumento em {file_name}: {e}")
         
         return documents
     
     def _load_knowledge_base(self):
-        """Carrega base de conhecimento dos arquivos JSON com parser unificado"""
+        """FASE 2: Carrega base de conhecimento com parser unificado e ingestão"""
         # Tentar múltiplos caminhos possíveis
         possible_paths = [
             Path("./knowledge"),
@@ -224,212 +220,222 @@ class AvatarRAGEngine:
             logger.error(f"Paths testados: {[str(p.absolute()) for p in possible_paths]}")
             return
         
-        logger.info(f"📚 Carregando base de conhecimento de {knowledge_dir.absolute()}")
+        logger.info(f"📚 FASE 2: Carregando base de conhecimento de {knowledge_dir.absolute()}")
         
+        total_docs_indexed = 0
+        
+        # Varredura recursiva em /app/knowledge/
         for avatar_dir in knowledge_dir.iterdir():
             if not avatar_dir.is_dir() or avatar_dir.name.startswith('_'):
                 continue
             
-            avatar_id = avatar_dir.name
-            if avatar_id not in self.AVATARS:
-                logger.warning(f"⚠️ Avatar {avatar_id} não reconhecido")
-                continue
+            folder_name = avatar_dir.name
             
-            documents = []
-            doc_count = 0
+            # Normalizar nomes de pasta (bruno_giovana → bruno + giovana)
+            avatar_ids = self.AVATAR_FOLDER_MAP.get(folder_name, [folder_name])
             
-            # Carregar todos os arquivos JSON do avatar
-            for json_file in avatar_dir.glob("*.json"):
-                # Ignorar arquivos legados
-                if json_file.name in ['embeddings.json', 'estrutura_chunks.json', 'dataset_variacoes.json']:
-                    logger.info(f"⏭️ Ignorando arquivo legado: {json_file.name}")
+            for avatar_id in avatar_ids:
+                if avatar_id not in self.AVATARS:
+                    logger.warning(f"⚠️ WARN: Avatar {avatar_id} não reconhecido")
                     continue
                 
-                try:
-                    with open(json_file, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
+                documents = []
+                doc_count = 0
+                
+                # Carregar todos os arquivos JSON do avatar
+                for json_file in avatar_dir.glob("*.json"):
+                    # Ignorar arquivos legados
+                    if json_file.name in ['embeddings.json', 'estrutura_chunks.json', 'dataset_variacoes.json']:
+                        logger.info(f"⏭️ Ignorando arquivo legado: {json_file.name}")
+                        continue
                     
-                    # Extrair documentos da estrutura real
-                    if isinstance(data, dict):
-                        # Estrutura tipo Sofia (items com pergunta/resposta_base)
-                        if 'items' in data and isinstance(data['items'], list):
-                            logger.info(f"📋 Formato detectado: Sofia (items)")
-                            for idx, item in enumerate(data['items']):
-                                if isinstance(item, dict):
-                                    doc_id = f"{avatar_id}_item_{idx}"
-                                    pergunta = item.get('pergunta', '')
-                                    resposta = item.get('resposta_base', '')
-                                    text = f"{pergunta} - {resposta}"
+                    try:
+                        with open(json_file, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                        
+                        # Extrair documentos da estrutura real
+                        if isinstance(data, dict):
+                            # Estrutura tipo Sofia (items com pergunta/resposta_base)
+                            if 'items' in data and isinstance(data['items'], list):
+                                logger.info(f"⚠️ WARN: Formato não padronizado em {json_file.name}, adaptando (Sofia format)")
+                                for idx, item in enumerate(data['items']):
+                                    if isinstance(item, dict):
+                                        doc_id = f"{avatar_id}_item_{idx}_{uuid.uuid4().hex[:8]}"
+                                        pergunta = item.get('pergunta', '')
+                                        resposta = item.get('resposta_base', '')
+                                        text = f"{pergunta} - {resposta}"
+                                        if text.strip():
+                                            documents.append({
+                                                'id': doc_id,
+                                                'text': text,
+                                                'metadata': {'type': 'qa', 'file': json_file.name}
+                                            })
+                                            doc_count += 1
+                            
+                            # Extrair FAQ
+                            if 'faq_estruturado' in data:
+                                logger.info(f"📋 Formato detectado: FAQ estruturado")
+                                for idx, faq in enumerate(data['faq_estruturado']):
+                                    doc_id = f"{avatar_id}_faq_{idx}_{uuid.uuid4().hex[:8]}"
+                                    text = f"{faq.get('pergunta', '')} - {faq.get('resposta', '')}"
                                     if text.strip():
                                         documents.append({
                                             'id': doc_id,
                                             'text': text,
-                                            'metadata': {'type': 'qa', 'file': json_file.name}
+                                            'metadata': {'type': 'faq', 'file': json_file.name}
                                         })
                                         doc_count += 1
-                        
-                        # Extrair FAQ
-                        if 'faq_estruturado' in data:
-                            logger.info(f"📋 Formato detectado: FAQ estruturado")
-                            for idx, faq in enumerate(data['faq_estruturado']):
-                                doc_id = f"{avatar_id}_faq_{idx}"
-                                text = f"{faq.get('pergunta', '')} - {faq.get('resposta', '')}"
-                                if text.strip():
-                                    documents.append({
-                                        'id': doc_id,
-                                        'text': text,
-                                        'metadata': {'type': 'faq', 'file': json_file.name}
-                                    })
-                                    doc_count += 1
-                        
-                        # Extrair núcleo de conhecimento
-                        if 'nucleo_conhecimento' in data:
-                            logger.info(f"📋 Formato detectado: Núcleo de conhecimento")
-                            nucleo_docs = self._parse_nucleo_conhecimento(
-                                data['nucleo_conhecimento'],
-                                avatar_id,
-                                json_file.name
-                            )
-                            documents.extend(nucleo_docs)
-                            doc_count += len(nucleo_docs)
-                        
-                        # Extrair áreas técnicas
-                        if 'areas_tecnicas' in data:
-                            logger.info(f"📋 Formato detectado: Áreas técnicas")
-                            for area_idx, area in enumerate(data['areas_tecnicas']):
-                                if 'detalhes' in area:
-                                    for detail_key, detail_val in area['detalhes'].items():
-                                        if isinstance(detail_val, dict):
-                                            doc_id = f"{avatar_id}_area_{area_idx}_{detail_key}"
-                                            text = detail_val.get('descricao', '')
-                                            if text.strip():
-                                                documents.append({
-                                                    'id': doc_id,
-                                                    'text': text,
-                                                    'metadata': {'type': 'area_tecnica', 'file': json_file.name}
-                                                })
-                                                doc_count += 1
+                            
+                            # Extrair Núcleo de Conhecimento
+                            if 'nucleo_conhecimento' in data:
+                                logger.info(f"📋 Formato detectado: Núcleo de Conhecimento")
+                                nucleo_docs = self._parse_nucleo_conhecimento(
+                                    data['nucleo_conhecimento'], 
+                                    avatar_id, 
+                                    json_file.name
+                                )
+                                documents.extend(nucleo_docs)
+                                doc_count += len(nucleo_docs)
+                            
+                            # Extrair Áreas Técnicas
+                            if 'areas_tecnicas' in data:
+                                logger.info(f"📋 Formato detectado: Áreas Técnicas")
+                                for idx, area in enumerate(data['areas_tecnicas']):
+                                    doc_id = f"{avatar_id}_area_{idx}_{uuid.uuid4().hex[:8]}"
+                                    text = area.get('descricao', '')
+                                    if text.strip():
+                                        documents.append({
+                                            'id': doc_id,
+                                            'text': text,
+                                            'metadata': {'type': 'area_tecnica', 'file': json_file.name}
+                                        })
+                                        doc_count += 1
+                    
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"⚠️ WARN: Erro ao decodificar JSON em {json_file.name}: {e}")
+                    except Exception as e:
+                        logger.warning(f"⚠️ WARN: Erro ao processar {json_file.name}: {e}")
                 
-                except Exception as e:
-                    logger.warning(f"⚠️ WARN: Erro ao carregar {json_file.name}: {e}")
-            
-            # Adicionar documentos ao ChromaDB
-            if documents:
+                # Limpar coleção existente e recriar (garantir dados frescos)
+                collection_name = f"{avatar_id}_knowledge"
                 try:
-                    self.add_documents(avatar_id, documents)
-                    logger.info(f"✅ Avatar {avatar_id}: {doc_count} documentos indexados na coleção {avatar_id}_knowledge")
-                except Exception as e:
-                    logger.error(f"❌ Erro ao adicionar documentos para {avatar_id}: {e}", exc_info=True)
-            else:
-                logger.warning(f"⚠️ Nenhum documento encontrado para {avatar_id}")
-    
-    def add_documents(self, avatar_id: str, documents: List[Dict[str, str]]):
-        """
-        Adiciona documentos à base de conhecimento de um avatar
+                    self.client.delete_collection(name=collection_name)
+                    logger.info(f"🔄 Limpando coleção: {collection_name}")
+                except:
+                    pass
+                
+                # Recriar coleção
+                collection = self.client.create_collection(
+                    name=collection_name,
+                    metadata={"hnsw:space": "cosine"}
+                )
+                self.collections[avatar_id] = collection
+                
+                # FASE 2: Ingerir documentos com chunking e embeddings
+                if documents:
+                    logger.info(f"📥 Ingestando {len(documents)} documentos para {avatar_id}...")
+                    
+                    # Aplicar chunking
+                    all_chunks = []
+                    for doc in documents:
+                        chunks = self._chunk_text(doc['text'], chunk_size=400, overlap=60)
+                        for chunk_idx, chunk in enumerate(chunks):
+                            all_chunks.append({
+                                'id': f"{doc['id']}_chunk_{chunk_idx}",
+                                'text': chunk,
+                                'metadata': doc['metadata']
+                            })
+                    
+                    # Gerar embeddings e inserir no ChromaDB
+                    try:
+                        model = self._get_embedding_model()
+                        
+                        # Preparar dados para inserção
+                        ids = [chunk['id'] for chunk in all_chunks]
+                        texts = [chunk['text'] for chunk in all_chunks]
+                        metadatas = [chunk['metadata'] for chunk in all_chunks]
+                        
+                        # Gerar embeddings
+                        embeddings = model.encode(texts, convert_to_numpy=True)
+                        
+                        # Inserir no ChromaDB
+                        collection.add(
+                            ids=ids,
+                            embeddings=embeddings.tolist(),
+                            documents=texts,
+                            metadatas=metadatas
+                        )
+                        
+                        logger.info(f"✅ {avatar_id}: {len(all_chunks)} chunks indexados na coleção {collection_name}")
+                        total_docs_indexed += len(all_chunks)
+                    
+                    except Exception as e:
+                        logger.warning(f"⚠️ WARN: Erro ao indexar {avatar_id}: {e}")
+                else:
+                    logger.warning(f"⚠️ WARN: Nenhum documento encontrado para {avatar_id}")
         
-        Args:
-            avatar_id: ID do avatar
-            documents: Lista de documentos com 'id', 'text', 'metadata'
+        # Protocolo Rafael
+        logger.info(f"📋 Protocolo Rafael: estado PENDING_DATA (aguardando 320 Q&As Genspark)")
+        
+        logger.info(f"✅ FASE 2 concluída: {total_docs_indexed} chunks indexados no total")
+    
+    def query(self, query_text: str, avatar_id: str, n_results: int = 3) -> Dict:
+        """
+        Busca documentos relevantes no ChromaDB
         """
         if avatar_id not in self.collections:
-            raise ValueError(f"Avatar {avatar_id} não encontrado")
+            return {"error": f"Avatar {avatar_id} não encontrado"}
         
-        collection = self.collections[avatar_id]
-        
-        # Chunking: dividir textos longos
-        chunked_documents = []
-        for doc in documents:
-            chunks = self._chunk_text(doc['text'])
-            for chunk_idx, chunk in enumerate(chunks):
-                chunked_documents.append({
-                    'id': f"{doc['id']}_chunk_{chunk_idx}",
-                    'text': chunk,
-                    'metadata': {**doc.get('metadata', {}), 'chunk': chunk_idx}
-                })
-        
-        # Extrair textos e embeddings
-        texts = [doc['text'] for doc in chunked_documents]
-        embeddings = self._get_embedding_model().encode(texts).tolist()
-        
-        # Adicionar ao ChromaDB
-        collection.add(
-            ids=[doc['id'] for doc in chunked_documents],
-            embeddings=embeddings,
-            documents=texts,
-            metadatas=[doc.get('metadata', {}) for doc in chunked_documents]
-        )
-        
-        logger.info(f"✅ {len(chunked_documents)} chunks adicionados para {avatar_id}")
-    
-    def query(self, avatar_id: str, query_text: str, top_k: int = 5) -> List[Dict]:
-        """
-        Busca documentos relevantes na base de conhecimento de um avatar
-        
-        Args:
-            avatar_id: ID do avatar
-            query_text: Texto da busca
-            top_k: Número de resultados
-            
-        Returns:
-            Lista de documentos relevantes com scores
-        """
-        if avatar_id not in self.collections:
-            raise ValueError(f"Avatar {avatar_id} não encontrado")
-        
-        collection = self.collections[avatar_id]
-        
-        # Gerar embedding da query
-        query_embedding = self._get_embedding_model().encode([query_text])[0].tolist()
-        
-        # Buscar no ChromaDB
-        results = collection.query(
-            query_embeddings=[query_embedding],
-            n_results=top_k
-        )
-        
-        # Formatar resultados
-        documents = []
-        if results and results['documents'] and len(results['documents']) > 0:
-            for idx, (doc, distance, metadata) in enumerate(zip(
-                results['documents'][0],
-                results['distances'][0],
-                results['metadatas'][0]
-            )):
-                # ChromaDB retorna distância, converter para similaridade
-                similarity = 1 - distance
-                documents.append({
-                    'id': results['ids'][0][idx],
-                    'text': doc,
-                    'score': similarity,
-                    'metadata': metadata
-                })
-        
-        return documents
-    
-    def generate_response(self, query_text: str, avatar_id: str, language: str = 'pt-BR') -> str:
-        """
-        Gera resposta usando RAG
-        
-        Args:
-            query_text: Pergunta do usuário
-            avatar_id: ID do avatar
-            language: Idioma da resposta
-        
-        Returns:
-            Resposta gerada
-        """
         try:
-            # Buscar documentos relevantes
-            documents = self.query(avatar_id, query_text, top_k=3)
+            model = self._get_embedding_model()
+            query_embedding = model.encode([query_text], convert_to_numpy=True)[0]
             
-            if documents and documents[0]['score'] > 0.20:
-                logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(documents)} documentos encontrados")
-                # Retornar o documento mais relevante
-                return documents[0]['text']
-            else:
-                logger.info(f"⚠️ RAG: Nenhum documento com score > 0.20")
-                return None
+            collection = self.collections[avatar_id]
+            results = collection.query(
+                query_embeddings=[query_embedding.tolist()],
+                n_results=n_results
+            )
+            
+            return {
+                "documents": results.get('documents', []),
+                "distances": results.get('distances', []),
+                "metadatas": results.get('metadatas', [])
+            }
         
         except Exception as e:
-            logger.error(f"❌ Erro no RAG: {e}", exc_info=True)
-            return None
+            logger.error(f"❌ Erro ao buscar em {avatar_id}: {e}")
+            return {"error": str(e)}
+    
+    def generate_response(self, text: str, avatar_id: str, language: str = "pt-BR") -> Dict:
+        """
+        Gera resposta usando RAG
+        """
+        logger.info(f"🔍 Query do usuário: {text}")
+        logger.info(f"🔍 Avatar ID: {avatar_id}")
+        
+        # Buscar documentos relevantes
+        search_results = self.query(text, avatar_id, n_results=3)
+        
+        if "error" in search_results:
+            logger.warning(f"⚠️ Erro na busca: {search_results['error']}")
+            return {"response": f"Desculpe, não consegui encontrar informações sobre isso."}
+        
+        documents = search_results.get("documents", [])
+        distances = search_results.get("distances", [])
+        
+        if not documents or not documents[0]:
+            logger.warning(f"⚠️ Nenhum documento encontrado para {avatar_id}")
+            return {"response": f"Desculpe, não tenho informações sobre isso."}
+        
+        # Usar o documento mais relevante
+        best_doc = documents[0][0] if documents[0] else ""
+        best_score = 1 - distances[0][0] if distances and distances[0] else 0
+        
+        logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(documents[0])} documentos encontrados")
+        logger.info(f"✅ Score de similaridade: {best_score:.2f}")
+        
+        if best_score < 0.20:
+            logger.warning(f"⚠️ Score baixo ({best_score:.2f}), usando fallback")
+            return {"response": f"Desculpe, não tenho uma resposta precisa sobre isso."}
+        
+        return {"response": best_doc}
