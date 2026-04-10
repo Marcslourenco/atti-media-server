@@ -261,9 +261,13 @@ def chunk_and_index(documents: List[Dict], avatar_id: str, source_file: str, col
             chunks = [content]
         else:
             chunks = []
-            for i in range(0, len(content), chunk_size - overlap):
+            i = 0
+            while i < len(content):
                 chunk = content[i:i+chunk_size]
                 chunks.append(chunk)
+                i += (chunk_size - overlap)
+                if i >= len(content):
+                    break
         
         # Indexar cada chunk com ID único
         for chunk_idx, chunk in enumerate(chunks):
