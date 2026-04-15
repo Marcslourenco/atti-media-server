@@ -1,80 +1,106 @@
 #!/usr/bin/env python3
 """
-FASE 2.5: Script de validação de ingestão
-Conecta no ChromaDB pré-indexado e valida se documentos foram indexados
+VALIDATE INGEST - Validação pós-build (v2.0 otimizada)
+Executa DURANTE docker build após worker_ingest_buildtime.py.
+Verifica que TODOS os avatares esperados têm coleções com >0 documentos.
+Falha com exit(1) se houver coleções faltantes ou vazias.
 """
 
-import chromadb
+import sys
 import logging
 from pathlib import Path
-import sys
+import chromadb
 
-logging.basicConfig(level=logging.INFO)
+# ============================================================================
+# CONFIGURAÇÃO
+# ============================================================================
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
+CHROMA_DB_PATH = Path("/app/chroma_db")
+
+# Avatares esperados (deve corresponder a worker_ingest_buildtime.py)
+EXPECTED_AVATARS = [
+    "sofia", "clara", "lucas", "amanda", "fernanda",
+    "marina", "roberto", "luisa", "lais", "paula",
+    "rafael", "bruno_giovana", "marcos_carol"
+]
+
+# ============================================================================
+# VALIDAÇÃO
+# ============================================================================
+
 def validate_ingest():
-    """Valida se ChromaDB foi pré-indexado com sucesso"""
+    """Valida que todos os avatares esperados foram indexados"""
+    logger.info("="*80)
+    logger.info("🔍 VALIDAÇÃO PÓS-BUILD")
+    logger.info("="*80)
     
-    logger.info("=" * 80)
-    logger.info("🔍 FASE 2.5: VALIDAÇÃO DE INGESTÃO")
-    logger.info("=" * 80)
-    
-    # Conectar no ChromaDB
-    chroma_path = Path("/app/chroma_db") if Path("/app/chroma_db").exists() else Path("./chroma_db")
-    
-    logger.info(f"📁 Conectando no ChromaDB em: {chroma_path.absolute()}")
-    
+    # Conectar ao ChromaDB
     try:
-        client = chromadb.PersistentClient(path=str(chroma_path))
-        logger.info("✅ ChromaDB conectado com sucesso")
+        client = chromadb.PersistentClient(path=str(CHROMA_DB_PATH))
+        logger.info(f"✅ Conectado ao ChromaDB em {CHROMA_DB_PATH}")
     except Exception as e:
-        logger.error(f"❌ Erro ao conectar no ChromaDB: {e}")
+        logger.error(f"❌ Erro ao conectar ao ChromaDB: {e}")
         return False
     
-    # Listar coleções e contar documentos
-    AVATARS = [
-        'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
-        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno',
-        'giovana', 'marcos', 'carol', 'english'
-    ]
+    # Listar coleções
+    collections = {col.name: col for col in client.list_collections()}
+    logger.info(f"\n📊 Coleções encontradas: {len(collections)}")
     
-    total_docs = 0
-    avatars_with_docs = 0
+    # Validar avatares esperados
+    missing = []
+    empty = []
     
-    logger.info("\n📊 CONTAGEM DE DOCUMENTOS POR AVATAR:")
-    logger.info("-" * 80)
-    
-    for avatar_id in AVATARS:
-        collection_name = f"{avatar_id}_knowledge"
-        try:
-            collection = client.get_collection(name=collection_name)
-            doc_count = collection.count()
-            
-            if doc_count > 0:
-                avatars_with_docs += 1
-                total_docs += doc_count
-                logger.info(f"✅ {avatar_id:15} | {collection_name:25} | {doc_count:5} docs")
-            else:
-                if avatar_id == 'rafael':
-                    logger.info(f"⏸️  {avatar_id:15} | {collection_name:25} | PENDING_DATA")
-                else:
-                    logger.warning(f"⚠️  {avatar_id:15} | {collection_name:25} | 0 docs")
+    for avatar in EXPECTED_AVATARS:
+        collection_name = f"{avatar}_knowledge"
         
-        except Exception as e:
-            logger.warning(f"⚠️  {avatar_id:15} | Coleção não encontrada")
+        if collection_name not in collections:
+            missing.append(avatar)
+            logger.warning(f"⚠️ {avatar}: COLEÇÃO NÃO ENCONTRADA")
+        else:
+            count = collections[collection_name].count()
+            if count == 0:
+                empty.append(avatar)
+                logger.warning(f"⚠️ {avatar}: COLEÇÃO VAZIA (0 docs)")
+            else:
+                logger.info(f"✅ {avatar}: {count} docs | coleção: {collection_name}")
     
-    logger.info("-" * 80)
-    logger.info(f"✅ Validação: {avatars_with_docs} avatares com conhecimento indexado")
-    logger.info(f"✅ Total de documentos: {total_docs}")
-    logger.info("=" * 80)
+    # Relatório final
+    logger.info("\n" + "="*80)
+    logger.info("📋 RELATÓRIO FINAL")
+    logger.info("="*80)
+    
+    total_expected = len(EXPECTED_AVATARS)
+    total_indexed = len(EXPECTED_AVATARS) - len(missing) - len(empty)
+    
+    logger.info(f"Avatares esperados: {total_expected}")
+    logger.info(f"Avatares indexados: {total_indexed}")
+    logger.info(f"Avatares faltantes: {len(missing)}")
+    logger.info(f"Avatares vazios: {len(empty)}")
+    
+    if missing:
+        logger.error(f"\n❌ Coleções faltantes: {missing}")
+    
+    if empty:
+        logger.error(f"\n❌ Coleções vazias: {empty}")
     
     # Gate de validação
-    if total_docs > 0:
-        logger.info("✅ VALIDAÇÃO APROVADA: Ingestão bem-sucedida")
-        return True
-    else:
-        logger.error("❌ VALIDAÇÃO REPROVADA: Nenhum documento indexado")
+    if missing or empty:
+        logger.error("\n❌ VALIDAÇÃO FALHOU")
         return False
+    else:
+        logger.info("\n✅ TODOS OS AVATARES INDEXADOS COM SUCESSO")
+        return True
+
+
+# ============================================================================
+# MAIN
+# ============================================================================
 
 if __name__ == "__main__":
     success = validate_ingest()

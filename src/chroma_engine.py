@@ -1,15 +1,30 @@
-import chromadb
+#!/usr/bin/env python3
+"""
+CHROMA ENGINE v2.0 - Read-Only Runtime + Lazy Loading
+Separação clara: ingestão em build-time, leitura em runtime.
+NUNCA faz collection.add() ou create_collection() em runtime.
+"""
+
 import json
 import os
 import logging
 import threading
 from pathlib import Path
 from typing import List, Dict, Optional
-import uuid
 
 logger = logging.getLogger(__name__)
 
-# FASE 4: Singleton thread-safe para lazy loading de embeddings
+# ============================================================================
+# CONFIGURAÇÃO
+# ============================================================================
+
+KNOWLEDGE_MODE = os.getenv("KNOWLEDGE_MODE", "runtime")  # build ou runtime
+logger.info(f"🔧 KNOWLEDGE_MODE: {KNOWLEDGE_MODE}")
+
+# ============================================================================
+# LAZY LOADING - SINGLETON THREAD-SAFE
+# ============================================================================
+
 _embedding_model = None
 _embedding_model_lock = threading.Lock()
 
@@ -23,373 +38,135 @@ def _get_embedding_model_singleton():
                 try:
                     from sentence_transformers import SentenceTransformer
                     _embedding_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
-                    logger.info("✅ Modelo de embeddings carregado com sucesso (singleton)")
+                    logger.info("✅ Modelo de embeddings carregado com sucesso")
                 except Exception as e:
                     logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
                     raise
     return _embedding_model
 
+
+# ============================================================================
+# DECORATOR: RUNTIME_ONLY
+# ============================================================================
+
+def runtime_only(func):
+    """Decorator que falha se KNOWLEDGE_MODE != 'build'"""
+    def wrapper(*args, **kwargs):
+        if KNOWLEDGE_MODE != "build":
+            raise RuntimeError(f"Função {func.__name__} só pode ser chamada em build-time (KNOWLEDGE_MODE=build)")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+# ============================================================================
+# AVATAR RAG ENGINE - READ-ONLY
+# ============================================================================
+
 class AvatarRAGEngine:
     """
-    Motor de RAG para avatares com parser unificado e contrato de dados
+    Motor de RAG para avatares - MODO READ-ONLY em runtime
+    Ingestão acontece em build-time via scripts/worker_ingest_buildtime.py
     """
     
     AVATARS = [
         'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
-        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno',
-        'giovana', 'marcos', 'carol', 'english'
+        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol'
     ]
     
-    # Mapeamento de pastas com nomes compostos
-    AVATAR_FOLDER_MAP = {
-        'bruno_giovana': ['bruno', 'giovana'],
-        'marcos_carol': ['marcos', 'carol']
-    }
-    
-    def __init__(self, persist_dir: str = "./chroma_db"):
+    def __init__(self, persist_dir: str = "/app/chroma_db"):
         """
-        Inicializa ChromaDB com persistência
-        
-        Args:
-            persist_dir: Diretório para armazenar dados do ChromaDB
+        Inicializa ChromaDB em modo READ-ONLY
+        Não faz ingestão em runtime.
         """
         logger.info(f"🔍 ARQUIVO CHROMA EM USO: {__file__}")
         self.persist_dir = persist_dir
-        os.makedirs(persist_dir, exist_ok=True)
+        self.knowledge_mode = KNOWLEDGE_MODE
         
-        # Configurar ChromaDB com nova API (v0.5+)
-        logger.info(f"🔍 Inicializando ChromaDB com PersistentClient...")
+        # Criar diretório se não existir (para desenvolvimento local)
+        Path(persist_dir).mkdir(parents=True, exist_ok=True)
+        
+        # Inicializar ChromaDB como cliente de leitura
+        logger.info(f"🔍 Inicializando ChromaDB em modo {self.knowledge_mode}...")
         try:
+            import chromadb
             self.client = chromadb.PersistentClient(
                 path=persist_dir,
                 settings=chromadb.config.Settings(
                     anonymized_telemetry=False,
-                    allow_reset=True
+                    allow_reset=False  # ← IMPORTANTE: Não permitir reset em runtime
                 )
             )
-            logger.info(f"✅ ChromaDB inicializado com PersistentClient (nova API)")
+            logger.info(f"✅ ChromaDB inicializado (modo {self.knowledge_mode})")
         except Exception as e:
-            logger.error(f"❌ ERRO CRÍTICO ao inicializar ChromaDB: {e}", exc_info=True)
-            raise ValueError(f"ChromaDB initialization failed: {e}")
+            logger.error(f"❌ ERRO ao inicializar ChromaDB: {e}", exc_info=True)
+            self.client = None
+            return
         
         # Modelo de embeddings - LAZY LOADING
         self.embedding_model = None
-        self._embedding_model_name = 'sentence-transformers/paraphrase-MiniLM-L3-v2'
-        logger.info(f"🔍 Embeddings configurados para lazy loading: {self._embedding_model_name}")
+        logger.info(f"🔍 Embeddings configurados para lazy loading")
         
         # Coleções por avatar
         self.collections = {}
-        self._init_collections()
+        self._init_collections_readonly()
         
-        # FASE 2: Carregar documentos de conhecimento com ingestão
-        self._load_knowledge_base()
-        
-        logger.info(f"✅ RAG Engine inicializado com {len(self.AVATARS)} avatares")
-        logger.info(f"✅ Embeddings: lazy loading (carregam sob demanda)")
+        logger.info(f"✅ RAG Engine inicializado em modo {self.knowledge_mode}")
+        logger.info(f"✅ Coleções disponíveis: {len(self.collections)}")
     
     def _get_embedding_model(self):
         """Usa singleton thread-safe para lazy loading"""
         return _get_embedding_model_singleton()
     
-    def _init_collections(self):
-        """Inicializa coleções ChromaDB para cada avatar"""
-        for avatar_id in self.AVATARS:
-            collection_name = f"{avatar_id}_knowledge"
-            try:
-                # Tentar obter coleção existente
-                collection = self.client.get_collection(name=collection_name)
-                logger.info(f"📦 Coleção existente: {collection_name}")
-            except:
-                # Criar nova coleção
-                collection = self.client.create_collection(
-                    name=collection_name,
-                    metadata={"hnsw:space": "cosine"}
-                )
-                logger.info(f"✨ Coleção criada: {collection_name}")
-            
-            self.collections[avatar_id] = collection
-    
-    def _chunk_text(self, text: str, chunk_size: int = 400, overlap: int = 60) -> List[str]:
+    def _init_collections_readonly(self):
         """
-        Divide texto em chunks com overlap (300-500 chars, 15% overlap)
+        Inicializa coleções em modo READ-ONLY
+        NÃO cria coleções, apenas lista as pré-existentes
         """
-        if len(text) <= chunk_size:
-            return [text]
-        
-        chunks = []
-        start = 0
-        while start < len(text):
-            end = min(start + chunk_size, len(text))
-            chunk = text[start:end]
-            if chunk.strip():
-                chunks.append(chunk)
-            start = end - overlap
-        
-        return chunks
-    
-    def _parse_nucleo_conhecimento(self, nucleo: dict, avatar_id: str, file_name: str) -> List[Dict]:
-        """
-        Parse flexível para nucleo_conhecimento (aceita strings ou dicts)
-        """
-        documents = []
-        
-        # Problemas comuns
-        for idx, item in enumerate(nucleo.get('problemas_comuns', [])):
-            try:
-                if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_problema_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = f"{item.get('problema', '')} - {item.get('solucao_sugerida', '')}"
-                elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_problema_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = item
-                else:
-                    continue
-                
-                if text.strip():
-                    documents.append({
-                        'id': doc_id,
-                        'text': text,
-                        'metadata': {'type': 'problema', 'file': file_name}
-                    })
-            except Exception as e:
-                logger.warning(f"⚠️ WARN: Erro ao processar problema_comum em {file_name}: {e}")
-        
-        # Objeções
-        for idx, item in enumerate(nucleo.get('objeções_clientes', [])):
-            try:
-                if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_objecao_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = f"{item.get('objecao', '')} - {item.get('resposta', '')}"
-                elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_objecao_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = item
-                else:
-                    continue
-                
-                if text.strip():
-                    documents.append({
-                        'id': doc_id,
-                        'text': text,
-                        'metadata': {'type': 'objecao', 'file': file_name}
-                    })
-            except Exception as e:
-                logger.warning(f"⚠️ WARN: Erro ao processar objeção em {file_name}: {e}")
-        
-        # Argumentos de venda
-        for idx, item in enumerate(nucleo.get('argumentos_venda', [])):
-            try:
-                if isinstance(item, dict):
-                    doc_id = f"{avatar_id}_argumento_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = f"{item.get('argumento', '')} - {item.get('descricao', '')}"
-                elif isinstance(item, str):
-                    doc_id = f"{avatar_id}_argumento_{idx}_{uuid.uuid4().hex[:8]}"
-                    text = item
-                else:
-                    continue
-                
-                if text.strip():
-                    documents.append({
-                        'id': doc_id,
-                        'text': text,
-                        'metadata': {'type': 'argumento', 'file': file_name}
-                    })
-            except Exception as e:
-                logger.warning(f"⚠️ WARN: Erro ao processar argumento em {file_name}: {e}")
-        
-        return documents
-    
-    def _load_knowledge_base(self):
-        """FASE 2: Carrega base de conhecimento com parser unificado e ingestão"""
-        # Tentar múltiplos caminhos possíveis
-        possible_paths = [
-            Path("./knowledge"),
-            Path("/app/knowledge"),
-            Path(os.path.dirname(os.path.abspath(__file__))).parent.parent / "knowledge",
-        ]
-        
-        knowledge_dir = None
-        for path in possible_paths:
-            logger.info(f"🔍 Verificando path: {path.absolute()}")
-            if path.exists():
-                knowledge_dir = path
-                logger.info(f"✅ Encontrado em: {knowledge_dir.absolute()}")
-                break
-        
-        if not knowledge_dir:
-            logger.error(f"❌ Diretório de conhecimento NÃO encontrado!")
-            logger.error(f"Paths testados: {[str(p.absolute()) for p in possible_paths]}")
+        if self.client is None:
+            logger.warning("⚠️ ChromaDB não inicializado, skipping collection init")
             return
         
-        logger.info(f"📚 FASE 2: Carregando base de conhecimento de {knowledge_dir.absolute()}")
-        
-        total_docs_indexed = 0
-        
-        # Varredura recursiva em /app/knowledge/
-        for avatar_dir in knowledge_dir.iterdir():
-            if not avatar_dir.is_dir() or avatar_dir.name.startswith('_'):
-                continue
+        try:
+            # Listar coleções existentes
+            existing_collections = {col.name: col for col in self.client.list_collections()}
+            logger.info(f"📊 Coleções encontradas: {len(existing_collections)}")
             
-            folder_name = avatar_dir.name
-            
-            # Normalizar nomes de pasta (bruno_giovana → bruno + giovana)
-            avatar_ids = self.AVATAR_FOLDER_MAP.get(folder_name, [folder_name])
-            
-            for avatar_id in avatar_ids:
-                if avatar_id not in self.AVATARS:
-                    logger.warning(f"⚠️ WARN: Avatar {avatar_id} não reconhecido")
-                    continue
-                
-                documents = []
-                doc_count = 0
-                
-                # Carregar todos os arquivos JSON do avatar
-                for json_file in avatar_dir.glob("*.json"):
-                    # Ignorar arquivos legados
-                    if json_file.name in ['embeddings.json', 'estrutura_chunks.json', 'dataset_variacoes.json']:
-                        logger.info(f"⏭️ Ignorando arquivo legado: {json_file.name}")
-                        continue
-                    
-                    try:
-                        with open(json_file, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
-                        
-                        # Extrair documentos da estrutura real
-                        if isinstance(data, dict):
-                            # Estrutura tipo Sofia (items com pergunta/resposta_base)
-                            if 'items' in data and isinstance(data['items'], list):
-                                logger.info(f"⚠️ WARN: Formato não padronizado em {json_file.name}, adaptando (Sofia format)")
-                                for idx, item in enumerate(data['items']):
-                                    if isinstance(item, dict):
-                                        doc_id = f"{avatar_id}_item_{idx}_{uuid.uuid4().hex[:8]}"
-                                        pergunta = item.get('pergunta', '')
-                                        resposta = item.get('resposta_base', '')
-                                        text = f"{pergunta} - {resposta}"
-                                        if text.strip():
-                                            documents.append({
-                                                'id': doc_id,
-                                                'text': text,
-                                                'metadata': {'type': 'qa', 'file': json_file.name}
-                                            })
-                                            doc_count += 1
-                            
-                            # Extrair FAQ
-                            if 'faq_estruturado' in data:
-                                logger.info(f"📋 Formato detectado: FAQ estruturado")
-                                for idx, faq in enumerate(data['faq_estruturado']):
-                                    doc_id = f"{avatar_id}_faq_{idx}_{uuid.uuid4().hex[:8]}"
-                                    text = f"{faq.get('pergunta', '')} - {faq.get('resposta', '')}"
-                                    if text.strip():
-                                        documents.append({
-                                            'id': doc_id,
-                                            'text': text,
-                                            'metadata': {'type': 'faq', 'file': json_file.name}
-                                        })
-                                        doc_count += 1
-                            
-                            # Extrair Núcleo de Conhecimento
-                            if 'nucleo_conhecimento' in data:
-                                logger.info(f"📋 Formato detectado: Núcleo de Conhecimento")
-                                nucleo_docs = self._parse_nucleo_conhecimento(
-                                    data['nucleo_conhecimento'], 
-                                    avatar_id, 
-                                    json_file.name
-                                )
-                                documents.extend(nucleo_docs)
-                                doc_count += len(nucleo_docs)
-                            
-                            # Extrair Áreas Técnicas
-                            if 'areas_tecnicas' in data:
-                                logger.info(f"📋 Formato detectado: Áreas Técnicas")
-                                for idx, area in enumerate(data['areas_tecnicas']):
-                                    doc_id = f"{avatar_id}_area_{idx}_{uuid.uuid4().hex[:8]}"
-                                    text = area.get('descricao', '')
-                                    if text.strip():
-                                        documents.append({
-                                            'id': doc_id,
-                                            'text': text,
-                                            'metadata': {'type': 'area_tecnica', 'file': json_file.name}
-                                        })
-                                        doc_count += 1
-                    
-                    except json.JSONDecodeError as e:
-                        logger.warning(f"⚠️ WARN: Erro ao decodificar JSON em {json_file.name}: {e}")
-                    except Exception as e:
-                        logger.warning(f"⚠️ WARN: Erro ao processar {json_file.name}: {e}")
-                
-                # Limpar coleção existente e recriar (garantir dados frescos)
+            # Mapear avatares para coleções
+            for avatar_id in self.AVATARS:
                 collection_name = f"{avatar_id}_knowledge"
-                try:
-                    self.client.delete_collection(name=collection_name)
-                    logger.info(f"🔄 Limpando coleção: {collection_name}")
-                except:
-                    pass
                 
-                # Recriar coleção
-                collection = self.client.create_collection(
-                    name=collection_name,
-                    metadata={"hnsw:space": "cosine"}
-                )
-                self.collections[avatar_id] = collection
-                
-                # FASE 2: Ingerir documentos com chunking e embeddings
-                if documents:
-                    logger.info(f"📥 Ingestando {len(documents)} documentos para {avatar_id}...")
-                    
-                    # Aplicar chunking
-                    all_chunks = []
-                    for doc in documents:
-                        chunks = self._chunk_text(doc['text'], chunk_size=400, overlap=60)
-                        for chunk_idx, chunk in enumerate(chunks):
-                            all_chunks.append({
-                                'id': f"{doc['id']}_chunk_{chunk_idx}",
-                                'text': chunk,
-                                'metadata': doc['metadata']
-                            })
-                    
-                    # Gerar embeddings e inserir no ChromaDB
-                    try:
-                        model = self._get_embedding_model()
-                        
-                        # Preparar dados para inserção
-                        ids = [chunk['id'] for chunk in all_chunks]
-                        texts = [chunk['text'] for chunk in all_chunks]
-                        metadatas = [chunk['metadata'] for chunk in all_chunks]
-                        
-                        # Gerar embeddings
-                        embeddings = model.encode(texts, convert_to_numpy=True)
-                        
-                        # Inserir no ChromaDB
-                        collection.add(
-                            ids=ids,
-                            embeddings=embeddings.tolist(),
-                            documents=texts,
-                            metadatas=metadatas
-                        )
-                        
-                        logger.info(f"✅ {avatar_id}: {len(all_chunks)} chunks indexados na coleção {collection_name}")
-                        total_docs_indexed += len(all_chunks)
-                    
-                    except Exception as e:
-                        logger.warning(f"⚠️ WARN: Erro ao indexar {avatar_id}: {e}")
+                if collection_name in existing_collections:
+                    self.collections[avatar_id] = existing_collections[collection_name]
+                    count = existing_collections[collection_name].count()
+                    logger.info(f"✅ {avatar_id}: {count} docs disponíveis")
                 else:
-                    logger.warning(f"⚠️ WARN: Nenhum documento encontrado para {avatar_id}")
+                    logger.warning(f"⚠️ {avatar_id}: Coleção não encontrada (será retornado fallback)")
         
-        # Protocolo Rafael
-        logger.info(f"📋 Protocolo Rafael: estado PENDING_DATA (aguardando 320 Q&As Genspark)")
-        
-        logger.info(f"✅ FASE 2 concluída: {total_docs_indexed} chunks indexados no total")
+        except Exception as e:
+            logger.error(f"❌ Erro ao listar coleções: {e}", exc_info=True)
     
     def query(self, query_text: str, avatar_id: str, n_results: int = 3) -> Dict:
         """
         Busca documentos relevantes no ChromaDB
+        Retorna fallback seguro se coleção não for encontrada
         """
+        # Verificar se coleção existe
         if avatar_id not in self.collections:
-            return {"error": f"Avatar {avatar_id} não encontrado"}
+            logger.warning(f"⚠️ Coleção não encontrada para {avatar_id} - retornando fallback")
+            return {
+                "error": "collection_not_found",
+                "fallback": True,
+                "documents": [],
+                "metadatas": [],
+                "distances": []
+            }
         
         try:
+            # Lazy loading do modelo
             model = self._get_embedding_model()
             query_embedding = model.encode([query_text], convert_to_numpy=True)[0]
             
+            # Query no ChromaDB
             collection = self.collections[avatar_id]
             results = collection.query(
                 query_embeddings=[query_embedding.tolist()],
@@ -398,44 +175,105 @@ class AvatarRAGEngine:
             
             return {
                 "documents": results.get('documents', []),
+                "metadatas": results.get('metadatas', []),
                 "distances": results.get('distances', []),
-                "metadatas": results.get('metadatas', [])
+                "fallback": False
             }
         
         except Exception as e:
-            logger.error(f"❌ Erro ao buscar em {avatar_id}: {e}")
-            return {"error": str(e)}
+            logger.error(f"❌ Erro ao fazer query: {e}", exc_info=True)
+            return {
+                "error": str(e),
+                "fallback": True,
+                "documents": [],
+                "metadatas": [],
+                "distances": []
+            }
     
-    def generate_response(self, text: str, avatar_id: str, language: str = "pt-BR") -> Dict:
+    def generate_response(self, query_text: str, avatar_id: str, language: str = "pt-BR") -> str:
         """
-        Gera resposta usando RAG
+        Gera resposta baseada em RAG
+        Retorna fallback seguro se não encontrar documentos
         """
-        logger.info(f"🔍 Query do usuário: {text}")
-        logger.info(f"🔍 Avatar ID: {avatar_id}")
+        try:
+            # Query no ChromaDB
+            results = self.query(query_text, avatar_id, n_results=3)
+            
+            # Se coleção não foi encontrada
+            if results.get("fallback"):
+                logger.warning(f"⚠️ Fallback para {avatar_id}: coleção não encontrada")
+                return f"Conhecimento não disponível para este avatar ({avatar_id})."
+            
+            # Se documentos foram encontrados
+            documents = results.get("documents", [])
+            if documents and len(documents) > 0 and len(documents[0]) > 0:
+                # Retornar primeiro documento mais relevante
+                top_doc = documents[0][0]
+                logger.info(f"✅ Usando RAG: {len(top_doc)} chars retornados")
+                return top_doc
+            else:
+                logger.warning(f"⚠️ Nenhum documento relevante encontrado para {avatar_id}")
+                return f"Não encontrei informações relevantes sobre '{query_text}' para este avatar."
         
-        # Buscar documentos relevantes
-        search_results = self.query(text, avatar_id, n_results=3)
+        except Exception as e:
+            logger.error(f"❌ Erro ao gerar resposta: {e}", exc_info=True)
+            return f"Erro ao processar sua pergunta. Tente novamente."
+    
+    # ========================================================================
+    # FUNÇÕES DE INGESTÃO - BUILD-TIME ONLY
+    # ========================================================================
+    
+    @runtime_only
+    def ingest_documents(self, avatar_id: str, documents: List[Dict]) -> int:
+        """
+        Ingere documentos no ChromaDB
+        PROIBIDO em runtime (KNOWLEDGE_MODE=runtime)
+        """
+        raise RuntimeError("Ingestão proibida em runtime")
+    
+    @runtime_only
+    def create_collection(self, avatar_id: str):
+        """
+        Cria coleção no ChromaDB
+        PROIBIDO em runtime (KNOWLEDGE_MODE=runtime)
+        """
+        raise RuntimeError("Criação de coleção proibida em runtime")
+
+
+# ============================================================================
+# HEALTH CHECK COM VALIDAÇÃO DE COLEÇÕES
+# ============================================================================
+
+def validate_collections() -> Dict:
+    """
+    Valida que coleções esperadas existem
+    Usado em health check
+    """
+    try:
+        import chromadb
+        client = chromadb.PersistentClient(path="/app/chroma_db")
+        collections = {col.name: col for col in client.list_collections()}
         
-        if "error" in search_results:
-            logger.warning(f"⚠️ Erro na busca: {search_results['error']}")
-            return {"response": f"Desculpe, não consegui encontrar informações sobre isso."}
+        expected = [f"{avatar}_knowledge" for avatar in AvatarRAGEngine.AVATARS]
+        missing = [c for c in expected if c not in collections]
         
-        documents = search_results.get("documents", [])
-        distances = search_results.get("distances", [])
-        
-        if not documents or not documents[0]:
-            logger.warning(f"⚠️ Nenhum documento encontrado para {avatar_id}")
-            return {"response": f"Desculpe, não tenho informações sobre isso."}
-        
-        # Usar o documento mais relevante
-        best_doc = documents[0][0] if documents[0] else ""
-        best_score = 1 - distances[0][0] if distances and distances[0] else 0
-        
-        logger.info(f"✅ USANDO RAG COM RESULTADOS: {len(documents[0])} documentos encontrados")
-        logger.info(f"✅ Score de similaridade: {best_score:.2f}")
-        
-        if best_score < 0.20:
-            logger.warning(f"⚠️ Score baixo ({best_score:.2f}), usando fallback")
-            return {"response": f"Desculpe, não tenho uma resposta precisa sobre isso."}
-        
-        return {"response": best_doc}
+        if missing:
+            logger.warning(f"⚠️ Coleções faltantes: {missing}")
+            return {
+                "status": "missing_collections",
+                "missing": missing,
+                "total_expected": len(expected),
+                "total_found": len(collections)
+            }
+        else:
+            return {
+                "status": "ok",
+                "total_collections": len(collections)
+            }
+    
+    except Exception as e:
+        logger.error(f"❌ Erro ao validar coleções: {e}")
+        return {
+            "status": "error",
+            "error": str(e)
+        }

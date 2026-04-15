@@ -19,13 +19,29 @@ COPY src/ ./src/
 COPY scripts/ ./scripts/
 COPY knowledge/ ./knowledge/
 
-# FASE 2: Executar ingestão offline durante build
+# ============================================================================
+# FASE BUILD-TIME: INGESTÃO OFFLINE COM VALIDAÇÃO EM CADEIA
+# ============================================================================
+
+# Executar worker de ingestão (build-time only)
 RUN echo "🔧 Iniciando ingestão offline..." && \
-    python scripts/worker_ingest.py && \
-    echo "✅ Ingestão concluída com sucesso"
+    python scripts/worker_ingest_buildtime.py && \
+    echo "✅ Ingestão offline concluída"
+
+# Executar validação pós-build
+RUN echo "🔍 Validando ChromaDB..." && \
+    python scripts/validate_ingest.py && \
+    echo "✅ Build com RAG pré-indexado concluído"
+
+# ============================================================================
+# RUNTIME: SEM INGESTÃO, APENAS LEITURA
+# ============================================================================
 
 # Expor porta
 EXPOSE 5000
+
+# Variável de ambiente para indicar modo runtime
+ENV KNOWLEDGE_MODE=runtime
 
 # Comando para rodar (SEM ingestão em runtime)
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT
