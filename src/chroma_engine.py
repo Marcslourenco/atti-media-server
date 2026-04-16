@@ -9,6 +9,7 @@ import json
 import os
 import logging
 import threading
+import psutil
 from pathlib import Path
 from typing import List, Dict, Optional
 
@@ -112,6 +113,10 @@ class AvatarRAGEngine:
         
         logger.info(f"✅ RAG Engine inicializado em modo {self.knowledge_mode}")
         logger.info(f"✅ Coleções disponíveis: {len(self.collections)}")
+        
+        # Log de RAM no startup
+        ram_gb = psutil.Process().memory_info().rss / (1024**3)
+        logger.info(f"💾 RAM no startup: {ram_gb:.2f} GB")
     
     def _get_embedding_model(self):
         """Usa singleton thread-safe para lazy loading"""

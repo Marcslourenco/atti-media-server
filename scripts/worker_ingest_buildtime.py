@@ -12,6 +12,7 @@ import logging
 import hashlib
 import gc
 import sys
+import psutil
 from pathlib import Path
 from typing import Dict, List, Any, Tuple
 import chromadb
@@ -210,6 +211,10 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
     # Limpeza final
     gc.collect()
     
+    # Log de RAM
+    ram_gb = psutil.Process().memory_info().rss / (1024**3)
+    logger.info(f"💾 RAM pós-ingestão {avatar_id}: {ram_gb:.2f} GB")
+    
     return total_indexed, warnings
 
 
@@ -273,6 +278,12 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(f"❌ Erro ao indexar {avatar}: {e}")
             all_warnings.append(f"{avatar}: {e}")
+    
+    # RAM final
+    final_ram = psutil.Process().memory_info().rss / (1024**3)
+    logger.info(f"🏁 RAM final: {final_ram:.2f} GB")
+    if final_ram > 1.8:
+        logger.warning("⚠️ Pico de RAM > 1.8GB – considere reduzir batch_size para 8")
     
     # Validar
     logger.info(f"\n📊 RESUMO: {total_docs} documentos indexados")

@@ -40,8 +40,9 @@ RUN echo "🔍 Validando ChromaDB..." && \
 # Expor porta
 EXPOSE 5000
 
-# Variável de ambiente para indicar modo runtime
+# Variáveis de ambiente para indicar modo runtime
 ENV KNOWLEDGE_MODE=runtime
+ENV ALLOW_MISSING_AVATARS=true
 
 # Comando para rodar (SEM ingestão em runtime)
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT

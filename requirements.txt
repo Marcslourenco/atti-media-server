@@ -7,7 +7,7 @@ fastapi==0.115.11
 uvicorn==0.34.0
 edge-tts==7.2.3
 pydantic==2.10.6
-chromadb>=0.5.23
+chromadb>=0.4.22
 sentence-transformers>=3.3.0
 numpy>=1.26.0
 python-dotenv>=1.0.0
@@ -16,3 +16,4 @@ librosa>=0.10.0
 scipy>=1.10.0
 requests>=2.32.0
 deep-translator>=1.11.4
+psutil>=5.9.0
