@@ -138,6 +138,70 @@ def extract_documents(data: Dict[str, Any], avatar_id: str) -> List[Dict[str, st
                         'content': content
                     })
     
+    # ESTRUTURA 5: Personas de Futebol (SPFC/Corinthians)
+    if 'clube' in data and 'arquetipo' in data:
+        # Extrair campos principais da persona
+        persona_fields = []
+        
+        # Descrição do arquétipo
+        if 'descricao_arquetipo' in data:
+            persona_fields.append(f"Arquétipo: {data['descricao_arquetipo']}")
+        
+        # Perfil demográfico
+        if 'perfil_demografico' in data and isinstance(data['perfil_demografico'], dict):
+            perfil = data['perfil_demografico']
+            if 'zona_urbana_primaria' in perfil:
+                persona_fields.append(f"Zona: {perfil['zona_urbana_primaria']}")
+            if 'referencias_culturais' in perfil:
+                refs = ', '.join(perfil['referencias_culturais']) if isinstance(perfil['referencias_culturais'], list) else str(perfil['referencias_culturais'])
+                persona_fields.append(f"Referências: {refs}")
+        
+        # Tom de voz
+        if 'tom_de_voz' in data and isinstance(data['tom_de_voz'], dict):
+            tom = data['tom_de_voz']
+            if 'adjetivos' in tom:
+                adjs = ', '.join(tom['adjetivos']) if isinstance(tom['adjetivos'], list) else str(tom['adjetivos'])
+                persona_fields.append(f"Tom: {adjs}")
+        
+        # Linguagem
+        if 'linguagem' in data and isinstance(data['linguagem'], dict):
+            ling = data['linguagem']
+            if 'girias_especificas' in ling:
+                girias = ', '.join(ling['girias_especificas']) if isinstance(ling['girias_especificas'], list) else str(ling['girias_especificas'])
+                persona_fields.append(f"Gírias: {girias}")
+            if 'expressoes_de_torcida' in ling:
+                exprs = ' | '.join(ling['expressoes_de_torcida']) if isinstance(ling['expressoes_de_torcida'], list) else str(ling['expressoes_de_torcida'])
+                persona_fields.append(f"Expressões: {exprs}")
+        
+        # Criar documento com toda a persona
+        if persona_fields:
+            documents.append({
+                'id': f"{avatar_id}_persona",
+                'content': f"Persona {data.get('clube', 'Unknown')}: " + " | ".join(persona_fields)
+            })
+    
+    # ESTRUTURA 6: Futebol - Outros arquivos (chants, history, etc.)
+    if 'chants' in data and isinstance(data['chants'], list):
+        for i, chant in enumerate(data['chants']):
+            if isinstance(chant, str):
+                documents.append({'id': f"chant_{i}", 'content': chant})
+            elif isinstance(chant, dict) and 'text' in chant:
+                documents.append({'id': f"chant_{i}", 'content': chant['text']})
+    
+    if 'matches' in data and isinstance(data['matches'], list):
+        for i, match in enumerate(data['matches']):
+            if isinstance(match, dict):
+                match_info = match.get('description') or match.get('title') or str(match)
+                if match_info:
+                    documents.append({'id': f"match_{i}", 'content': match_info})
+    
+    if 'players' in data and isinstance(data['players'], list):
+        for i, player in enumerate(data['players']):
+            if isinstance(player, dict):
+                player_info = player.get('name') or player.get('description') or str(player)
+                if player_info:
+                    documents.append({'id': f"player_{i}", 'content': player_info})
+    
     # Fallback: descrição simples
     if not documents and 'descricao' in data and data['descricao']:
         documents.append({
