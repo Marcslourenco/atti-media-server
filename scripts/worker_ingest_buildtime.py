@@ -28,8 +28,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-KNOWLEDGE_DIR = Path("/app/knowledge")
-CHROMA_DB_PATH = Path("/app/chroma_db")
+# Use /tmp para testes locais, /app em Docker
+KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", "/tmp/knowledge"))
+CHROMA_DB_PATH = Path(os.getenv("CHROMA_DB_PATH", "/tmp/chroma_db"))
 BATCH_SIZE = 16  # Controle de RAM
 
 # Avatares esperados (hardcoded)
@@ -61,16 +62,24 @@ def init_chromadb():
 # ============================================================================
 
 def load_embedding_model():
-    """Carrega modelo de embeddings UMA VEZ no build"""
-    logger.info("🔧 Carregando modelo de embeddings...")
+    """Carrega modelo ONNX nativo do ChromaDB (mais leve que SentenceTransformer)"""
+    logger.info("🔧 Carregando modelo ONNX nativo...")
     try:
-        from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
-        logger.info("✅ Modelo carregado: paraphrase-MiniLM-L3-v2")
-        return model
+        from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
+        embedding_fn = ONNXMiniLM_L6_V2()
+        logger.info("✅ Modelo ONNX carregado: MiniLM-L6-V2")
+        return embedding_fn
     except Exception as e:
-        logger.error(f"❌ Erro ao carregar modelo: {e}")
-        sys.exit(1)
+        logger.error(f"❌ Erro ao carregar modelo ONNX: {e}")
+        logger.warning("⚠️ Fallback para SentenceTransformer...")
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
+            logger.info("✅ Fallback: SentenceTransformer carregado")
+            return model
+        except Exception as e2:
+            logger.error(f"❌ Erro ao carregar fallback: {e2}")
+            sys.exit(1)
 
 
 # ============================================================================
@@ -186,8 +195,17 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
                     # Gerar ID único
                     unique_id = f"{avatar_id}_{hashlib.md5(doc['content'][:100].encode()).hexdigest()[:8]}"
                     
-                    # Gerar embedding
-                    embedding = model.encode(doc['content']).tolist()
+                    # Gerar embedding (ONNX usa __call__, não encode)
+                    try:
+                        if hasattr(model, 'encode'):
+                            # SentenceTransformer
+                            embedding = model.encode(doc['content']).tolist()
+                        else:
+                            # ONNX - usa __call__ ou _model.encode
+                            embedding = model([doc['content']])[0].tolist()
+                    except Exception as e:
+                        logger.warning(f"Erro ao gerar embedding: {e}")
+                        continue
                     
                     # Adicionar ao ChromaDB
                     collection.add(
