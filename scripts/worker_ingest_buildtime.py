@@ -28,8 +28,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Use /tmp para testes locais, /app em Docker
-KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", "/tmp/knowledge"))
+# Em build-time: /app/knowledge (copiado pelo Dockerfile)
+# Em testes locais: ./knowledge (relativo ao script)
+KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", "./knowledge"))
+# ChromaDB sempre em /tmp para evitar problemas de permissão
 CHROMA_DB_PATH = Path(os.getenv("CHROMA_DB_PATH", "/tmp/chroma_db"))
 BATCH_SIZE = 16  # Controle de RAM
 
