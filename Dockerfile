@@ -23,12 +23,39 @@ COPY knowledge/ ./knowledge/
 # FASE BUILD-TIME: INGESTÃO OFFLINE COM VALIDAÇÃO EM CADEIA
 # ============================================================================
 
+# DIAGNÓSTICO PRÉ-BUILD
+RUN echo "=== DIAGNÓSTICO PRÉ-BUILD ===" && \
+    echo "Working dir: $(pwd)" && \
+    echo "Listando knowledge:" && ls -la ./knowledge/ && \
+    echo "Contando arquivos por avatar:" && \
+    for avatar in sofia clara lucas amanda fernanda marina roberto luisa lais paula rafael bruno_giovana marcos_carol; do \
+        if [ -d "./knowledge/$avatar" ]; then \
+            count=$(find ./knowledge/$avatar -type f | wc -l); \
+            echo "✅ $avatar: $count arquivos"; \
+        else \
+            echo "❌ $avatar: NÃO ENCONTRADO"; \
+        fi \
+    done
+
 # Executar worker de ingestão (build-time only)
 RUN echo "🔧 Iniciando ingestão offline..." && \
-    echo "📍 Working directory: $(pwd)" && \
-    echo "📍 Knowledge directory exists:" && ls -la ./knowledge/ | head -5 && \
     python scripts/worker_ingest_buildtime.py || (echo "❌ ERRO NA INGESTÃO"; exit 1) && \
     echo "✅ Ingestão offline concluída"
+
+# DIAGNÓSTICO PÓS-BUILD
+RUN echo "=== DIAGNÓSTICO PÓS-BUILD ===" && \
+    python -c "\
+import chromadb; \
+client = chromadb.PersistentClient(path='/tmp/chroma_db'); \
+colls = client.list_collections(); \
+print(f'Coleções indexadas: {len(colls)}'); \
+total = 0; \
+for c in colls: \
+    count = c.count(); \
+    total += count; \
+    print(f'  {c.name}: {count} docs'); \
+print(f'TOTAL: {total} docs'); \
+"
 
 # Executar validação pós-build
 RUN echo "🔍 Validando ChromaDB..." && \
