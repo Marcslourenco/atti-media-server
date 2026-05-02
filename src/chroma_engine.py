@@ -30,19 +30,26 @@ _embedding_model = None
 _embedding_model_lock = threading.Lock()
 
 def _get_embedding_model_singleton():
-    """Carrega SentenceTransformer sob demanda (thread-safe singleton)"""
+    """Carrega ONNX nativo sob demanda (thread-safe singleton)"""
     global _embedding_model
     if _embedding_model is None:
         with _embedding_model_lock:
             if _embedding_model is None:
-                logger.info("📥 Carregando modelo de embeddings (singleton)...")
+                logger.info("📥 Carregando modelo ONNX nativo (singleton)...")
                 try:
-                    from sentence_transformers import SentenceTransformer
-                    _embedding_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
-                    logger.info("✅ Modelo de embeddings carregado com sucesso")
+                    from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
+                    _embedding_model = ONNXMiniLM_L6_V2()
+                    logger.info("✅ Modelo ONNX nativo carregado com sucesso")
                 except Exception as e:
-                    logger.error(f"❌ Erro ao carregar modelo: {e}", exc_info=True)
-                    raise
+                    logger.error(f"❌ Erro ao carregar modelo ONNX: {e}", exc_info=True)
+                    logger.warning("⚠️ Fallback para SentenceTransformer...")
+                    try:
+                        from sentence_transformers import SentenceTransformer
+                        _embedding_model = SentenceTransformer("sentence-transformers/paraphrase-MiniLM-L3-v2")
+                        logger.info("✅ Fallback: SentenceTransformer carregado")
+                    except Exception as e2:
+                        logger.error(f"❌ Erro ao carregar fallback: {e2}", exc_info=True)
+                        raise
     return _embedding_model
 
 
@@ -74,12 +81,17 @@ class AvatarRAGEngine:
         'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol'
     ]
     
-    def __init__(self, persist_dir: str = "/app/chroma_db"):
+    def __init__(self, persist_dir: str = None):
         """
         Inicializa ChromaDB em modo READ-ONLY
         Não faz ingestão em runtime.
         """
+        # Usar /tmp/chroma_db em runtime, /app/chroma_db em build
+        if persist_dir is None:
+            persist_dir = "/tmp/chroma_db" if KNOWLEDGE_MODE == "runtime" else "/app/chroma_db"
+        
         logger.info(f"🔍 ARQUIVO CHROMA EM USO: {__file__}")
+        logger.info(f"🔍 PERSIST_DIR: {persist_dir} (KNOWLEDGE_MODE={KNOWLEDGE_MODE})")
         self.persist_dir = persist_dir
         self.knowledge_mode = KNOWLEDGE_MODE
         
@@ -167,16 +179,21 @@ class AvatarRAGEngine:
             }
         
         try:
-            # Lazy loading do modelo
-            model = self._get_embedding_model()
-            query_embedding = model.encode([query_text], convert_to_numpy=True)[0]
+            # Lazy loading do modelo ONNX
+            embedding_fn = self._get_embedding_model()
             
-            # Query no ChromaDB
+            # ONNX usa __call__() diretamente, retorna lista de embeddings
+            query_embeddings = embedding_fn([query_text])
+            logger.info(f"🔍 Query embedding gerado com ONNX: {len(query_embeddings)} embeddings")
+            
+            # Query no ChromaDB com embedding ONNX
             collection = self.collections[avatar_id]
             results = collection.query(
-                query_embeddings=[query_embedding.tolist()],
+                query_embeddings=query_embeddings,
                 n_results=n_results
             )
+            
+            logger.info(f"✅ Query executada para {avatar_id}: {len(results.get('documents', [[]])[0])} documentos encontrados")
             
             return {
                 "documents": results.get('documents', []),
