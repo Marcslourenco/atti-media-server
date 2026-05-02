@@ -1,0 +1,25 @@
+{
+  "chunking_rules": {
+    "faq_estruturado": {
+      "preserve_qa_pair": true,
+      "max_chunk_chars": 500,
+      "overlap_percent": 15,
+      "break_on_sentence": true,
+      "preserve_legal_context": true
+    },
+    "nucleo_conhecimento": {
+      "chunk_by_item": true,
+      "include_problem_and_solution": true
+    },
+    "areas_tecnicas": {
+      "chunk_by_area": true,
+      "include_formula_and_example": true
+    }
+  },
+  "worker_ingest_instructions": {
+    "input_path": "/app/knowledge/rafael/rafael_knowledge.json",
+    "output_collection": "rafael_knowledge",
+    "embedding_lazy_load": true,
+    "error_handling": "log_warning_and_continue"
+  }
+}

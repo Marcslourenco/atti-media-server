@@ -1,0 +1,19 @@
+{
+  "collection_name": "rafael_knowledge",
+  "embedding_model": "paraphrase-MiniLM-L3-v2",
+  "embedding_dimensions": 384,
+  "chunk_size": 400,
+  "chunk_overlap": 60,
+  "metadata_template": {
+    "avatar": "rafael",
+    "dominio": "tributario",
+    "modulo": "fundamentos_st | calculo_mva_pauta | segmentos_st | transicao_2026_2033 | compliance_multas",
+    "nivel_tecnico": "basico | intermediario | avancado",
+    "vigencia": "2026-2033"
+  },
+  "indexing_strategy": {
+    "faq_estruturado": "index pergunta + resposta",
+    "nucleo_conhecimento": "index problemas_comuns + objeções_clientes",
+    "areas_tecnicas": "index area + descricao + formula"
+  }
+}

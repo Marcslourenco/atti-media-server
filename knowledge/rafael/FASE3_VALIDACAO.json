@@ -1,0 +1,14 @@
+{
+  "total_qnas": 800,
+  "distribuicao_final": {
+    "fundamentos_st": 160,
+    "calculo_mva_pauta": 190,
+    "segmentos_st": 160,
+    "transicao_2026_2033": 160,
+    "compliance_multas": 130
+  },
+  "exemplo_numerico_pct": 100.0,
+  "ids_unicos": true,
+  "respostas_no_limite": true,
+  "status": "APROVADO"
+}
