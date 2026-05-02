@@ -25,12 +25,14 @@ COPY knowledge/ ./knowledge/
 
 # Executar worker de ingestão (build-time only)
 RUN echo "🔧 Iniciando ingestão offline..." && \
-    python scripts/worker_ingest_buildtime.py && \
+    echo "📍 Working directory: $(pwd)" && \
+    echo "📍 Knowledge directory exists:" && ls -la ./knowledge/ | head -5 && \
+    python scripts/worker_ingest_buildtime.py || (echo "❌ ERRO NA INGESTÃO"; exit 1) && \
     echo "✅ Ingestão offline concluída"
 
 # Executar validação pós-build
 RUN echo "🔍 Validando ChromaDB..." && \
-    python scripts/validate_ingest.py && \
+    python scripts/validate_ingest.py || (echo "❌ ERRO NA VALIDAÇÃO"; exit 1) && \
     echo "✅ Build com RAG pré-indexado concluído"
 
 # ============================================================================
