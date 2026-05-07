@@ -22,7 +22,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-CHROMA_DB_PATH = Path("/app/chroma_db")
+CHROMA_DB_PATH = Path("/tmp/chroma_db")
 ALLOW_MISSING_AVATARS = os.getenv("ALLOW_MISSING_AVATARS", "true").lower() == "true"
 
 # Avatares esperados (deve corresponder a worker_ingest_buildtime.py)
