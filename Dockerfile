@@ -42,21 +42,6 @@ RUN echo "🔧 Iniciando ingestão offline..." && \
     python scripts/worker_ingest_buildtime.py || (echo "❌ ERRO NA INGESTÃO"; exit 1) && \
     echo "✅ Ingestão offline concluída"
 
-# DIAGNÓSTICO PÓS-BUILD
-RUN echo "=== DIAGNÓSTICO PÓS-BUILD ===" && \
-    python -c "\
-import chromadb; \
-client = chromadb.PersistentClient(path='/tmp/chroma_db'); \
-colls = client.list_collections(); \
-print(f'Coleções indexadas: {len(colls)}'); \
-total = 0; \
-for c in colls: \
-    count = c.count(); \
-    total += count; \
-    print(f'  {c.name}: {count} docs'); \
-print(f'TOTAL: {total} docs'); \
-"
-
 # Executar validação pós-build
 RUN echo "🔍 Validando ChromaDB..." && \
     python scripts/validate_ingest.py || (echo "❌ ERRO NA VALIDAÇÃO"; exit 1) && \
