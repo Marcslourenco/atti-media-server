@@ -1,0 +1,114 @@
+{
+  "data": "2026-05-09T10:03:18.718192",
+  "conexao_ok": true,
+  "collections_encontradas": [
+    "lucas_knowledge",
+    "paula_knowledge",
+    "rafael_knowledge",
+    "luisa_knowledge",
+    "fernanda_knowledge",
+    "sofia_knowledge",
+    "amanda_knowledge",
+    "lais_knowledge",
+    "clara_knowledge",
+    "bruno_giovana_knowledge",
+    "roberto_knowledge",
+    "marcos_carol_knowledge",
+    "marina_knowledge"
+  ],
+  "avatares_esperados": [
+    "lais",
+    "paula",
+    "bruno_giovana",
+    "sofia",
+    "clara",
+    "lucas",
+    "amanda",
+    "marina",
+    "fernanda",
+    "rafael",
+    "marcos_carol",
+    "luisa"
+  ],
+  "resultados": {
+    "lais": {
+      "existe": true,
+      "documentos": 30,
+      "tem_conteudo": true
+    },
+    "paula": {
+      "existe": true,
+      "documentos": 25,
+      "tem_conteudo": true
+    },
+    "bruno_giovana": {
+      "existe": true,
+      "documentos": 1,
+      "tem_conteudo": true
+    },
+    "sofia": {
+      "existe": true,
+      "documentos": 26,
+      "tem_conteudo": true
+    },
+    "clara": {
+      "existe": true,
+      "documentos": 28,
+      "tem_conteudo": true
+    },
+    "lucas": {
+      "existe": true,
+      "documentos": 23,
+      "tem_conteudo": true
+    },
+    "amanda": {
+      "existe": true,
+      "documentos": 25,
+      "tem_conteudo": true
+    },
+    "marina": {
+      "existe": true,
+      "documentos": 53,
+      "tem_conteudo": true
+    },
+    "fernanda": {
+      "existe": true,
+      "documentos": 51,
+      "tem_conteudo": true
+    },
+    "rafael": {
+      "existe": true,
+      "documentos": 7,
+      "tem_conteudo": true
+    },
+    "marcos_carol": {
+      "existe": true,
+      "documentos": 1,
+      "tem_conteudo": true
+    },
+    "luisa": {
+      "existe": true,
+      "documentos": 24,
+      "tem_conteudo": true
+    }
+  },
+  "diagnostico": {
+    "nao_existem": [],
+    "existem_vazios": [],
+    "existem_com_dados": [
+      "lais",
+      "paula",
+      "bruno_giovana",
+      "sofia",
+      "clara",
+      "lucas",
+      "amanda",
+      "marina",
+      "fernanda",
+      "rafael",
+      "marcos_carol",
+      "luisa"
+    ],
+    "problema_raiz": "PODE_SER_QUERY"
+  }
+}
