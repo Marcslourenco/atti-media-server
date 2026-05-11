@@ -1,0 +1,54 @@
+2026-05-02 10:34:17,776 - INFO - ================================================================================
+2026-05-02 10:34:17,776 - INFO - 🔧 WORKER INGESTÃO OFFLINE - BUILD-TIME
+2026-05-02 10:34:17,776 - INFO - ================================================================================
+2026-05-02 10:34:17,776 - INFO - 🔧 Inicializando ChromaDB em /tmp/chroma_db_test...
+2026-05-02 10:34:17,863 - INFO - ✅ ChromaDB inicializado
+2026-05-02 10:34:17,864 - INFO - 🔧 Carregando modelo ONNX nativo...
+2026-05-02 10:34:17,927 - INFO - ✅ Modelo ONNX carregado: MiniLM-L6-V2
+2026-05-02 10:34:19,284 - INFO - 💾 RAM pós-ingestão sofia: 0.25 GB
+2026-05-02 10:34:19,284 - INFO - ✅ sofia: 26 docs indexados
+2026-05-02 10:34:20,595 - INFO - 💾 RAM pós-ingestão clara: 0.25 GB
+2026-05-02 10:34:20,595 - INFO - ✅ clara: 28 docs indexados
+2026-05-02 10:34:21,680 - INFO - 💾 RAM pós-ingestão lucas: 0.26 GB
+2026-05-02 10:34:21,681 - INFO - ✅ lucas: 23 docs indexados
+2026-05-02 10:34:22,743 - INFO - 💾 RAM pós-ingestão amanda: 0.26 GB
+2026-05-02 10:34:22,744 - INFO - ✅ amanda: 25 docs indexados
+2026-05-02 10:34:24,821 - INFO - 💾 RAM pós-ingestão fernanda: 0.26 GB
+2026-05-02 10:34:24,822 - INFO - ✅ fernanda: 51 docs indexados
+2026-05-02 10:34:27,174 - INFO - 💾 RAM pós-ingestão marina: 0.26 GB
+2026-05-02 10:34:27,175 - INFO - ✅ marina: 53 docs indexados
+2026-05-02 10:34:29,362 - INFO - 💾 RAM pós-ingestão roberto: 0.27 GB
+2026-05-02 10:34:29,362 - INFO - ✅ roberto: 47 docs indexados
+2026-05-02 10:34:30,374 - INFO - 💾 RAM pós-ingestão luisa: 0.27 GB
+2026-05-02 10:34:30,374 - INFO - ✅ luisa: 24 docs indexados
+2026-05-02 10:34:31,564 - INFO - 💾 RAM pós-ingestão lais: 0.27 GB
+2026-05-02 10:34:31,565 - INFO - ✅ lais: 30 docs indexados
+2026-05-02 10:34:32,586 - INFO - 💾 RAM pós-ingestão paula: 0.28 GB
+2026-05-02 10:34:32,586 - INFO - ✅ paula: 25 docs indexados
+2026-05-02 10:34:32,950 - INFO - 💾 RAM pós-ingestão rafael: 0.28 GB
+2026-05-02 10:34:32,950 - INFO - ✅ rafael: 7 docs indexados
+2026-05-02 10:34:33,084 - INFO - 💾 RAM pós-ingestão bruno_giovana: 0.28 GB
+2026-05-02 10:34:33,084 - INFO - ✅ bruno_giovana: 1 docs indexados
+2026-05-02 10:34:33,211 - INFO - 💾 RAM pós-ingestão marcos_carol: 0.28 GB
+2026-05-02 10:34:33,211 - INFO - ✅ marcos_carol: 1 docs indexados
+2026-05-02 10:34:33,211 - INFO - 🏁 RAM final: 0.28 GB
+2026-05-02 10:34:33,211 - INFO - 
+📊 RESUMO: 341 documentos indexados
+2026-05-02 10:34:33,211 - INFO - 
+🔍 VALIDANDO INGESTÃO...
+2026-05-02 10:34:33,217 - INFO - ✅ sofia: 26 docs | coleção: sofia_knowledge
+2026-05-02 10:34:33,220 - INFO - ✅ clara: 28 docs | coleção: clara_knowledge
+2026-05-02 10:34:33,222 - INFO - ✅ lucas: 23 docs | coleção: lucas_knowledge
+2026-05-02 10:34:33,225 - INFO - ✅ amanda: 25 docs | coleção: amanda_knowledge
+2026-05-02 10:34:33,227 - INFO - ✅ fernanda: 51 docs | coleção: fernanda_knowledge
+2026-05-02 10:34:33,230 - INFO - ✅ marina: 53 docs | coleção: marina_knowledge
+2026-05-02 10:34:33,233 - INFO - ✅ roberto: 47 docs | coleção: roberto_knowledge
+2026-05-02 10:34:33,235 - INFO - ✅ luisa: 24 docs | coleção: luisa_knowledge
+2026-05-02 10:34:33,237 - INFO - ✅ lais: 30 docs | coleção: lais_knowledge
+2026-05-02 10:34:33,239 - INFO - ✅ paula: 25 docs | coleção: paula_knowledge
+2026-05-02 10:34:33,241 - INFO - ✅ rafael: 7 docs | coleção: rafael_knowledge
+2026-05-02 10:34:33,242 - INFO - ✅ bruno_giovana: 1 docs | coleção: bruno_giovana_knowledge
+2026-05-02 10:34:33,244 - INFO - ✅ marcos_carol: 1 docs | coleção: marcos_carol_knowledge
+2026-05-02 10:34:33,244 - INFO - ✅ Todos os avatares indexados com sucesso
+2026-05-02 10:34:33,244 - INFO - 
+✅ Build com RAG pré-indexado concluído

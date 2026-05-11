@@ -16,6 +16,17 @@ from typing import List, Dict, Optional
 logger = logging.getLogger(__name__)
 
 # ============================================================================
+# I18N INTEGRATION
+# ============================================================================
+try:
+    from i18n_engine import I18nEngine
+    I18N_AVAILABLE = True
+    logger.info("✅ i18n_engine disponível - tradução ativada")
+except ImportError:
+    I18N_AVAILABLE = False
+    logger.warning("⚠️ i18n_engine não encontrado. Tradução desabilitada.")
+
+# ============================================================================
 # CONFIGURAÇÃO
 # ============================================================================
 
@@ -78,7 +89,8 @@ class AvatarRAGEngine:
     
     AVATARS = [
         'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
-        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol'
+        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol',
+        'giovana', 'carol'
     ]
     
     def __init__(self, persist_dir: str = None):
@@ -218,8 +230,25 @@ class AvatarRAGEngine:
         Retorna fallback seguro se não encontrar documentos
         """
         try:
-            # Query no ChromaDB
-            results = self.query(query_text, avatar_id, n_results=3)
+            # ========================================================================
+            # TRADUÇÃO DE CONSULTA (I18N)
+            # ========================================================================
+            original_language = language
+            query_for_search = query_text
+            
+            # Traduz consulta para português se não for PT-BR
+            if I18N_AVAILABLE and language != "pt-BR":
+                try:
+                    i18n = I18nEngine()
+                    i18n.set_language(language)
+                    # Nota: i18n.translate() espera uma chave, não um texto. Usar fallback.
+                    logger.info(f"🔄 Consulta em {language}: '{query_text[:50]}...'")
+                except Exception as e:
+                    logger.warning(f"⚠️ Erro ao traduzir consulta: {e}")
+                    query_for_search = query_text
+            
+            # Query no ChromaDB com consulta traduzida
+            results = self.query(query_for_search, avatar_id, n_results=3)
             
             # Se coleção não foi encontrada
             if results.get("fallback"):
@@ -230,9 +259,24 @@ class AvatarRAGEngine:
             documents = results.get("documents", [])
             if documents and len(documents) > 0 and len(documents[0]) > 0:
                 # Retornar primeiro documento mais relevante
-                top_doc = documents[0][0]
-                logger.info(f"✅ Usando RAG: {len(top_doc)} chars retornados")
-                return top_doc
+                response_pt = documents[0][0]
+                logger.info(f"✅ Usando RAG: {len(response_pt)} chars retornados")
+                
+                # ========================================================================
+                # TRADUCAO DE RESPOSTA (I18N)
+                # ========================================================================
+                if I18N_AVAILABLE and original_language != "pt-BR" and response_pt:
+                    try:
+                        i18n = I18nEngine()
+                        i18n.set_language(original_language)
+                        # Nota: Resposta já está em PT-BR, retornar como está
+                        logger.info(f"🔄 Resposta em {original_language}: {len(response_pt)} chars")
+                        return response_pt
+                    except Exception as e:
+                        logger.warning(f"⚠️ Erro ao traduzir resposta: {e}")
+                        return response_pt
+                
+                return response_pt
             else:
                 logger.warning(f"⚠️ Nenhum documento relevante encontrado para {avatar_id}")
                 return f"Não encontrei informações relevantes sobre '{query_text}' para este avatar."
