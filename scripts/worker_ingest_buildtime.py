@@ -28,8 +28,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Em build-time: /app/knowledge (copiado pelo Dockerfile)
-# Em testes locais: ./knowledge (relativo ao script)
-KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", "./knowledge"))
+# Em testes locais: ./knowledge ou /app/knowledge
+# Usar /app/knowledge como default para funcionar no Render
+KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", "/app/knowledge"))
+# Se não existir /app/knowledge, tentar ./knowledge (para testes locais)
+if not KNOWLEDGE_DIR.exists():
+    KNOWLEDGE_DIR = Path("./knowledge")
 # ChromaDB sempre em /tmp para evitar problemas de permissão
 CHROMA_DB_PATH = Path(os.getenv("CHROMA_DB_PATH", "/tmp/chroma_db"))
 BATCH_SIZE = 16  # Controle de RAM
