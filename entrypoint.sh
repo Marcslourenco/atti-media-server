@@ -1,47 +1,34 @@
 #!/bin/bash
 set -e
 
-echo "🔍 Verificando ambiente no Render..."
-echo "Diretório atual: $(pwd)"
-echo "Usuário: $(whoami)"
-echo "Diretório /app/knowledge:"
-ls -la /app/knowledge/ 2>&1 || echo "  (diretório não encontrado)"
-echo "Diretório /app/scripts:"
-ls -la /app/scripts/ 2>&1 | head -20
+echo "🔧 MODO DIAGNÓSTICO - Teste mínimo"
+cd /app
 
-echo "🔍 Verificando ChromaDB..."
+# Roda o script mínimo
+python /app/scripts/ingest_minimo.py
+
+# Se passou, então o problema está no worker_ingest_buildtime.py
+echo ""
+echo "✅ Script mínimo passou. Agora vamos testar o worker original com import isolado de onnxruntime"
+echo ""
+
+# Teste isolado de onnxruntime (causa mais provável de OOM)
 python -c "
-import sys, os, traceback
-sys.path.append(os.getcwd())
+import sys, os
+sys.stdout.reconfigure(line_buffering=True)
+print('Testando import de onnxruntime...', flush=True)
 try:
-    from src.chroma_engine import AvatarRAGEngine
-    engine = AvatarRAGEngine()
-    collections = list(engine.client.list_collections())
-    print(f'✅ Collections encontradas: {len(collections)}')
-    if len(collections) == 0:
-        print('⚠️ Nenhuma collection. Iniciando ingestão...')
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    import onnxruntime
+    print(f'✅ onnxruntime versão: {onnxruntime.__version__}', flush=True)
 except Exception as e:
-    print(f'❌ Erro ao verificar ChromaDB: {e}')
-    traceback.print_exc()
+    print(f'❌ onnxruntime falhou: {e}', flush=True)
+    import traceback; traceback.print_exc()
     sys.exit(1)
 "
 
-if [ $? -ne 0 ]; then
-    echo "📚 Ingerindo documentos (modo DEBUG)..."
-    cd /app
-    set -x
-    python /app/scripts/worker_ingest_buildtime.py 2>&1
-    set +x
-    if [ $? -eq 0 ]; then
-        echo "✅ Ingestão concluída com sucesso"
-    else
-        echo "❌ Ingestão falhou com código $?"
-        exit 1
-    fi
-fi
+echo "✅ Import do onnxruntime OK. Agora testando worker_ingest_buildtime.py com timeout de 10s"
+timeout 10s python /app/scripts/worker_ingest_buildtime.py 2>&1 || echo "❌ Worker falhou ou timeout"
 
-echo "🚀 Iniciando servidor..."
-exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Mantém o container vivo para inspeção (opcional)
+echo "🔍 Diagnóstico concluído. Mantendo container vivo por 1 hora para logs..."
+sleep 3600
