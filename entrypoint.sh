@@ -1,45 +1,47 @@
 #!/bin/bash
-# entrypoint.sh - Verificação e ingestão em runtime
-
 set -e
 
-echo "🔍 Verificando ChromaDB em produção..."
+echo "🔍 Verificando ambiente no Render..."
+echo "Diretório atual: $(pwd)"
+echo "Usuário: $(whoami)"
+echo "Diretório /app/knowledge:"
+ls -la /app/knowledge/ 2>&1 || echo "  (diretório não encontrado)"
+echo "Diretório /app/scripts:"
+ls -la /app/scripts/ 2>&1 | head -20
 
-# Tenta conectar e verificar se há dados
+echo "🔍 Verificando ChromaDB..."
 python -c "
-import sys
-import os
+import sys, os, traceback
 sys.path.append(os.getcwd())
-from src.chroma_engine import AvatarRAGEngine
-
 try:
+    from src.chroma_engine import AvatarRAGEngine
     engine = AvatarRAGEngine()
     collections = list(engine.client.list_collections())
-    collection_names = [c.name for c in collections]
-    
-    if len(collection_names) == 0:
-        print('⚠️ Nenhuma collection encontrada. Executando ingestão...')
-        sys.exit(1)  # Sinaliza que precisa ingerir
+    print(f'✅ Collections encontradas: {len(collections)}')
+    if len(collections) == 0:
+        print('⚠️ Nenhuma collection. Iniciando ingestão...')
+        sys.exit(1)
     else:
-        print(f'✅ {len(collection_names)} collections encontradas')
         sys.exit(0)
 except Exception as e:
     print(f'❌ Erro ao verificar ChromaDB: {e}')
+    traceback.print_exc()
     sys.exit(1)
 "
 
-# Se não há dados, executa ingestão
 if [ $? -ne 0 ]; then
-    echo "📚 Ingerindo documentos no ChromaDB..."
-    python scripts/worker_ingest_buildtime.py
+    echo "📚 Ingerindo documentos (modo DEBUG)..."
+    cd /app
+    set -x
+    python /app/scripts/worker_ingest_buildtime.py 2>&1
+    set +x
     if [ $? -eq 0 ]; then
         echo "✅ Ingestão concluída com sucesso"
     else
-        echo "❌ Erro durante ingestão"
+        echo "❌ Ingestão falhou com código $?"
         exit 1
     fi
 fi
 
-# Inicia o servidor principal
 echo "🚀 Iniciando servidor..."
 exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
