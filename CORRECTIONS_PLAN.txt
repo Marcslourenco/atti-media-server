@@ -1,0 +1,550 @@
+PLANO DE EXECUÇÃO — SOFIA AI BACKEND (VERSÃO CORRIGIDA)
+# Engenheiro responsável: Manus
+# Regra absoluta: ZERO APIs pagas em qualquer camada (primária, secundária ou fallback)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CONTEXTO (leia antes de executar)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A Fase 0 diagnóstica confirmou:
+- Collection `sofia` no ChromaDB contém apenas FAQs (correto)
+- Scores de retrieval baixos: 0.37–0.48 (chunking inadequado)
+- Diretório `knowledge/sofia/prompts/` não existe no container
+- Redis não configurado (memória contextual inoperante)
+
+As correções devem ser executadas NA ORDEM ABAIXO.
+Cada ação só é concluída após teste local no GitHub Codespace com evidência de log.
+NÃO faça deploy no Render antes de todos os testes passarem.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 1 — Corrigir saudação automática (sem hard-coded)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### 1.1 Backend — main.py (FastAPI)
+
+Adicione o campo `event_type` no endpoint `/api/avatar/speak`:
+
+```python
+from enum import Enum
+from typing import Optional
+
+class EventType(str, Enum):
+    INTRO = "intro"
+    USER_QUERY = "query"
+
+@app.post("/api/avatar/speak")
+async def speak(
+    avatar_id: str,
+    text: str,
+    language: str = "pt-BR",
+    event_type: EventType = EventType.USER_QUERY,
+    session_id: Optional[str] = None,
+):
+    if event_type == EventType.INTRO:
+        intro_text = f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        audio_data = await tts_generate(intro_text, avatar_id, language)
+        return {"response": intro_text, "audio": audio_data, "source": "intro"}
+
+    # Pipeline normal (RAG + LLM)
+    response = await rag_engine.generate_response(
+        query=text,
+        avatar_id=avatar_id,
+        session_id=session_id
+    )
+    return response
+```
+
+### 1.2 Frontend (somente diagnóstico)
+
+Verifique no repositório `humanosdigitais-website` se a saudação envia `event_type=intro`.
+Se não enviar, registre como pendente — NÃO modifique agora. O backend já aceita o campo.
+
+### Teste da Ação 1:
+```bash
+curl -X POST "http://localhost:8000/api/avatar/speak" \
+  -H "Content-Type: application/json" \
+  -d '{"avatar_id":"sofia","text":"","language":"pt-BR","event_type":"intro"}'
+# Esperado: {"response":"Olá! Sou Sofia. Como posso ajudar?","source":"intro"}
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 2 — Corrigir chunking para melhorar scores de retrieval
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### 2.1 Modificar worker_ingest_buildtime.py
+
+Substitua o parser existente por:
+
+```python
+import re
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+
+def parse_qa_document(text: str, avatar_id: str) -> list[dict]:
+    """Parser para documentos Q/A: resposta = conteúdo, pergunta = metadado."""
+    chunks = []
+    pattern = r'Q:\s*(.+?)\s*A:\s*(.+?)(?=Q:|$)'
+    matches = re.findall(pattern, text, re.DOTALL)
+    for question, answer in matches:
+        answer_clean = answer.strip()
+        if answer_clean:
+            chunks.append({
+                "content": answer_clean,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "question_trigger": question.strip(),
+                    "doc_type": "qa"
+                }
+            })
+    logging.info(f"[Parser Q/A] avatar={avatar_id}: {len(chunks)} chunks extraídos")
+    return chunks
+
+def parse_narrative_document(text: str, avatar_id: str) -> list[dict]:
+    """Parser para documentos narrativos com overlap."""
+    chunk_size = 400
+    overlap = 60
+    chunks = []
+    for i in range(0, len(text), chunk_size - overlap):
+        chunk = text[i:i + chunk_size].strip()
+        if chunk:
+            chunks.append({
+                "content": chunk,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "doc_type": "narrative"
+                }
+            })
+    logging.info(f"[Parser Narrativo] avatar={avatar_id}: {len(chunks)} chunks extraídos")
+    return chunks
+
+def ingest_document(text: str, avatar_id: str, doc_type: str = "auto") -> list[dict]:
+    """Dispatch automático de parser."""
+    if doc_type == "auto":
+        doc_type = "qa" if re.search(r'Q:\s*.+\s*A:\s*', text, re.DOTALL) else "narrative"
+    if doc_type == "qa":
+        return parse_qa_document(text, avatar_id)
+    return parse_narrative_document(text, avatar_id)
+```
+
+No loop de ingestão, adicione log de resumo por avatar:
+```python
+# Após ingerir todos os documentos de um avatar:
+logging.info(f"[Ingestão Completa] {avatar_id}: {qa_count} QA + {narrative_count} narrativo = {total} chunks")
+# Exemplo de saída esperada:
+# ✅ sofia: 64 documentos (60 QA / 4 narrativo)
+```
+
+### 2.2 Reingerir dados
+
+```bash
+rm -rf /tmp/chroma_db
+python scripts/worker_ingest_buildtime.py
+```
+
+### 2.3 Medir scores após correção
+
+```bash
+python3 -c "
+import chromadb
+from sentence_transformers import SentenceTransformer
+
+client = chromadb.PersistentClient(path='/tmp/chroma_db')
+col = client.get_collection('sofia')
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+queries = ['o que você faz?', 'como posso te contatar?', 'quais são seus serviços?']
+for query in queries:
+    emb = model.encode([query]).tolist()
+    results = col.query(query_embeddings=emb, n_results=3, include=['documents','distances'])
+    print(f'\nQuery: {query}')
+    for i, (doc, dist) in enumerate(zip(results['documents'][0], results['distances'][0])):
+        print(f'  {i+1}. Score: {dist:.4f} | Doc: {doc[:80]}...')
+"
+```
+
+**Critério de aprovação: scores > 0.6 para todas as queries.**
+Se não atingir, reduza `chunk_size` para 300 e `overlap` para 80 e repita.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 3 — Copiar brain files para o repositório correto
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### 3.1 Copiar arquivos via commit (sem COPY --from= no Dockerfile)
+
+```bash
+# No diretório do repositório atti-media-server
+mkdir -p knowledge/sofia/prompts
+
+cp ../atti-sofia-tools/prompts/system_prompt_sofia.txt knowledge/sofia/prompts/system_prompt.txt
+cp ../atti-sofia-tools/prompts/regras_conversacao.txt knowledge/sofia/prompts/
+cp ../atti-sofia-tools/prompts/variacao_respostas.txt knowledge/sofia/prompts/
+
+git add knowledge/sofia/prompts/
+git commit -m "feat: adicionar brain files da Sofia (system prompt, regras, variações)"
+git push
+```
+
+### 3.2 Implementar BrainManager em src/brain_manager.py
+
+```python
+import os
+import logging
+from pathlib import Path
+
+class BrainManager:
+    def __init__(self, base_path: str = "knowledge"):
+        self.base_path = Path(base_path)
+        self._cache = {}
+        self._load_all()
+
+    def _load_all(self):
+        for avatar_dir in self.base_path.iterdir():
+            if not avatar_dir.is_dir():
+                continue
+            avatar_id = avatar_dir.name
+            prompts_dir = avatar_dir / "prompts"
+            if not prompts_dir.exists():
+                logging.warning(f"[BrainManager] Diretório prompts não encontrado: {prompts_dir}")
+                continue
+            self._cache[avatar_id] = {}
+            for f in prompts_dir.glob("*.txt"):
+                key = f.stem
+                self._cache[avatar_id][key] = f.read_text(encoding="utf-8").strip()
+                logging.info(f"[BrainManager] Carregado: {avatar_id}/{key} ({len(self._cache[avatar_id][key])} chars)")
+
+    def get_system_prompt(self, avatar_id: str) -> str:
+        return self._cache.get(avatar_id, {}).get("system_prompt", "")
+
+    def get_rules(self, avatar_id: str) -> str:
+        return self._cache.get(avatar_id, {}).get("regras_conversacao", "")
+
+    def get_variations(self, avatar_id: str) -> str:
+        return self._cache.get(avatar_id, {}).get("variacao_respostas", "")
+
+# Instanciar no startup do FastAPI:
+# brain_manager = BrainManager()
+```
+
+No `main.py`, adicione no startup:
+```python
+from src.brain_manager import BrainManager
+brain_manager = BrainManager()
+
+@app.on_event("startup")
+async def startup_event():
+    prompt = brain_manager.get_system_prompt("sofia")
+    if not prompt:
+        logging.error("❌ CRÍTICO: system_prompt da Sofia não carregado!")
+    else:
+        logging.info(f"✅ BrainManager: system_prompt Sofia carregado ({len(prompt)} chars)")
+```
+
+### Teste da Ação 3:
+```python
+# Execute no Codespace:
+from src.brain_manager import BrainManager
+bm = BrainManager()
+assert len(bm.get_system_prompt("sofia")) > 0, "FALHA: system_prompt vazio"
+print("✅ BrainManager OK")
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 4 — Integrar LLM 100% gratuito e open-source
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### REGRA ABSOLUTA: ZERO APIs pagas — nem primária, nem secundária, nem fallback.
+### LLMs permitidos (todos gratuitos/open-source):
+- **Ollama local** (primário — phi3:mini, llama3.2, qwen2.5:1.5b)
+- **Qwen via OpenRouter free tier** (secundário gratuito)
+- **Fallback interno** (sem LLM — usa contexto RAG direto, sem chamada externa)
+
+### 4.1 Criar src/llm_orchestrator.py
+
+```python
+import httpx
+import re
+import os
+import logging
+
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "phi3:mini")
+
+# Fallback gratuito via OpenRouter (Qwen2.5 — sem custo)
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")  # chave gratuita do openrouter.ai
+OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "qwen/qwen-2.5-7b-instruct:free")
+
+async def _call_ollama(system_prompt: str, messages: list, user_query: str, context_docs: str) -> str:
+    payload = {
+        "model": OLLAMA_MODEL,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            *messages[-6:],
+            {"role": "user", "content": f"Documentos relevantes:\n{context_docs}\n\nPergunta: {user_query}"}
+        ],
+        "stream": False
+    }
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        resp = await client.post(f"{OLLAMA_URL}/api/chat", json=payload)
+        resp.raise_for_status()
+        return resp.json()["message"]["content"].strip()
+
+async def _call_openrouter(system_prompt: str, messages: list, user_query: str, context_docs: str) -> str:
+    if not OPENROUTER_API_KEY:
+        raise ValueError("OPENROUTER_API_KEY não configurado")
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": OPENROUTER_MODEL,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            *messages[-6:],
+            {"role": "user", "content": f"Documentos relevantes:\n{context_docs}\n\nPergunta: {user_query}"}
+        ]
+    }
+    async with httpx.AsyncClient(timeout=20.0) as client:
+        resp = await client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"].strip()
+
+def _rag_fallback(context_docs: str) -> str:
+    """Fallback interno: limpa e retorna o contexto RAG diretamente."""
+    clean = re.sub(r'^Q:.*?\n', '', context_docs, flags=re.MULTILINE)
+    clean = re.sub(r'^A:\s*', '', clean, flags=re.MULTILINE)
+    return clean.strip()[:300]
+
+async def generate_llm_response(
+    system_prompt: str,
+    context_docs: str,
+    history: list,
+    user_query: str
+) -> dict:
+    """
+    Hierarquia de LLMs (100% gratuitos):
+    1. Ollama local (phi3:mini ou qwen2.5:1.5b)
+    2. OpenRouter Qwen free tier (requer OPENROUTER_API_KEY gratuita)
+    3. Fallback RAG interno (sem LLM externo)
+    """
+    # Tentativa 1: Ollama
+    try:
+        response = await _call_ollama(system_prompt, history, user_query, context_docs)
+        logging.info("[LLM] Resposta via Ollama")
+        return {"response": response, "source": "ollama"}
+    except Exception as e:
+        logging.warning(f"[LLM] Ollama falhou: {e}")
+
+    # Tentativa 2: OpenRouter (Qwen free)
+    try:
+        response = await _call_openrouter(system_prompt, history, user_query, context_docs)
+        logging.info("[LLM] Resposta via OpenRouter/Qwen (gratuito)")
+        return {"response": response, "source": "openrouter_free"}
+    except Exception as e:
+        logging.warning(f"[LLM] OpenRouter falhou: {e}")
+
+    # Tentativa 3: Fallback RAG interno
+    response = _rag_fallback(context_docs)
+    logging.info("[LLM] Usando fallback RAG interno")
+    return {"response": response, "source": "rag_fallback"}
+```
+
+### 4.2 Configurar Ollama no ambiente de produção (Render)
+
+**IMPORTANTE:** Não instale Ollama via curl no entrypoint.sh em runtime — isso falha no Render por falta de permissão root.
+
+Use a abordagem correta via Dockerfile:
+
+```dockerfile
+# No Dockerfile do atti-media-server, adicione ANTES do CMD:
+RUN curl -fsSL https://ollama.ai/install.sh | sh
+
+# No entrypoint.sh, adicione ANTES do uvicorn:
+ollama serve &
+sleep 5
+ollama pull ${OLLAMA_MODEL:-phi3:mini}
+```
+
+**Alternativa sem Ollama no Render:** Configure `OPENROUTER_API_KEY` com uma conta gratuita em openrouter.ai. O modelo `qwen/qwen-2.5-7b-instruct:free` não tem custo.
+
+### 4.3 Variáveis de ambiente necessárias no Render
+
+```bash
+# Obrigatório escolher ao menos uma:
+OLLAMA_URL=http://localhost:11434      # se Ollama instalado no container
+OLLAMA_MODEL=phi3:mini                  # ou qwen2.5:1.5b (mais leve)
+
+# OU (gratuito, sem instalação):
+OPENROUTER_API_KEY=sk-or-xxxx           # conta gratuita em openrouter.ai
+OPENROUTER_MODEL=qwen/qwen-2.5-7b-instruct:free
+
+# PROIBIDO — não adicione estas variáveis:
+# DEEPSEEK_API_KEY  ← API paga, removida
+# OPENAI_API_KEY    ← API paga, proibida
+# ANTHROPIC_API_KEY ← API paga, proibida
+```
+
+### Teste da Ação 4:
+```bash
+python3 -c "
+import asyncio
+from src.llm_orchestrator import generate_llm_response
+
+async def test():
+    result = await generate_llm_response(
+        system_prompt='Você é Sofia, assistente virtual.',
+        context_docs='A: Nosso horário de atendimento é de segunda a sexta, das 9h às 18h.',
+        history=[],
+        user_query='Qual o horário de atendimento?'
+    )
+    print(f'Source: {result[\"source\"]}')
+    print(f'Response: {result[\"response\"]}')
+    assert result['response'], 'FALHA: resposta vazia'
+    print('✅ LLM OK')
+
+asyncio.run(test())
+"
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 5 — Memória contextual (Redis com fallback gratuito)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Redis no Render custa ~$3/mês. Use a alternativa gratuita primeiro:
+
+### 5.1 Implementar SessionMemory com fallback in-memory
+
+```python
+import os
+import json
+import logging
+from typing import Optional
+
+# Tenta usar Redis se configurado, senão usa dict em memória
+try:
+    import redis.asyncio as aioredis
+    REDIS_URL = os.getenv("REDIS_URL", "")
+    _use_redis = bool(REDIS_URL)
+except ImportError:
+    _use_redis = False
+
+_memory_store = {}  # fallback in-memory
+
+class SessionMemory:
+    def __init__(self, session_id: str, max_turns: int = 6):
+        self.session_id = session_id
+        self.max_turns = max_turns
+        self._redis = None
+
+    async def _get_redis(self):
+        if _use_redis and self._redis is None:
+            self._redis = await aioredis.from_url(os.getenv("REDIS_URL"))
+        return self._redis
+
+    async def get_history(self) -> list:
+        if _use_redis:
+            try:
+                r = await self._get_redis()
+                data = await r.get(f"session:{self.session_id}")
+                return json.loads(data) if data else []
+            except Exception as e:
+                logging.warning(f"[Memory] Redis falhou, usando in-memory: {e}")
+        return _memory_store.get(self.session_id, [])
+
+    async def add_turn(self, user_msg: str, assistant_msg: str):
+        history = await self.get_history()
+        history.append({"role": "user", "content": user_msg})
+        history.append({"role": "assistant", "content": assistant_msg})
+        history = history[-(self.max_turns * 2):]  # mantém últimos N turnos
+
+        if _use_redis:
+            try:
+                r = await self._get_redis()
+                await r.setex(f"session:{self.session_id}", 3600, json.dumps(history))
+                return
+            except Exception as e:
+                logging.warning(f"[Memory] Redis falhou ao salvar: {e}")
+        _memory_store[self.session_id] = history
+
+    async def clear(self):
+        if _use_redis:
+            try:
+                r = await self._get_redis()
+                await r.delete(f"session:{self.session_id}")
+            except:
+                pass
+        _memory_store.pop(self.session_id, None)
+```
+
+**Nota:** O fallback in-memory perde sessões ao reiniciar o container. É aceitável para MVP. Quando quiser persistência, adicione o Redis add-on do Render ($3/mês) e configure `REDIS_URL`.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## AÇÃO 6 — Testes obrigatórios antes do deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Execute o checklist completo no GitHub Codespace:
+
+```bash
+#!/bin/bash
+# scripts/test_local.sh
+
+set -e
+echo "=== TESTE LOCAL PRÉ-DEPLOY ==="
+
+echo "--- Teste 1: Endpoint intro ---"
+curl -s -X POST "http://localhost:8000/api/avatar/speak" \
+  -H "Content-Type: application/json" \
+  -d '{"avatar_id":"sofia","text":"","event_type":"intro"}' | python3 -m json.tool
+echo "✅ Ação 1 OK"
+
+echo "--- Teste 2: Scores de retrieval ---"
+python3 scripts/test_retrieval.py  # deve imprimir scores > 0.6
+echo "✅ Ação 2 OK"
+
+echo "--- Teste 3: BrainManager ---"
+python3 -c "
+from src.brain_manager import BrainManager
+bm = BrainManager()
+p = bm.get_system_prompt('sofia')
+assert len(p) > 0, 'FALHA: prompt vazio'
+print(f'✅ Ação 3 OK — prompt: {len(p)} chars')
+"
+
+echo "--- Teste 4: LLM Orchestrator ---"
+python3 -c "
+import asyncio
+from src.llm_orchestrator import generate_llm_response
+async def t():
+    r = await generate_llm_response('Você é Sofia.', 'A: Horário: 9h–18h.', [], 'Qual horário?')
+    assert r['response'], 'FALHA'
+    print(f'✅ Ação 4 OK — source: {r[\"source\"]}')
+asyncio.run(t())
+"
+
+echo "=== TODOS OS TESTES PASSARAM — pode fazer commit e deploy ==="
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHECKLIST DE ENTREGÁVEIS (responda com evidências)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ ] 1. Código do endpoint `/api/avatar/speak` com `event_type` — log da resposta intro
+[ ] 2. `worker_ingest_buildtime.py` com novos parsers — log mostrando contagem por avatar
+[ ] 3. Scores de retrieval > 0.6 para 3 queries de teste — print do terminal
+[ ] 4. Arquivos `knowledge/sofia/prompts/` commitados — hash do commit
+[ ] 5. `BrainManager` carregando corretamente — log do startup
+[ ] 6. `LLMOrchestrator` respondendo (Ollama OU OpenRouter free) — log com `source`
+[ ] 7. `SessionMemory` funcionando (in-memory ou Redis) — sem erros no startup
+[ ] 8. Script `test_local.sh` executado com sucesso completo — output colado aqui
+[ ] 9. Hash do commit final após todos os itens acima
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## REGRAS FINAIS INEGOCIÁVEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. ZERO APIs pagas — nem como fallback, nem comentadas no código.
+   APIs permitidas: Ollama (local), OpenRouter free tier (Qwen gratuito).
+2. NÃO use `COPY --from=` inválido no Dockerfile. Brain files entram via commit.
+3. NÃO reporte sucesso sem evidência de log/terminal.
+4. Se qualquer teste falhar, PARE e reporte o erro completo antes de continuar.
+5. Se o Render não suportar Ollama, use OpenRouter free como primário — nunca APIs pagas.

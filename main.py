@@ -151,6 +151,18 @@ async def avatar_status():
 import uuid
 import time
 import json
+from enum import Enum
+
+class EventType(str, Enum):
+    INTRO = "intro"
+    USER_QUERY = "query"
+
+class SpeakRequestV2(BaseModel):
+    avatar_id: str = Field(..., description="ID do avatar")
+    text: str = Field(default="", description="Texto para sintetizar")
+    language: Optional[str] = Field("pt-BR", description="Idioma do texto")
+    event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento")
+    session_id: Optional[str] = Field(None, description="ID da sessão")
 
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
@@ -272,6 +284,96 @@ async def avatar_speak(request: SpeakRequest):
         "language": language,
         "avatar_id": avatar_id,
         "supported_languages": app.state.supported_languages,
+        "request_id": request_id,
+        "metrics": structured_log
+    }
+
+@app.post("/api/avatar/speak-v2")
+async def avatar_speak_v2(request: SpeakRequestV2):
+    """Endpoint v2 com suporte a event_type (intro/query)"""
+    request_id = str(uuid.uuid4())[:8]
+    start_time = time.time()
+    
+    avatar_id = request.avatar_id
+    text = request.text.strip() if request.text else ""
+    language = request.language or "pt-BR"
+    event_type = request.event_type
+    
+    logger.info(f"[{request_id}] Avatar speak v2: avatar={avatar_id}, event_type={event_type}, language={language}")
+    
+    # AÇÃO 1: Se event_type=intro, retornar saudação automática
+    if event_type == EventType.INTRO:
+        intro_text = f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
+        return {
+            "success": True,
+            "text_response": intro_text,
+            "source": "intro",
+            "avatar_id": avatar_id,
+            "language": language,
+            "request_id": request_id
+        }
+    
+    # Se event_type=query, usar pipeline normal (RAG + LLM)
+    if not text:
+        raise HTTPException(status_code=400, detail="text não pode estar vazio para queries")
+    
+    # Resto do pipeline normal...
+    response_text = text
+    rag_used = False
+    docs_found = 0
+    avg_score = 0.0
+    fallback_reason = "NONE"
+    
+    if rag_engine:
+        try:
+            logger.info(f"[{request_id}] Chamando rag_engine.generate_response...")
+            result = rag_engine.generate_response(text, avatar_id, language)
+            if result and isinstance(result, str) and len(result) > 0:
+                response_text = result
+                rag_used = True
+                docs_found = 1
+                avg_score = 0.25
+                logger.info(f"[{request_id}] ✅ RAG com resultados")
+            else:
+                fallback_reason = "NO_DOCS"
+                logger.info(f"[{request_id}] ⚠️ RAG retornou vazio")
+        except Exception as e:
+            fallback_reason = "RAG_ERROR"
+            logger.error(f"[{request_id}] ERRO no RAG: {e}", exc_info=True)
+    
+    audio_data = None
+    visemes = []
+    if viseme_sync:
+        try:
+            result = await viseme_sync.synthesize_with_visemes(response_text, avatar_id, language)
+            if result:
+                audio_data = result.get("audio")
+                visemes = result.get("visemes", [])
+        except Exception as e:
+            logger.error(f"Erro ao gerar áudio: {e}")
+    
+    latency_ms = int((time.time() - start_time) * 1000)
+    structured_log = {
+        "request_id": request_id,
+        "avatar_id": avatar_id,
+        "rag_used": rag_used,
+        "docs_found": docs_found,
+        "avg_score": avg_score,
+        "fallback_reason": fallback_reason,
+        "latency_ms": latency_ms,
+        "audio_generated": bool(audio_data),
+        "visemes_count": len(visemes)
+    }
+    
+    return {
+        "success": True,
+        "text_response": response_text,
+        "audio_data": audio_data,
+        "visemes": visemes,
+        "language": language,
+        "avatar_id": avatar_id,
+        "source": "rag" if rag_used else "fallback",
         "request_id": request_id,
         "metrics": structured_log
     }
