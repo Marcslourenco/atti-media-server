@@ -115,6 +115,28 @@ async def _generate_with_openrouter(
         logger.error(f"[LLMOrchestrator] Erro ao chamar OpenRouter: {e}")
         raise
 
+def _rag_fallback(context_docs: str) -> str:
+    """Fallback interno: retorna o conteúdo mais relevante do contexto RAG de forma limpa."""
+    if not context_docs or len(context_docs.strip()) < 10:
+        return "Desculpe, não encontrei informações sobre esse assunto."
+    
+    # Remove prefixos Q: mas preserva o conteúdo de A:
+    lines = context_docs.split('\n')
+    clean_lines = []
+    for line in lines:
+        line = line.strip()
+        if line.startswith('Q:'):
+            continue  # pula a pergunta
+        if line.startswith('A:'):
+            line = line[2:].strip()  # remove prefixo A:
+        if len(line) > 20:  # ignora linhas muito curtas
+            clean_lines.append(line)
+    
+    result = ' '.join(clean_lines[:5])  # primeiras 5 linhas relevantes
+    return result[:350] if result else "Desculpe, não encontrei informações sobre esse assunto."
+
+
+
 async def generate_llm_response(
     system_prompt: str,
     context: str,
@@ -146,6 +168,6 @@ async def generate_llm_response(
         logger.error(f"[LLMOrchestrator] Ambos LLMs falharam: {e}")
         # Fallback final: retorna contexto como resposta
         return {
-            "response": context or "Desculpe, não consegui gerar uma resposta no momento.",
+            "response": _rag_fallback(context),
             "source": "fallback"
         }
