@@ -14,8 +14,8 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 # Modelo padrão para Ollama (leve)
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
 
-# Modelo gratuito do OpenRouter (Mistral 7B)
-OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "mistralai/mistral-7b-instruct")
+# Modelo gratuito do OpenRouter (Baidu Cobuddy - testado e funcional)
+OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "baidu/cobuddy:free")
 
 async def _test_ollama() -> bool:
     """Testa se Ollama está disponível"""
