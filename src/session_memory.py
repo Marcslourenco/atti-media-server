@@ -72,6 +72,7 @@ class SessionMemory:
         
         _memory_store[self.session_id] = history
         logger.info(f"[SessionMemory] Turno adicionado: {self.session_id} ({len(history)} mensagens)")
+        return history
     
     async def add_turn_async(self, user_msg: str, assistant_msg: str):
         """Adiciona um turno à conversa (assíncrono)"""

@@ -92,6 +92,121 @@ def load_embedding_model():
 # FASE 3: PARSER ROBUSTO
 # ============================================================================
 
+import re
+
+def parse_qa_document(text: str, avatar_id: str):
+    """Parser para documentos Q/A"""
+    chunks = []
+    pattern = r'Q:\s*(.+?)\s*A:\s*(.+?)(?=Q:|$)'
+    matches = re.findall(pattern, text, re.DOTALL)
+    
+    for question, answer in matches:
+        answer_clean = answer.strip()
+        if len(answer_clean) > 10:
+            chunks.append({
+                "content": answer_clean,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "question_trigger": question.strip(),
+                    "doc_type": "qa"
+                }
+            })
+    
+    logger.info(f"[Parser Q/A] avatar={avatar_id}: {len(chunks)} chunks")
+    return chunks
+
+def parse_narrative_document(text: str, avatar_id: str, chunk_size: int = 350, overlap: int = 70):
+    """Parser para documentos narrativos"""
+    chunks = []
+    start = 0
+    
+    while start < len(text):
+        end = start + chunk_size
+        chunk = text[start:end].strip()
+        
+        if len(chunk) > 30:
+            chunks.append({
+                "content": chunk,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "doc_type": "narrative"
+                }
+            })
+        
+        start += chunk_size - overlap
+    
+    logger.info(f"[Parser Narrativo] avatar={avatar_id}: {len(chunks)} chunks")
+    return chunks
+
+def detect_and_parse(text: str, avatar_id: str):
+    """Detecta tipo de documento e aplica parser correto"""
+    is_qa = bool(re.search(r'Q:\s*.+?\s*A:\s*', text, re.DOTALL))
+    
+    if is_qa:
+        return parse_qa_document(text, avatar_id)
+    
+    return parse_narrative_document(text, avatar_id)
+
+
+
+
+import re
+
+def parse_qa_document(text: str, avatar_id: str):
+    """Parser para documentos Q/A"""
+    chunks = []
+    pattern = r'Q:\s*(.+?)\s*A:\s*(.+?)(?=Q:|$)'
+    matches = re.findall(pattern, text, re.DOTALL)
+    
+    for question, answer in matches:
+        answer_clean = answer.strip()
+        if len(answer_clean) > 10:
+            chunks.append({
+                "content": answer_clean,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "question_trigger": question.strip(),
+                    "doc_type": "qa"
+                }
+            })
+    
+    logger.info(f"[Parser Q/A] avatar={avatar_id}: {len(chunks)} chunks")
+    return chunks
+
+def parse_narrative_document(text: str, avatar_id: str, chunk_size: int = 350, overlap: int = 70):
+    """Parser para documentos narrativos"""
+    chunks = []
+    start = 0
+    
+    while start < len(text):
+        end = start + chunk_size
+        chunk = text[start:end].strip()
+        
+        if len(chunk) > 30:
+            chunks.append({
+                "content": chunk,
+                "metadata": {
+                    "avatar_id": avatar_id,
+                    "doc_type": "narrative"
+                }
+            })
+        
+        start += chunk_size - overlap
+    
+    logger.info(f"[Parser Narrativo] avatar={avatar_id}: {len(chunks)} chunks")
+    return chunks
+
+def detect_and_parse(text: str, avatar_id: str):
+    """Detecta tipo de documento e aplica parser correto"""
+    is_qa = bool(re.search(r'Q:\s*.+?\s*A:\s*', text, re.DOTALL))
+    
+    if is_qa:
+        return parse_qa_document(text, avatar_id)
+    
+    return parse_narrative_document(text, avatar_id)
+
+
+
 def extract_documents(data: Union[Dict[str, Any], List], avatar_id: str) -> List[Dict[str, str]]:
     """Extrai documentos de múltiplas estruturas JSON"""
     documents = []

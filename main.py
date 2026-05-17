@@ -2,6 +2,7 @@ import os
 import logging
 from pathlib import Path
 from typing import Optional
+from enum import Enum
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -12,10 +13,16 @@ logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 
 BACKEND_VERSION = "7.0.0"
 
+class EventType(str, Enum):
+    INTRO = "intro"
+    USER_QUERY = "query"
+
 class SpeakRequest(BaseModel):
-    text: str = Field(..., description="Texto para sintetizar e gerar visemes")
-    avatar_id: Optional[str] = Field("default", description="ID do avatar para visemes")
+    avatar_id: str = Field(..., description="ID do avatar")
+    text: str = Field(default="", description="Texto para sintetizar")
     language: Optional[str] = Field("pt-BR", description="Idioma do texto (pt-BR, en, es)")
+    event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento (intro ou query)")
+    session_id: Optional[str] = Field(None, description="ID da sessão")
 
 class TTSRequest(BaseModel):
     text: str = Field(..., description="Texto para converter em fala")
@@ -166,16 +173,49 @@ class SpeakRequestV2(BaseModel):
 
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
-    """Endpoint principal para fala do avatar."""
+    """Endpoint principal para fala do avatar com suporte a event_type."""
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
     
-    text = request.text.strip()
-    avatar_id = request.avatar_id or "default"
+    avatar_id = request.avatar_id
+    text = request.text.strip() if request.text else ""
     language = request.language or "pt-BR"
+    event_type = request.event_type
+    session_id = request.session_id
     
+    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}")
+    
+    # CORREÇÃO A: Se event_type=intro, retornar saudação automática
+    if event_type == EventType.INTRO:
+        intro_text = f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
+        
+        # Gerar áudio se disponível
+        audio_data = None
+        visemes = []
+        if viseme_sync:
+            try:
+                result = await viseme_sync.synthesize_with_visemes(intro_text, avatar_id, language)
+                if result:
+                    audio_data = result.get("audio")
+                    visemes = result.get("visemes", [])
+            except Exception as e:
+                logger.error(f"Erro ao gerar áudio para intro: {e}")
+        
+        return {
+            "success": True,
+            "text_response": intro_text,
+            "audio_data": audio_data,
+            "visemes": visemes,
+            "source": "intro",
+            "avatar_id": avatar_id,
+            "language": language,
+            "request_id": request_id
+        }
+    
+    # Se event_type=query, usar pipeline normal (RAG + LLM)
     if not text:
-        raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório")
+        raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório para queries")
     
     if language not in app.state.supported_languages:
         language = "pt-BR"
