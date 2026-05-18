@@ -285,6 +285,20 @@ class AvatarRAGEngine:
             logger.error(f"❌ Erro ao gerar resposta: {e}", exc_info=True)
             return f"Erro ao processar sua pergunta. Tente novamente."
     
+    def get_available_collections(self) -> list:
+        """
+        Retorna lista de coleções disponíveis no ChromaDB.
+        Usado no startup para verificar se a ingestão foi concluída.
+        """
+        try:
+            if self.client is None:
+                return []
+            collections = self.client.list_collections()
+            return [c.name for c in collections]
+        except Exception as e:
+            logger.warning(f"Erro ao listar coleções: {e}")
+            return []
+    
     # ========================================================================
     # FUNÇÕES DE INGESTÃO - BUILD-TIME ONLY
     # ========================================================================

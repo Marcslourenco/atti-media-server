@@ -144,7 +144,7 @@ async def health():
         "validation_available": validation_available
     }
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
         "service": "humanos-digitais-tts-rag-llm",

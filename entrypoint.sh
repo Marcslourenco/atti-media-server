@@ -17,5 +17,16 @@ python /app/scripts/worker_ingest_buildtime.py > /tmp/ingestao.log 2>&1 &
 INGEST_PID=$!
 echo "  PID da ingestão: $INGEST_PID"
 
+# Monitoramento de conclusão da ingestão em background
+(
+  wait $INGEST_PID
+  EXIT_CODE=$?
+  if [ $EXIT_CODE -eq 0 ]; then
+    echo "✅ Ingestão concluída com sucesso (PID: $INGEST_PID)"
+  else
+    echo "❌ Ingestão falhou com código: $EXIT_CODE (PID: $INGEST_PID)"
+  fi
+) &
+
 echo "🚀 Iniciando servidor web (porta ${PORT:-8000})..."
 exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
