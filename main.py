@@ -1,5 +1,6 @@
 import os
 import logging
+import asyncio
 from pathlib import Path
 from typing import Optional
 from enum import Enum
@@ -12,6 +13,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 
 BACKEND_VERSION = "7.0.0"
+
+# Flag global para indicar se a ingestão está completa
+_ingestion_ready = False
 
 class EventType(str, Enum):
     INTRO = "intro"
@@ -74,6 +78,7 @@ except Exception as e:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    global _ingestion_ready
     logger.info(f"Iniciando humanos-digitais-tts-rag-llm v{BACKEND_VERSION}")
     
     translation_available = i18n_engine is not None
@@ -83,8 +88,22 @@ async def lifespan(app: FastAPI):
     app.state.tts_available = tts_available
     app.state.supported_languages = ["pt-BR", "en", "es"] if translation_available else ["pt-BR"]
     
-    logger.info(f"Tradução disponível: {translation_available}")
-    logger.info(f"TTS/Visemes disponível: {tts_available}")
+    logger.info(f"Traducao disponivel: {translation_available}")
+    logger.info(f"TTS/Visemes disponivel: {tts_available}")
+    
+    # Verificar se ChromaDB ja tem dados (ingestao pode estar rodando em background)
+    try:
+        if rag_engine:
+            collections = rag_engine.get_available_collections()
+            if collections:
+                _ingestion_ready = True
+                logger.info(f"✅ {len(collections)} colecoes disponiveis no startup")
+            else:
+                logger.info("⏳ Ingestao em background — RAG indisponivel temporariamente")
+        else:
+            logger.warning("⚠️ RAG engine nao inicializado")
+    except Exception as e:
+        logger.warning(f"⚠️ ChromaDB ainda nao pronto: {e}")
     
     yield
     logger.info("Desligando servidor")
@@ -216,6 +235,27 @@ async def avatar_speak(request: SpeakRequest):
     # Se event_type=query, usar pipeline LLM com RAG
     if not text:
         raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório para queries")
+    
+    # Verificar se ingestao esta completa
+    global _ingestion_ready
+    if not _ingestion_ready:
+        try:
+            if rag_engine:
+                cols = rag_engine.get_available_collections()
+                if cols:
+                    _ingestion_ready = True
+        except:
+            pass
+    
+    if not _ingestion_ready:
+        logger.warning(f"[{request_id}] RAG ainda nao pronto, retornando mensagem de espera")
+        return {
+            "success": True,
+            "text_response": "Estou finalizando minha inicializacao. Por favor, tente novamente em 1-2 minutos.",
+            "source": "initializing",
+            "avatar_id": avatar_id,
+            "request_id": request_id
+        }
     
     if language not in app.state.supported_languages:
         language = "pt-BR"

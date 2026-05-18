@@ -10,8 +10,12 @@ echo "🔧 Verificando imports críticos..."
 python -c "import chromadb; print('✅ chromadb OK')"
 python -c "import onnxruntime; print(f'✅ onnxruntime {onnxruntime.__version__} OK')"
 
-echo "📥 Executando ingestão de conhecimento (pode levar 1-2 minutos)..."
-python /app/scripts/worker_ingest_buildtime.py
+# IMPORTANTE: Ingestão em background
+# Uvicorn sobe IMEDIATAMENTE para que o Render detecte a porta
+echo "📥 Iniciando ingestão de conhecimento em background..."
+python /app/scripts/worker_ingest_buildtime.py > /tmp/ingestao.log 2>&1 &
+INGEST_PID=$!
+echo "  PID da ingestão: $INGEST_PID"
 
-echo "✅ Ingestão concluída. Iniciando servidor web..."
+echo "🚀 Iniciando servidor web (porta ${PORT:-8000})..."
 exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
