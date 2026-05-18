@@ -213,7 +213,7 @@ async def avatar_speak(request: SpeakRequest):
             "request_id": request_id
         }
     
-    # Se event_type=query, usar pipeline normal (RAG + LLM)
+    # Se event_type=query, usar pipeline LLM com RAG
     if not text:
         raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório para queries")
     
@@ -222,71 +222,96 @@ async def avatar_speak(request: SpeakRequest):
     
     logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, language={language}, text='{text[:100]}'")
     
-    # VALIDACAO CRITICA: Verificar se ChromaDB esta ativo
+    # PIPELINE LLM: RAG + LLMOrchestrator
+    response_text = text
+    llm_source = "fallback"
     rag_used = False
     docs_found = 0
     avg_score = 0.0
     fallback_reason = "NONE"
     
-    if rag_engine and hasattr(rag_engine, "collections"):
-        logger.info(f"[{request_id}] ✅ USANDO CHROMA_ENGINE EM RUNTIME")
-        logger.info(f"[{request_id}] ✅ Colecoes ChromaDB: {list(rag_engine.collections.keys())}")
-    else:
-        logger.warning(f"[{request_id}] ⚠️ RAG Engine nao eh ChromaDB (tipo: {type(rag_engine).__name__})")
-    # ===== DIAGNOSTICO RAG =====
-    logger.info("=" * 50)
-    logger.info("🔍 DIAGNOSTICO RAG - INICIO")
-    logger.info(f"🔍 Query do usuario: {text}")
-    logger.info(f"🔍 Avatar ID: {avatar_id}")
-    logger.info(f"🔍 Language: {language}")
+    # Importar SessionMemory no topo
+    from src.session_memory import SessionMemory
     
-    # Verificar se rag_engine existe
-    if rag_engine is not None:
-        logger.info("🔍 rag_engine: OBJETO EXISTE")
-    else:
-        logger.info("🔍 rag_engine: NAO EXISTE")
-        logger.info("=" * 50)
-    
-    # Verificar se o metodo generate_response existe
-    if rag_engine and hasattr(rag_engine, 'generate_response'):
-        logger.info("🔍 Metodo generate_response: EXISTE")
-    else:
-        logger.info("🔍 Metodo generate_response: NAO EXISTE")
-        logger.info("=" * 50)
-    
-    # Chamar o RAG e logar cada passo
-    response_text = text
     try:
+        # 1. Buscar contexto do RAG
+        context_docs = ""
         if rag_engine:
-            logger.info(f"[{request_id}] 🔍 Chamando rag_engine.generate_response...")
-            result = rag_engine.generate_response(text, avatar_id, language)
-            logger.info(f"[{request_id}] 🔍 Resultado bruto do RAG: {result}")
+            try:
+                result = rag_engine.generate_response(text, avatar_id, language)
+                if result and isinstance(result, str) and len(result) > 0:
+                    context_docs = result
+                    rag_used = True
+                    docs_found = 1
+                    avg_score = 0.25
+                    logger.info(f"[{request_id}] ✅ RAG: {len(context_docs)} chars de contexto")
+            except Exception as e:
+                logger.warning(f"[{request_id}] ⚠️ RAG erro: {e}")
+        
+        # 2. Buscar histórico da sessão
+        history = []
+        if session_id:
+            try:
+                mem = SessionMemory(session_id)
+                history = mem.get_history()
+                logger.info(f"[{request_id}] ✅ Histórico: {len(history)} mensagens")
+            except Exception as e:
+                logger.warning(f"[{request_id}] ⚠️ Histórico erro: {e}")
+        
+        # 3. Buscar system prompt do avatar
+        system_prompt = ""
+        try:
+            from src.brain_manager import BrainManager
+            brain_manager = BrainManager()
+            system_prompt = brain_manager.get_system_prompt(avatar_id)
+            if not system_prompt:
+                system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
+            logger.info(f"[{request_id}] ✅ System prompt: {len(system_prompt)} chars")
+        except Exception as e:
+            logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
+            system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
+        
+        # 4. Gerar resposta com LLM real (OpenRouter)
+        try:
+            from src.llm_orchestrator import generate_llm_response
             
-            if result and isinstance(result, str) and len(result) > 0:
-                response_text = result
-                rag_used = True
-                docs_found = 1
-                avg_score = 0.25  # Score médio estimado
-                logger.info(f"[{request_id}] ✅ USANDO RAG COM RESULTADOS: 1 documentos encontrados")
-                logger.info(f"[{request_id}] 🔍 Resposta extraida: '{response_text[:100]}'")
-                logger.info(f"[{request_id}] 🔍 Tamanho da resposta: {len(response_text)}")
+            llm_result = await generate_llm_response(
+                system_prompt=system_prompt,
+                context=context_docs,
+                history=history,
+                query=text
+            )
+            
+            response_text = llm_result['response']
+            llm_source = llm_result['source']
+            logger.info(f"[{request_id}] ✅ LLM ({llm_source}): {len(response_text)} chars")
+            
+        except Exception as e:
+            logger.error(f"[{request_id}] ❌ LLM erro: {e}", exc_info=True)
+            fallback_reason = "LLM_ERROR"
+            # Fallback para RAG se LLM falhar
+            if context_docs:
+                response_text = context_docs
+                llm_source = "rag_fallback"
             else:
-                fallback_reason = "NO_DOCS"
-                logger.info(f"[{request_id}] ⚠️ RAG retornou vazio, usando fallback")
-        else:
-            fallback_reason = "NO_RAG_ENGINE"
-            logger.info(f"[{request_id}] 🔍 rag_engine nao inicializado, usando texto original")
-            
+                response_text = text
+                llm_source = "fallback"
+        
+        # 5. Salvar na memória da sessão
+        if session_id:
+            try:
+                mem = SessionMemory(session_id)
+                mem.add_turn(text, response_text)
+                logger.info(f"[{request_id}] ✅ Sessão salva")
+            except Exception as e:
+                logger.warning(f"[{request_id}] ⚠️ Sessão erro: {e}")
+    
     except Exception as e:
-        fallback_reason = "RAG_ERROR"
-        logger.error(f"[{request_id}] 🔍 ERRO no RAG: {e}", exc_info=True)
+        logger.error(f"[{request_id}] ❌ Pipeline erro: {e}", exc_info=True)
+        fallback_reason = "PIPELINE_ERROR"
         response_text = text
     
-    logger.info("🔍 DIAGNOSTICO RAG - FIM")
-    logger.info("=" * 50)
-    # ===== FIM DIAGNOSTICO ====
-    
-    # 2️⃣ DEPOIS: Gerar áudio e visemes com a resposta inteligente
+    # 2️⃣ Gerar áudio e visemes com a resposta inteligente
     audio_data = None
     visemes = []
     if viseme_sync:
@@ -325,6 +350,7 @@ async def avatar_speak(request: SpeakRequest):
         "avatar_id": avatar_id,
         "supported_languages": app.state.supported_languages,
         "request_id": request_id,
+        "source": llm_source,
         "metrics": structured_log
     }
 

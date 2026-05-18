@@ -12,7 +12,7 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Modelo padrão para Ollama (leve)
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "neural-chat")
 
 # Modelo gratuito do OpenRouter (Baidu Cobuddy - testado e funcional)
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "baidu/cobuddy:free")

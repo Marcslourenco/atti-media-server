@@ -93,7 +93,7 @@ print(prompt)  # Retorna o system prompt de Sofia
 **Variáveis de Ambiente:**
 ```bash
 OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=mistral
+OLLAMA_MODEL=neural-chat
 OPENROUTER_API_KEY=sk-...
 ```
 

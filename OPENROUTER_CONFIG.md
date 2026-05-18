@@ -28,7 +28,7 @@
 export OPENROUTER_API_KEY="sk-or-v1-sua-chave-aqui"
 
 # 2. (Opcional) Configurar modelo específico
-export OPENROUTER_MODEL="mistralai/mistral-7b-instruct"
+export OPENROUTER_MODEL="baidu/cobuddy:free"
 
 # 3. Testar
 python3 << 'EOF'
@@ -59,7 +59,7 @@ No Render Dashboard → Environment:
 
 ```
 OPENROUTER_API_KEY=sk-or-v1-sua-chave-aqui
-OPENROUTER_MODEL=mistralai/mistral-7b-instruct
+OPENROUTER_MODEL=baidu/cobuddy:free
 ```
 
 ### 2. Modelos Disponíveis
@@ -67,9 +67,9 @@ OPENROUTER_MODEL=mistralai/mistral-7b-instruct
 Verifique em: https://openrouter.ai/models
 
 Modelos testados e recomendados:
-- `mistralai/mistral-7b-instruct`
-- `meta-llama/llama-2-7b-chat`
-- `nousresearch/nous-hermes-2-mistral-7b-dpo`
+- `baidu/cobuddy:free`
+- `baidu/cobuddy:free`
+- `baidu/cobuddy:free`
 
 ### 3. Deploy
 
@@ -89,7 +89,7 @@ git push origin main
 **Solução:**
 1. Acesse https://openrouter.ai/models
 2. Procure por modelos gratuitos
-3. Copie o nome exato (ex: `mistralai/mistral-7b-instruct`)
+3. Copie o nome exato (ex: `baidu/cobuddy:free`)
 4. Atualize `OPENROUTER_MODEL` no Render
 
 ### Erro: "Unauthorized" (401)
