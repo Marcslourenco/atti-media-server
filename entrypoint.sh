@@ -23,6 +23,9 @@ echo "  PID da ingestão: $INGEST_PID"
   EXIT_CODE=$?
   if [ $EXIT_CODE -eq 0 ]; then
     echo "✅ Ingestão concluída com sucesso (PID: $INGEST_PID)"
+    # Criar arquivo de flag para indicar que ingestão foi concluída
+    touch /tmp/ingestion_complete
+    echo "✅ Flag de ingestão criada: /tmp/ingestion_complete"
   else
     echo "❌ Ingestão falhou com código: $EXIT_CODE (PID: $INGEST_PID)"
   fi

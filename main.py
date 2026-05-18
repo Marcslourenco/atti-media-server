@@ -14,8 +14,6 @@ logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 
 BACKEND_VERSION = "7.0.0"
 
-# Flag global para indicar se a ingestão está completa
-_ingestion_ready = False
 
 class EventType(str, Enum):
     INTRO = "intro"
@@ -76,9 +74,24 @@ except Exception as e:
     logger.warning(f"Validação endpoint não disponível: {e}")
     validation_available = False
 
+
+# ============================================================================
+# INGESTION READINESS CHECK
+# ============================================================================
+def is_ingestion_ready() -> bool:
+    """
+    Verifica se a ingestão concluiu via arquivo de flag no filesystem.
+    Arquivo criado por entrypoint.sh após worker_ingest_buildtime.py concluir.
+    """
+    import os
+    flag_file = "/tmp/ingestion_complete"
+    exists = os.path.exists(flag_file)
+    if exists:
+        logger.info("✅ Ingestão concluída (flag encontrada)")
+    return exists
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _ingestion_ready
     logger.info(f"Iniciando humanos-digitais-tts-rag-llm v{BACKEND_VERSION}")
     
     translation_available = i18n_engine is not None
@@ -91,19 +104,11 @@ async def lifespan(app: FastAPI):
     logger.info(f"Traducao disponivel: {translation_available}")
     logger.info(f"TTS/Visemes disponivel: {tts_available}")
     
-    # Verificar se ChromaDB ja tem dados (ingestao pode estar rodando em background)
-    try:
-        if rag_engine:
-            collections = rag_engine.get_available_collections()
-            if collections:
-                _ingestion_ready = True
-                logger.info(f"✅ {len(collections)} colecoes disponiveis no startup")
-            else:
-                logger.info("⏳ Ingestao em background — RAG indisponivel temporariamente")
-        else:
-            logger.warning("⚠️ RAG engine nao inicializado")
-    except Exception as e:
-        logger.warning(f"⚠️ ChromaDB ainda nao pronto: {e}")
+    # Verificar se ingestão já foi concluída
+    if is_ingestion_ready():
+        logger.info("✅ Ingestão já concluída (flag encontrada)")
+    else:
+        logger.info("⏳ Aguardando ingestão em background...")
     
     yield
     logger.info("Desligando servidor")
@@ -121,12 +126,25 @@ if validation_available and rag_engine:
     logger.info("✅ Endpoint /api/validate-rag disponível")
 
 # ==================== CORS ====================
+# Configurar CORS com domínios do Vercel e desenvolvimento
 origins_str = os.getenv("CORS_ALLOW_ORIGINS", "")
-origins = [origin.strip() for origin in origins_str.split(",") if origin.strip()]
+origins_list = [origin.strip() for origin in origins_str.split(",") if origin.strip()]
+
+# Se nenhum domínio foi configurado via env, usar defaults
+if not origins_list:
+    origins_list = [
+        "https://humanosdigitais-website-fix.vercel.app",
+        "https://humanosdigitais-website.vercel.app",
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "*"  # remover em produção final se necessário
+    ]
+
+logger.info(f"CORS configurado para: {origins_list}")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins if origins else ["*"],
+    allow_origins=origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -237,24 +255,15 @@ async def avatar_speak(request: SpeakRequest):
         raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório para queries")
     
     # Verificar se ingestao esta completa
-    global _ingestion_ready
-    if not _ingestion_ready:
-        try:
-            if rag_engine:
-                cols = rag_engine.get_available_collections()
-                if cols:
-                    _ingestion_ready = True
-        except:
-            pass
-    
-    if not _ingestion_ready:
+    if not is_ingestion_ready():
         logger.warning(f"[{request_id}] RAG ainda nao pronto, retornando mensagem de espera")
         return {
             "success": True,
             "text_response": "Estou finalizando minha inicializacao. Por favor, tente novamente em 1-2 minutos.",
             "source": "initializing",
             "avatar_id": avatar_id,
-            "request_id": request_id
+            "request_id": request_id,
+            "visemes": []
         }
     
     if language not in app.state.supported_languages:
@@ -417,7 +426,8 @@ async def avatar_speak_v2(request: SpeakRequestV2):
             "source": "intro",
             "avatar_id": avatar_id,
             "language": language,
-            "request_id": request_id
+            "request_id": request_id,
+            "visemes": []
         }
     
     # Se event_type=query, usar pipeline normal (RAG + LLM)
