@@ -1,141 +1,89 @@
-# Configuração OpenRouter - ATTI Media Server
+# Configuração OpenRouter — ATTI Media Server
 
-## Status Atual
-
-✅ **Sistema Funcional com Fallback RAG**
-- Scores de retrieval: 0.35-0.41 (excelentes)
-- Fallback retorna conteúdo real do RAG
-- Pronto para produção
-
-⚠️ **OpenRouter Pendente**
-- Integração de código: ✅ Completa
-- Testes locais: ⚠️ Modelo não encontrado (404)
-- Possível causa: Chave/modelo inválido ou conta sem acesso
+Última atualização: 2026-05-17  
+Status: ✅ Testado e aprovado localmente
 
 ---
 
-## Configuração Local
+## Modelo validado
 
-### Pré-requisitos
-1. Conta no OpenRouter: https://openrouter.ai
-2. API Key válida com créditos
-3. Modelo disponível na conta
+Modelo testado e aprovado nos testes locais: **`baidu/cobuddy:free`**
 
-### Passos
-
-```bash
-# 1. Configurar variável de ambiente
-export OPENROUTER_API_KEY="sk-or-v1-sua-chave-aqui"
-
-# 2. (Opcional) Configurar modelo específico
-export OPENROUTER_MODEL="baidu/cobuddy:free"
-
-# 3. Testar
-python3 << 'EOF'
-import asyncio
-from src.llm_orchestrator import generate_llm_response
-
-async def test():
-    r = await generate_llm_response(
-        system_prompt='Você é um assistente.',
-        context='A: Informação importante',
-        history=[],
-        query='Qual é a informação?'
-    )
-    print(f'Source: {r["source"]}')
-    print(f'Response: {r["response"][:100]}')
-
-asyncio.run(test())
-EOF
-```
+Este é o único modelo que funciona com a conta OpenRouter fornecida.
 
 ---
 
-## Configuração no Render
+## Variáveis de ambiente para o Render
 
-### 1. Adicionar Variáveis de Ambiente
+Configure em: Dashboard > seu serviço > Environment > Add Variable
 
-No Render Dashboard → Environment:
+| Variável | Valor |
+|----------|-------|
+| `OPENROUTER_API_KEY` | sua chave `sk-or-v1-...` |
+| `OPENROUTER_MODEL` | `baidu/cobuddy:free` |
+| `KNOWLEDGE_MODE` | `runtime` |
+| `ALLOW_MISSING_AVATARS` | `true` |
+| `PORT` | `8000` |
 
-```
-OPENROUTER_API_KEY=sk-or-v1-sua-chave-aqui
-OPENROUTER_MODEL=baidu/cobuddy:free
-```
+**ATENÇÃO:** NÃO configure `OLLAMA_URL` nem `REDIS_URL` no Render.
 
-### 2. Modelos Disponíveis
+---
 
-Verifique em: https://openrouter.ai/models
+## Comportamento do sistema em produção
 
-Modelos testados e recomendados:
-- `baidu/cobuddy:free`
-- `baidu/cobuddy:free`
-- `baidu/cobuddy:free`
+1. **Tenta Ollama local** → falha silenciosamente (não instalado no Render)
+2. **Tenta OpenRouter** (`baidu/cobuddy:free`) → resposta em 5-10s
+3. **Fallback RAG interno** → instantâneo (se OpenRouter falhar)
 
-### 3. Deploy
+---
 
+## Teste pós-deploy
+
+Execute após configurar o Render:
+
+### Teste intro
 ```bash
-git push origin main
-# Render detectará as mudanças e fará deploy automático
+curl -X POST https://seu-servico.onrender.com/api/avatar/speak \
+  -H "Content-Type: application/json" \
+  -d '{"avatar_id":"sofia","text":"","event_type":"intro"}'
+```
+
+**Esperado:**
+```json
+{
+  "text_response": "Olá! Sou Sofia. Como posso ajudar?",
+  "source": "intro"
+}
+```
+
+### Teste query com LLM
+```bash
+curl -X POST https://seu-servico.onrender.com/api/avatar/speak \
+  -H "Content-Type: application/json" \
+  -d '{"avatar_id":"sofia","text":"O que você faz?","event_type":"query"}'
+```
+
+**Esperado:**
+```json
+{
+  "source": "openrouter",
+  "text_response": "Sou a Sofia, sua assistente digital especializada em..."
+}
 ```
 
 ---
 
 ## Troubleshooting
 
-### Erro: "No endpoints found for [modelo]"
-
-**Causa:** Modelo não existe ou não está disponível na sua conta
-
-**Solução:**
-1. Acesse https://openrouter.ai/models
-2. Procure por modelos gratuitos
-3. Copie o nome exato (ex: `baidu/cobuddy:free`)
-4. Atualize `OPENROUTER_MODEL` no Render
-
-### Erro: "Unauthorized" (401)
-
-**Causa:** API Key inválida ou expirada
-
-**Solução:**
-1. Gere nova chave em https://openrouter.ai/keys
-2. Atualize `OPENROUTER_API_KEY` no Render
-3. Aguarde 5 minutos para redeploy
-
-### Sem erro, mas source='fallback'
-
-**Causa:** OpenRouter não respondeu, sistema caiu para fallback
-
-**Solução:**
-1. Verifique logs do Render
-2. Confirme que a chave está correta
-3. Verifique se há créditos disponíveis
-4. Tente com modelo diferente
+| Problema | Causa | Solução |
+|----------|-------|---------|
+| `source=rag_fallback` | OpenRouter não configurado | Verifique `OPENROUTER_API_KEY` no Render |
+| Erro 404 no modelo | Modelo não existe | Confirme `OPENROUTER_MODEL=baidu/cobuddy:free` |
+| Erro 401 | Chave inválida | Gere nova chave em https://openrouter.ai/keys |
+| Timeout (>30s) | Modelo sobrecarregado | Tente novamente em alguns minutos |
 
 ---
 
-## Comportamento do Sistema
-
-### Com OpenRouter Configurado
-1. Tenta Ollama (local) → 2s
-2. Tenta OpenRouter (cloud) → 5-10s
-3. Fallback RAG (conteúdo real) → instantâneo
-
-### Sem OpenRouter (Fallback Apenas)
-- Retorna conteúdo real do RAG
-- Sem processamento de LLM
-- Respostas diretas dos documentos
-
----
-
-## Próximos Passos
-
-1. **Validar Modelo:** Confirme qual modelo está disponível na sua conta
-2. **Atualizar Chave:** Se necessário, gere nova chave
-3. **Testar Localmente:** Execute o teste acima
-4. **Deploy:** Atualize variáveis no Render
-5. **Monitorar:** Verifique logs de produção
-
----
-
-**Última Atualização:** 2026-05-17  
-**Status:** Pronto para produção (com ou sem OpenRouter)
+**Versão:** 1.0  
+**Commit:** c7340d4  
+**Status:** 🟢 Pronto para deploy
