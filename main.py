@@ -259,11 +259,14 @@ async def avatar_speak(request: SpeakRequest):
         logger.warning(f"[{request_id}] RAG ainda nao pronto, retornando mensagem de espera")
         return {
             "success": True,
-            "text_response": "Estou finalizando minha inicializacao. Por favor, tente novamente em 1-2 minutos.",
+            "text_response": "Estou finalizando minha inicialização. Por favor, tente novamente em 1 minuto.",
+            "visemes": [],
+            "audio": None,
             "source": "initializing",
             "avatar_id": avatar_id,
-            "request_id": request_id,
-            "visemes": []
+            "rag_used": False,
+            "docs_found": 0,
+            "request_id": request_id
         }
     
     if language not in app.state.supported_languages:
