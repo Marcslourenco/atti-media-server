@@ -1,6 +1,7 @@
 import os
 import logging
 import asyncio
+import re
 from pathlib import Path
 from typing import Optional
 from enum import Enum
@@ -13,6 +14,31 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 
 BACKEND_VERSION = "7.0.0"
+
+
+def sanitize_for_tts(text: str) -> str:
+    """Remove markdown, emojis e estados de UI para TTS limpo."""
+    if not text:
+        return ""
+    
+    # Remove markdown com conteudo: **bold**, *italic*, _underline_, __strong__
+    text = re.sub(r'\*\*[^*]*\*\*', '', text)  # **bold**
+    text = re.sub(r'__[^_]*__', '', text)  # __strong__
+    text = re.sub(r'\*[^*]*\*', '', text)  # *italic*
+    text = re.sub(r'_[^_]*_', '', text)  # _underline_
+    
+    # Remove parenteses com conteudo (estados UI, descricoes)
+    # Exemplo: (Rafael esta se preparando...), (carregando...)
+    text = re.sub(r'\([^)]*\)', '', text)
+    
+    # Remove emojis (unicode range)
+    text = re.sub(r'[\U0001F300-\U0001F9FF]', '', text)
+    
+    # Remove multiplos espacos
+    text = re.sub(r'\s+', ' ', text)
+    
+    # Remove espacos nas extremidades
+    return text.strip()
 
 
 class EventType(str, Enum):
@@ -232,7 +258,7 @@ async def avatar_speak(request: SpeakRequest):
         visemes = []
         if viseme_sync:
             try:
-                result = await viseme_sync.synthesize_with_visemes(intro_text, avatar_id, language)
+                result = await viseme_sync.synthesize_with_visemes(sanitize_for_tts(intro_text), avatar_id, language)
                 if result:
                     audio_data = result.get("audio")
                     visemes = result.get("visemes", [])
@@ -256,16 +282,35 @@ async def avatar_speak(request: SpeakRequest):
     
     # Verificar se ingestao esta completa
     if not is_ingestion_ready():
-        logger.warning(f"[{request_id}] RAG ainda nao pronto, retornando mensagem de espera")
+        logger.warning(f"[{request_id}] RAG ainda nao pronto, gerando TTS do fallback")
+        fallback_text = (
+            "Ainda estou organizando meu conhecimento. "
+            "Por favor, tente novamente em instantes."
+        )
+        
+        # Gerar áudio para o fallback
+        audio_data = None
+        visemes = []
+        if viseme_sync:
+            try:
+                result = await viseme_sync.synthesize_with_visemes(
+                    sanitize_for_tts(fallback_text), avatar_id, language or "pt-BR"
+                )
+                if result:
+                    audio_data = result.get("audio")
+                    visemes = result.get("visemes", [])
+                    logger.info(f"[{request_id}] TTS fallback: {len(audio_data) if audio_data else 0} bytes")
+            except Exception as e:
+                logger.warning(f"[{request_id}] TTS fallback erro: {e}")
+        
         return {
             "success": True,
-            "text_response": "Estou finalizando minha inicialização. Por favor, tente novamente em 1 minuto.",
-            "visemes": [],
-            "audio": None,
-            "source": "initializing",
+            "text_response": fallback_text,
+            "audio_data": audio_data,
+            "visemes": visemes,
+            "source": "rag_loading",
             "avatar_id": avatar_id,
-            "rag_used": False,
-            "docs_found": 0,
+            "language": language or "pt-BR",
             "request_id": request_id
         }
     
@@ -369,7 +414,7 @@ async def avatar_speak(request: SpeakRequest):
     if viseme_sync:
         try:
             logger.info(f"Gerando áudio com resposta: {response_text[:100]}")
-            result = await viseme_sync.synthesize_with_visemes(response_text, avatar_id, language)
+            result = await viseme_sync.synthesize_with_visemes(sanitize_for_tts(response_text), avatar_id, language)
             if result:
                 audio_data = result.get("audio")
                 visemes = result.get("visemes", [])
@@ -465,7 +510,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     visemes = []
     if viseme_sync:
         try:
-            result = await viseme_sync.synthesize_with_visemes(response_text, avatar_id, language)
+            result = await viseme_sync.synthesize_with_visemes(sanitize_for_tts(response_text), avatar_id, language)
             if result:
                 audio_data = result.get("audio")
                 visemes = result.get("visemes", [])
