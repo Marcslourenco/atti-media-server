@@ -331,7 +331,13 @@ def validate_collections() -> Dict:
     """
     try:
         import chromadb
-        client = chromadb.PersistentClient(path="/app/chroma_db")
+        import os
+        # Usar o mesmo path da ingestão (não hardcoded)
+        persist_dir = os.environ.get("CHROMA_DB_PATH",
+            "/tmp/chroma_db" if os.environ.get("KNOWLEDGE_MODE","runtime") == "runtime"
+            else "/app/chroma_db"
+        )
+        client = chromadb.PersistentClient(path=persist_dir)
         collections = {col.name: col for col in client.list_collections()}
         
         expected = [f"{avatar}_knowledge" for avatar in AvatarRAGEngine.AVATARS]
