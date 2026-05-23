@@ -99,8 +99,12 @@ class AvatarRAGEngine:
         Não faz ingestão em runtime.
         """
         # Usar /tmp/chroma_db em runtime, /app/chroma_db em build
+        # Mas permite override via variável de ambiente CHROMA_DB_PATH
         if persist_dir is None:
-            persist_dir = "/tmp/chroma_db" if KNOWLEDGE_MODE == "runtime" else "/app/chroma_db"
+            persist_dir = os.environ.get(
+                "CHROMA_DB_PATH",
+                "/tmp/chroma_db" if KNOWLEDGE_MODE == "runtime" else "/app/chroma_db"
+            )
         
         logger.info(f"🔍 ARQUIVO CHROMA EM USO: {__file__}")
         logger.info(f"🔍 PERSIST_DIR: {persist_dir} (KNOWLEDGE_MODE={KNOWLEDGE_MODE})")
