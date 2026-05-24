@@ -10,6 +10,14 @@ import onnxruntime
 print(f'✅ onnxruntime {onnxruntime.__version__} OK')
 "
 
+# Exportar CHROMA_DB_PATH se não estiver definido
+if [ -z "$CHROMA_DB_PATH" ]; then
+    export CHROMA_DB_PATH="/data/chroma_db"
+    echo "🔧 CHROMA_DB_PATH não definido, usando default: $CHROMA_DB_PATH"
+else
+    echo "🔧 CHROMA_DB_PATH já definido: $CHROMA_DB_PATH"
+fi
+
 # Remove flag antiga se existir (deploy novo = ingestão nova)
 rm -f /tmp/ingestion_complete
 echo "🗑️ Flag de ingestão anterior removida"
