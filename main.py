@@ -596,6 +596,58 @@ async def translate_text(request: TranslationRequest):
         logger.error(f"Erro na tradução: {e}")
         raise HTTPException(status_code=500, detail=f"Erro na tradução: {str(e)}")
 
+# ==================== AVATARES ====================
+@app.get("/api/avatars")
+async def get_avatars():
+    """
+    Endpoint dinâmico que varre o diretório /app/knowledge
+    e retorna lista de avatares com metadados extraídos.
+    """
+    knowledge_dir = Path("/app/knowledge")
+    avatares = []
+    
+    # Fallback para ambiente local
+    if not knowledge_dir.exists():
+        knowledge_dir = Path("./knowledge")
+    
+    if not knowledge_dir.exists():
+        return {"success": False, "avatares": [], "total": 0, "error": "Knowledge directory not found"}
+        
+    for avatar_dir in sorted(knowledge_dir.iterdir()):
+        # Ignora arquivos ou pastas de sistema
+        if not avatar_dir.is_dir() or avatar_dir.name.startswith((".", "__", "docs")):
+            continue
+            
+        avatar_id = avatar_dir.name
+        role = "Consultor(a) Digital"  # Fallback padrão
+        
+        # Tenta extrair a role dinamicamente do system_prompt
+        prompt_file = avatar_dir / "prompts" / "system_prompt.txt"
+        if prompt_file.exists():
+            try:
+                with open(prompt_file, "r", encoding="utf-8") as f:
+                    first_line = f.readline().strip().lower()
+                    if "você é" in first_line or "voce é" in first_line:
+                        # Extrai simplificado: "Você é Marina, assistente..." -> "assistente"
+                        parts = first_line.split("você é")[-1].split(",")[0].strip()
+                        if parts:
+                            role = parts.title()
+                        else:
+                            role = "Consultor(a) Digital"
+            except Exception as e:
+                logger.warning(f"Erro ao ler prompt de {avatar_id}: {e}")
+                pass
+                
+        avatares.append({
+            "avatar_id": avatar_id,
+            "nome": avatar_id.replace("_", " ").title(),
+            "role": role,
+            "saudacao": f"Oi! Eu sou {avatar_id.replace('_', ' ').title()}. Como posso ajudar?",
+            "imagem": f"https://raw.githubusercontent.com/Marcslourenco/humanosdigitais-website/main/assets/avatares/{avatar_id}-principal.png"
+        })
+        
+    return {"success": True, "avatares": avatares, "total": len(avatares)}
+
 # ==================== STARTUP ====================
 if __name__ == "__main__":
     import uvicorn
