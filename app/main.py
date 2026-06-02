@@ -268,6 +268,29 @@ async def serve_stream(filename: str):
 # ── Avatares ──────────────────────────────────────────────────────────────
 from pathlib import Path
 
+# ── Mapeamento de imagens de avatares ──────────────────────────────────────
+AVATAR_IMAGE_MAP = {
+    "sofia":         "estaticas/01-sofia-principal.png",
+    "rafael":        "estaticas/02-rafael-principal.png",
+    "clara":         "estaticas/03-clara-principal.png",
+    "lucas":         "estaticas/04-lucas-principal.png",
+    "amanda":        "estaticas/05-amanda-principal.png",
+    "fernanda":      "estaticas/06-fernanda-principal.png",
+    "marina":        "estaticas/07-marina-principal.png",
+    "roberto":       "estaticas/08-roberto-principal.png",
+    "luisa":         "estaticas/09-luisa-principal.png",
+    "lais":          "estaticas/10-lais-principal.png",
+    "paula":         "estaticas/11-paula-principal.png",
+    "bruno":         "estaticas/12-bruno-principal.png",
+    "giovana":       "estaticas/13-giovana-principal.png",
+    "marcos":        "estaticas/14-marcos-principal.png",
+    "carol":         "estaticas/15-carol-principal.png",
+    "bruno_giovana": "estaticas/12-bruno-principal.png",
+    "marcos_carol":  "estaticas/14-marcos-principal.png",
+}
+
+GH_BASE = "https://raw.githubusercontent.com/Marcslourenco/humanosdigitais-website/main/assets/avatares/"
+
 @app.get("/api/avatars", tags=["avatars"])
 async def get_avatars():
     """
@@ -308,13 +331,17 @@ async def get_avatars():
             except Exception as e:
                 logger.warning(f"Erro ao ler prompt de {avatar_id}: {e}")
                 pass
+        
+        # Usar mapeamento para imagens (com fallback)
+        image_path = AVATAR_IMAGE_MAP.get(avatar_id, f"estaticas/{avatar_id}-principal.png")
+        imagem_url = GH_BASE + image_path
                 
         avatares.append({
             "avatar_id": avatar_id,
             "nome": avatar_id.replace("_", " ").title(),
             "role": role,
             "saudacao": f"Oi! Eu sou {avatar_id.replace('_', ' ').title()}. Como posso ajudar?",
-            "imagem": f"https://raw.githubusercontent.com/Marcslourenco/humanosdigitais-website/main/assets/avatares/{avatar_id}-principal.png"
+            "imagem": imagem_url
         })
         
     return {"success": True, "avatares": avatares, "total": len(avatares)}
