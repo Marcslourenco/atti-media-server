@@ -654,3 +654,4 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
     logger.info(f"Starting server on port {port}")
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
+// FORCE RENDER REBUILD: Tue Jun  2 13:49:15 EDT 2026
