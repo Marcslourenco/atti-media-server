@@ -268,16 +268,6 @@ async def serve_stream(filename: str):
 # ── Avatares ──────────────────────────────────────────────────────────────
 from pathlib import Path
 
-# ── Mapeamento de imagens de avatares ──────────────────────────────────────
-# Mapeamento simples de avatar IDs para nomes de arquivo com estaticas/
-AVATAR_IMAGE_MAP = {
-    "sofia": "01", "rafael": "02", "clara": "03", "lucas": "04",
-    "amanda": "05", "fernanda": "06", "marina": "07", "roberto": "08",
-    "luisa": "09", "lais": "10", "paula": "11", "bruno": "12",
-    "giovana": "13", "marcos": "14", "carol": "15",
-    "bruno_giovana": "12", "marcos_carol": "14",
-}
-
 GH_BASE = "https://raw.githubusercontent.com/Marcslourenco/humanosdigitais-website/main/assets/avatares/"
 
 @app.get("/api/avatars", tags=["avatars"])
@@ -321,10 +311,9 @@ async def get_avatars():
                 logger.warning(f"Erro ao ler prompt de {avatar_id}: {e}")
                 pass
         
-        # Construir URL com estaticas/ usando mapeamento
-        num = AVATAR_IMAGE_MAP.get(avatar_id, avatar_id)
-        image_filename = f"estaticas/{num}-{avatar_id}-principal.png"
-        imagem_url = GH_BASE + image_filename
+        # Construir URL com estaticas/ usando replace simples
+        imagem_url = f"{GH_BASE}{avatar_id}-principal.png"
+        imagem_url = imagem_url.replace("/assets/avatares/", "/estaticas/")
                 
         avatares.append({
             "avatar_id": avatar_id,
