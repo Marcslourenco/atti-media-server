@@ -345,4 +345,4 @@ async def get_avatars():
         })
         
     return {"success": True, "avatares": avatares, "total": len(avatares)}
-// FORCE RENDER REBUILD: Tue Jun  2 15:56:11 EDT 2026
+# rebuild marker
