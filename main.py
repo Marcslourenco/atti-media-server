@@ -643,7 +643,7 @@ async def get_avatars():
             "nome": avatar_id.replace("_", " ").title(),
             "role": role,
             "saudacao": f"Oi! Eu sou {avatar_id.replace('_', ' ').title()}. Como posso ajudar?",
-            "imagem": f"https://raw.githubusercontent.com/Marcslourenco/humanosdigitais-website/main/assets/avatares/{avatar_id}-principal.png"
+            "imagem": f"/assets/avatares/estaticas/{avatar_id}-principal.png"
         })
         
     return {"success": True, "avatares": avatares, "total": len(avatares)}
