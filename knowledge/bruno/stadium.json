@@ -1,0 +1,75 @@
+{
+  "id": "STD-0001",
+  "source_type": "historical",
+  "nome_atual": "MorumBIS",
+  "nome_historico": "Estádio Cícero Pompeu de Toledo",
+  "apelido": "Morumbi",
+  "inauguracao": "1960-10-02",
+  "localizacao": {
+    "bairro": "Morumbi",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "pais": "Brasil"
+  },
+  "capacidade": {
+    "historica_maxima": 150000,
+    "atual_homologada": 67052,
+    "nota": "A capacidade histórica máxima se refere à época sem cadeiras. A capacidade atual é com todos os assentos."
+  },
+  "caracteristicas": {
+    "tipo": "Estádio particular (propriedade do clube)",
+    "cobertura": "Parcial",
+    "iluminacao": "Sim",
+    "grama": "Natural",
+    "arquiteto_original": "João Batista Vilanova Artigas e Carlos Cascaldi"
+  },
+  "reformas": [
+    {
+      "ano": "1970s–1980s",
+      "descricao": "Ampliações progressivas da capacidade."
+    },
+    {
+      "ano": "1990s",
+      "descricao": "Instalação de cadeiras e modernização das instalações."
+    },
+    {
+      "ano": "2020s",
+      "descricao": "Parceria com patrocinador resultou na renomeação para MorumBIS. Obras de modernização e melhoria da experiência do torcedor."
+    }
+  ],
+  "recordes_de_publico": [
+    {
+      "jogo": "Diversos jogos históricos",
+      "publico_estimado": 150000,
+      "nota": "Recorde estimado em jogos sem assentos, antes das reformas."
+    }
+  ],
+  "eventos_marcantes": [
+    {
+      "evento": "Jogos da Copa do Mundo FIFA 1950",
+      "nota": "Antes da construção do Morumbi, mas o estádio foi palco de clássicos históricos após sua inauguração."
+    },
+    {
+      "evento": "Final da Copa Libertadores 1993",
+      "descricao": "O Morumbi foi palco de decisões históricas do clube."
+    },
+    {
+      "evento": "Show de Frank Sinatra (1980)",
+      "descricao": "O Morumbi recebeu o icônico show de Frank Sinatra, um dos maiores eventos culturais realizados no estádio."
+    },
+    {
+      "evento": "Concertos e eventos culturais",
+      "descricao": "Por décadas foi o maior estádio particular do mundo, recebendo shows internacionais de artistas como Paul McCartney, Rolling Stones, entre outros."
+    },
+    {
+      "evento": "Copa América 2019 e Copa do Mundo 2014 (jogos)",
+      "descricao": "Palco de jogos das competições internacionais realizadas no Brasil."
+    }
+  ],
+  "curiosidades": [
+    "Foi considerado por décadas o maior estádio particular do mundo.",
+    "A construção durou mais de 10 anos.",
+    "O arquiteto Vilanova Artigas é um dos mais importantes da arquitetura modernista brasileira.",
+    "O nome MorumBIS vem da parceria de naming rights com o banco BIS (atual C6 Bank em algumas fases)."
+  ]
+}

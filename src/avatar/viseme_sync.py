@@ -308,6 +308,19 @@ class VisemeSyncEngine:
         voice = avatar_voices.get(language, {}).get(avatar_id.lower(), None)
         if not voice:
             # Fallback para voz padrão do idioma
+            voice = default_voices.get(language, "pt-BR-FranciscaNeural")
+        
+        # Definir rate/pitch para diferenciar timbres (limitação do Edge-TTS gratuito)
+        # pt-BR-FranciscaNeural (feminino) e pt-BR-AntonioNeural (masculino) são as únicas opções gratuitas
+        rate = "+0%"
+        pitch = "+0Hz"
+        if language == "pt-BR":
+            if avatar_id.lower() in ["clara", "fernanda", "marina"]:
+                rate = "-5%"
+                pitch = "+12Hz"
+            elif avatar_id.lower() in ["lucas", "roberto", "bruno", "marcos"]:
+                rate = "+5%"
+                pitch = "-12Hz"
             default_voices = {
                 "pt-BR": "pt-BR-FranciscaNeural",
                 "en": "en-US-JennyNeural",

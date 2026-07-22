@@ -90,7 +90,7 @@ class AvatarRAGEngine:
     AVATARS = [
         'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
         'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol',
-        'giovana', 'carol'
+        'giovana', 'carol', 'bruno', 'marcos'
     ]
     
     def __init__(self, persist_dir: str = None):

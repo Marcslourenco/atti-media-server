@@ -1,0 +1,101 @@
+[
+  {
+    "id": "RIV-0001",
+    "source_type": "historical",
+    "rival": "Sport Club Corinthians Paulista",
+    "tipo_classico": "Derby Paulista",
+    "historico_resumido": "O Derby Paulista é um dos clássicos mais populares do futebol brasileiro, reunindo as duas maiores torcidas do estado de São Paulo. O São Paulo e o Corinthians disputam a supremacia paulistana desde a fundação dos dois clubes. Historicamente, o São Paulo tem ligeiro aproveitamento superior em clássicos oficiais, mas os números variam conforme o período.",
+    "momentos_marcantes": [
+      "Final do Campeonato Paulista de 1992, vencida pelo São Paulo.",
+      "Clássicos decisivos no Campeonato Brasileiro, especialmente em 2006 e 2008.",
+      "O Derby é frequentemente o jogo de maior público e audiência televisiva do estado de São Paulo.",
+      "Rivalidade intensificada pelo fato de as torcidas dos dois clubes serem as maiores do Brasil."
+    ],
+    "nivel_emocional": "Máximo. O Derby Paulista paralisa a cidade de São Paulo. É o clássico de maior impacto social no estado.",
+    "curiosidade": "Corinthians e São Paulo juntos somam mais de 60% de todos os torcedores do estado de São Paulo."
+  },
+  {
+    "id": "RIV-0002",
+    "source_type": "historical",
+    "rival": "Sociedade Esportiva Palmeiras",
+    "tipo_classico": "Choque-Rei",
+    "historico_resumido": "O Choque-Rei é considerado por muitos o clássico mais equilibrado e de maior qualidade técnica do futebol brasileiro. São Paulo e Palmeiras são os dois clubes com mais títulos no futebol paulista, o que dá ao clássico um peso histórico imenso. A rivalidade tem raízes no elitismo de ambos os clubes e no orgulho de suas torcidas.",
+    "momentos_marcantes": [
+      "Finais do Campeonato Paulista disputadas entre os dois clubes em diferentes décadas.",
+      "Clássicos no Brasileirão de 2006, 2007 e 2008 quando o São Paulo era tricampeão.",
+      "Jogos de Libertadores em que os dois clubes se enfrentaram.",
+      "O Choque-Rei no Morumbi lotado é considerado um dos espetáculos mais belos do futebol brasileiro."
+    ],
+    "nivel_emocional": "Muito alto. Considerado o clássico mais técnico e equilibrado. A disputa é também pelo título de maior clube de São Paulo.",
+    "curiosidade": "O apelido 'Choque-Rei' sugere o embate entre dois reis do futebol paulista."
+  },
+  {
+    "id": "RIV-0003",
+    "source_type": "historical",
+    "rival": "Santos Futebol Clube",
+    "tipo_classico": "Clássico da Saudade / Majestoso",
+    "historico_resumido": "A rivalidade entre São Paulo e Santos tem raízes na disputa pela hegemonia do futebol paulista. O Santos de Pelé e o São Paulo de Telê Santana marcaram épocas diferentes, mas o clássico reúne duas das maiores histórias do futebol brasileiro.",
+    "momentos_marcantes": [
+      "Clássicos do Campeonato Paulista nos anos 1960, quando o Santos de Pelé dominava.",
+      "Confrontos na Copa Libertadores da América.",
+      "O São Paulo eliminou o Santos em edições de Copa do Brasil e Brasileirão."
+    ],
+    "nivel_emocional": "Alto. Embora não tenha a mesma frequência de clássicos que o Derby e o Choque-Rei, o histórico de grandes jogadores torna o confronto especial.",
+    "curiosidade": "O clássico é também chamado de 'Majestoso' em algumas referências da imprensa esportiva."
+  },
+  {
+    "id": "RIV-0004",
+    "source_type": "historical",
+    "rival": "Sport Club Internacional",
+    "tipo_classico": "Rivalidade Nacional",
+    "historico_resumido": "A rivalidade entre São Paulo e Internacional se intensificou especialmente a partir dos anos 2000, quando ambos disputavam os principais títulos nacionais e internacionais. O Internacional de Beira-Rio e o São Paulo do Morumbi se tornaram os dois grandes representantes do futebol brasileiro no século XXI.",
+    "momentos_marcantes": [
+      "Semifinal da Copa Libertadores de 2005, vencida pelo São Paulo e que resultou no título mundial.",
+      "Disputas pelo Campeonato Brasileiro em 2006, 2007 e 2008.",
+      "O Internacional venceu a Copa Libertadores 2006 e Copa do Mundo de Clubes 2006, um ano após o título do São Paulo."
+    ],
+    "nivel_emocional": "Alto no contexto nacional. Rivalidade de prestígio, disputada em grandes fases para os dois clubes.",
+    "curiosidade": "Os dois clubes dividiram a hegemonia do futebol brasileiro na primeira década dos anos 2000."
+  },
+  {
+    "id": "RIV-0005",
+    "source_type": "historical",
+    "rival": "Club Atletico Independiente (ARG)",
+    "tipo_classico": "Rivalidade Continental",
+    "historico_resumido": "O confronto entre São Paulo e o Independiente aconteceu em momentos decisivos da Copa Libertadores. O Independiente é o maior vencedor da Libertadores e o São Paulo precisou superar essa tradição argentina para conquistar seus títulos continentais.",
+    "momentos_marcantes": [
+      "Confrontos na fase de grupos e eliminatórias da Copa Libertadores em diferentes edições.",
+      "A superação de clubes argentinos foi essencial para o São Paulo nas campanhas campeãs de 1992 e 1993."
+    ],
+    "nivel_emocional": "Médio-alto. Rivalidade de respeito e disputa continental.",
+    "curiosidade": "O Independiente é o maior campeão da Copa Libertadores com 7 títulos."
+  },
+  {
+    "id": "RIV-0006",
+    "source_type": "historical",
+    "rival": "Newell's Old Boys (ARG)",
+    "tipo_classico": "Final da Libertadores 1992",
+    "historico_resumido": "O Newell's Old Boys foi o adversário do São Paulo na final da Copa Libertadores de 1992. O confronto ficou marcado pela disputa de pênaltis em que o São Paulo conquistou seu primeiro título continental.",
+    "momentos_marcantes": [
+      "Final da Copa Libertadores 1992: São Paulo 0 x 0 Newell's (com vitória do SPFC nos pênaltis).",
+      "O Newell's era treinado por Marcelo Bielsa na época.",
+      "Raí converteu pênalti decisivo na final."
+    ],
+    "nivel_emocional": "Histórico. O jogo representa o início da era de ouro do São Paulo.",
+    "curiosidade": "O Newell's de Bielsa era considerado o melhor clube sul-americano naquele período."
+  },
+  {
+    "id": "RIV-0007",
+    "source_type": "historical",
+    "rival": "Liverpool FC (ING)",
+    "tipo_classico": "Final da Copa do Mundo de Clubes FIFA 2005",
+    "historico_resumido": "O Liverpool de Rafa Benítez era favorito na final do Mundial de Clubes FIFA de 2005, após ter conquistado a UEFA Champions League no mesmo ano (na memorável final contra o Milan). O São Paulo surpreendeu o mundo ao derrotá-lo com gol de Mineiro.",
+    "momentos_marcantes": [
+      "Final da Copa do Mundo de Clubes FIFA 2005: São Paulo 1 x 0 Liverpool.",
+      "Gol de Mineiro aos 27 minutos do segundo tempo.",
+      "Rogério Ceni fez defesas fundamentais no jogo."
+    ],
+    "nivel_emocional": "Máximo histórico. A vitória sobre o Liverpool consagrou o tricampeonato mundial e chocou o mundo.",
+    "curiosidade": "O Liverpool havia eliminado o Milan na Champions daquele ano com uma das maiores viradas da história, tornando a derrota para o São Paulo ainda mais simbólica."
+  }
+]

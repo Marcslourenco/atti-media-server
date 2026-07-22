@@ -51,6 +51,7 @@ class SpeakRequest(BaseModel):
     language: Optional[str] = Field("pt-BR", description="Idioma do texto (pt-BR, en, es)")
     event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento (intro ou query)")
     session_id: Optional[str] = Field(None, description="ID da sessão")
+    context_url: Optional[str] = Field(None, description="URL da página do visitante")
 
 class TTSRequest(BaseModel):
     text: str = Field(..., description="Texto para converter em fala")
@@ -245,8 +246,9 @@ async def avatar_speak(request: SpeakRequest):
     language = request.language or "pt-BR"
     event_type = request.event_type
     session_id = request.session_id
+    context_url = request.context_url
     
-    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}")
+    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}, context_url={context_url}")
     
     # CORREÇÃO A: Se event_type=intro, retornar saudação automática
     if event_type == EventType.INTRO:
@@ -368,6 +370,10 @@ async def avatar_speak(request: SpeakRequest):
             logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
             system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
         
+        # Injetar context_url no system prompt
+        if context_url:
+            system_prompt += f"\nO visitante está na página: {context_url}."
+        
         # 4. Gerar resposta com LLM real (OpenRouter)
         try:
             from src.llm_orchestrator import generate_llm_response
@@ -391,7 +397,7 @@ async def avatar_speak(request: SpeakRequest):
                 response_text = context_docs
                 llm_source = "rag_fallback"
             else:
-                response_text = text
+                response_text = "Desculpe, não encontrei informações sobre esse assunto no meu conhecimento atual."
                 llm_source = "fallback"
         
         # 5. Salvar na memória da sessão
@@ -406,7 +412,7 @@ async def avatar_speak(request: SpeakRequest):
     except Exception as e:
         logger.error(f"[{request_id}] ❌ Pipeline erro: {e}", exc_info=True)
         fallback_reason = "PIPELINE_ERROR"
-        response_text = text
+        response_text = "Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente."
     
     # 2️⃣ Gerar áudio e visemes com a resposta inteligente
     audio_data = None
