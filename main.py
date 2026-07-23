@@ -49,9 +49,9 @@ class SpeakRequest(BaseModel):
     avatar_id: str = Field(..., description="ID do avatar")
     text: str = Field(default="", description="Texto para sintetizar")
     language: Optional[str] = Field("pt-BR", description="Idioma do texto (pt-BR, en, es)")
-    event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento (intro ou query)")
+    event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento")
     session_id: Optional[str] = Field(None, description="ID da sessão")
-    context_url: Optional[str] = Field(None, description="URL da página do visitante")
+    context_url: Optional[str] = Field(None, description="URL da página onde o visitante está")
 
 class TTSRequest(BaseModel):
     text: str = Field(..., description="Texto para converter em fala")
@@ -252,7 +252,7 @@ async def avatar_speak(request: SpeakRequest):
     
     # CORREÇÃO A: Se event_type=intro, retornar saudação automática
     if event_type == EventType.INTRO:
-        intro_text = f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
         logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
         
         # Gerar áudio se disponível
@@ -372,7 +372,7 @@ async def avatar_speak(request: SpeakRequest):
         
         # Injetar context_url no system prompt
         if context_url:
-            system_prompt += f"\nO visitante está na página: {context_url}."
+            system_prompt += f"\n\nO visitante está atualmente na página: {context_url}"
         
         # 4. Gerar resposta com LLM real (OpenRouter)
         try:
@@ -412,7 +412,10 @@ async def avatar_speak(request: SpeakRequest):
     except Exception as e:
         logger.error(f"[{request_id}] ❌ Pipeline erro: {e}", exc_info=True)
         fallback_reason = "PIPELINE_ERROR"
-        response_text = "Desculpe, ocorreu um erro ao processar sua pergunta. Por favor, tente novamente."
+        response_text = (
+            "Desculpe, tive uma dificuldade técnica para processar sua pergunta. "
+            "Poderia reformular ou tentar novamente?"
+        )
     
     # 2️⃣ Gerar áudio e visemes com a resposta inteligente
     audio_data = None

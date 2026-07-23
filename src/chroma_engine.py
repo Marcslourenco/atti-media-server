@@ -89,8 +89,9 @@ class AvatarRAGEngine:
     
     AVATARS = [
         'sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda',
-        'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol',
-        'giovana', 'carol', 'bruno', 'marcos'
+        'marina', 'roberto', 'luisa', 'lais', 'paula',
+        'bruno', 'giovana', 'marcos', 'carol',
+        'bruno_giovana', 'marcos_carol'
     ]
     
     def __init__(self, persist_dir: str = None):
@@ -174,6 +175,17 @@ class AvatarRAGEngine:
                     logger.info(f"✅ {avatar_id}: {count} docs disponíveis")
                 else:
                     logger.warning(f"⚠️ {avatar_id}: Coleção não encontrada (será retornado fallback)")
+            
+            # Alias: bruno → bruno_giovana_knowledge, marcos → marcos_carol_knowledge
+            ALIAS_MAP = {
+                'bruno': 'bruno_giovana_knowledge',
+                'marcos': 'marcos_carol_knowledge',
+            }
+            for alias_id, real_collection_name in ALIAS_MAP.items():
+                if alias_id not in self.collections and real_collection_name in existing_collections:
+                    self.collections[alias_id] = existing_collections[real_collection_name]
+                    count = existing_collections[real_collection_name].count()
+                    logger.info(f"✅ {alias_id}: {count} docs disponíveis (via alias {real_collection_name})")
         
         except Exception as e:
             logger.error(f"❌ Erro ao listar coleções: {e}", exc_info=True)
@@ -345,6 +357,8 @@ def validate_collections() -> Dict:
         collections = {col.name: col for col in client.list_collections()}
         
         expected = [f"{avatar}_knowledge" for avatar in AvatarRAGEngine.AVATARS]
+        # bruno e marcos usam coleções alias, não precisam de coleção própria
+        expected = [e for e in expected if e not in ('bruno_knowledge', 'marcos_knowledge')]
         missing = [c for c in expected if c not in collections]
         
         if missing:
