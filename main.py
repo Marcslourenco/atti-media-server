@@ -106,16 +106,19 @@ except Exception as e:
 # INGESTION READINESS CHECK
 # ============================================================================
 def is_ingestion_ready() -> bool:
-    """
-    Verifica se a ingestão concluiu via arquivo de flag no filesystem.
-    Arquivo criado por entrypoint.sh após worker_ingest_buildtime.py concluir.
-    """
-    import os
-    flag_file = "/tmp/ingestion_complete"
-    exists = os.path.exists(flag_file)
-    if exists:
-        logger.info("✅ Ingestão concluída (flag encontrada)")
-    return exists
+    """Gate baseado em colecoes reais, não em flag volátil."""
+    if os.path.exists("/tmp/ingestion_complete"):
+        return True
+    try:
+        if rag_engine and hasattr(rag_engine, 'client') and rag_engine.client:
+            cols = rag_engine.client.list_collections()
+            total = sum(c.count() for c in cols)
+            if total > 0:
+                logger.info(f"Ingestão pronta via coleções persistidas (sem flag): {len(cols)} coleções, {total} docs")
+                return True
+    except Exception as e:
+        logger.warning(f"check coleções falhou: {e}")
+    return False
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -337,13 +340,33 @@ async def avatar_speak(request: SpeakRequest):
         context_docs = ""
         if rag_engine:
             try:
-                result = rag_engine.generate_response(text, avatar_id, language)
-                if result and isinstance(result, str) and len(result) > 0:
-                    context_docs = result
+                # Consulta real para obter metricas
+                query_result = rag_engine.query(text, avatar_id, n_results=3)
+                if query_result and not query_result.get("error"):
+                    docs = query_result.get("documents", [])
+                    distances = query_result.get("distances", [])
+                    # Achatar docs (pode ser lista de listas)
+                    flat_docs = []
+                    for d in docs:
+                        if isinstance(d, list):
+                            flat_docs.extend(d)
+                        else:
+                            flat_docs.append(d)
+                    context_docs = "\n".join(flat_docs)
                     rag_used = True
-                    docs_found = 1
-                    avg_score = 0.25
-                    logger.info(f"[{request_id}] ✅ RAG: {len(context_docs)} chars de contexto")
+                    docs_found = len(flat_docs)
+                    # Calcular avg_score real: 1 - distancia (quanto menor a distancia, melhor)
+                    flat_distances = []
+                    for dd in distances:
+                        if isinstance(dd, list):
+                            flat_distances.extend(dd)
+                        else:
+                            flat_distances.append(dd)
+                    if flat_distances:
+                        avg_score = sum(1 - d for d in flat_distances if isinstance(d, (int, float))) / len(flat_distances)
+                    logger.info(f"[{request_id}] ✅ RAG: {docs_found} docs, avg_score={avg_score:.3f}")
+                else:
+                    logger.info(f"[{request_id}] ⚠️ RAG sem resultados para {avatar_id}")
             except Exception as e:
                 logger.warning(f"[{request_id}] ⚠️ RAG erro: {e}")
         
@@ -392,13 +415,23 @@ async def avatar_speak(request: SpeakRequest):
         except Exception as e:
             logger.error(f"[{request_id}] ❌ LLM erro: {e}", exc_info=True)
             fallback_reason = "LLM_ERROR"
-            # Fallback para RAG se LLM falhar
+            # Fallback: tenta formular resposta a partir do contexto via cascata
             if context_docs:
-                response_text = context_docs
-                llm_source = "rag_fallback"
+                try:
+                    from src.llm_orchestrator import generate_llm_response
+                    fr = await generate_llm_response(
+                        system_prompt + "\nResponda APENAS com base no contexto, em 1-2 frases.",
+                        context_docs, [], text
+                    )
+                    response_text = fr['response']
+                    llm_source = fr['source']
+                except Exception:
+                    from src.llm_orchestrator import _rag_fallback
+                    response_text = _rag_fallback(context_docs)
+                    llm_source = "rag_fallback"
             else:
-                response_text = "Desculpe, não encontrei informações sobre esse assunto no meu conhecimento atual."
-                llm_source = "fallback"
+                response_text = "Desculpe, não tenho informação sobre isso no momento."
+                llm_source = "no_context"
         
         # 5. Salvar na memória da sessão
         if session_id:
@@ -501,16 +534,31 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     if rag_engine:
         try:
             logger.info(f"[{request_id}] Chamando rag_engine.generate_response...")
-            result = rag_engine.generate_response(text, avatar_id, language)
-            if result and isinstance(result, str) and len(result) > 0:
-                response_text = result
+            # Consulta real para obter metricas
+            query_result = rag_engine.query(text, avatar_id, n_results=3)
+            if query_result and not query_result.get("error"):
+                docs = query_result.get("documents", [])
+                distances = query_result.get("distances", [])
+                flat_docs = []
+                for d in docs:
+                    if isinstance(d, list):
+                        flat_docs.extend(d)
+                    else:
+                        flat_docs.append(d)
+                flat_distances = []
+                for dd in distances:
+                    if isinstance(dd, list):
+                        flat_distances.extend(dd)
+                    else:
+                        flat_distances.append(dd)
+                docs_found = len(flat_docs)
+                if flat_distances:
+                    avg_score = sum(1 - d for d in flat_distances if isinstance(d, (int, float))) / len(flat_distances)
                 rag_used = True
-                docs_found = 1
-                avg_score = 0.25
-                logger.info(f"[{request_id}] ✅ RAG com resultados")
+                logger.info(f"[{request_id}] ✅ RAG v2: {docs_found} docs, avg_score={avg_score:.3f}")
             else:
                 fallback_reason = "NO_DOCS"
-                logger.info(f"[{request_id}] ⚠️ RAG retornou vazio")
+                logger.info(f"[{request_id}] ⚠️ RAG sem resultados")
         except Exception as e:
             fallback_reason = "RAG_ERROR"
             logger.error(f"[{request_id}] ERRO no RAG: {e}", exc_info=True)

@@ -14,8 +14,15 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 # Modelo padrão para Ollama (leve)
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "neural-chat")
 
-# Modelo gratuito do OpenRouter (Baidu Cobuddy - testado e funcional)
-OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "baidu/cobuddy:free")
+# Cascata de modelos free-only (validada em 23/07/2026 via API ao vivo)
+# Lidos de env OPENROUTER_MODELS (csv) com fallback para a lista default abaixo
+# Nao-reasoning primeiro (melhor para resposta curta em voz), reasoning no fim
+OPENROUTER_MODELS = os.getenv("OPENROUTER_MODELS", "").split(",") if os.getenv("OPENROUTER_MODELS") else [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "inclusionai/ling-3.0-flash:free",
+    "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+]
 
 async def _test_ollama() -> bool:
     """Testa se Ollama está disponível"""
@@ -71,49 +78,65 @@ async def _generate_with_openrouter(
     context: str,
     query: str
 ) -> Dict[str, str]:
-    """Gera resposta usando OpenRouter (free tier - Qwen)"""
-    logger.info(f"[LLMOrchestrator] Usando OpenRouter ({OPENROUTER_MODEL})")
-    
+    """Gera resposta usando cascata de modelos free do OpenRouter.
+    Tenta cada modelo em ordem; em 404/429/timeout/erro, cai no proximo.
+    NUNCA usa modelo pago."""
     if not OPENROUTER_API_KEY:
-        raise Exception("OPENROUTER_API_KEY não configurada")
+        raise Exception("OPENROUTER_API_KEY nao configurada")
     
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": f"Contexto: {context}\n\nPergunta: {query}"}
     ]
     
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.post(
-                OPENROUTER_URL,
-                headers={
-                    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                    "HTTP-Referer": "https://humanosdigitais.com",
-                    "X-Title": "Humanos Digitais"
-                },
-                json={
-                    "model": OPENROUTER_MODEL,
-                    "messages": messages,
-                    "temperature": 0.7,
-                    "max_tokens": 500
-                }
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                assistant_message = data["choices"][0]["message"]["content"]
-                logger.info(f"[LLMOrchestrator] OpenRouter respondeu: {len(assistant_message)} caracteres")
-                return {
-                    "response": assistant_message,
-                    "source": "openrouter"
-                }
-            else:
-                logger.error(f"[LLMOrchestrator] OpenRouter erro: {response.status_code}")
-                logger.error(f"[LLMOrchestrator] Resposta: {response.text}")
-                raise Exception(f"OpenRouter retornou {response.status_code}")
-    except Exception as e:
-        logger.error(f"[LLMOrchestrator] Erro ao chamar OpenRouter: {e}")
-        raise
+    last_err = None
+    for model in OPENROUTER_MODELS:
+        model = model.strip()
+        if not model:
+            continue
+        try:
+            logger.info(f"[LLMOrchestrator] Tentando OpenRouter com {model}")
+            async with httpx.AsyncClient(timeout=25) as client:
+                response = await client.post(
+                    OPENROUTER_URL,
+                    headers={
+                        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                        "HTTP-Referer": "https://humanosdigitais.com",
+                        "X-Title": "Humanos Digitais"
+                    },
+                    json={
+                        "model": model,
+                        "messages": messages,
+                        "temperature": 0.7,
+                        "max_tokens": 500
+                    }
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    assistant_message = data["choices"][0]["message"]["content"]
+                    logger.info(f"[LLMOrchestrator] {model} respondeu: {len(assistant_message)} caracteres")
+                    return {
+                        "response": assistant_message,
+                        "source": f"openrouter:{model}"
+                    }
+                elif response.status_code in (404, 429):
+                    logger.warning(f"[LLMOrchestrator] {model} falhou ({response.status_code}), tentando proximo")
+                    last_err = Exception(f"{model}: HTTP {response.status_code}")
+                    continue
+                else:
+                    logger.error(f"[LLMOrchestrator] {model} erro {response.status_code}: {response.text[:200]}")
+                    raise Exception(f"{model} retornou {response.status_code}")
+        except httpx.TimeoutException as e:
+            logger.warning(f"[LLMOrchestrator] {model} timeout: {e}, tentando proximo")
+            last_err = e
+            continue
+        except Exception as e:
+            logger.warning(f"[LLMOrchestrator] {model} falhou: {e}, tentando proximo")
+            last_err = e
+            continue
+    
+    raise Exception(f"Todos os modelos free falharam: {last_err}")
 
 def _rag_fallback(context_docs: str) -> str:
     """Fallback interno: retorna o conteúdo mais relevante do contexto RAG de forma limpa."""
