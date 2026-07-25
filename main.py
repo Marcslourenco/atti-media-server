@@ -498,17 +498,17 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     """Endpoint v2 com suporte a event_type (intro/query)"""
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
-    
+
     avatar_id = request.avatar_id
     text = request.text.strip() if request.text else ""
     language = request.language or "pt-BR"
     event_type = request.event_type
-    
+
     logger.info(f"[{request_id}] Avatar speak v2: avatar={avatar_id}, event_type={event_type}, language={language}")
-    
+
     # AÇÃO 1: Se event_type=intro, retornar saudação automática
     if event_type == EventType.INTRO:
-        intro_text = f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
         logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
         return {
             "success": True,
@@ -519,50 +519,105 @@ async def avatar_speak_v2(request: SpeakRequestV2):
             "request_id": request_id,
             "visemes": []
         }
-    
+
     # Se event_type=query, usar pipeline normal (RAG + LLM)
     if not text:
         raise HTTPException(status_code=400, detail="text não pode estar vazio para queries")
-    
-    # Resto do pipeline normal...
+
+    # Pipeline LLM completo com RAG (igual ao v1)
     response_text = text
+    llm_source = "fallback"
     rag_used = False
     docs_found = 0
     avg_score = 0.0
     fallback_reason = "NONE"
-    
-    if rag_engine:
+    context_docs = ""
+    context_url = None  # SpeakRequestV2 não tem context_url
+
+    try:
+        # 1. Buscar contexto do RAG
+        if rag_engine:
+            try:
+                query_result = rag_engine.query(text, avatar_id, n_results=3)
+                if query_result and not query_result.get("error"):
+                    docs = query_result.get("documents", [])
+                    distances = query_result.get("distances", [])
+                    flat_docs = []
+                    for d in docs:
+                        if isinstance(d, list):
+                            flat_docs.extend(d)
+                        else:
+                            flat_docs.append(d)
+                    context_docs = "\n".join(flat_docs)
+                    rag_used = True
+                    docs_found = len(flat_docs)
+                    flat_distances = []
+                    for dd in distances:
+                        if isinstance(dd, list):
+                            flat_distances.extend(dd)
+                        else:
+                            flat_distances.append(dd)
+                    if flat_distances:
+                        avg_score = sum(1 - d for d in flat_distances if isinstance(d, (int, float))) / len(flat_distances)
+                    logger.info(f"[{request_id}] ✅ RAG v2: {docs_found} docs, avg_score={avg_score:.3f}")
+                else:
+                    fallback_reason = "NO_DOCS"
+                    logger.info(f"[{request_id}] ⚠️ RAG sem resultados")
+            except Exception as e:
+                fallback_reason = "RAG_ERROR"
+                logger.error(f"[{request_id}] ERRO no RAG: {e}", exc_info=True)
+
+        # 2. Buscar system prompt do avatar
+        system_prompt = ""
         try:
-            logger.info(f"[{request_id}] Chamando rag_engine.generate_response...")
-            # Consulta real para obter metricas
-            query_result = rag_engine.query(text, avatar_id, n_results=3)
-            if query_result and not query_result.get("error"):
-                docs = query_result.get("documents", [])
-                distances = query_result.get("distances", [])
-                flat_docs = []
-                for d in docs:
-                    if isinstance(d, list):
-                        flat_docs.extend(d)
-                    else:
-                        flat_docs.append(d)
-                flat_distances = []
-                for dd in distances:
-                    if isinstance(dd, list):
-                        flat_distances.extend(dd)
-                    else:
-                        flat_distances.append(dd)
-                docs_found = len(flat_docs)
-                if flat_distances:
-                    avg_score = sum(1 - d for d in flat_distances if isinstance(d, (int, float))) / len(flat_distances)
-                rag_used = True
-                logger.info(f"[{request_id}] ✅ RAG v2: {docs_found} docs, avg_score={avg_score:.3f}")
-            else:
-                fallback_reason = "NO_DOCS"
-                logger.info(f"[{request_id}] ⚠️ RAG sem resultados")
+            from src.brain_manager import BrainManager
+            brain_manager = BrainManager()
+            system_prompt = brain_manager.get_system_prompt(avatar_id)
+            if not system_prompt:
+                system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
         except Exception as e:
-            fallback_reason = "RAG_ERROR"
-            logger.error(f"[{request_id}] ERRO no RAG: {e}", exc_info=True)
-    
+            logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
+            system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
+
+        # 3. Gerar resposta com LLM
+        try:
+            from src.llm_orchestrator import generate_llm_response
+            llm_result = await generate_llm_response(
+                system_prompt=system_prompt,
+                context=context_docs,
+                history=[],
+                query=text
+            )
+            response_text = llm_result['response']
+            llm_source = llm_result['source']
+            logger.info(f"[{request_id}] ✅ LLM v2 ({llm_source}): {len(response_text)} chars")
+        except Exception as e:
+            logger.error(f"[{request_id}] ❌ LLM erro: {e}", exc_info=True)
+            fallback_reason = "LLM_ERROR"
+            if context_docs:
+                try:
+                    from src.llm_orchestrator import generate_llm_response
+                    fr = await generate_llm_response(
+                        system_prompt + "\nResponda APENAS com base no contexto, em 1-2 frases.",
+                        context_docs, [], text
+                    )
+                    response_text = fr['response']
+                    llm_source = fr['source']
+                except Exception:
+                    from src.llm_orchestrator import _rag_fallback
+                    response_text = _rag_fallback(context_docs)
+                    llm_source = "rag_fallback"
+            else:
+                response_text = "Desculpe, não tenho informação sobre isso no momento."
+                llm_source = "no_context"
+    except Exception as e:
+        logger.error(f"[{request_id}] ❌ Pipeline v2 erro: {e}", exc_info=True)
+        fallback_reason = "PIPELINE_ERROR"
+        response_text = (
+            "Desculpe, tive uma dificuldade técnica para processar sua pergunta. "
+            "Poderia reformular ou tentar novamente?"
+        )
+
     audio_data = None
     visemes = []
     if viseme_sync:
@@ -573,7 +628,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
                 visemes = result.get("visemes", [])
         except Exception as e:
             logger.error(f"Erro ao gerar áudio: {e}")
-    
+
     latency_ms = int((time.time() - start_time) * 1000)
     structured_log = {
         "request_id": request_id,
@@ -586,7 +641,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
         "audio_generated": bool(audio_data),
         "visemes_count": len(visemes)
     }
-    
+
     return {
         "success": True,
         "text_response": response_text,
@@ -594,7 +649,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
         "visemes": visemes,
         "language": language,
         "avatar_id": avatar_id,
-        "source": "rag" if rag_used else "fallback",
+        "source": llm_source,
         "request_id": request_id,
         "metrics": structured_log
     }
