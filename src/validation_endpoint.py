@@ -64,11 +64,14 @@ def validate_rag_engine(rag_engine) -> Dict:
                         scores = []
                         for query in test_queries:
                             try:
-                                results_list = rag_engine.query(avatar_id, query, top_k=1)
-                                if results_list and len(results_list) > 0:
+                                res = rag_engine.query(query, avatar_id, n_results=1)
+                                docs = (res.get("documents") or [[]])[0]
+                                if docs and len(docs) > 0:
                                     avatar_result["queries_with_results"] += 1
-                                    scores.append(results_list[0].get('score', 0.0))
-                            except:
+                                    dists = (res.get("distances") or [[]])[0]
+                                    if dists:
+                                        scores.append(max(0.0, 1.0 - float(dists[0])))
+                            except Exception:
                                 pass
                         
                         avatar_result["queries_tested"] = len(test_queries)
