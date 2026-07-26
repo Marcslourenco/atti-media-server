@@ -237,6 +237,7 @@ class SpeakRequestV2(BaseModel):
     language: Optional[str] = Field("pt-BR", description="Idioma do texto")
     event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento")
     session_id: Optional[str] = Field(None, description="ID da sessão")
+    context_url: Optional[str] = Field(None, description="URL da página onde o visitante está")
 
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
@@ -532,7 +533,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     avg_score = 0.0
     fallback_reason = "NONE"
     context_docs = ""
-    context_url = None  # SpeakRequestV2 não tem context_url
+    context_url = request.context_url
 
     try:
         # 1. Buscar contexto do RAG
@@ -578,6 +579,10 @@ async def avatar_speak_v2(request: SpeakRequestV2):
         except Exception as e:
             logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
             system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
+
+        # Injetar context_url no system prompt
+        if context_url:
+            system_prompt = system_prompt + "\n\nO visitante está atualmente na página: " + context_url + ". Use essa informação para contextualizar sua resposta quando fizer sentido."
 
         # 3. Gerar resposta com LLM
         try:
