@@ -316,21 +316,20 @@ class VisemeSyncEngine:
         rate = "+0%"
         pitch = "+0Hz"
         if language == "pt-BR":
-            if avatar_id.lower() in ["sofia", "amanda", "giovana"]:
-                rate = "+0%"
-                pitch = "+0Hz"
-            elif avatar_id.lower() in ["clara", "fernanda", "luisa", "paula", "carol"]:
+            # Femininas: variar pitch para diferenciar timbres
+            if avatar_id.lower() in ["clara", "fernanda", "marina", "lais"]:
                 rate = "-3%"
                 pitch = "+8Hz"
-            elif avatar_id.lower() in ["marina", "lais"]:
+            elif avatar_id.lower() in ["luisa", "paula", "carol"]:
                 rate = "+2%"
                 pitch = "+4Hz"
+            # Masculinos: ENERGIA e OTIMISMO (não "morto")
             elif avatar_id.lower() in ["rafael", "roberto"]:
-                rate = "+0%"
-                pitch = "-6Hz"
+                rate = "+8%"
+                pitch = "+2Hz"
             elif avatar_id.lower() in ["lucas", "bruno", "marcos"]:
-                rate = "+3%"
-                pitch = "-10Hz"
+                rate = "+10%"
+                pitch = "+0Hz"
         
         logger.info(f"Voz selecionada para {avatar_id} ({language}): {voice}")
         
