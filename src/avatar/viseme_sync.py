@@ -274,23 +274,25 @@ class VisemeSyncEngine:
         import io
         
         # Definir voz baseada no avatar_id e idioma
+        # Apenas 3 vozes pt-BR gratuitas:
+        #   pt-BR-AntonioNeural (M), pt-BR-FranciscaNeural (F), pt-BR-ThalitaMultilingualNeural (F)
         avatar_voices = {
             "pt-BR": {
-                "sofia": "pt-BR-FranciscaNeural",      # Feminina
-                "lucas": "pt-BR-AntonioNeural",       # Masculino
-                "clara": "pt-BR-FranciscaNeural",      # Feminina
-                "amanda": "pt-BR-FranciscaNeural",     # Feminina
-                "fernanda": "pt-BR-FranciscaNeural",   # Feminina
-                "marina": "pt-BR-FranciscaNeural",     # Feminina
-                "roberto": "pt-BR-AntonioNeural",      # Masculino
-                "luisa": "pt-BR-FranciscaNeural",      # Feminina
-                "lais": "pt-BR-FranciscaNeural",       # Feminina
-                "paula": "pt-BR-FranciscaNeural",      # Feminina
-                "bruno": "pt-BR-AntonioNeural",        # Masculino
-                "giovana": "pt-BR-FranciscaNeural",    # Feminina
-                "marcos": "pt-BR-AntonioNeural",       # Masculino
-                "carol": "pt-BR-FranciscaNeural",      # Feminina
-                "rafael": "pt-BR-AntonioNeural",       # Masculino
+                "sofia": "pt-BR-FranciscaNeural",           # Feminina
+                "clara": "pt-BR-ThalitaMultilingualNeural", # Feminina
+                "amanda": "pt-BR-FranciscaNeural",          # Feminina
+                "fernanda": "pt-BR-ThalitaMultilingualNeural", # Feminina
+                "marina": "pt-BR-FranciscaNeural",          # Feminina
+                "luisa": "pt-BR-ThalitaMultilingualNeural", # Feminina
+                "lais": "pt-BR-FranciscaNeural",            # Feminina
+                "paula": "pt-BR-ThalitaMultilingualNeural", # Feminina
+                "giovana": "pt-BR-FranciscaNeural",         # Feminina
+                "carol": "pt-BR-ThalitaMultilingualNeural", # Feminina
+                "rafael": "pt-BR-AntonioNeural",            # Masculino
+                "lucas": "pt-BR-AntonioNeural",             # Masculino
+                "roberto": "pt-BR-AntonioNeural",           # Masculino
+                "bruno": "pt-BR-AntonioNeural",             # Masculino
+                "marcos": "pt-BR-AntonioNeural",            # Masculino
             },
             "en": {
                 "sofia": "en-US-JennyNeural",
@@ -310,30 +312,32 @@ class VisemeSyncEngine:
             # Fallback para voz padrão do idioma
             voice = default_voices.get(language, "pt-BR-FranciscaNeural")
         
-        # Definir rate/pitch para diferenciar timbres (limitação do Edge-TTS gratuito)
-        # pt-BR-FranciscaNeural (feminino) e pt-BR-AntonioNeural (masculino) são as únicas opções gratuitas
+        # Definir rate/pitch para diferenciar timbres
         rate = "+0%"
         pitch = "+0Hz"
         if language == "pt-BR":
-            if avatar_id.lower() in ["clara", "fernanda", "marina"]:
-                rate = "-5%"
-                pitch = "+12Hz"
-            elif avatar_id.lower() in ["lucas", "roberto", "bruno", "marcos"]:
-                rate = "+5%"
-                pitch = "-12Hz"
-            default_voices = {
-                "pt-BR": "pt-BR-FranciscaNeural",
-                "en": "en-US-JennyNeural",
-                "es": "es-ES-ElviraNeural"
-            }
-            voice = default_voices.get(language, "pt-BR-FranciscaNeural")
+            if avatar_id.lower() in ["sofia", "amanda", "giovana"]:
+                rate = "+0%"
+                pitch = "+0Hz"
+            elif avatar_id.lower() in ["clara", "fernanda", "luisa", "paula", "carol"]:
+                rate = "-3%"
+                pitch = "+8Hz"
+            elif avatar_id.lower() in ["marina", "lais"]:
+                rate = "+2%"
+                pitch = "+4Hz"
+            elif avatar_id.lower() in ["rafael", "roberto"]:
+                rate = "+0%"
+                pitch = "-6Hz"
+            elif avatar_id.lower() in ["lucas", "bruno", "marcos"]:
+                rate = "+3%"
+                pitch = "-10Hz"
         
         logger.info(f"Voz selecionada para {avatar_id} ({language}): {voice}")
         
         try:
             # Gerar áudio com Edge-TTS (usando io.BytesIO como no commit dc2395a)
             buf = io.BytesIO()
-            communicate = edge_tts.Communicate(text, voice, rate="+0%", pitch="+0Hz")
+            communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
             
             async for chunk in communicate.stream():
                 if chunk["type"] == "audio":

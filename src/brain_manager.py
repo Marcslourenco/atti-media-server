@@ -59,6 +59,20 @@ class BrainManager:
         logger.warning(f"[BrainManager] Prompt não encontrado para {avatar_id}, usando fallback")
         return f"Você é um assistente digital chamado {avatar_id.capitalize()}. Seja prestativo, amigável e profissional."
     
+    def get_greeting(self, avatar_id: str) -> str:
+        """Retorna a saudação do avatar, extraindo do system prompt ou usando fallback"""
+        prompt = self.get_system_prompt(avatar_id)
+        
+        # Tentar extrair saudação das primeiras linhas do system prompt
+        lines = prompt.split('\n')
+        for line in lines[:5]:
+            line = line.strip()
+            if line and any(g in line.lower() for g in ['olá', 'oi', 'bom dia', 'boa tarde', 'boa noite', 'bem-vindo']):
+                return line
+        
+        # Fallback: saudação genérica personalizada
+        return f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+    
     def reload_prompts(self):
         """Recarrega todos os prompts (útil para desenvolvimento)"""
         self.prompts_cache.clear()

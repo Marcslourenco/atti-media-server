@@ -254,9 +254,15 @@ async def avatar_speak(request: SpeakRequest):
     
     logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}, context_url={context_url}")
     
-    # CORREÇÃO A: Se event_type=intro, retornar saudação automática
+    # CORREÇÃO A: Se event_type=intro, retornar saudação do avatar
     if event_type == EventType.INTRO:
-        intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        try:
+            from src.brain_manager import BrainManager
+            brain_manager = BrainManager()
+            intro_text = text if text else brain_manager.get_greeting(avatar_id)
+        except Exception as e:
+            logger.warning(f"[{request_id}] ⚠️ BrainManager erro na intro: {e}")
+            intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
         logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
         
         # Gerar áudio se disponível
@@ -507,9 +513,15 @@ async def avatar_speak_v2(request: SpeakRequestV2):
 
     logger.info(f"[{request_id}] Avatar speak v2: avatar={avatar_id}, event_type={event_type}, language={language}")
 
-    # AÇÃO 1: Se event_type=intro, retornar saudação automática
+    # AÇÃO 1: Se event_type=intro, retornar saudação do avatar
     if event_type == EventType.INTRO:
-        intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
+        try:
+            from src.brain_manager import BrainManager
+            brain_manager = BrainManager()
+            intro_text = text if text else brain_manager.get_greeting(avatar_id)
+        except Exception as e:
+            logger.warning(f"[{request_id}] ⚠️ BrainManager erro na intro: {e}")
+            intro_text = text if text else f"Olá! Sou {avatar_id.capitalize()}. Como posso ajudar?"
         logger.info(f"[{request_id}] [INTRO] {avatar_id}: {intro_text}")
         return {
             "success": True,
