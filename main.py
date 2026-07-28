@@ -28,8 +28,10 @@ def sanitize_for_tts(text: str) -> str:
     # Remove aspas (retas e tipograficas)
     text = re.sub(r'[\u201c\u201d\u201e]([^\u201c\u201d\u201e]+)[\u201c\u201d\u201e]', r'\1', text)
     text = re.sub(r'"([^"]+)"', r'\1', text)
-    # Remove descricoes entre parenteses e emojis
-    text = re.sub(r'\([^)]*\)', '', text)
+    # Remove parênteses com conteúdo curto (<50 chars): estados de UI
+    text = re.sub(r'\([^)]{0,50}\)', '', text)
+    # Remove parênteses longos mas PRESERVA o conteúdo
+    text = re.sub(r'\(([^)]{51,})\)', r'\1', text)
     text = re.sub(r'[\U0001F300-\U0001F9FF]', '', text)
     # Normaliza pontuacao para evitar pausas estranhas no TTS
     text = re.sub(r',{2,}', ', ', text)

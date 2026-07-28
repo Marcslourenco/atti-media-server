@@ -1,0 +1,5 @@
+{
+  "pergunta": "Quais são os planos disponíveis?",
+  "resposta": "Oferecemos dois planos: Plano Essencial (nossa equipe faz as atualizações de conhecimento do avatar) e Plano Premium (o próprio avatar faz leituras diárias no website do cliente e atualiza seus conhecimentos automaticamente, além de aceitar uploads de vídeos, PDFs e imagens para enriquecer a base de conhecimento).",
+  "metadata": {"tipo": "plataforma", "prioridade": "alta"}
+}
