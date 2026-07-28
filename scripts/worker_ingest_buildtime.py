@@ -414,6 +414,13 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
         warnings.append(f"Nenhum arquivo JSON em {avatar_dir}")
         return 0, warnings
     
+    # Deletar coleção antiga (se existir) para evitar dados stale do deploy anterior
+    try:
+        client.delete_collection(f"{avatar_id}_knowledge")
+        logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
+    except Exception:
+        pass  # Coleção não existia, OK
+    
     # Criar coleção
     try:
         collection = client.get_or_create_collection(
