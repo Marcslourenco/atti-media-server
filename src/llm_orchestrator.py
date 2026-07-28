@@ -18,10 +18,10 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "neural-chat")
 # Lidos de env OPENROUTER_MODELS (csv) com fallback para a lista default abaixo
 # Nao-reasoning primeiro (melhor para resposta curta em voz), reasoning no fim
 OPENROUTER_MODELS = os.getenv("OPENROUTER_MODELS", "").split(",") if os.getenv("OPENROUTER_MODELS") else [
-    "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "inclusionai/ling-3.0-flash:free",
-    "google/gemma-4-31b-it:free",
-    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "inclusionai/ling-3.0-flash:free",       # ← PRIORIDADE 1: Muito rápido
+    "google/gemma-4-31b-it:free",            # ← PRIORIDADE 2: Rápido e bom em PT-BR
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", # ← PRIORIDADE 3
+    "nvidia/nemotron-3-ultra-550b-a55b:free" # ← ÚLTIMO RECURSO (lento)
 ]
 
 async def _test_ollama() -> bool:

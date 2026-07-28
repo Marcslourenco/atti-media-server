@@ -17,27 +17,25 @@ BACKEND_VERSION = "7.0.0"
 
 
 def sanitize_for_tts(text: str) -> str:
-    """Remove markdown, emojis e estados de UI para TTS limpo."""
+    """Remove markdown, emojis e estados de UI para TTS limpo. Preserva o conteudo."""
     if not text:
         return ""
-    
-    # Remove markdown com conteudo: **bold**, *italic*, _underline_, __strong__
-    text = re.sub(r'\*\*[^*]*\*\*', '', text)  # **bold**
-    text = re.sub(r'__[^_]*__', '', text)  # __strong__
-    text = re.sub(r'\*[^*]*\*', '', text)  # *italic*
-    text = re.sub(r'_[^_]*_', '', text)  # _underline_
-    
-    # Remove parenteses com conteudo (estados UI, descricoes)
-    # Exemplo: (Rafael esta se preparando...), (carregando...)
+    # Preserva o conteudo, remove apenas os delimitadores markdown
+    text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)
+    text = re.sub(r'__([^_]+)__', r'\1', text)
+    text = re.sub(r'\*([^*]+)\*', r'\1', text)
+    text = re.sub(r'_([^_]+)_', r'\1', text)
+    # Remove aspas (retas e tipograficas)
+    text = re.sub(r'[\u201c\u201d\u201e]([^\u201c\u201d\u201e]+)[\u201c\u201d\u201e]', r'\1', text)
+    text = re.sub(r'"([^"]+)"', r'\1', text)
+    # Remove descricoes entre parenteses e emojis
     text = re.sub(r'\([^)]*\)', '', text)
-    
-    # Remove emojis (unicode range)
     text = re.sub(r'[\U0001F300-\U0001F9FF]', '', text)
-    
-    # Remove multiplos espacos
+    # Normaliza pontuacao para evitar pausas estranhas no TTS
+    text = re.sub(r',{2,}', ', ', text)
+    text = re.sub(r'\.{2,}', '. ', text)
+    text = re.sub(r'!{2,}', '!', text)
     text = re.sub(r'\s+', ' ', text)
-    
-    # Remove espacos nas extremidades
     return text.strip()
 
 

@@ -323,13 +323,17 @@ class VisemeSyncEngine:
             elif avatar_id.lower() in ["luisa", "paula", "carol"]:
                 rate = "+2%"
                 pitch = "+4Hz"
-            # Masculinos: ENERGIA e OTIMISMO (não "morto")
-            elif avatar_id.lower() in ["rafael", "roberto"]:
-                rate = "+8%"
-                pitch = "+2Hz"
-            elif avatar_id.lower() in ["lucas", "bruno", "marcos"]:
-                rate = "+10%"
-                pitch = "+0Hz"
+            # Masculinos: cada um com timbre distinto
+            elif avatar_id.lower() == "bruno":
+                rate, pitch = "+15%", "+4Hz"   # Entusiasmado
+            elif avatar_id.lower() == "marcos":
+                rate, pitch = "+10%", "+2Hz"   # Vibrante
+            elif avatar_id.lower() == "lucas":
+                rate, pitch = "+5%", "+0Hz"    # Jovem
+            elif avatar_id.lower() == "rafael":
+                rate, pitch = "-3%", "-4Hz"    # Formal
+            elif avatar_id.lower() == "roberto":
+                rate, pitch = "-8%", "-6Hz"    # Maduro
         
         logger.info(f"Voz selecionada para {avatar_id} ({language}): {voice}")
         
