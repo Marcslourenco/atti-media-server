@@ -17,26 +17,41 @@ BACKEND_VERSION = "7.0.0"
 
 
 def sanitize_for_tts(text: str) -> str:
-    """Remove markdown, emojis e estados de UI para TTS limpo. Preserva o conteudo."""
+    """Remove TODOS os símbolos markdown/especiais, preserva apenas texto falável."""
     if not text:
         return ""
-    # Preserva o conteudo, remove apenas os delimitadores markdown
+    # 1. Remove headers markdown (###, ##, #)
+    text = re.sub(r'^#{1,6}\s*', '', text, flags=re.MULTILINE)
+    text = re.sub(r'#{1,6}', '', text)
+    # 2. Remove bold/italic markers, PRESERVA conteúdo
+    text = re.sub(r'\*\*\*([^*]+)\*\*\*', r'\1', text)
     text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)
-    text = re.sub(r'__([^_]+)__', r'\1', text)
     text = re.sub(r'\*([^*]+)\*', r'\1', text)
+    text = re.sub(r'___([^_]+)___', r'\1', text)
+    text = re.sub(r'__([^_]+)__', r'\1', text)
     text = re.sub(r'_([^_]+)_', r'\1', text)
-    # Remove aspas (retas e tipograficas)
-    text = re.sub(r'[\u201c\u201d\u201e]([^\u201c\u201d\u201e]+)[\u201c\u201d\u201e]', r'\1', text)
-    text = re.sub(r'"([^"]+)"', r'\1', text)
-    # Remove parênteses com conteúdo curto (<50 chars): estados de UI
-    text = re.sub(r'\([^)]{0,50}\)', '', text)
-    # Remove parênteses longos mas PRESERVA o conteúdo
-    text = re.sub(r'\(([^)]{51,})\)', r'\1', text)
-    text = re.sub(r'[\U0001F300-\U0001F9FF]', '', text)
-    # Normaliza pontuacao para evitar pausas estranhas no TTS
+    # 3. Remove aspas, preserva conteúdo
+    text = re.sub(r'[\u201c\u201d\u201e\'\"]([^\u201c\u201d\u201e\'\"\n]+)[\u201c\u201d\u201e\'\"]', r'\1', text)
+    # 4. Remove code blocks e inline code
+    text = re.sub(r'```[^`]*```', '', text)
+    text = re.sub(r'`([^`]+)`', r'\1', text)
+    # 5. Remove markdown links [texto](url) → texto
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+    # 6. Remove bullet points e listas
+    text = re.sub(r'^[\s]*[-*+]\s+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^[\s]*\d+\.\s+', '', text, flags=re.MULTILINE)
+    # 7. Remove emojis
+    text = re.sub(r'[\U0001F300-\U0001F9FF\U00002702-\U000027B0\U0000FE00-\U0000FE0F\U0001F680-\U0001F6FF]', '', text)
+    # 8. Remove parênteses curtos (UI states), preserva longos
+    text = re.sub(r'\([^)]{0,40}\)', '', text)
+    text = re.sub(r'\(([^)]{41,})\)', r'\1', text)
+    # 9. Remove símbolos especiais restantes
+    text = re.sub(r'[#*_~`|>]', '', text)
+    # 10. Normaliza pontuação
     text = re.sub(r',{2,}', ', ', text)
     text = re.sub(r'\.{2,}', '. ', text)
     text = re.sub(r'!{2,}', '!', text)
+    text = re.sub(r'\?{2,}', '?', text)
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
@@ -671,34 +686,34 @@ async def avatar_speak_v2(request: SpeakRequestV2):
         "metrics": structured_log
     }
 @app.post("/api/tts")
-async def tts_only(request: TTSRequest):
-    """Endpoint apenas para TTS (sem visemes)."""
-    text = request.text.strip()
-    language = request.language or "pt-BR"
-    
+async def text_to_speech(request: dict):
+    """Endpoint TTS puro — recebe texto, retorna áudio + visemes."""
+    text = request.get("text", "").strip()
+    language = request.get("language", "pt-BR")
+    avatar_id = request.get("avatar_id", "sofia")
+
     if not text:
-        raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório")
-    
-    if language not in app.state.supported_languages:
-        language = "pt-BR"
-    
+        raise HTTPException(status_code=400, detail="text é obrigatório")
+
+    clean_text = sanitize_for_tts(text)
+
     audio_data = None
-    
+    visemes = []
     if viseme_sync:
         try:
-            result = await viseme_sync.synthesize_with_visemes(text, "default", language)
+            result = await viseme_sync.synthesize_with_visemes(clean_text, avatar_id, language)
             if result:
                 audio_data = result.get("audio")
+                visemes = result.get("visemes", [])
         except Exception as e:
-            logger.error(f"Erro no TTS: {e}")
-            raise HTTPException(status_code=500, detail=f"Erro ao gerar áudio: {str(e)}")
-    
-    if not audio_data:
-        raise HTTPException(status_code=500, detail="Falha ao gerar áudio")
-    
+            logger.error(f"Erro TTS: {e}")
+            raise HTTPException(status_code=500, detail=f"TTS falhou: {str(e)}")
+
     return {
         "success": True,
         "audio_data": audio_data,
+        "visemes": visemes,
+        "text": clean_text,
         "language": language
     }
 
