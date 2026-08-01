@@ -310,7 +310,8 @@ class VisemeSyncEngine:
         voice = avatar_voices.get(language, {}).get(avatar_id.lower(), None)
         if not voice:
             # Fallback para voz padrão do idioma
-            voice = default_voices.get(language, "pt-BR-FranciscaNeural")
+            default_voices_fallback = {"pt-BR": "pt-BR-FranciscaNeural", "en": "en-US-JennyNeural", "es": "es-ES-ElviraNeural"}
+            voice = default_voices_fallback.get(language, "pt-BR-FranciscaNeural")
         
         # Definir rate/pitch para diferenciar timbres
         rate = "+0%"
