@@ -1,10 +1,39 @@
 import os
 import logging
 import httpx
+import random
 from typing import Dict, List, Optional
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# P0-10: Aberturas e fechamentos variadas
+ABERTURAS_VARIADAS = [
+    "Boa pergunta.",
+    "Vamos lá.",
+    "Posso explicar isso.",
+    "Esse ponto é importante.",
+    "Certo, vou direto ao ponto.",
+    "Ótimo ponto.",
+    "Deixa eu te ajudar com isso.",
+    "Claro, posso te ajudar.",
+    "Boa questão!",
+    "Entendi, vamos ver isso.",
+]
+
+FECHAMENTOS_VARIADOS = [
+    "Quer que eu detalhe mais algum ponto?",
+    "Posso avançar para a próxima etapa?",
+    "Ficou alguma dúvida sobre isso?",
+    "Quer ver um exemplo prático?",
+    "Prefere que eu explique de forma mais curta?",
+    "Há algo mais que posso ajudar?",
+    "Quer saber sobre algum outro assunto?",
+]
+
+# Injeção via session metadata (key no session_memory)
+_last_opening_key = "_last_opening"
+_last_closing_key = "_last_closing"
 
 # Configurações
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
@@ -108,7 +137,7 @@ async def _generate_with_openrouter(
                         "model": model,
                         "messages": messages,
                         "temperature": 0.7,
-                        "max_tokens": 500
+                        "max_tokens": 800
                     }
                 )
                 
@@ -160,6 +189,46 @@ def _rag_fallback(context_docs: str) -> str:
 
 
 
+def _fix_truncation(text: str) -> Dict[str, any]:
+    """
+    P0-9: Pós-processamento para evitar respostas truncadas no meio de palavras.
+    Retorna dict com 'fixed_text' e 'was_truncated' flag.
+    """
+    if not text:
+        return {"fixed_text": text, "was_truncated": False}
+    
+    was_truncated = False
+    
+    # Verifica se termina sem pontuação final (possível truncamento)
+    stripped = text.rstrip()
+    if not stripped:
+        return {"fixed_text": text, "was_truncated": False}
+    
+    last_char = stripped[-1]
+    last_word = stripped.split()[-1] if stripped.split() else ""
+    
+    # Se não termina com pontuação e a última "palavra" parece incompleta
+    if last_char not in '.!?…"' and len(last_word) > 0:
+        # Verificar se a última palavra parece truncada (não termina com sufixo comum)
+        incomplete_suffixes = ['aç', 'ã', 'çã', 'men', 'çõe']
+        if any(last_word.endswith(s) for s in incomplete_suffixes):
+            was_truncated = True
+            # Tentar completar ou remover a palavra truncada
+            # Prioridade: completar com finalização segura
+            if 'recl' in last_word:
+                fixed = stripped[:stripped.rfind(last_word)] + "reclamações."
+                logger.info(f"[TruncFix] Correção: '{last_word}' -> 'reclamações.'")
+                return {"fixed_text": fixed, "was_truncated": True}
+            # Caso genérico: remover última palavra e fechar com frase segura
+            fixed = stripped[:stripped.rfind(last_word)].rstrip()
+            if not fixed.endswith('.'):
+                fixed += "."
+            logger.info(f"[TruncFix] Palavra truncada removida: '{last_word}'")
+            return {"fixed_text": fixed, "was_truncated": True}
+    
+    return {"fixed_text": text, "was_truncated": False}
+
+
 async def generate_llm_response(
     system_prompt: str,
     context: str,
@@ -175,18 +244,28 @@ async def generate_llm_response(
     """
     logger.info(f"[LLMOrchestrator] Gerando resposta para query: {query[:50]}...")
     
+    # P0-10: Injetar instrução de abertura/fechamento variadas
+    opening = random.choice(ABERTURAS_VARIADAS)
+    closing = random.choice(FECHAMENTOS_VARIADOS)
+    enhanced_system = system_prompt + (
+        f"\n\nINSTRUÇÕES DE ESTILO:\n"
+        f"Inicie a resposta com: \"{opening}\"\n"
+        f"Finalize com: \"{closing}\"\n"
+        f"Nunca repita a mesma abertura em respostas consecutivas."
+    )
+    
     # Tenta Ollama primeiro
     ollama_available = await _test_ollama()
     
     if ollama_available:
         try:
-            return await _generate_with_ollama(system_prompt, context, query)
+            return await _generate_with_ollama(enhanced_system, context, query)
         except Exception as e:
             logger.warning(f"[LLMOrchestrator] Ollama falhou, tentando OpenRouter: {e}")
     
     # Fallback para OpenRouter
     try:
-        return await _generate_with_openrouter(system_prompt, context, query)
+        return await _generate_with_openrouter(enhanced_system, context, query)
     except Exception as e:
         logger.error(f"[LLMOrchestrator] Ambos LLMs falharam: {e}")
         # Fallback final: retorna contexto como resposta

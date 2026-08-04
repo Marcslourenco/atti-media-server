@@ -414,21 +414,34 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
         warnings.append(f"Nenhum arquivo JSON em {avatar_dir}")
         return 0, warnings
     
-    # Deletar coleção antiga (se existir) para evitar dados stale do deploy anterior
-    try:
-        client.delete_collection(f"{avatar_id}_knowledge")
-        logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
-    except Exception:
-        pass  # Coleção não existia, OK
+    # ====================================================================
+    # INGESTÃO ATÔMICA: indexar em _tmp, validar, depois promover
+    # ====================================================================
     
-    # Criar coleção
+    # 1. Contar documentos atuais (se existirem)
+    current_count = 0
     try:
-        collection = client.get_or_create_collection(
-            name=f"{avatar_id}_knowledge",
+        current_collection = client.get_collection(f"{avatar_id}_knowledge")
+        current_count = current_collection.count()
+        logger.info(f"📊 {avatar_id}: {current_count} docs atuais (coleção existente)")
+    except Exception:
+        logger.info(f"📊 {avatar_id}: nenhuma coleção existente (nova ingestão)")
+    
+    # 2. Remover coleção temporária anterior (se existir)
+    try:
+        client.delete_collection(f"{avatar_id}_knowledge_tmp")
+        logger.info(f"🗑️ Coleção temporária anterior removida: {avatar_id}_knowledge_tmp")
+    except Exception:
+        pass
+    
+    # 3. Criar coleção temporária
+    try:
+        tmp_collection = client.get_or_create_collection(
+            name=f"{avatar_id}_knowledge_tmp",
             metadata={"hnsw:space": "cosine"}
         )
     except Exception as e:
-        warnings.append(f"Erro ao criar coleção: {e}")
+        warnings.append(f"Erro ao criar coleção temporária: {e}")
         return 0, warnings
     
     total_indexed = 0
@@ -462,8 +475,8 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
                         logger.warning(f"Erro ao gerar embedding: {e}")
                         continue
                     
-                    # Adicionar ao ChromaDB
-                    collection.add(
+                    # Adicionar à coleção temporária
+                    tmp_collection.add(
                         ids=[unique_id],
                         documents=[doc['content']],
                         embeddings=[embedding],
@@ -480,6 +493,74 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
         except Exception as e:
             warnings.append(f"Erro ao processar {json_file.name}: {e}")
             continue
+    
+    # 4. Validar contagem da coleção temporária
+    tmp_count = total_indexed
+    logger.info(f"📊 {avatar_id}: {total_indexed} docs indexados em _tmp (atual: {current_count})")
+    
+    # 5. Validação: docs_tmp >= docs_current * 0.95 (exceto nova ingestão)
+    if current_count > 0:
+        threshold = int(current_count * 0.95)
+        if tmp_count < threshold:
+            logger.error(f"❌ {avatar_id}: INGESTÃO INVALIDADA — {tmp_count} < {threshold} (95% de {current_count})")
+            logger.error(f"❌ Mantendo coleção atual com {current_count} docs")
+            # Limpar coleção temporária
+            try:
+                client.delete_collection(f"{avatar_id}_knowledge_tmp")
+            except Exception:
+                pass
+            return current_count, warnings + [f"INGESTÃO REJEITADA: {tmp_count} < {threshold}"]
+    
+    # 6. Promover: deletar coleção antiga E recriar com dados temporários
+    try:
+        client.delete_collection(f"{avatar_id}_knowledge")
+        logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
+    except Exception:
+        pass
+    
+    # 7. Promover coleção temporária → oficial
+    try:
+        promoted = client.get_collection(f"{avatar_id}_knowledge_tmp")
+        promoted_count = promoted.count()
+        
+        # Renomear: criar oficial e copiar dados
+        official = client.get_or_create_collection(
+            name=f"{avatar_id}_knowledge",
+            metadata={"hnsw:space": "cosine"}
+        )
+        
+        # Copiar dados da temporária para a oficial em batches
+        all_docs = promoted.get()
+        if all_docs['documents']:
+            for i in range(0, len(all_docs['documents']), BATCH_SIZE):
+                batch_end = min(i + BATCH_SIZE, len(all_docs['documents']))
+                official.add(
+                    ids=all_docs['ids'][i:batch_end],
+                    documents=all_docs['documents'][i:batch_end],
+                    embeddings=all_docs['embeddings'][i:batch_end],
+                    metadatas=all_docs['metadatas'][i:batch_end]
+                )
+            gc.collect()
+        
+        # Limpar coleção temporária
+        client.delete_collection(f"{avatar_id}_knowledge_tmp")
+        logger.info(f"✅ {avatar_id}: PROMOCÃO CONCLUÍDA — {promoted_count} docs (anterior: {current_count})")
+        
+    except Exception as e:
+        logger.error(f"❌ {avatar_id}: ERRO NA PROMOCÃO: {e}")
+        warnings.append(f"Erro na promoção: {e}")
+        # Tentar recuperar coleção antiga
+        try:
+            client.delete_collection(f"{avatar_id}_knowledge")
+        except Exception:
+            pass
+        try:
+            client.get_or_create_collection(
+                name=f"{avatar_id}_knowledge",
+                metadata={"hnsw:space": "cosine"}
+            )
+        except Exception:
+            pass
     
     # Limpeza final
     gc.collect()

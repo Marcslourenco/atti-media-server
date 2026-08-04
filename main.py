@@ -13,7 +13,14 @@ from contextlib import asynccontextmanager
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 
-BACKEND_VERSION = "7.0.0"
+BACKEND_VERSION = "7.1.0"
+
+try:
+    from src.feature_catalog import INSTITUTIONAL_BLOCK
+    logger.info("feature_catalog carregado com sucesso")
+except Exception as e:
+    logger.error(f"Erro ao importar feature_catalog: {e}")
+    INSTITUTIONAL_BLOCK = ""
 
 
 def sanitize_for_tts(text: str) -> str:
@@ -267,7 +274,11 @@ async def avatar_speak(request: SpeakRequest):
     session_id = request.session_id
     context_url = request.context_url
     
-    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}, context_url={context_url}")
+    if context_url:
+        logger.info(f"[{request_id}] context_url recebido: {context_url}")
+    else:
+        logger.info(f"[{request_id}] context_url não recebido")
+    logger.info(f"[{request_id}] Avatar speak: avatar={avatar_id}, event_type={event_type}, language={language}")
     
     # CORREÇÃO A: Se event_type=intro, retornar saudação do avatar
     if event_type == EventType.INTRO:
@@ -415,9 +426,15 @@ async def avatar_speak(request: SpeakRequest):
             logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
             system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
         
+        # Injetar bloco institucional obrigatório
+        if INSTITUTIONAL_BLOCK:
+            system_prompt += "\n\n" + INSTITUTIONAL_BLOCK
+        
         # Injetar context_url no system prompt
         if context_url:
             system_prompt += f"\n\nO visitante está atualmente na página: {context_url}"
+        
+        logger.info(f"[{request_id}] System prompt final: {len(system_prompt)} chars (com institutional)")
         
         # 4. Gerar resposta com LLM real (OpenRouter)
         try:
@@ -433,6 +450,13 @@ async def avatar_speak(request: SpeakRequest):
             response_text = llm_result['response']
             llm_source = llm_result['source']
             logger.info(f"[{request_id}] ✅ LLM ({llm_source}): {len(response_text)} chars")
+            
+            # P0-9: Pós-processamento anti-truncamento
+            from src.llm_orchestrator import _fix_truncation
+            trunc_result = _fix_truncation(response_text)
+            if trunc_result['was_truncated']:
+                logger.info(f"[{request_id}] ⚠️ TRUNCAMENTO DETECTADO E CORRIGIDO")
+                response_text = trunc_result['fixed_text']
             
         except Exception as e:
             logger.error(f"[{request_id}] ❌ LLM erro: {e}", exc_info=True)
@@ -478,6 +502,12 @@ async def avatar_speak(request: SpeakRequest):
     if viseme_sync:
         try:
             logger.info(f"Gerando áudio com resposta: {response_text[:100]}")
+            # P0-9: Garantir que o texto não termina truncado antes do TTS
+            from src.llm_orchestrator import _fix_truncation
+            trunc_result = _fix_truncation(response_text)
+            if trunc_result['was_truncated']:
+                logger.info(f"[{request_id}] ⚠️ TRUNCAMENTO pré-TTS detectado e corrigido")
+                response_text = trunc_result['fixed_text']
             result = await viseme_sync.synthesize_with_visemes(sanitize_for_tts(response_text), avatar_id, language)
             if result:
                 audio_data = result.get("audio")
@@ -502,16 +532,34 @@ async def avatar_speak(request: SpeakRequest):
     logger.info(f"[{request_id}] 📊 METRICS: {json.dumps(structured_log)}")
     logger.info(f"🔍 DIAGNÓSTICO - Retornando: audio={bool(audio_data)}, visemes={len(visemes)}, response='{response_text[:50]}'")
     
+    # P0-11: Identificar source e garantir consistência text_display/text_spoken
+    if fallback_reason == "NO_CONTEXT":
+        source = "rag_llm_tts"
+    elif rag_used:
+        source = "rag_llm_tts"
+    elif event_type and hasattr(event_type, 'value') and event_type.value == "intro":
+        source = "avatar_speak_llm"
+    else:
+        source = llm_source or "rag_llm_tts"
+    
+    # text_display e text_spoken são o mesmo texto (texto final do LLM, sanitizado para TTS)
+    text_spoken = sanitize_for_tts(response_text)
+    text_display = response_text
+    
     return {
         "success": True,
+        "response_id": request_id,
         "text_response": response_text,
+        "text_display": text_display,
+        "text_spoken": text_spoken,
         "audio_data": audio_data,
         "visemes": visemes,
+        "visemes_count": len(visemes),
         "language": language,
         "avatar_id": avatar_id,
         "supported_languages": app.state.supported_languages,
         "request_id": request_id,
-        "source": llm_source,
+        "source": source,
         "metrics": structured_log
     }
 
@@ -561,6 +609,12 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     fallback_reason = "NONE"
     context_docs = ""
     context_url = request.context_url
+
+    # P0-13: Log obrigatório de context_url
+    if context_url:
+        logger.info(f"[{request_id}] context_url recebido: {context_url}")
+    else:
+        logger.info(f"[{request_id}] context_url não recebido")
 
     try:
         # 1. Buscar contexto do RAG
@@ -716,6 +770,43 @@ async def text_to_speech(request: dict):
         "text": clean_text,
         "language": language
     }
+
+@app.post("/api/tts-direct")
+async def tts_direct(request: dict):
+    """Endpoint TTS direto — sem RAG, sem LLM. Apenas texto → áudio + visemes."""
+    text = request.get("text", "").strip()
+    language = request.get("language", "pt-BR")
+    avatar_id = request.get("avatar_id", "sofia")
+
+    if not text:
+        raise HTTPException(status_code=400, detail="text é obrigatório")
+
+    if not viseme_sync:
+        raise HTTPException(status_code=503, detail="Motor TTS não disponível")
+
+    # Sanitizar texto para TTS
+    clean_text = sanitize_for_tts(text)
+
+    try:
+        result = await viseme_sync.synthesize_with_visemes(clean_text, avatar_id, language)
+        if result and result.get("audio"):
+            return {
+                "success": True,
+                "audio_data": result["audio"],
+                "visemes": result.get("visemes", []),
+                "text": clean_text,
+                "avatar_id": avatar_id,
+                "language": language,
+                "sample_rate": result.get("sample_rate", 24000)
+            }
+        else:
+            raise HTTPException(status_code=500, detail="TTS não retornou áudio")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro /api/tts-direct: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"TTS falhou: {str(e)}")
+
 
 @app.post("/api/translate")
 async def translate_text(request: TranslationRequest):
