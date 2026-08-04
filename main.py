@@ -730,9 +730,11 @@ async def avatar_speak_v2(request: SpeakRequestV2):
 
     return {
         "success": True,
+        "response_id": request_id,
         "text_response": response_text,
         "audio_data": audio_data,
         "visemes": visemes,
+        "visemes_count": len(visemes),
         "language": language,
         "avatar_id": avatar_id,
         "source": llm_source,
