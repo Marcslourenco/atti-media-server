@@ -209,12 +209,22 @@ def _fix_truncation(text: str) -> Dict[str, any]:
     
     # Se não termina com pontuação e a última "palavra" parece incompleta
     if last_char not in '.!?…"' and len(last_word) > 0:
-        # Verificar se a última palavra parece truncada (não termina com sufixo comum)
+        # Critério 1: A última palavra termina com sufixo incompleto conhecido
         incomplete_suffixes = ['aç', 'ã', 'çã', 'men', 'çõe']
-        if any(last_word.endswith(s) for s in incomplete_suffixes):
-            was_truncated = True
+        ends_with_incomplete = any(last_word.endswith(s) for s in incomplete_suffixes)
+        
+        # Critério 2: A última palavra é muito curta (<=3 chars) e o texto é longo (>30 chars)
+        is_short_cutoff = len(last_word) <= 3 and len(stripped) > 30
+        
+        # Critério 3: Se o texto é longo (>20 chars) e não termina com pontuação,
+        # é quase sempre truncamento (LLM cortou no meio de uma frase)
+        # Isso é o critério mais confiável para detecção de truncamento
+        is_long_without_period = len(stripped) > 20
+        
+        was_truncated = ends_with_incomplete or is_short_cutoff or is_long_without_period
+        
+        if was_truncated:
             # Tentar completar ou remover a palavra truncada
-            # Prioridade: completar com finalização segura
             if 'recl' in last_word:
                 fixed = stripped[:stripped.rfind(last_word)] + "reclamações."
                 logger.info(f"[TruncFix] Correção: '{last_word}' -> 'reclamações.'")
