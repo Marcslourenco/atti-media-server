@@ -661,6 +661,10 @@ async def avatar_speak_v2(request: SpeakRequestV2):
             logger.warning(f"[{request_id}] ⚠️ System prompt erro: {e}")
             system_prompt = f"Você é {avatar_id.capitalize()}, assistente virtual. Responda em português."
 
+        # P0-8: Injetar guardrail institucional
+        if INSTITUTIONAL_BLOCK:
+            system_prompt += "\n\n" + INSTITUTIONAL_BLOCK
+
         # Injetar context_url no system prompt
         if context_url:
             system_prompt = system_prompt + "\n\nO visitante está atualmente na página: " + context_url + ". Use essa informação para contextualizar sua resposta quando fizer sentido."
