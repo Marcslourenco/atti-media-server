@@ -125,8 +125,11 @@ except Exception as e:
 
 
 # ============================================================================
-# INGESTION READINESS CHECK
+# RAG READINESS FLAG (P0-REGRESSÃO)
+# Bloqueia consultas RAG enquanto ingestão não estiver completa
 # ============================================================================
+RAG_READY = False
+
 def is_ingestion_ready() -> bool:
     """Gate baseado em colecoes reais, não em flag volátil."""
     if os.path.exists("/tmp/ingestion_complete"):
@@ -141,6 +144,10 @@ def is_ingestion_ready() -> bool:
     except Exception as e:
         logger.warning(f"check coleções falhou: {e}")
     return False
+
+def rag_ready_check():
+    """Retorna True se RAG está pronto para consultas. Senão, retorna False."""
+    return RAG_READY or is_ingestion_ready()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -157,7 +164,9 @@ async def lifespan(app: FastAPI):
     logger.info(f"TTS/Visemes disponivel: {tts_available}")
     
     # Verificar se ingestão já foi concluída
+    global RAG_READY
     if is_ingestion_ready():
+        RAG_READY = True
         logger.info("✅ Ingestão já concluída (flag encontrada)")
     else:
         logger.info("⏳ Aguardando ingestão em background...")
@@ -232,7 +241,11 @@ async def root():
 
 @app.get("/health")
 async def health():
-    return {"status": "healthy", "version": BACKEND_VERSION}
+    return {
+        "status": "healthy",
+        "version": BACKEND_VERSION,
+        "rag_ready": RAG_READY or is_ingestion_ready()
+    }
 
 @app.get("/api/avatar/status")
 async def avatar_status():
@@ -371,7 +384,7 @@ async def avatar_speak(request: SpeakRequest):
     try:
         # 1. Buscar contexto do RAG
         context_docs = ""
-        if rag_engine:
+        if rag_engine and rag_ready_check():
             try:
                 # Consulta real para obter metricas
                 query_result = rag_engine.query(text, avatar_id, n_results=3)
@@ -618,7 +631,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
 
     try:
         # 1. Buscar contexto do RAG
-        if rag_engine:
+        if rag_engine and rag_ready_check():
             try:
                 query_result = rag_engine.query(text, avatar_id, n_results=3)
                 if query_result and not query_result.get("error"):

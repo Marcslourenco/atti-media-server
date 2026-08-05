@@ -415,26 +415,33 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
         return 0, warnings
     
     # ====================================================================
-    # INGESTÃO ATÔMICA: indexar em _tmp, validar, depois promover
+    # INGESTÃO ATÔMICA SEGURA (P0-REGRESSÃO)
+    # Regras:
+    #   a) NUNCA apagar coleção ativa antes de ter nova validada
+    #   b) Promover: _tmp → _new → validar → apagar _tmp → apagar antiga
+    #   c) Se falhar, manter coleção anterior intacta
     # ====================================================================
     
     # 1. Contar documentos atuais (se existirem)
     current_count = 0
+    has_existing_collection = False
     try:
         current_collection = client.get_collection(f"{avatar_id}_knowledge")
         current_count = current_collection.count()
+        has_existing_collection = True
         logger.info(f"📊 {avatar_id}: {current_count} docs atuais (coleção existente)")
     except Exception:
         logger.info(f"📊 {avatar_id}: nenhuma coleção existente (nova ingestão)")
     
-    # 2. Remover coleção temporária anterior (se existir)
-    try:
-        client.delete_collection(f"{avatar_id}_knowledge_tmp")
-        logger.info(f"🗑️ Coleção temporária anterior removida: {avatar_id}_knowledge_tmp")
-    except Exception:
-        pass
+    # 2. Remover coleções temporárias anteriores (se existirem)
+    for suffix in ["_tmp", "_new"]:
+        try:
+            client.delete_collection(f"{avatar_id}_knowledge{suffix}")
+            logger.info(f"🗑️ Coleção {suffix} anterior removida: {avatar_id}_knowledge{suffix}")
+        except Exception:
+            pass
     
-    # 3. Criar coleção temporária
+    # 3. Criar coleção temporária _tmp
     try:
         tmp_collection = client.get_or_create_collection(
             name=f"{avatar_id}_knowledge_tmp",
@@ -466,10 +473,8 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
                     # Gerar embedding (ONNX usa __call__, não encode)
                     try:
                         if hasattr(model, 'encode'):
-                            # SentenceTransformer
                             embedding = model.encode(doc['content']).tolist()
                         else:
-                            # ONNX - usa __call__ ou _model.encode
                             embedding = model([doc['content']])[0].tolist()
                     except Exception as e:
                         logger.warning(f"Erro ao gerar embedding: {e}")
@@ -484,7 +489,6 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
                     )
                     total_indexed += 1
                 
-                # Limpeza de memória entre batches
                 gc.collect()
         
         except json.JSONDecodeError as e:
@@ -499,68 +503,127 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
     logger.info(f"📊 {avatar_id}: {total_indexed} docs indexados em _tmp (atual: {current_count})")
     
     # 5. Validação: docs_tmp >= docs_current * 0.95 (exceto nova ingestão)
-    if current_count > 0:
+    if has_existing_collection and current_count > 0:
         threshold = int(current_count * 0.95)
         if tmp_count < threshold:
             logger.error(f"❌ {avatar_id}: INGESTÃO INVALIDADA — {tmp_count} < {threshold} (95% de {current_count})")
             logger.error(f"❌ Mantendo coleção atual com {current_count} docs")
-            # Limpar coleção temporária
             try:
                 client.delete_collection(f"{avatar_id}_knowledge_tmp")
             except Exception:
                 pass
             return current_count, warnings + [f"INGESTÃO REJEITADA: {tmp_count} < {threshold}"]
     
-    # 6. Promover: deletar coleção antiga E recriar com dados temporários
-    try:
-        client.delete_collection(f"{avatar_id}_knowledge")
-        logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
-    except Exception:
-        pass
+    # 6. PROMOÇÃO SEGURA: _tmp → _new → validar → apagar _tmp → apagar antiga
+    promotion_ok = False
+    promoted_count = 0
     
-    # 7. Promover coleção temporária → oficial
     try:
-        promoted = client.get_collection(f"{avatar_id}_knowledge_tmp")
-        promoted_count = promoted.count()
+        # 6a. Criar coleção _new (nova oficial)
+        new_collection = client.get_or_create_collection(
+            name=f"{avatar_id}_knowledge_new",
+            metadata={"hnsw:space": "cosine"}
+        )
         
-        # Renomear: criar oficial e copiar dados
+        # 6b. Copiar dados de _tmp para _new (com include= para embeddings)
+        promoted = client.get_collection(f"{avatar_id}_knowledge_tmp")
+        all_docs = promoted.get(include=["embeddings", "documents", "metadatas"])
+        
+        if not all_docs or not all_docs.get('documents'):
+            raise ValueError("Coleção _tmp está vazia ou get() retornou sem dados")
+        
+        docs_list = all_docs['documents']
+        ids_list = all_docs['ids']
+        embeddings_list = all_docs.get('embeddings')
+        metadatas_list = all_docs.get('metadatas')
+        
+        if embeddings_list is None:
+            raise ValueError("Embeddings não retornados por get() — use include=['embeddings']")
+        
+        # Copiar em batches
+        for i in range(0, len(docs_list), BATCH_SIZE):
+            batch_end = min(i + BATCH_SIZE, len(docs_list))
+            new_collection.add(
+                ids=ids_list[i:batch_end],
+                documents=docs_list[i:batch_end],
+                embeddings=[emb.tolist() if hasattr(emb, 'tolist') else emb for emb in embeddings_list[i:batch_end]],
+                metadatas=metadatas_list[i:batch_end] if metadatas_list else [{'source': 'tmp'}] * (batch_end - i)
+            )
+        gc.collect()
+        
+        # 6c. Validar contagem da coleção _new
+        new_count = new_collection.count()
+        if new_count < len(docs_list) * 0.95:
+            raise ValueError(f"Validação falhou: _new tem {new_count} docs mas _tmp tinha {len(docs_list)}")
+        
+        promoted_count = new_count
+        
+        # 6d. Apagar coleção temporária _tmp
+        client.delete_collection(f"{avatar_id}_knowledge_tmp")
+        logger.info(f"🗑️ Coleção _tmp removida: {avatar_id}_knowledge_tmp")
+        
+        # 6e. Apagar coleção antiga (SÓ AGORA, após _new validada)
+        if has_existing_collection:
+            try:
+                client.delete_collection(f"{avatar_id}_knowledge")
+                logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
+            except Exception:
+                pass
+        
+        # 6f. Renomear _new → oficial
+        # ChromaDB não suporta rename nativo, então criamos a oficial copiando
         official = client.get_or_create_collection(
             name=f"{avatar_id}_knowledge",
             metadata={"hnsw:space": "cosine"}
         )
         
-        # Copiar dados da temporária para a oficial em batches
-        all_docs = promoted.get()
-        if all_docs['documents']:
-            for i in range(0, len(all_docs['documents']), BATCH_SIZE):
-                batch_end = min(i + BATCH_SIZE, len(all_docs['documents']))
+        # Copiar de _new para oficial
+        new_docs = new_collection.get(include=["embeddings", "documents", "metadatas"])
+        if new_docs and new_docs.get('documents'):
+            for i in range(0, len(new_docs['documents']), BATCH_SIZE):
+                batch_end = min(i + BATCH_SIZE, len(new_docs['documents']))
                 official.add(
-                    ids=all_docs['ids'][i:batch_end],
-                    documents=all_docs['documents'][i:batch_end],
-                    embeddings=all_docs['embeddings'][i:batch_end],
-                    metadatas=all_docs['metadatas'][i:batch_end]
+                    ids=new_docs['ids'][i:batch_end],
+                    documents=new_docs['documents'][i:batch_end],
+                    embeddings=[emb.tolist() if hasattr(emb, 'tolist') else emb for emb in new_docs['embeddings'][i:batch_end]],
+                    metadatas=new_docs.get('metadatas', [{'source': 'new'}] * (batch_end - i))[i:batch_end] if new_docs.get('metadatas') else [{'source': 'new'}] * (batch_end - i)
                 )
             gc.collect()
         
-        # Limpar coleção temporária
-        client.delete_collection(f"{avatar_id}_knowledge_tmp")
+        # 6g. Validar oficial e apagar _new
+        official_count = official.count()
+        if official_count < promoted_count * 0.95:
+            raise ValueError(f"Validação oficial falhou: {official_count} < {promoted_count * 0.95}")
+        
+        client.delete_collection(f"{avatar_id}_knowledge_new")
+        logger.info(f"🗑️ Coleção _new removida: {avatar_id}_knowledge_new")
+        
+        promotion_ok = True
         logger.info(f"✅ {avatar_id}: PROMOCÃO CONCLUÍDA — {promoted_count} docs (anterior: {current_count})")
         
     except Exception as e:
         logger.error(f"❌ {avatar_id}: ERRO NA PROMOCÃO: {e}")
         warnings.append(f"Erro na promoção: {e}")
-        # Tentar recuperar coleção antiga
-        try:
-            client.delete_collection(f"{avatar_id}_knowledge")
-        except Exception:
-            pass
-        try:
-            client.get_or_create_collection(
-                name=f"{avatar_id}_knowledge",
-                metadata={"hnsw:space": "cosine"}
-            )
-        except Exception:
-            pass
+        
+        # Se promoção falhou, a coleção antiga (se existia) permanece intacta
+        # Limpar _tmp e _new se ainda existirem
+        for suffix in ["_tmp", "_new"]:
+            try:
+                client.delete_collection(f"{avatar_id}_knowledge{suffix}")
+            except Exception:
+                pass
+        
+        if not promotion_ok and has_existing_collection:
+            logger.warning(f"⚠️ {avatar_id}: Mantendo coleção anterior com {current_count} docs")
+        elif not promotion_ok and not has_existing_collection:
+            # Nova ingestão sem coleção anterior — criar vazia
+            try:
+                client.get_or_create_collection(
+                    name=f"{avatar_id}_knowledge",
+                    metadata={"hnsw:space": "cosine"}
+                )
+            except Exception:
+                pass
     
     # Limpeza final
     gc.collect()
@@ -569,7 +632,8 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
     ram_gb = psutil.Process().memory_info().rss / (1024**3)
     logger.info(f"💾 RAM pós-ingestão {avatar_id}: {ram_gb:.2f} GB")
     
-    return total_indexed, warnings
+    # Retornar contagem: se promoção OK, retornar promoted_count; senão current_count
+    return promoted_count if promotion_ok else current_count, warnings
 
 
 # ============================================================================
@@ -582,10 +646,10 @@ def inherit_knowledge(client, source_avatar: str, target_avatar: str):
         source_collection = client.get_collection(f"{source_avatar}_knowledge")
         target_collection = client.get_or_create_collection(f"{target_avatar}_knowledge")
         
-        # Pega todos os documentos
-        all_docs = source_collection.get()
+        # Pega todos os documentos (com include para embeddings)
+        all_docs = source_collection.get(include=["embeddings", "documents", "metadatas"])
         
-        if not all_docs['documents']:
+        if not all_docs or not all_docs.get('documents'):
             logger.warning(f"⚠️ {source_avatar} não tem documentos para herdar")
             return
         
@@ -593,14 +657,21 @@ def inherit_knowledge(client, source_avatar: str, target_avatar: str):
         batch_size = 100
         for i in range(0, len(all_docs['documents']), batch_size):
             batch_docs = all_docs['documents'][i:i+batch_size]
-            batch_metas = all_docs['metadatas'][i:i+batch_size]
+            batch_metas = all_docs.get('metadatas', [None] * len(batch_docs))[i:i+batch_size]
             batch_ids = [f"{target_avatar}_{doc_id.split('_')[-1]}" for doc_id in all_docs['ids'][i:i+batch_size]]
+            batch_embs = all_docs.get('embeddings', [])
+            if batch_embs:
+                batch_embs = batch_embs[i:i+batch_size]
             
-            target_collection.add(
-                documents=batch_docs,
-                metadatas=batch_metas,
-                ids=batch_ids
-            )
+            add_kwargs = {
+                'documents': batch_docs,
+                'metadatas': batch_metas,
+                'ids': batch_ids
+            }
+            if batch_embs:
+                add_kwargs['embeddings'] = [emb.tolist() if hasattr(emb, 'tolist') else emb for emb in batch_embs]
+            
+            target_collection.add(**add_kwargs)
         
         count = target_collection.count()
         logger.info(f"✅ {target_avatar} herdou {count} documentos de {source_avatar}")
@@ -667,7 +738,19 @@ def main():
     except:
         pass
     
-    logger.info("\n✅ Ingestão concluída com sucesso!")
+    # Verificar se todas as coleções foram promovidas com sucesso
+    failures = 0
+    for avatar, count in sorted(results.items()):
+        if count == 0:
+            failures += 1
+            logger.error(f"  ❌ {avatar:20s} → 0 docs (FALHA)")
+    
+    if failures == 0:
+        logger.info("\n✅ Ingestão concluída com sucesso!")
+    else:
+        total_avatars = len(results)
+        logger.info(f"\n❌ INGESTÃO COM FALHAS — {total_avatars - failures} de {total_avatars} coleções promovidas")
+    
     logger.info("=" * 80)
 
 
