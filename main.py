@@ -280,6 +280,14 @@ async def avatar_speak(request: SpeakRequest):
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
     
+    # CORREÇÃO 2: Verificar RAG_READY antes de processar
+    if not RAG_READY and request.event_type not in [EventType.INTRO, EventType.GREETING]:
+        logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
+        raise HTTPException(
+            status_code=503,
+            detail="RAG em indexação. Tente novamente em instantes."
+        )
+    
     avatar_id = request.avatar_id
     text = request.text.strip() if request.text else ""
     language = request.language or "pt-BR"
@@ -581,6 +589,14 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     """Endpoint v2 com suporte a event_type (intro/query)"""
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
+
+    # CORREÇÃO 2: Verificar RAG_READY antes de processar
+    if not RAG_READY and request.event_type not in [EventType.INTRO, EventType.GREETING]:
+        logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
+        raise HTTPException(
+            status_code=503,
+            detail="RAG em indexação. Tente novamente em instantes."
+        )
 
     avatar_id = request.avatar_id
     text = request.text.strip() if request.text else ""

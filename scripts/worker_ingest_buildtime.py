@@ -514,92 +514,80 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
                 pass
             return current_count, warnings + [f"INGESTÃO REJEITADA: {tmp_count} < {threshold}"]
     
-    # 6. PROMOÇÃO SEGURA: _tmp → _new → validar → apagar _tmp → apagar antiga
+    # 6. PROMOÇÃO SEGURA: _tmp → oficial (rename nativo)
     promotion_ok = False
     promoted_count = 0
     
     try:
-        # 6a. Criar coleção _new (nova oficial)
-        new_collection = client.get_or_create_collection(
-            name=f"{avatar_id}_knowledge_new",
-            metadata={"hnsw:space": "cosine"}
-        )
-        
-        # 6b. Copiar dados de _tmp para _new (com include= para embeddings)
-        promoted = client.get_collection(f"{avatar_id}_knowledge_tmp")
-        all_docs = promoted.get(include=["embeddings", "documents", "metadatas"])
+        # 6a. Ler coleção temporária
+        tmp_collection = client.get_collection(f"{avatar_id}_knowledge_tmp")
+        all_docs = tmp_collection.get(include=["embeddings", "documents", "metadatas"])
         
         if not all_docs or not all_docs.get('documents'):
             raise ValueError("Coleção _tmp está vazia ou get() retornou sem dados")
         
-        docs_list = all_docs['documents']
-        ids_list = all_docs['ids']
-        embeddings_list = all_docs.get('embeddings')
-        metadatas_list = all_docs.get('metadatas')
+        docs_count = len(all_docs['documents'])
+        logger.info(f"📊 {avatar_id}: _tmp tem {docs_count} docs, pronto para promoção")
         
-        if embeddings_list is None:
-            raise ValueError("Embeddings não retornados por get() — use include=['embeddings']")
+        # 6b. Validar contagem: docs_tmp >= docs_current * 0.95
+        if docs_count < current_count * 0.95:
+            raise ValueError(f"Validação falhou: _tmp tem {docs_count} docs mas anterior tinha {current_count}")
         
-        # Copiar em batches
-        for i in range(0, len(docs_list), BATCH_SIZE):
-            batch_end = min(i + BATCH_SIZE, len(docs_list))
-            new_collection.add(
-                ids=ids_list[i:batch_end],
-                documents=docs_list[i:batch_end],
-                embeddings=[emb.tolist() if hasattr(emb, 'tolist') else emb for emb in embeddings_list[i:batch_end]],
-                metadatas=metadatas_list[i:batch_end] if metadatas_list else [{'source': 'tmp'}] * (batch_end - i)
+        # 6c. RENAME NATIVO: _tmp → oficial
+        # ChromaDB suporta col.modify(name=...) para renomear
+        try:
+            # Apagar coleção antiga (se existia) ANTES do rename
+            if has_existing_collection:
+                try:
+                    client.delete_collection(f"{avatar_id}_knowledge")
+                    logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
+                except Exception:
+                    pass
+            
+            # Renomear _tmp para oficial usando modify
+            tmp_collection.modify(name=f"{avatar_id}_knowledge")
+            logger.info(f"✅ Coleção renomeada: {avatar_id}_knowledge_tmp → {avatar_id}_knowledge")
+            
+        except AttributeError:
+            # Fallback: se modify não existir, usar delete + get_or_create
+            logger.warning(f"⚠️ col.modify não disponível, usando fallback delete+create")
+            client.delete_collection(f"{avatar_id}_knowledge_tmp")
+            
+            # Recriar com nome oficial
+            official = client.get_or_create_collection(
+                name=f"{avatar_id}_knowledge",
+                metadata={"hnsw:space": "cosine"}
             )
-        gc.collect()
-        
-        # 6c. Validar contagem da coleção _new
-        new_count = new_collection.count()
-        if new_count < len(docs_list) * 0.95:
-            raise ValueError(f"Validação falhou: _new tem {new_count} docs mas _tmp tinha {len(docs_list)}")
-        
-        promoted_count = new_count
-        
-        # 6d. Apagar coleção temporária _tmp
-        client.delete_collection(f"{avatar_id}_knowledge_tmp")
-        logger.info(f"🗑️ Coleção _tmp removida: {avatar_id}_knowledge_tmp")
-        
-        # 6e. Apagar coleção antiga (SÓ AGORA, após _new validada)
-        if has_existing_collection:
-            try:
-                client.delete_collection(f"{avatar_id}_knowledge")
-                logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
-            except Exception:
-                pass
-        
-        # 6f. Renomear _new → oficial
-        # ChromaDB não suporta rename nativo, então criamos a oficial copiando
-        official = client.get_or_create_collection(
-            name=f"{avatar_id}_knowledge",
-            metadata={"hnsw:space": "cosine"}
-        )
-        
-        # Copiar de _new para oficial
-        new_docs = new_collection.get(include=["embeddings", "documents", "metadatas"])
-        if new_docs and new_docs.get('documents'):
-            for i in range(0, len(new_docs['documents']), BATCH_SIZE):
-                batch_end = min(i + BATCH_SIZE, len(new_docs['documents']))
+            
+            # Copiar dados (última tentativa)
+            ids_list = all_docs['ids']
+            docs_list = all_docs['documents']
+            embeddings_list = all_docs.get('embeddings')
+            metadatas_list = all_docs.get('metadatas')
+            
+            for i in range(0, len(docs_list), BATCH_SIZE):
+                batch_end = min(i + BATCH_SIZE, len(docs_list))
                 official.add(
-                    ids=new_docs['ids'][i:batch_end],
-                    documents=new_docs['documents'][i:batch_end],
-                    embeddings=[emb.tolist() if hasattr(emb, 'tolist') else emb for emb in new_docs['embeddings'][i:batch_end]],
-                    metadatas=new_docs.get('metadatas', [{'source': 'new'}] * (batch_end - i))[i:batch_end] if new_docs.get('metadatas') else [{'source': 'new'}] * (batch_end - i)
+                    ids=ids_list[i:batch_end],
+                    documents=docs_list[i:batch_end],
+                    embeddings=[emb.tolist() if hasattr(emb, 'tolist') else emb for emb in embeddings_list[i:batch_end]] if embeddings_list else None,
+                    metadatas=metadatas_list[i:batch_end] if metadatas_list else [{'source': 'promoted'}] * (batch_end - i)
                 )
             gc.collect()
         
-        # 6g. Validar oficial e apagar _new
-        official_count = official.count()
-        if official_count < promoted_count * 0.95:
-            raise ValueError(f"Validação oficial falhou: {official_count} < {promoted_count * 0.95}")
+        # 6d. VALIDAÇÃO FINAL: Verificar que a coleção oficial existe e tem docs > 0
+        official_collection = client.get_collection(f"{avatar_id}_knowledge")
+        official_count = official_collection.count()
         
-        client.delete_collection(f"{avatar_id}_knowledge_new")
-        logger.info(f"🗑️ Coleção _new removida: {avatar_id}_knowledge_new")
+        if official_count == 0:
+            raise ValueError(f"Validação falhou: coleção oficial tem 0 docs após promoção")
         
+        if official_count < docs_count * 0.95:
+            raise ValueError(f"Validação falhou: oficial tem {official_count} docs mas _tmp tinha {docs_count}")
+        
+        promoted_count = official_count
         promotion_ok = True
-        logger.info(f"✅ {avatar_id}: PROMOCÃO CONCLUÍDA — {promoted_count} docs (anterior: {current_count})")
+        logger.info(f"✅ {avatar_id}: PROMOÇÃO CONCLUÍDA — {promoted_count} docs (anterior: {current_count})")
         
     except Exception as e:
         logger.error(f"❌ {avatar_id}: ERRO NA PROMOCÃO: {e}")
