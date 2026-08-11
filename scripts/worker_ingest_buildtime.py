@@ -647,16 +647,18 @@ def inherit_knowledge(client, source_avatar: str, target_avatar: str):
             batch_docs = all_docs['documents'][i:i+batch_size]
             batch_metas = all_docs.get('metadatas', [None] * len(batch_docs))[i:i+batch_size]
             batch_ids = [f"{target_avatar}_{doc_id.split('_')[-1]}" for doc_id in all_docs['ids'][i:i+batch_size]]
-            batch_embs = all_docs.get('embeddings', [])
-            if batch_embs:
+            batch_embs = all_docs.get('embeddings', None)
+            if batch_embs is not None and hasattr(batch_embs, '__len__') and len(batch_embs) > 0:
                 batch_embs = batch_embs[i:i+batch_size]
+            else:
+                batch_embs = []
             
             add_kwargs = {
                 'documents': batch_docs,
                 'metadatas': batch_metas,
                 'ids': batch_ids
             }
-            if batch_embs:
+            if batch_embs is not None and hasattr(batch_embs, '__len__') and len(batch_embs) > 0:
                 add_kwargs['embeddings'] = [emb.tolist() if hasattr(emb, 'tolist') else emb for emb in batch_embs]
             
             target_collection.add(**add_kwargs)
@@ -735,6 +737,13 @@ def main():
     
     if failures == 0:
         logger.info("\n✅ Ingestão concluída com sucesso!")
+        # Criar flag de conclusão
+        try:
+            with open("/tmp/ingestion_complete", "w") as f:
+                f.write("OK")
+            logger.info("🚩 Flag /tmp/ingestion_complete criada com sucesso.")
+        except Exception as e:
+            logger.error(f"❌ Erro ao criar flag /tmp/ingestion_complete: {e}")
     else:
         total_avatars = len(results)
         logger.info(f"\n❌ INGESTÃO COM FALHAS — {total_avatars - failures} de {total_avatars} coleções promovidas")

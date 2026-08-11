@@ -131,19 +131,8 @@ except Exception as e:
 RAG_READY = False
 
 def is_ingestion_ready() -> bool:
-    """Gate baseado em colecoes reais, não em flag volátil."""
-    if os.path.exists("/tmp/ingestion_complete"):
-        return True
-    try:
-        if rag_engine and hasattr(rag_engine, 'client') and rag_engine.client:
-            cols = rag_engine.client.list_collections()
-            total = sum(c.count() for c in cols)
-            if total > 0:
-                logger.info(f"Ingestão pronta via coleções persistidas (sem flag): {len(cols)} coleções, {total} docs")
-                return True
-    except Exception as e:
-        logger.warning(f"check coleções falhou: {e}")
-    return False
+    """Gate baseado estritamente na flag /tmp/ingestion_complete gerada ao término da ingestão."""
+    return os.path.exists("/tmp/ingestion_complete") or RAG_READY
 
 def rag_ready_check():
     """Retorna True se RAG está pronto para consultas. Senão, retorna False."""
@@ -163,13 +152,17 @@ async def lifespan(app: FastAPI):
     logger.info(f"Traducao disponivel: {translation_available}")
     logger.info(f"TTS/Visemes disponivel: {tts_available}")
     
-    # Verificar se ingestão já foi concluída
+    # CORREÇÃO BUG 2: Apagar incondicionalmente /tmp/ingestion_complete no startup para evitar flag fantasma
     global RAG_READY
-    if is_ingestion_ready():
-        RAG_READY = True
-        logger.info("✅ Ingestão já concluída (flag encontrada)")
-    else:
-        logger.info("⏳ Aguardando ingestão em background...")
+    RAG_READY = False
+    try:
+        if os.path.exists("/tmp/ingestion_complete"):
+            os.remove("/tmp/ingestion_complete")
+            logger.info("🧹 Flag antiga /tmp/ingestion_complete removida no startup.")
+    except Exception as e:
+        logger.warning(f"⚠️ Erro ao limpar flag antiga: {e}")
+        
+    logger.info("⏳ RAG_READY = False. Aguardando ingestão em background...")
     
     yield
     logger.info("Desligando servidor")
@@ -281,7 +274,7 @@ async def avatar_speak(request: SpeakRequest):
     start_time = time.time()
     
     # CORREÇÃO 2: Verificar RAG_READY antes de processar
-    if not RAG_READY and request.event_type not in [EventType.INTRO, EventType.GREETING]:
+    if not RAG_READY and request.event_type != EventType.INTRO:
         logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
         raise HTTPException(
             status_code=503,
@@ -591,7 +584,7 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     start_time = time.time()
 
     # CORREÇÃO 2: Verificar RAG_READY antes de processar
-    if not RAG_READY and request.event_type not in [EventType.INTRO, EventType.GREETING]:
+    if not RAG_READY and request.event_type != EventType.INTRO:
         logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
         raise HTTPException(
             status_code=503,
