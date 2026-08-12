@@ -44,7 +44,16 @@ def validate_rag_engine(rag_engine) -> Dict:
             }
             
             try:
-                collection = rag_engine.collections.get(avatar_id)
+                # CORREÇÃO 4: Buscar diretamente pelo nome no client ChromaDB sem depender de cache
+                col_name = f"{avatar_id}_knowledge"
+                if avatar_id == 'bruno': col_name = 'bruno_giovana_knowledge'
+                elif avatar_id == 'marcos': col_name = 'marcos_carol_knowledge'
+                
+                try:
+                    collection = rag_engine.client.get_collection(col_name)
+                except Exception:
+                    collection = rag_engine.collections.get(avatar_id)
+                    
                 if not collection:
                     avatar_result["status"] = "NO_COLLECTION"
                 else:

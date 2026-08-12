@@ -548,9 +548,17 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
             tmp_collection.modify(name=f"{avatar_id}_knowledge")
             logger.info(f"✅ Coleção renomeada: {avatar_id}_knowledge_tmp → {avatar_id}_knowledge")
             
-            # CORREÇÃO 1: Recarregar a coleção pelo nome para atualizar referência de cache e UUID no client
+            # CORREÇÃO 2 & 3: Invalidar cache no rag_engine se disponível e buscar pelo nome
+            try:
+                from src.chroma_engine import rag_engine
+                if rag_engine and hasattr(rag_engine, 'invalidate_cache'):
+                    rag_engine.invalidate_cache(avatar_id)
+            except Exception:
+                pass
+                
             official_collection = client.get_collection(f"{avatar_id}_knowledge")
-            logger.info(f"🔄 Reload pós-rename efetuado para {avatar_id}_knowledge (UUID atualizado)")
+            assert official_collection is not None, f"Falha ao recuperar {avatar_id}_knowledge após rename"
+            logger.info(f"🔄 Reload e assert pós-rename efetuados com sucesso para {avatar_id}_knowledge")
             
         except AttributeError:
             # Fallback: se modify não existir, usar delete + get_or_create

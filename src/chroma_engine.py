@@ -151,41 +151,53 @@ class AvatarRAGEngine:
         """Usa singleton thread-safe para lazy loading"""
         return _get_embedding_model_singleton()
     
+    def get_collection(self, avatar_id: str):
+        """Sempre busca a coleção pelo nome diretamente no client ChromaDB, nunca cacheia UUID"""
+        collection_name = f"{avatar_id}_knowledge"
+        if avatar_id == 'bruno':
+            collection_name = 'bruno_giovana_knowledge'
+        elif avatar_id == 'marcos':
+            collection_name = 'marcos_carol_knowledge'
+            
+        try:
+            if self.client is None:
+                raise RuntimeError("ChromaDB client não inicializado")
+            return self.client.get_collection(name=collection_name)
+        except Exception as e:
+            logger.error(f"❌ Erro ao recuperar coleção {collection_name} para {avatar_id}: {e}")
+            raise
+
+    def invalidate_cache(self, avatar_id: str = None):
+        """Invalida o cache de coleções se houver"""
+        if avatar_id:
+            self.collections.pop(avatar_id, None)
+            logger.info(f"🔄 Cache invalidado para {avatar_id}")
+        else:
+            self.collections.clear()
+            logger.info("🔄 Cache de todas as coleções invalidado")
+
     def _init_collections_readonly(self):
         """
-        Inicializa coleções em modo READ-ONLY
-        NÃO cria coleções, apenas lista as pré-existentes
+        Inicializa coleções em modo READ-ONLY validando existência pelo nome.
         """
         if self.client is None:
             logger.warning("⚠️ ChromaDB não inicializado, skipping collection init")
             return
         
         try:
-            # Listar coleções existentes
             existing_collections = {col.name: col for col in self.client.list_collections()}
-            logger.info(f"📊 Coleções encontradas: {len(existing_collections)}")
+            logger.info(f"📊 Coleções encontradas no client: {len(existing_collections)}")
             
-            # Mapear avatares para coleções
             for avatar_id in self.AVATARS:
                 collection_name = f"{avatar_id}_knowledge"
-                
+                if avatar_id in ('bruno', 'marcos'):
+                    collection_name = 'bruno_giovana_knowledge' if avatar_id == 'bruno' else 'marcos_carol_knowledge'
+                    
                 if collection_name in existing_collections:
-                    self.collections[avatar_id] = existing_collections[collection_name]
                     count = existing_collections[collection_name].count()
-                    logger.info(f"✅ {avatar_id}: {count} docs disponíveis")
+                    logger.info(f"✅ {avatar_id} ({collection_name}): {count} docs disponíveis")
                 else:
-                    logger.warning(f"⚠️ {avatar_id}: Coleção não encontrada (será retornado fallback)")
-            
-            # Alias: bruno → bruno_giovana_knowledge, marcos → marcos_carol_knowledge
-            ALIAS_MAP = {
-                'bruno': 'bruno_giovana_knowledge',
-                'marcos': 'marcos_carol_knowledge',
-            }
-            for alias_id, real_collection_name in ALIAS_MAP.items():
-                if alias_id not in self.collections and real_collection_name in existing_collections:
-                    self.collections[alias_id] = existing_collections[real_collection_name]
-                    count = existing_collections[real_collection_name].count()
-                    logger.info(f"✅ {alias_id}: {count} docs disponíveis (via alias {real_collection_name})")
+                    logger.warning(f"⚠️ {avatar_id} ({collection_name}): Coleção não encontrada")
         
         except Exception as e:
             logger.error(f"❌ Erro ao listar coleções: {e}", exc_info=True)
@@ -195,9 +207,14 @@ class AvatarRAGEngine:
         Busca documentos relevantes no ChromaDB
         Retorna fallback seguro se coleção não for encontrada
         """
-        # Verificar se coleção existe
-        if avatar_id not in self.collections:
-            logger.warning(f"⚠️ Coleção não encontrada para {avatar_id} - retornando fallback")
+        # Verificar se coleção existe pelo nome diretamente
+        try:
+            col_name = f"{avatar_id}_knowledge"
+            if avatar_id == 'bruno': col_name = 'bruno_giovana_knowledge'
+            elif avatar_id == 'marcos': col_name = 'marcos_carol_knowledge'
+            self.client.get_collection(col_name)
+        except Exception:
+            logger.warning(f"⚠️ Coleção {col_name} não encontrada para {avatar_id} - retornando fallback")
             return {
                 "error": "collection_not_found",
                 "fallback": True,
