@@ -548,6 +548,10 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
             tmp_collection.modify(name=f"{avatar_id}_knowledge")
             logger.info(f"✅ Coleção renomeada: {avatar_id}_knowledge_tmp → {avatar_id}_knowledge")
             
+            # CORREÇÃO 1: Recarregar a coleção pelo nome para atualizar referência de cache e UUID no client
+            official_collection = client.get_collection(f"{avatar_id}_knowledge")
+            logger.info(f"🔄 Reload pós-rename efetuado para {avatar_id}_knowledge (UUID atualizado)")
+            
         except AttributeError:
             # Fallback: se modify não existir, usar delete + get_or_create
             logger.warning(f"⚠️ col.modify não disponível, usando fallback delete+create")
@@ -728,25 +732,28 @@ def main():
     except:
         pass
     
-    # Verificar se todas as coleções foram promovidas com sucesso
+    # CORREÇÃO 4: Verificar rigorosamente se TODOS os 13 avatares possuem contagem > 0 antes de soltar a flag RAG_READY
+    expected_avatars = ['sofia', 'rafael', 'clara', 'lucas', 'amanda', 'fernanda', 'marina', 'roberto', 'luisa', 'lais', 'paula', 'bruno_giovana', 'marcos_carol']
     failures = 0
-    for avatar, count in sorted(results.items()):
-        if count == 0:
-            failures += 1
-            logger.error(f"  ❌ {avatar:20s} → 0 docs (FALHA)")
     
-    if failures == 0:
-        logger.info("\n✅ Ingestão concluída com sucesso!")
-        # Criar flag de conclusão
+    for avatar in expected_avatars:
+        c_count = results.get(avatar, 0)
+        if c_count == 0:
+            failures += 1
+            logger.error(f"  ❌ {avatar:20s} → 0 docs ou ausente (FALHA)")
+        else:
+            logger.info(f"  ✅ {avatar:20s} → {c_count} docs validados")
+            
+    if failures == 0 and len(results) >= len(expected_avatars):
+        logger.info("\n✅ Ingestão completa de TODOS os 13 avatares validada com sucesso!")
         try:
             with open("/tmp/ingestion_complete", "w") as f:
                 f.write("OK")
-            logger.info("🚩 Flag /tmp/ingestion_complete criada com sucesso.")
+            logger.info("🚩 Flag /tmp/ingestion_complete criada com sucesso. RAG_READY = True autorizado.")
         except Exception as e:
             logger.error(f"❌ Erro ao criar flag /tmp/ingestion_complete: {e}")
     else:
-        total_avatars = len(results)
-        logger.info(f"\n❌ INGESTÃO COM FALHAS — {total_avatars - failures} de {total_avatars} coleções promovidas")
+        logger.error(f"\n❌ INGESTÃO INTERROMPIDA OU COM FALHAS — {failures} falhas detectadas em {len(expected_avatars)} avatares esperados. Flag NÃO criada.")
     
     logger.info("=" * 80)
 

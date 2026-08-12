@@ -214,8 +214,19 @@ class AvatarRAGEngine:
             query_embeddings = embedding_fn([query_text])
             logger.info(f"🔍 Query embedding gerado com ONNX: {len(query_embeddings)} embeddings")
             
-            # Query no ChromaDB com embedding ONNX
-            collection = self.collections[avatar_id]
+            # CORREÇÃO 2: Sempre buscar a coleção diretamente pelo nome no client para evitar cache de UUID obsoleto após rename
+            collection_name = f"{avatar_id}_knowledge"
+            if avatar_id in ('bruno', 'marcos'):
+                collection_name = 'bruno_giovana_knowledge' if avatar_id == 'bruno' else 'marcos_carol_knowledge'
+            
+            try:
+                collection = self.client.get_collection(collection_name)
+            except Exception:
+                collection = self.collections.get(avatar_id)
+                
+            if not collection:
+                raise ValueError(f"Coleção para {avatar_id} não encontrada")
+                
             results = collection.query(
                 query_embeddings=query_embeddings,
                 n_results=n_results
