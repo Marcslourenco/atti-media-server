@@ -130,13 +130,13 @@ except Exception as e:
 # ============================================================================
 RAG_READY = False
 
-def is_ingestion_ready() -> bool:
-    """Gate baseado estritamente na flag /tmp/ingestion_complete gerada ao término da ingestão."""
-    return os.path.exists("/tmp/ingestion_complete") or RAG_READY
+def is_rag_ready() -> bool:
+    """Gate estritamente file-based baseado na existência de /tmp/ingestion_complete para evitar dessincronização de memória entre threads/processos do worker."""
+    return os.path.exists("/tmp/ingestion_complete")
 
 def rag_ready_check():
-    """Retorna True se RAG está pronto para consultas. Senão, retorna False."""
-    return RAG_READY or is_ingestion_ready()
+    """Retorna True se RAG está pronto para consultas baseado unicamente no arquivo físico."""
+    return is_rag_ready()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -273,9 +273,9 @@ async def avatar_speak(request: SpeakRequest):
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
     
-    # CORREÇÃO 2: Verificar RAG_READY antes de processar
-    if not RAG_READY and request.event_type != EventType.INTRO:
-        logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
+    # CORREÇÃO 2: Verificar is_rag_ready() antes de processar (file-based)
+    if not is_rag_ready() and request.event_type != EventType.INTRO:
+        logger.warning(f"[{request_id}] RAG não está pronto (arquivo /tmp/ingestion_complete ausente), retornando 503")
         raise HTTPException(
             status_code=503,
             detail="RAG em indexação. Tente novamente em instantes."
@@ -332,12 +332,12 @@ async def avatar_speak(request: SpeakRequest):
     if not text:
         raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório para queries")
     
-    # Verificar se ingestao esta completa
-    if not is_ingestion_ready():
-        logger.warning(f"[{request_id}] RAG ainda nao pronto, gerando TTS do fallback")
-        fallback_text = (
-            "Ainda estou organizando meu conhecimento. "
-            "Por favor, tente novamente em instantes."
+    # Verificar se ingestao esta completa usando exclusivamente o arquivo físico
+    if not is_rag_ready():
+        logger.warning(f"[{request_id}] RAG não está pronto (arquivo /tmp/ingestion_complete ausente), retornando 503")
+        return JSONResponse(
+            status_code=503,
+            content={"detail": "RAG em indexação. Tente novamente em instantes."}
         )
         
         # Gerar áudio para o fallback
@@ -583,9 +583,9 @@ async def avatar_speak_v2(request: SpeakRequestV2):
     request_id = str(uuid.uuid4())[:8]
     start_time = time.time()
 
-    # CORREÇÃO 2: Verificar RAG_READY antes de processar
-    if not RAG_READY and request.event_type != EventType.INTRO:
-        logger.warning(f"[{request_id}] RAG não está pronto, retornando 503")
+    # CORREÇÃO 2: Verificar is_rag_ready() antes de processar (file-based)
+    if not is_rag_ready() and request.event_type != EventType.INTRO:
+        logger.warning(f"[{request_id}] RAG não está pronto (arquivo /tmp/ingestion_complete ausente), retornando 503")
         raise HTTPException(
             status_code=503,
             detail="RAG em indexação. Tente novamente em instantes."
@@ -799,6 +799,7 @@ async def text_to_speech(request: dict):
         "language": language
     }
 
+@app.post("/api/tts/direct")
 @app.post("/api/tts-direct")
 async def tts_direct(request: dict):
     """Endpoint TTS direto — sem RAG, sem LLM. Apenas texto → áudio + visemes."""
