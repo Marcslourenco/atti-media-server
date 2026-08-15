@@ -1,0 +1,107 @@
+{
+  "versao": "1.0",
+  "descricao": "Manifest central de personas. O backend deve ler este arquivo na inicialização e carregar, para cada entrada, o arquivo individual correspondente em 02_personas/. Nenhuma persona deve ser carregada sem estar listada aqui.",
+  "vinculo_institucional_padrao": "03_guardrails/institutional_block.json",
+  "avisos_carregamento": [
+    "Cada arquivo individual deve ser validado contra o schema de persona em 03_guardrails/content_schemas.json antes de ser carregado em memória.",
+    "Se um avatar_id listado aqui não tiver arquivo correspondente, ou o arquivo falhar na validação de schema, o backend deve logar erro crítico e NÃO iniciar o avatar com dados parciais/corrompidos — melhor recusar o carregamento daquele avatar específico do que servir uma persona incompleta.",
+    "As duplas (bruno_giovana, marcos_carol) usam um único avatar_id representando os dois personagens falando de forma alternada — o frontend/UneeQ deve tratar como uma única sessão de avatar."
+  ],
+  "avatares": [
+    {
+      "avatar_id": "sofia",
+      "nome": "Sofia",
+      "archetype": "Consultora Universal / Avatar de Demonstração",
+      "segmento_cliente": "generico_demo",
+      "arquivo": "02_personas/persona_sofia.json"
+    },
+    {
+      "avatar_id": "rafael",
+      "nome": "Rafael",
+      "archetype": "Consultor B2B Industrial",
+      "segmento_cliente": "industria_metalurgica_contabilidade",
+      "arquivo": "02_personas/persona_rafael.json"
+    },
+    {
+      "avatar_id": "clara",
+      "nome": "Clara",
+      "archetype": "Recepcionista Empática",
+      "segmento_cliente": "saude_clinicas",
+      "arquivo": "02_personas/persona_clara.json"
+    },
+    {
+      "avatar_id": "lucas",
+      "nome": "Lucas",
+      "archetype": "Vendedor Energético de Varejo",
+      "segmento_cliente": "varejo_supermercados_shopping",
+      "arquivo": "02_personas/persona_lucas.json"
+    },
+    {
+      "avatar_id": "amanda",
+      "nome": "Amanda",
+      "archetype": "Orientadora Pedagógica Didática",
+      "segmento_cliente": "educacao_escolas",
+      "arquivo": "02_personas/persona_amanda.json"
+    },
+    {
+      "avatar_id": "fernanda",
+      "nome": "Fernanda",
+      "archetype": "Anfitriã Hospitaleira",
+      "segmento_cliente": "hotelaria_turismo",
+      "arquivo": "02_personas/persona_fernanda.json"
+    },
+    {
+      "avatar_id": "marina",
+      "nome": "Marina",
+      "archetype": "Consultora Analítica de Sustentabilidade",
+      "segmento_cliente": "energia_solar_sustentabilidade",
+      "arquivo": "02_personas/persona_marina.json"
+    },
+    {
+      "avatar_id": "roberto",
+      "nome": "Roberto",
+      "archetype": "Atendente Institucional de Serviço Público",
+      "segmento_cliente": "servico_publico_prefeitura",
+      "arquivo": "02_personas/persona_roberto.json"
+    },
+    {
+      "avatar_id": "luisa",
+      "nome": "Luisa",
+      "archetype": "Especialista em Origem e Sabor",
+      "segmento_cliente": "industria_alimenticia",
+      "arquivo": "02_personas/persona_luisa.json"
+    },
+    {
+      "avatar_id": "lais",
+      "nome": "Lais",
+      "archetype": "Vendedora Persuasiva de Concessionária",
+      "segmento_cliente": "concessionaria_veiculos",
+      "arquivo": "02_personas/persona_lais.json"
+    },
+    {
+      "avatar_id": "paula",
+      "nome": "Paula",
+      "archetype": "Assistente Ágil de Operações Comerciais",
+      "segmento_cliente": "ecommerce_atacado",
+      "arquivo": "02_personas/persona_paula.json"
+    },
+    {
+      "avatar_id": "bruno_giovana",
+      "nome": "Bruno & Giovana",
+      "archetype": "Dupla de Torcedores Fanáticos (São Paulo FC)",
+      "segmento_cliente": "generico_com_vies_futebol_spfc",
+      "arquivo": "02_personas/persona_bruno_giovana.json",
+      "vies_extremo": true
+    },
+    {
+      "avatar_id": "marcos_carol",
+      "nome": "Marcos & Carol",
+      "archetype": "Dupla de Torcedores Fanáticos (Corinthians)",
+      "segmento_cliente": "generico_com_vies_futebol_corinthians",
+      "arquivo": "02_personas/persona_marcos_carol.json",
+      "vies_extremo": true
+    }
+  ],
+  "total_avatar_ids": 13,
+  "observacao_contagem": "13 avatar_id/slots técnicos cobrem os 14 avatares solicitados: 11 avatares individuais (sofia a paula) + 2 duplas (bruno_giovana e marcos_carol), cada dupla ocupando 1 slot de avatar_id representando 2 personagens que se alternam na fala dentro da mesma sessão."
+}

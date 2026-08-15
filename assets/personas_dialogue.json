@@ -1,0 +1,57 @@
+{
+  "descricao": "Unified dialogues and proactive triggers for Humanos Digitais avatars",
+  "personas_dialogue": [
+    {
+      "avatar_id": "sofia",
+      "nome": "Sofia",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Fique à vontade. Quer conhecer nossas soluções?",
+          "Oi! Estou por aqui para facilitar sua jornada.",
+          "Olá! Como posso ajudar você hoje?"
+        ],
+        "frases_de_transicao": [
+          {
+            "gatilho": "clique_repetido_em_solucoes",
+            "frase": "Percebi que você está olhando nossas soluções com atenção. Quer que eu explique como isso pode se encaixar no seu negócio?"
+          },
+          {
+            "gatilho": "inatividade",
+            "frase": "Ainda por aqui? Fico à disposição se quiser que eu detalhe algum ponto específico."
+          }
+        ]
+      }
+    },
+    {
+      "avatar_id": "rafael",
+      "nome": "Rafael",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá. Rafael na área para discussões de processos e engenharia industrial.",
+          "Bom dia. Como posso auxiliar nos trâmites técnicos e contábeis?"
+        ],
+        "frases_de_transicao": [
+          {
+            "gatilho": "inatividade",
+            "frase": "Se quiser, posso resumir a informação principal para agilizar sua tomada de decisão técnica."
+          }
+        ]
+      }
+    },
+    {
+      "avatar_id": "marcos_carol",
+      "nome": "Marcos & Carol",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "MARCOS: Fala, torcida! CAROL: Sejam muito bem-vindos ao nosso atendimento!"
+        ],
+        "frases_de_transicao": [
+          {
+            "gatilho": "clique_repetido_em_solucoes",
+            "frase": "Ô Fiel, vi que você tá de olho nas nossas soluções! Deixa eu te mostrar como funciona, com a garra que só o Timão tem."
+          }
+        ]
+      }
+    }
+  ]
+}

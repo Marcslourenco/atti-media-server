@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://humanosdigitais.com.br/schemas/content_schemas.json",
+  "title": "Humanos Digitais - Content Schemas",
+  "description": "Schema unificado para validar checklists de onboarding (universal e por segmento) e personas de avatares. Deve ser usado pelo backend ANTES de qualquer indexação no ChromaDB.",
+
+  "$defs": {
+
+    "validacao": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "regex": { "type": "string", "description": "Regex para validar a resposta livre." },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "min_length": { "type": "integer", "minimum": 0 },
+        "max_length": { "type": "integer", "minimum": 1 },
+        "opcoes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Obrigatório quando tipo_resposta é single_select ou multi_select."
+        }
+      }
+    },
+
+    "uso_no_avatar": {
+      "type": "object",
+      "required": ["contexto", "prioridade"],
+      "additionalProperties": false,
+      "properties": {
+        "contexto": {
+          "type": "string",
+          "description": "Onde essa informação é usada na fala do avatar.",
+          "examples": ["apresentacao", "faq", "encerramento", "objecao_preco", "pitch_produto"]
+        },
+        "prioridade": {
+          "type": "string",
+          "enum": ["alta", "media", "baixa"]
+        },
+        "template_fala": {
+          "type": "string",
+          "description": "Template opcional com placeholders {campo} para montar a resposta do avatar."
+        }
+      }
+    },
+
+    "checklist_item": {
+      "type": "object",
+      "required": ["id", "pergunta", "tipo_resposta", "obrigatorio", "uso_no_avatar"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]{3,64}$",
+          "description": "Identificador único, snake_case."
+        },
+        "pergunta": { "type": "string", "minLength": 5, "maxLength": 300 },
+        "descricao_ajuda": { "type": "string", "maxLength": 500 },
+        "tipo_resposta": {
+          "type": "string",
+          "enum": ["texto", "numero", "data", "booleano", "single_select", "multi_select", "upload"]
+        },
+        "obrigatorio": { "type": "boolean" },
+        "depende_de": {
+          "type": "string",
+          "description": "id de outro item cuja resposta condiciona a exibição deste (lógica condicional)."
+        },
+        "uso_no_avatar": { "$ref": "#/$defs/uso_no_avatar" },
+        "validacao": { "$ref": "#/$defs/validacao" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "tipo_resposta": { "const": "single_select" } } },
+          "then": { "properties": { "validacao": { "required": ["opcoes"] } } }
+        },
+        {
+          "if": { "properties": { "tipo_resposta": { "const": "multi_select" } } },
+          "then": { "properties": { "validacao": { "required": ["opcoes"] } } }
+        }
+      ]
+    },
+
+    "checklist_file": {
+      "type": "object",
+      "required": ["versao", "segmento", "itens"],
+      "additionalProperties": false,
+      "properties": {
+        "versao": { "type": "string", "pattern": "^\\d+\\.\\d+(\\.\\d+)?$" },
+        "segmento": {
+          "type": "string",
+          "description": "'universal' para 01_onboarding/universal_checklist.json ou o nome do segmento (ex: metalurgica, cafeteria, contabilidade)."
+        },
+        "itens": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/checklist_item" }
+        }
+      }
+    },
+
+    "persona": {
+      "type": "object",
+      "required": [
+        "avatar_id", "nome", "segmento_cliente", "tom_de_voz",
+        "biografia", "expertise", "restricoes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "avatar_id": {
+          "type": "string",
+          "enum": [
+            "sofia", "rafael", "clara", "lucas", "amanda", "fernanda",
+            "marina", "roberto", "luisa", "lais", "paula",
+            "bruno_giovana", "marcos_carol"
+          ]
+        },
+        "nome": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "segmento_cliente": {
+          "type": "string",
+          "description": "Nicho de negócio do cliente que usa este avatar (ex: metalurgica, coffee_trading)."
+        },
+        "tom_de_voz": {
+          "type": "string",
+          "enum": ["formal", "consultivo", "caloroso", "tecnico_acessivel", "descontraido"]
+        },
+        "biografia": { "type": "string", "maxLength": 1000 },
+        "expertise": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "restricoes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tópicos ou comportamentos que este avatar específico não deve abordar."
+        },
+        "gatilhos_frases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["gatilho", "frase"],
+            "additionalProperties": false,
+            "properties": {
+              "gatilho": { "type": "string", "description": "Evento ou palavra-chave que dispara a frase." },
+              "frase": { "type": "string" }
+            }
+          }
+        },
+        "vinculo_institucional": {
+          "type": "boolean",
+          "default": true,
+          "description": "Se true, este avatar herda automaticamente institutional_block.json no momento da montagem do system_prompt."
+        }
+      }
+    }
+  },
+
+  "oneOf": [
+    { "$ref": "#/$defs/checklist_file" },
+    { "$ref": "#/$defs/persona" }
+  ]
+}

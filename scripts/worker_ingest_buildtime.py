@@ -533,22 +533,39 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
         if docs_count < current_count * 0.95:
             raise ValueError(f"Validação falhou: _tmp tem {docs_count} docs mas anterior tinha {current_count}")
         
-        # 6c. RENAME NATIVO: _tmp → oficial
-        # ChromaDB suporta col.modify(name=...) para renomear
+        # 6c. SWAP ATÔMICO EM 3 PASSOS (Regra Zero: nunca apagar oficial antes do rename)
         try:
-            # Apagar coleção antiga (se existia) ANTES do rename
+            old_col_name = f"{avatar_id}_knowledge_old"
+            official_col_name = f"{avatar_id}_knowledge"
+            tmp_col_name = f"{avatar_id}_knowledge_tmp"
+            
+            # Limpar _old residual se houver
+            try:
+                client.delete_collection(old_col_name)
+            except Exception:
+                pass
+            
+            # Passo 1: Se já existe _old de uma execução anterior, podemos reutilizar ou limpar.
+            # O guia exige que a coleção antiga seja mantida em quarentena (_old) para rollback, sem deletar imediatamente.
+            try:
+                client.delete_collection(old_col_name)
+            except Exception:
+                pass
+
+            # Passo 2: Renomear oficial atual para _old (Quarentena persistente)
             if has_existing_collection:
                 try:
-                    client.delete_collection(f"{avatar_id}_knowledge")
-                    logger.info(f"🗑️ Coleção antiga removida: {avatar_id}_knowledge")
-                except Exception:
-                    pass
+                    existing_col = client.get_collection(official_col_name)
+                    existing_col.modify(name=old_col_name)
+                    logger.info(f"🛡️ Coleção antiga movida para quarentena: {avatar_id}_knowledge_old ({official_col_name} → {old_col_name})")
+                except Exception as e:
+                    logger.warning(f"⚠️ Não foi possível mover oficial para quarentena _old: {e}")
             
-            # Renomear _tmp para oficial usando modify
-            tmp_collection.modify(name=f"{avatar_id}_knowledge")
-            logger.info(f"✅ Coleção renomeada: {avatar_id}_knowledge_tmp → {avatar_id}_knowledge")
+            # Passo 3: Renomear _tmp para oficial (Promoção)
+            tmp_collection.modify(name=official_col_name)
+            logger.info(f"✅ Coleção promovida com sucesso: {tmp_col_name} → {official_col_name} (Quarentena mantida em {old_col_name})")
             
-            # CORREÇÃO 2 & 3: Invalidar cache no rag_engine se disponível e buscar pelo nome
+            # Invalidar cache no rag_engine e recarregar
             try:
                 from src.chroma_engine import rag_engine
                 if rag_engine and hasattr(rag_engine, 'invalidate_cache'):
@@ -556,9 +573,12 @@ def index_avatar(avatar_id: str, model, client) -> Tuple[int, List[str]]:
             except Exception:
                 pass
                 
-            official_collection = client.get_collection(f"{avatar_id}_knowledge")
-            assert official_collection is not None, f"Falha ao recuperar {avatar_id}_knowledge após rename"
-            logger.info(f"🔄 Reload e assert pós-rename efetuados com sucesso para {avatar_id}_knowledge")
+            official_collection = client.get_collection(official_col_name)
+            assert official_collection is not None, f"Falha ao recuperar {official_col_name} após swap atômico"
+            logger.info(f"🔄 Reload e assert pós-swap atômico efetuados com sucesso para {official_col_name}")
+            
+            promotion_ok = True
+            promoted_count = docs_count
             
         except AttributeError:
             # Fallback: se modify não existir, usar delete + get_or_create
@@ -660,18 +680,22 @@ def inherit_knowledge(client, source_avatar: str, target_avatar: str):
             batch_metas = all_docs.get('metadatas', [None] * len(batch_docs))[i:i+batch_size]
             batch_ids = [f"{target_avatar}_{doc_id.split('_')[-1]}" for doc_id in all_docs['ids'][i:i+batch_size]]
             batch_embs = all_docs.get('embeddings', None)
-            if batch_embs is not None and hasattr(batch_embs, '__len__') and len(batch_embs) > 0:
-                batch_embs = batch_embs[i:i+batch_size]
+            # Verificação segura de array numpy / lista sem ambiguidade booleana
+            is_valid_embs = False
+            if batch_embs is not None:
+                try:
+                    if hasattr(batch_embs, "size") and batch_embs.size > 0:
+                        is_valid_embs = True
+                    elif hasattr(batch_embs, "__len__") and len(batch_embs) > 0:
+                        is_valid_embs = True
+                except Exception:
+                    is_valid_embs = False
+
+            if is_valid_embs:
+                sliced_embs = batch_embs[i:i+batch_size]
+                add_kwargs['embeddings'] = [emb.tolist() if hasattr(emb, 'tolist') else emb for emb in sliced_embs]
             else:
-                batch_embs = []
-            
-            add_kwargs = {
-                'documents': batch_docs,
-                'metadatas': batch_metas,
-                'ids': batch_ids
-            }
-            if batch_embs is not None and hasattr(batch_embs, '__len__') and len(batch_embs) > 0:
-                add_kwargs['embeddings'] = [emb.tolist() if hasattr(emb, 'tolist') else emb for emb in batch_embs]
+                add_kwargs['embeddings'] = None
             
             target_collection.add(**add_kwargs)
         
