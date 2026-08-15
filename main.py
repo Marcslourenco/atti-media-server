@@ -371,13 +371,31 @@ async def avatar_speak(request: SpeakRequest):
     if any(term in text_lower for term in forbidden_terms):
         response_text = "Prefiro focar em como podemos ajudar o seu negócio a crescer com eficiência e clareza. Vamos falar sobre as nossas soluções práticas?"
     else:
-        response_text = text
+        response_text = None
         # Verificar viés de futebol se a pergunta for sobre o melhor time
         if any(q in text_lower for q in ["melhor time", "qual o melhor time", "time do brasil"]):
             if avatar_id in ["marcos_carol", "marcos", "carol"]:
                 response_text = "Time de Nação só tem um, e ele é Fiel: Corinthians, com C de campeão! Na Neo Química Arena a energia é única."
             elif avatar_id in ["bruno_giovana", "bruno", "giovana"]:
                 response_text = "Time bom é time que é Soberano tricampeão mundial, meu amigo — e isso só tem um: São Paulo!"
+                
+        # Consultar o RAG Engine
+        if not response_text and rag_engine:
+            try:
+                rag_results = rag_engine.query(avatar_id, text, n_results=2)
+                if rag_results and "documents" in rag_results and rag_results["documents"]:
+                    docs = rag_results["documents"][0]
+                    if docs:
+                        doc_text = docs[0].strip()
+                        if len(doc_text) > 250:
+                            doc_text = doc_text[:250] + "..."
+                        response_text = doc_text
+            except Exception as e:
+                logger.error(f"Erro ao consultar RAG no avatar_speak: {e}")
+                
+        # Fallback inteligente sem ecoar a pergunta
+        if not response_text:
+            response_text = "Como assistente da plataforma Humanos Digitais, estou aqui para ajudar você a encontrar a solução ideal e responder às suas dúvidas com clareza e eficiência. Posso detalhar nossos serviços?"
             
     sanitized = sanitize_for_tts(response_text)
     audio_data = None
