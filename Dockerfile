@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 # Copiar requirements
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN for i in 1 2 3 4 5; do pip install --no-cache-dir --timeout 120 -r requirements.txt && break || sleep 15; done
 
 # Copiar todos os arquivos Python necessários
 COPY main.py .
