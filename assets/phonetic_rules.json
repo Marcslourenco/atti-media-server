@@ -19,10 +19,10 @@
       "id": "omitir_url",
       "prioridade": 2,
       "categoria": "omissao",
-      "regex": "(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?(\\/[^\\s]*)?",
+      "regex": "https?:\\/\\/(www\\.)?[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?(\\/[^\\s]*)?",
       "substituicao": "",
-      "descricao": "URLs são omitidas; se necessário, o avatar deve falar o nome do site de forma amigável via texto fixo, não via regex genérica.",
-      "exemplo_entrada": "Acesse humanosdigitais.com.br para saber mais",
+      "descricao": "Apenas URLs completas com http/https são omitidas. Domínios puros são preservados para leitura amigável.",
+      "exemplo_entrada": "Acesse https://humanosdigitais.com.br para saber mais",
       "exemplo_saida": "Acesse para saber mais"
     },
     {

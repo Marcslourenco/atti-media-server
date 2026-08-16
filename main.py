@@ -131,6 +131,7 @@ class SpeakRequest(BaseModel):
     event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento")
     session_id: Optional[str] = Field(None, description="ID da sessão")
     context_url: Optional[str] = Field(None, description="URL da página onde o visitante está")
+    is_greeting: Optional[bool] = Field(False, description="Bypass explícito para saudações")
 
 class TTSRequest(BaseModel):
     text: str = Field(..., description="Texto para converter em fala")
@@ -368,10 +369,12 @@ async def avatar_speak(request: SpeakRequest):
     
     response_text = None
 
-    # 1. Detecção rigorosa de saudações
+    # 1. GREETING BYPASS EXPLÍCITO: Se request.is_greeting for True ou for saudação óbvia, usa o texto exato ou saudação oficial sem RAG
     saudacoes = ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "oi!", "olá!", "e aí", "eai", "tudo bem?", "hey", "hello"]
-    if text_lower in saudacoes or text == "":
-        if avatar_id == "sofia":
+    if request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower:
+        if request.is_greeting and text and text not in saudacoes:
+            response_text = text
+        elif avatar_id == "sofia":
             response_text = "Oi! Sou a Sofia, sua anfitriã aqui na plataforma. Estou pronta para te apresentar nossos humanos digitais e tirar qualquer dúvida. Vamos conversar?"
         else:
             persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
@@ -383,12 +386,12 @@ async def avatar_speak(request: SpeakRequest):
 
     # 2. Perguntas institucionais diretas (sem RAG)
     if not response_text:
-        institutional_keywords = ["nome da sua empresa", "quem é você", "o que é humanos digitais", "humanosdigitais.com.br", "qual o seu nome"]
-        if any(keyword in text_lower for keyword in institutional_keywords):
+        institutional_keywords = ["nome da sua empresa", "quem é você", "quem e voce", "o que é humanos digitais", "humanosdigitais.com.br", "qual o seu nome"]
+        if any(keyword in text_lower for keyword in institutional_keywords) or "quem" in text_lower and "você" in text_lower:
             persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
             p_nome = persona_obj.get('nome', 'Sofia') if persona_obj else 'Sofia'
             if avatar_id == "sofia":
-                response_text = "Sou a Sofia, sua anfitriã na Humanos Digitais (humanosdigitais.com.br). Somos especialistas em criar experiências de atendimento digital que aproximam marcas de pessoas."
+                response_text = "Sou a Sofia, sua anfitriã na Humanos Digitais, disponível em humanosdigitais.com.br. Somos especialistas em criar experiências de atendimento digital que aproximam marcas de pessoas."
             else:
                 response_text = f"Sou o(a) {p_nome}. A empresa é a Humanos Digitais (humanosdigitais.com.br), especialista em experiências de atendimento digital."
 
