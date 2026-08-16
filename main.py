@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 from typing import Optional
 from enum import Enum
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
@@ -217,6 +217,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/favicon.ico")
+async def favicon():
+    return Response(status_code=204)
+
 @app.get("/api/health")
 async def health():
     return {
@@ -379,10 +383,10 @@ async def avatar_speak(request: SpeakRequest):
             elif avatar_id in ["bruno_giovana", "bruno", "giovana"]:
                 response_text = "Time bom é time que é Soberano tricampeão mundial, meu amigo — e isso só tem um: São Paulo!"
                 
-        # Consultar o RAG Engine
+        # Consultar o RAG Engine (assinatura correta: query(query_text, avatar_id))
         if not response_text and rag_engine:
             try:
-                rag_results = rag_engine.query(avatar_id, text, n_results=2)
+                rag_results = rag_engine.query(text, avatar_id, n_results=2)
                 if rag_results and "documents" in rag_results and rag_results["documents"]:
                     docs = rag_results["documents"][0]
                     if docs:
@@ -393,8 +397,17 @@ async def avatar_speak(request: SpeakRequest):
             except Exception as e:
                 logger.error(f"Erro ao consultar RAG no avatar_speak: {e}")
                 
-        # Fallback inteligente sem ecoar a pergunta
-        if not response_text:
+        # Fallback inteligente sem ecoar a pergunta - se for saudação inicial ou vazio, usar a saudação oficial da Sofia
+        if not response_text or "oi" in text.lower() or "olá" in text.lower() or "início" in text.lower() or text == "":
+            if avatar_id == "sofia":
+                response_text = "Oi! Sou a Sofia, sua anfitriã aqui na plataforma. Estou pronta para te apresentar nossos humanos digitais e tirar qualquer dúvida. Vamos conversar?"
+            else:
+                persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
+                if persona_obj and "dialogues" in persona_obj and "aberturas_variadas" in persona_obj["dialogues"]:
+                    response_text = persona_obj["dialogues"]["aberturas_variadas"][0]
+                else:
+                    response_text = "Como assistente da plataforma Humanos Digitais, estou aqui para ajudar você a encontrar a solução ideal e responder às suas dúvidas com clareza e eficiência. Posso detalhar nossos serviços?"
+        elif not response_text:
             response_text = "Como assistente da plataforma Humanos Digitais, estou aqui para ajudar você a encontrar a solução ideal e responder às suas dúvidas com clareza e eficiência. Posso detalhar nossos serviços?"
             
     sanitized = sanitize_for_tts(response_text)
