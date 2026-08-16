@@ -360,11 +360,7 @@ import json
 
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
-    if not (RAG_READY or is_rag_ready()):
-        raise HTTPException(
-            status_code=503,
-            detail="RAG em indexação. Tente novamente em instantes."
-        )
+    # REMOVIDO O BLOQUEIO 503: Se a ingestão estiver rodando, o backend serve via fallback ou _old sem deixar o site mudo por 15 min.
     request_id = str(uuid.uuid4())[:8]
     avatar_id = request.avatar_id
     text = request.text.strip() if request.text else ""

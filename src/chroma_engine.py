@@ -208,20 +208,29 @@ class AvatarRAGEngine:
         Retorna fallback seguro se coleção não for encontrada
         """
         # Verificar se coleção existe pelo nome diretamente
+        # Blindagem robusta: se a coleção oficial não existir, tenta usar a quarentena (_old) para nunca falhar durante a ingestão
+        col_name = f"{avatar_id}_knowledge"
+        if avatar_id == 'bruno': col_name = 'bruno_giovana_knowledge'
+        elif avatar_id == 'marcos': col_name = 'marcos_carol_knowledge'
+        
+        collection = None
         try:
-            col_name = f"{avatar_id}_knowledge"
-            if avatar_id == 'bruno': col_name = 'bruno_giovana_knowledge'
-            elif avatar_id == 'marcos': col_name = 'marcos_carol_knowledge'
-            self.client.get_collection(col_name)
+            collection = self.client.get_collection(col_name)
         except Exception:
-            logger.warning(f"⚠️ Coleção {col_name} não encontrada para {avatar_id} - retornando fallback")
-            return {
-                "error": "collection_not_found",
-                "fallback": True,
-                "documents": [],
-                "metadatas": [],
-                "distances": []
-            }
+            # Tentar quarentena _old
+            old_col_name = f"{col_name}_old"
+            try:
+                collection = self.client.get_collection(old_col_name)
+                logger.info(f"🔄 Usando coleção em quarentena {old_col_name} para {avatar_id}")
+            except Exception:
+                logger.warning(f"⚠️ Coleção nem oficial nem _old encontrada para {avatar_id} - retornando fallback seguro")
+                return {
+                    "error": "collection_not_found",
+                    "fallback": True,
+                    "documents": [],
+                    "metadatas": [],
+                    "distances": []
+                }
         
         try:
             # Lazy loading do modelo ONNX
