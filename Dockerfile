@@ -18,6 +18,7 @@ COPY src/avatar/viseme_sync.py ./viseme_sync.py
 COPY src/ ./src/
 COPY scripts/ ./scripts/
 COPY knowledge/ ./knowledge/
+COPY assets/ ./assets/
 
 # Copiar entrypoint
 COPY entrypoint.sh /entrypoint.sh

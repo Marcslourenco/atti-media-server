@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from jsonschema import Draft7Validator
@@ -14,25 +15,48 @@ class PersonaLoader:
     garantindo robustez e carregamento completo.
     """
     
+    MANIFEST_PATHS = [
+        "assets/personas_manifest.json",
+        "knowledge/personas_manifest.json",
+        "src/personas_manifest.json",
+        "/tmp/atti-media-server/assets/personas_manifest.json",
+    ]
+
     def __init__(self, base_dir: Optional[str] = None):
+        project_root = Path(__file__).resolve().parents[1]
         if base_dir is None:
-            self.base_dir = Path("/tmp/atti-media-server/assets") if Path("/tmp/atti-media-server/assets").exists() else Path("./assets")
+            self.search_roots = [
+                Path("/app/assets"), project_root / "assets",
+                Path("/tmp/atti-media-server/assets"), Path.cwd() / "assets",
+                project_root / "knowledge", Path.cwd() / "knowledge",
+            ]
+            self.base_dir = next((p for p in self.search_roots if p.exists()), project_root / "assets")
         else:
             self.base_dir = Path(base_dir)
-            
+            self.search_roots = [self.base_dir]
+
         self.personas: Dict[str, Dict[str, Any]] = {}
         self.dialogues: Dict[str, Dict[str, Any]] = {}
         self.institutional_block: Dict[str, Any] = {}
         self.schema: Dict[str, Any] = {}
         
+        self.manifest_path = self._find_asset("personas_manifest.json")
         self._load_schema()
         self._load_institutional_block()
         self._load_dialogues()
         self._load_manifest_and_personas()
         
+    def _find_asset(self, filename: str) -> Optional[Path]:
+        candidates = []
+        for root in self.search_roots:
+            candidates.extend([root / filename, root / "03_guardrails" / filename])
+        for path in (Path(p) for p in self.MANIFEST_PATHS if filename == "personas_manifest.json"):
+            candidates.append(path)
+        return next((p for p in candidates if p.exists()), None)
+
     def _load_schema(self):
-        schema_path = self.base_dir / "content_schemas.json"
-        if schema_path.exists():
+        schema_path = self._find_asset("content_schemas.json")
+        if schema_path and schema_path.exists():
             try:
                 with open(schema_path, "r", encoding="utf-8") as f:
                     self.schema = json.load(f)
@@ -41,8 +65,8 @@ class PersonaLoader:
                 logger.error(f"❌ Erro ao carregar content_schemas.json: {e}")
                 
     def _load_institutional_block(self):
-        inst_path = self.base_dir / "institutional_block.json"
-        if inst_path.exists():
+        inst_path = self._find_asset("institutional_block.json")
+        if inst_path and inst_path.exists():
             try:
                 with open(inst_path, "r", encoding="utf-8") as f:
                     self.institutional_block = json.load(f)
@@ -51,8 +75,9 @@ class PersonaLoader:
                 logger.error(f"❌ Erro ao carregar institutional_block.json: {e}")
                 
     def _load_dialogues(self):
-        d_paths = [self.base_dir / "personas_dialogue .json", self.base_dir / "personas_dialogue.json"]
-        d_path = next((p for p in d_paths if p.exists()), None)
+        d_path = self._find_asset("personas_dialogue.json")
+        if d_path is None:
+            d_path = self._find_asset("personas_dialogue .json")
         if d_path:
             try:
                 with open(d_path, "r", encoding="utf-8") as f:
@@ -66,10 +91,11 @@ class PersonaLoader:
                 logger.error(f"❌ Erro ao carregar personas_dialogue.json: {e}")
                 
     def _load_manifest_and_personas(self):
-        manifest_path = self.base_dir / "personas_manifest.json"
-        if not manifest_path.exists():
-            logger.error(f"❌ ERRO CRÍTICO: personas_manifest.json não encontrado em {manifest_path}")
+        manifest_path = self.manifest_path
+        if manifest_path is None:
+            logger.error("❌ ERRO CRÍTICO: personas_manifest.json não encontrado nos caminhos configurados")
             return
+        logger.info(f"✅ personas_manifest.json carregado com sucesso: {manifest_path}")
             
         try:
             with open(manifest_path, "r", encoding="utf-8") as f:
@@ -84,14 +110,21 @@ class PersonaLoader:
                 arquivo_rel = entry.get("arquivo", "")
                 file_name = Path(arquivo_rel).name
                 
-                persona_file = self.base_dir / file_name
-                if not persona_file.exists():
-                    sub_file = self.base_dir / "02_personas" / file_name
-                    if sub_file.exists():
-                        persona_file = sub_file
-                    else:
-                        logger.error(f"❌ ERRO CRÍTICO: Arquivo de persona ausente para {avatar_id}: {persona_file}")
-                        continue
+                persona_candidates = [
+                    manifest_path.parent / arquivo_rel,
+                    manifest_path.parent / file_name,
+                    manifest_path.parent / "02_personas" / file_name,
+                ]
+                for root in self.search_roots:
+                    persona_candidates.extend([
+                        root / arquivo_rel,
+                        root / file_name,
+                        root / "02_personas" / file_name,
+                    ])
+                persona_file = next((p for p in persona_candidates if p.exists()), None)
+                if persona_file is None:
+                    logger.error(f"❌ ERRO CRÍTICO: Arquivo de persona ausente para {avatar_id}: {file_name}")
+                    continue
                         
                 try:
                     with open(persona_file, "r", encoding="utf-8") as pf:

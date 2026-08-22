@@ -1,6 +1,7 @@
 import os
 import logging
 import httpx
+import time
 from typing import Optional
 
 logger = logging.getLogger(__name__)
@@ -8,10 +9,11 @@ logger = logging.getLogger(__name__)
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 
 LLM_MODELS_FALLBACK = [
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
     "google/gemma-4-26b-a4b-it:free",
     "google/gemma-4-31b-it:free",
-    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
 ]
+_rate_limit_cache = {}  # {model: timestamp_do_429}
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 SAFE_FALLBACK = "Desculpe, não consegui elaborar uma boa resposta agora. Pode reformular a pergunta?"
@@ -41,6 +43,12 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
     )
 
     for model in LLM_MODELS_FALLBACK:
+        cached_at = _rate_limit_cache.get(model)
+        if cached_at is not None and time.time() - cached_at < 60:
+            logger.info(f"⏭️ Pulando {model} (rate limit ativo)")
+            continue
+        if cached_at is not None:
+            _rate_limit_cache.pop(model, None)
         try:
             logger.info(f"🤖 Tentando LLM: {model} para {avatar_id}")
             async with httpx.AsyncClient(timeout=15.0) as client:
@@ -69,7 +77,11 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     logger.info(f"✅ LLM respondeu via {model}: {len(answer)} chars")
                     return answer
             else:
-                logger.warning(f"⚠️ {model} HTTP {resp.status_code}, tentando próximo...")
+                if resp.status_code == 429:
+                    _rate_limit_cache[model] = time.time()
+                    logger.warning(f"⚠️ {model} HTTP 429; rate limit em cache por 60s")
+                else:
+                    logger.warning(f"⚠️ {model} HTTP {resp.status_code}, tentando próximo...")
                 continue
         except Exception as e:
             logger.warning(f"⚠️ {model} falhou: {e}, tentando próximo...")
@@ -114,7 +126,11 @@ def finalize_for_tts(text: Optional[str]) -> str:
         if last_punct > 5:
             text = truncated[:last_punct + 1]
         else:
-            text = truncated
+            last_space = truncated.rfind(' ')
+            if last_space > 50:
+                text = truncated[:last_space] + "."
+            else:
+                text = truncated + "."
 
     if text and text[-1] not in ['.', '!', '?']:
         text += "."

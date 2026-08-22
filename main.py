@@ -133,6 +133,8 @@ class SpeakRequest(BaseModel):
     event_type: EventType = Field(EventType.USER_QUERY, description="Tipo de evento")
     session_id: Optional[str] = Field(None, description="ID da sessão")
     context_url: Optional[str] = Field(None, description="URL da página onde o visitante está")
+    element_id: Optional[str] = Field(None, description="Elemento da interface acionado pelo visitante")
+    previous_avatar: Optional[str] = Field(None, description="Avatar anterior na transição")
     is_greeting: Optional[bool] = Field(False, description="Bypass explícito para saudações")
 
 class TTSRequest(BaseModel):
@@ -378,6 +380,15 @@ async def avatar_speak(request: SpeakRequest):
     
     response_text = None
 
+    # Transição contextual: a anfitriã reconhece a troca de avatar sem inverter os papéis.
+    if request.previous_avatar and request.previous_avatar != avatar_id:
+        prev_persona = persona_loader.get_persona(request.previous_avatar) if persona_loader else None
+        prev_nome = prev_persona.get("nome", request.previous_avatar) if prev_persona else request.previous_avatar
+        prev_role = prev_persona.get("role", prev_persona.get("archetype", "")) if prev_persona else ""
+        if avatar_id == "sofia":
+            qualificacao = f", {prev_role}" if prev_role else ""
+            response_text = f"Oi! Percebi que você se interessou pelo {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
+
     # 1. GREETING BYPASS EXPLÍCITO: Se request.is_greeting for True ou for saudação óbvia, usa o texto exato ou saudação oficial sem RAG
     saudacoes = ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "oi!", "olá!", "e aí", "eai", "tudo bem?", "hey", "hello"]
     if request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower:
@@ -395,16 +406,24 @@ async def avatar_speak(request: SpeakRequest):
 
     # 2. Perguntas reais: RAG -> LLM -> TTS. Nunca retorna fragmento cru do RAG.
     if not response_text:
-        context = ""
+        page_context = ""
+        if request.context_url:
+            page_context += f"\nO usuário está na página: {request.context_url}"
+        if request.element_id:
+            page_context += f"\nO usuário acabou de interagir com o elemento: {request.element_id}"
+
+        context = page_context.strip()
+        rag_context = ""
         if rag_engine:
             try:
                 rag_results = rag_engine.query(text, avatar_id, n_results=3)
                 docs = (rag_results or {}).get("documents", [[]])[0]
                 relevant = [d.strip() for d in docs if d and len(d.strip()) > 10]
-                context = "\n---\n".join(relevant[:3])
+                rag_context = "\n---\n".join(relevant[:3])
             except Exception as e:
                 logger.error(f"Erro RAG no avatar_speak: {e}")
 
+        context = "\n\n".join(part for part in [context, rag_context] if part)
         llm_answer = await call_llm(avatar_id, text, context, persona_loader)
         response_text = finalize_for_tts(llm_answer)
 
