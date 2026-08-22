@@ -1,7 +1,9 @@
-import logging
 import asyncio
 import os
 import re
+import logging
+from src.llm_engine import call_llm, finalize_for_tts
+from src.persona_loader import PersonaLoader
 from pathlib import Path
 from typing import Optional
 from enum import Enum
@@ -143,6 +145,13 @@ class TranslationRequest(BaseModel):
     source_language: Optional[str] = Field(None, description="Idioma de origem (opcional)")
 
 # Importações dos módulos
+try:
+    persona_loader = PersonaLoader()
+    logger.info("✅ persona_loader inicializado")
+except Exception as e:
+    logger.error(f"❌ Erro ao inicializar persona_loader: {e}")
+    persona_loader = None
+
 try:
     from i18n_engine import I18nEngine
     i18n_engine = I18nEngine()
@@ -384,64 +393,22 @@ async def avatar_speak(request: SpeakRequest):
                 p_nome = persona_obj.get('nome', 'avatar') if persona_obj else 'avatar'
                 response_text = f"Olá! Sou o(a) {p_nome}. Como posso ajudar?"
 
-    # 2. Perguntas institucionais diretas (sem RAG)
+    # 2. Perguntas reais: RAG -> LLM -> TTS. Nunca retorna fragmento cru do RAG.
     if not response_text:
-        institutional_keywords = ["nome da sua empresa", "quem é você", "quem e voce", "o que é humanos digitais", "humanosdigitais.com.br", "qual o seu nome"]
-        if any(keyword in text_lower for keyword in institutional_keywords) or "quem" in text_lower and "você" in text_lower:
-            persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
-            p_nome = persona_obj.get('nome', 'Sofia') if persona_obj else 'Sofia'
-            if avatar_id == "sofia":
-                response_text = "Sou a Sofia, sua anfitriã na Humanos Digitais, disponível em humanosdigitais.com.br. Somos especialistas em criar experiências de atendimento digital que aproximam marcas de pessoas."
-            else:
-                response_text = f"Sou o(a) {p_nome}. A empresa é a Humanos Digitais (humanosdigitais.com.br), especialista em experiências de atendimento digital."
+        context = ""
+        if rag_engine:
+            try:
+                rag_results = rag_engine.query(text, avatar_id, n_results=3)
+                docs = (rag_results or {}).get("documents", [[]])[0]
+                relevant = [d.strip() for d in docs if d and len(d.strip()) > 10]
+                context = "\n---\n".join(relevant[:3])
+            except Exception as e:
+                logger.error(f"Erro RAG no avatar_speak: {e}")
 
-    # 3. Guardrails Institucionais e Anti-Jargão de TI
-    if not response_text:
-        forbidden_terms = ["sql", "chromadb", "vetor", "embedding", "python", "fastapi", "servidor", "docker", "render", "vercel", "api key", "token"]
-        if any(term in text_lower for term in forbidden_terms):
-            response_text = "Prefiro focar em como podemos ajudar o seu negócio a crescer com eficiência e clareza. Vamos falar sobre as nossas soluções práticas?"
+        llm_answer = await call_llm(avatar_id, text, context, persona_loader)
+        response_text = finalize_for_tts(llm_answer)
 
-    # 4. Viés de Futebol
-    if not response_text:
-        if any(q in text_lower for q in ["melhor time", "qual o melhor time", "time do brasil"]):
-            if avatar_id in ["marcos_carol", "marcos", "carol"]:
-                response_text = "Time de Nação só tem um, e ele é Fiel: Corinthians, com C de campeão! Na Neo Química Arena a energia é única."
-            elif avatar_id in ["bruno_giovana", "bruno", "giovana"]:
-                response_text = "Time bom é time que é Soberano tricampeão mundial, meu amigo — e isso só tem um: São Paulo!"
-
-    # 5. Consulta RAG com Filtro de Relevância e Geração de Resposta Coerente (Sem Fragmentos Crus)
-    if not response_text and rag_engine:
-        try:
-            rag_results = rag_engine.query(text, avatar_id, n_results=2)
-            if rag_results and "documents" in rag_results and rag_results["documents"]:
-                docs = rag_results["documents"][0]
-                if docs:
-                    # Filtrar documentos relevantes ou formatar adequadamente
-                    relevant_docs = [d.strip() for d in docs if d and len(d.strip()) > 10]
-                    if relevant_docs:
-                        persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
-                        sys_prompt = persona_obj.get("system_prompt_template", "Você é um assistente da Humanos Digitais.") if persona_obj else "Você é um assistente da Humanos Digitais."
-                        
-                        # Função interna de geração coerente com contexto (evitando Q&A cru)
-                        def call_llm_with_context(system_prompt: str, user_text: str, context: list) -> str:
-                            try:
-                                ctx_snippet = context[0]
-                                # Limpar formatação Q&A cru se houver
-                                if "Q:" in ctx_snippet and "A:" in ctx_snippet:
-                                    parts = ctx_snippet.split("A:")
-                                    if len(parts) > 1:
-                                        ctx_snippet = parts[1].strip()
-                                if len(ctx_snippet) > 300:
-                                    ctx_snippet = ctx_snippet[:300] + "..."
-                                return ctx_snippet
-                            except Exception:
-                                return context[0] if context else "Ainda não tenho essa informação na minha base."
-
-                        response_text = call_llm_with_context(sys_prompt, text, relevant_docs)
-        except Exception as e:
-            logger.error(f"Erro ao consultar RAG no avatar_speak: {e}")
-
-    # 6. Fallback Dinâmico Final
+    # 3. Fallback Dinâmico Final
     if not response_text:
         persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
         if persona_obj and persona_obj.get("nome"):
