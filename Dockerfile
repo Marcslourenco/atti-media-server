@@ -19,6 +19,8 @@ COPY src/ ./src/
 COPY scripts/ ./scripts/
 COPY knowledge/ ./knowledge/
 COPY assets/ ./assets/
+# Falhar o build se o manifesto não estiver presente ou não for JSON válido.
+RUN test -s /app/assets/personas_manifest.json && python -m json.tool /app/assets/personas_manifest.json >/dev/null
 
 # Copiar entrypoint
 COPY entrypoint.sh /entrypoint.sh
