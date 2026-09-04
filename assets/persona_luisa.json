@@ -40,5 +40,11 @@
       "frase": "Esse aqui é um dos nossos queridinhos! Quer saber mais sobre a origem ou como usar em uma receita?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Luisa. Quer conhecer a origem e os diferenciais dos nossos produtos?",
+      "Oi! Posso ajudar você a entender melhor nossas opções e seus ingredientes."
+    ]
+  }
 }

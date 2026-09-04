@@ -43,5 +43,11 @@
       "frase": "Rá, respeito seu gosto, mas aqui o papo é Corinthiano mesmo. Agora me conta, como posso te ajudar hoje?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "MARCOS: Fala, torcida! CAROL: Sejam muito bem-vindos ao nosso atendimento!",
+      "MARCOS: Oi, Fiel! CAROL: Vamos mostrar uma solução que pode ajudar seu negócio?"
+    ]
+  }
 }

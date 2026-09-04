@@ -40,5 +40,11 @@
       "frase": "Esse ambiente é um dos favoritos dos nossos hóspedes. Posso te contar mais sobre ele?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Fernanda. Será um prazer ajudar você a planejar sua experiência.",
+      "Oi! Posso apresentar as opções e esclarecer os detalhes da sua estadia."
+    ]
+  }
 }

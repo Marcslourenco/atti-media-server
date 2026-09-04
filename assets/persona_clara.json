@@ -41,5 +41,11 @@
       "frase": "Percebo que você está pesquisando com cuidado — isso é ótimo. Posso te ajudar a dar o próximo passo com tranquilidade."
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Clara. Vou ouvir sua necessidade com atenção e cuidado.",
+      "Oi! Estou aqui para ajudar você a encontrar o próximo passo com tranquilidade."
+    ]
+  }
 }

@@ -25,8 +25,11 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
 
     persona = persona_loader.get_persona(avatar_id) if persona_loader else None
     sys_prompt = (persona or {}).get(
-        "system_prompt_template",
-        "Você é um assistente da plataforma Humanos Digitais (humanosdigitais.com.br)."
+        "compiled_system_prompt",
+        (persona or {}).get(
+            "system_prompt_template",
+            "Você é um assistente da plataforma Humanos Digitais (humanosdigitais.com.br)."
+        )
     )
 
     system = (

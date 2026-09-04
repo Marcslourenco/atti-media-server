@@ -42,5 +42,11 @@
       "frase": "Esse tema costuma gerar bastante dúvida nas empresas. Posso te explicar como isso se aplica ao seu caso?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá. Sou o Rafael e posso ajudar com processos industriais e contábeis.",
+      "Olá. Vamos analisar juntos a sua necessidade operacional?"
+    ]
+  }
 }

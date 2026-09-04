@@ -40,5 +40,11 @@
       "frase": "Notei que você está comparando com calma. Posso agilizar isso te passando as condições direto?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Paula. Posso ajudar você a organizar sua demanda com clareza.",
+      "Oi! Estou aqui para explicar as opções e orientar os próximos passos."
+    ]
+  }
 }

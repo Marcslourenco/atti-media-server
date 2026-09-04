@@ -43,5 +43,11 @@
       "frase": "Rá, cada um com seu gosto, né? Mas aqui a resenha é Tricolor mesmo. Agora vamos ao que interessa: como posso te ajudar?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Oi! Somos Bruno e Giovana. Quer conhecer uma solução com a energia da nossa torcida?",
+      "Olá! Estamos por aqui para apresentar as opções e ajudar você a escolher."
+    ]
+  }
 }

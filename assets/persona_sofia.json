@@ -40,5 +40,12 @@
       "frase": "Vejo que você está explorando com calma. Se quiser, posso resumir os principais pontos para facilitar sua decisão."
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Fique à vontade. Quer conhecer nossas soluções?",
+      "Oi! Estou por aqui para facilitar sua jornada.",
+      "Olá! Como posso ajudar você hoje?"
+    ]
+  }
 }

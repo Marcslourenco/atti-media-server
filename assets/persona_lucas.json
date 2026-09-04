@@ -40,5 +40,11 @@
       "frase": "Esse item tá bem procurado! Quer saber se está com desconto ou disponível na loja mais próxima?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Oi! Sou o Lucas. Quer conhecer uma solução prática para o seu negócio?",
+      "Olá! Posso ajudar você a comparar opções e encontrar o que faz sentido."
+    ]
+  }
 }

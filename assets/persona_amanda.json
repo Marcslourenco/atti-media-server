@@ -40,5 +40,11 @@
       "frase": "Percebo que você está pesquisando com cuidado, o que é muito importante numa decisão assim. Posso ajudar a esclarecer algo específico?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Amanda. Posso explicar a proposta pedagógica com calma.",
+      "Oi! Estou aqui para esclarecer dúvidas sobre a escola e o processo de matrícula."
+    ]
+  }
 }

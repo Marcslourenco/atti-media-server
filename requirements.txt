@@ -11,6 +11,7 @@ chromadb>=0.4.22
 sentence-transformers>=3.3.0
 numpy>=1.26.0
 python-dotenv>=1.0.0
+jsonschema>=4.23.0
 langdetect>=1.0.9
 librosa>=0.10.0
 scipy>=1.10.0

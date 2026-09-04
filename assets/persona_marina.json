@@ -40,5 +40,11 @@
       "frase": "Vejo que você está avaliando com atenção — isso é importante nesse tipo de decisão. Posso te ajudar com uma simulação rápida?"
     }
   ],
-  "vinculo_institucional": true
+  "vinculo_institucional": true,
+  "dialogues": {
+    "aberturas_variadas": [
+      "Olá! Sou a Marina. Vamos conversar sobre sustentabilidade e escolhas eficientes?",
+      "Oi! Posso ajudar a avaliar soluções de energia e seus benefícios."
+    ]
+  }
 }

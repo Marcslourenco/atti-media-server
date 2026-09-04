@@ -27,8 +27,8 @@
       "nome": "Rafael",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "Olá. Rafael na área para discussões de processos e engenharia industrial.",
-          "Bom dia. Como posso auxiliar nos trâmites técnicos e contábeis?"
+          "Olá. Sou o Rafael e posso ajudar com processos industriais e contábeis.",
+          "Olá. Vamos analisar juntos a sua necessidade operacional?"
         ],
         "frases_de_transicao": [
           {
@@ -39,11 +39,112 @@
       }
     },
     {
+      "avatar_id": "clara",
+      "nome": "Clara",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Clara. Vou ouvir sua necessidade com atenção e cuidado.",
+          "Oi! Estou aqui para ajudar você a encontrar o próximo passo com tranquilidade."
+        ]
+      }
+    },
+    {
+      "avatar_id": "lucas",
+      "nome": "Lucas",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Oi! Sou o Lucas. Quer conhecer uma solução prática para o seu negócio?",
+          "Olá! Posso ajudar você a comparar opções e encontrar o que faz sentido."
+        ]
+      }
+    },
+    {
+      "avatar_id": "amanda",
+      "nome": "Amanda",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Amanda. Posso explicar a proposta pedagógica com calma.",
+          "Oi! Estou aqui para esclarecer dúvidas sobre a escola e o processo de matrícula."
+        ]
+      }
+    },
+    {
+      "avatar_id": "fernanda",
+      "nome": "Fernanda",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Fernanda. Será um prazer ajudar você a planejar sua experiência.",
+          "Oi! Posso apresentar as opções e esclarecer os detalhes da sua estadia."
+        ]
+      }
+    },
+    {
+      "avatar_id": "marina",
+      "nome": "Marina",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Marina. Vamos conversar sobre sustentabilidade e escolhas eficientes?",
+          "Oi! Posso ajudar a avaliar soluções de energia e seus benefícios."
+        ]
+      }
+    },
+    {
+      "avatar_id": "roberto",
+      "nome": "Roberto",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou o Roberto. Posso orientar você sobre os serviços e procedimentos públicos.",
+          "Oi! Estou à disposição para explicar o próximo passo de forma simples."
+        ]
+      }
+    },
+    {
+      "avatar_id": "luisa",
+      "nome": "Luisa",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Luisa. Quer conhecer a origem e os diferenciais dos nossos produtos?",
+          "Oi! Posso ajudar você a entender melhor nossas opções e seus ingredientes."
+        ]
+      }
+    },
+    {
+      "avatar_id": "lais",
+      "nome": "Lais",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Lais. Posso ajudar você a encontrar o veículo que combina com sua rotina.",
+          "Oi! Vamos descobrir juntos qual opção atende melhor às suas necessidades?"
+        ]
+      }
+    },
+    {
+      "avatar_id": "paula",
+      "nome": "Paula",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Olá! Sou a Paula. Posso ajudar você a organizar sua demanda com clareza.",
+          "Oi! Estou aqui para explicar as opções e orientar os próximos passos."
+        ]
+      }
+    },
+    {
+      "avatar_id": "bruno_giovana",
+      "nome": "Bruno & Giovana",
+      "dialogue_patterns": {
+        "aberturas_variadas": [
+          "Oi! Somos Bruno e Giovana. Quer conhecer uma solução com a energia da nossa torcida?",
+          "Olá! Estamos por aqui para apresentar as opções e ajudar você a escolher."
+        ]
+      }
+    },
+    {
       "avatar_id": "marcos_carol",
       "nome": "Marcos & Carol",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "MARCOS: Fala, torcida! CAROL: Sejam muito bem-vindos ao nosso atendimento!"
+          "MARCOS: Fala, torcida! CAROL: Sejam muito bem-vindos ao nosso atendimento!",
+          "MARCOS: Oi, Fiel! CAROL: Vamos mostrar uma solução que pode ajudar seu negócio?"
         ],
         "frases_de_transicao": [
           {
