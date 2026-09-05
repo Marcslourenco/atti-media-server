@@ -406,7 +406,9 @@ async def avatar_speak(request: SpeakRequest):
                 response_text = persona_obj["dialogues"]["aberturas_variadas"][0]
             else:
                 p_nome = persona_obj.get('nome', 'avatar') if persona_obj else 'avatar'
-                response_text = f"Olá! Sou o(a) {p_nome}. Como posso ajudar?"
+                fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
+                artigo = "a" if avatar_id.lower() in fem else "o"
+                response_text = f"Olá! Sou {artigo} {p_nome}. Como posso ajudar?"
 
     # 2. Perguntas reais: RAG -> LLM -> TTS. Nunca retorna fragmento cru do RAG.
     if not response_text:
@@ -434,11 +436,18 @@ async def avatar_speak(request: SpeakRequest):
     # 3. Fallback Dinâmico Final
     if not response_text:
         persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
-        if persona_obj and persona_obj.get("nome"):
-            nome_av = persona_obj.get("nome")
-            response_text = f"Aqui é o(a) {nome_av}. Ainda não encontrei esse ponto exato na minha base de conhecimento, mas posso te encaminhar para um especialista ou detalhar outra solução da plataforma."
-        else:
-            response_text = f"Ainda não tenho essa informação exata na minha base de conhecimento ({avatar_id}), mas posso te auxiliar com as soluções da plataforma."
+        nome_av = persona_obj.get("nome", avatar_id) if persona_obj else avatar_id
+        fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
+        artigo = "a" if avatar_id.lower() in fem else "o"
+        inst = persona_obj.get("institutional_block", {}) if persona_obj else {}
+        identidade = inst.get("identidade", {}) if isinstance(inst, dict) else {}
+        plat = identidade.get("plataforma", "Humanos Digitais")
+        site = identidade.get("site", "humanosdigitais.com.br")
+        response_text = (
+            f"Aqui é {artigo} {nome_av}, da plataforma {plat}. Ainda não encontrei esse ponto exato "
+            f"na minha base de conhecimento, mas posso te encaminhar para um especialista ou detalhar "
+            f"nossas soluções em {site}."
+        )
             
     sanitized = sanitize_for_tts(response_text)
     audio_data = None

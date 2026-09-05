@@ -9,8 +9,10 @@ logger = logging.getLogger(__name__)
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 
 LLM_MODELS_FALLBACK = [
-    "google/gemma-4-26b-a4b-it:free",
     "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "liquid/lfm-2.5-2.6b:free",
+    "nvidia/nemotron-nano-9b-v2:free",
+    "google/gemma-4-26b-a4b-it:free",
     "google/gemma-4-31b-it:free",
 ]
 _rate_limit_cache = {}  # {model: timestamp_do_429}
@@ -32,8 +34,17 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         )
     )
 
+    nome = (persona or {}).get("nome", "Sofia")
+    fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
+    artigo = "a" if avatar_id.lower() in fem else "o"
+    identity = (
+        f"IDENTIDADE: Você É {nome}. Fale SEMPRE em 1ª pessoa (\"Eu sou {artigo}...\", \"Eu posso...\"). "
+        f"NUNCA se descreva em 3ª pessoa (\"{nome} é...\"). Use o gênero correto ({artigo} {nome})."
+    )
+
     system = (
         f"{sys_prompt}\n\n"
+        f"{identity}\n\n"
         "REGRAS DE RESPOSTA:\n"
         "- Responda em português brasileiro, tom natural e falado (a resposta será convertida em voz).\n"
         "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
