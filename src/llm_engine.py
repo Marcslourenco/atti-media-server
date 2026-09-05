@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 
 LLM_MODELS_FALLBACK = [
-    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
     "google/gemma-4-26b-a4b-it:free",
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
     "google/gemma-4-31b-it:free",
 ]
 _rate_limit_cache = {}  # {model: timestamp_do_429}
@@ -54,6 +54,18 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
             _rate_limit_cache.pop(model, None)
         try:
             logger.info(f"🤖 Tentando LLM: {model} para {avatar_id}")
+            start = time.time()
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user_text},
+                ],
+                "max_tokens": 150,
+                "temperature": 0.4,
+            }
+            if "-reasoning" in model:
+                payload["reasoning"] = {"enabled": False}
             async with httpx.AsyncClient(timeout=15.0) as client:
                 resp = await client.post(
                     OPENROUTER_URL,
@@ -63,22 +75,21 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                         "HTTP-Referer": "https://humanosdigitais-website-fix.vercel.app",
                         "X-Title": "Humanos Digitais",
                     },
-                    json={
-                        "model": model,
-                        "messages": [
-                            {"role": "system", "content": system},
-                            {"role": "user", "content": user_text},
-                        ],
-                        "max_tokens": 150,
-                        "temperature": 0.4,
-                    },
+                    json=payload,
                 )
             if resp.status_code == 200:
                 data = resp.json()
-                if "choices" in data and len(data["choices"]) > 0:
-                    answer = data["choices"][0]["message"]["content"].strip()
-                    logger.info(f"✅ LLM respondeu via {model}: {len(answer)} chars")
-                    return answer
+                choices = data.get("choices") or []
+                message = choices[0].get("message", {}) if choices else {}
+                content = (message.get("content") or "").strip()
+                if not content:
+                    content = (message.get("reasoning") or "").strip()
+                if not content:
+                    logger.warning(f"⚠️ {model} HTTP 200 sem conteúdo útil: {resp.text[:300]}")
+                    continue
+                logger.info(f"⏱️ {model} latência {time.time() - start:.1f}s")
+                logger.info(f"✅ LLM respondeu via {model}: {len(content)} chars")
+                return content
             else:
                 if resp.status_code == 429:
                     _rate_limit_cache[model] = time.time()

@@ -366,6 +366,10 @@ async def tts_direct(request: TTSDirectRequest):
         "request_id": request_id
     }
 
+@app.post("/api/tts")
+async def tts_legacy(request: TTSDirectRequest):
+    return await tts_direct(request)
+
 import uuid
 import time
 import json
@@ -425,7 +429,7 @@ async def avatar_speak(request: SpeakRequest):
 
         context = "\n\n".join(part for part in [context, rag_context] if part)
         llm_answer = await call_llm(avatar_id, text, context, persona_loader)
-        response_text = finalize_for_tts(llm_answer)
+        response_text = finalize_for_tts(llm_answer) if llm_answer else None
 
     # 3. Fallback Dinâmico Final
     if not response_text:

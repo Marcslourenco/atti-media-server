@@ -5,7 +5,7 @@
   "avisos_carregamento": [
     "Cada arquivo individual deve ser validado contra o schema de persona em 03_guardrails/content_schemas.json antes de ser carregado em memória.",
     "Se um avatar_id listado aqui não tiver arquivo correspondente, ou o arquivo falhar na validação de schema, o backend deve logar erro crítico e NÃO iniciar o avatar com dados parciais/corrompidos — melhor recusar o carregamento daquele avatar específico do que servir uma persona incompleta.",
-    "As duplas (bruno_giovana, marcos_carol) usam um único avatar_id representando os dois personagens falando de forma alternada — o frontend/UneeQ deve tratar como uma única sessão de avatar."
+    "As duplas (bruno_giovana, marcos_carol) usam um único avatar_id representando os dois personagens falando de forma alternada — a camada de apresentação deve tratar cada dupla como uma única sessão de avatar."
   ],
   "avatares": [
     {
