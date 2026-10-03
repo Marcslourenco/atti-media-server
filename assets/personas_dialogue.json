@@ -63,8 +63,8 @@
       "nome": "Amanda",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "Olá! Sou a Amanda. Posso explicar a proposta pedagógica com calma.",
-          "Oi! Estou aqui para esclarecer dúvidas sobre a escola e o processo de matrícula."
+          "Olá! Sou a Amanda, recepcionista do hotel. Como posso tornar sua estadia mais confortável?",
+          "Oi! Posso ajudar com reservas, acomodações, serviços e informações para sua estadia."
         ]
       }
     },
@@ -83,8 +83,8 @@
       "nome": "Marina",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "Olá! Sou a Marina. Vamos conversar sobre sustentabilidade e escolhas eficientes?",
-          "Oi! Posso ajudar a avaliar soluções de energia e seus benefícios."
+          "Olá! Sou a Marina, consultora do Shopping Center. Posso ajudar a encontrar o que você procura?",
+          "Oi! Quer saber sobre lojas, alimentação, lazer, horários ou serviços do shopping?"
         ]
       }
     },
@@ -133,8 +133,8 @@
       "nome": "Bruno & Giovana",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "Oi! Somos Bruno e Giovana. Quer conhecer uma solução com a energia da nossa torcida?",
-          "Olá! Estamos por aqui para apresentar as opções e ajudar você a escolher."
+          "E aí! Eu sou o Bruno, e esta é a Giovana. Quer conhecer uma solução com a energia da nossa torcida?",
+          "Olá! Somos Bruno e Giovana, prontos para apresentar as opções e ajudar você a escolher."
         ]
       }
     },
@@ -143,8 +143,8 @@
       "nome": "Marcos & Carol",
       "dialogue_patterns": {
         "aberturas_variadas": [
-          "MARCOS: Fala, torcida! CAROL: Sejam muito bem-vindos ao nosso atendimento!",
-          "MARCOS: Oi, Fiel! CAROL: Vamos mostrar uma solução que pode ajudar seu negócio?"
+          "MARCOS: E aí! Eu sou o Marcos. CAROL: E eu sou a Carol; sejam muito bem-vindos ao nosso atendimento!",
+          "MARCOS: Oi, Fiel! Eu sou o Marcos. CAROL: Eu sou a Carol, e vamos mostrar uma solução que pode ajudar seu negócio?"
         ],
         "frases_de_transicao": [
           {
