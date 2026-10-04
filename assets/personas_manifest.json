@@ -32,57 +32,57 @@
     {
       "avatar_id": "lucas",
       "nome": "Lucas",
-      "archetype": "Vendedor Energético de Varejo",
-      "segmento_cliente": "varejo_supermercados_shopping",
+      "archetype": "Consultor Automotivo",
+      "segmento_cliente": "concessionaria_veiculos",
       "arquivo": "02_personas/persona_lucas.json"
     },
     {
       "avatar_id": "amanda",
       "nome": "Amanda",
-      "archetype": "Orientadora Pedagógica Didática",
-      "segmento_cliente": "educacao_escolas",
+      "archetype": "Recepcionista de Hotel",
+      "segmento_cliente": "hotelaria_hospedagem",
       "arquivo": "02_personas/persona_amanda.json"
     },
     {
       "avatar_id": "fernanda",
       "nome": "Fernanda",
-      "archetype": "Anfitriã Hospitaleira",
-      "segmento_cliente": "hotelaria_turismo",
+      "archetype": "Atendente Municipal",
+      "segmento_cliente": "prefeitura_municipal",
       "arquivo": "02_personas/persona_fernanda.json"
     },
     {
       "avatar_id": "marina",
       "nome": "Marina",
-      "archetype": "Consultora Analítica de Sustentabilidade",
-      "segmento_cliente": "energia_solar_sustentabilidade",
+      "archetype": "Atendente de Shopping",
+      "segmento_cliente": "shopping_center",
       "arquivo": "02_personas/persona_marina.json"
     },
     {
       "avatar_id": "roberto",
       "nome": "Roberto",
-      "archetype": "Atendente Institucional de Serviço Público",
-      "segmento_cliente": "servico_publico_prefeitura",
+      "archetype": "Consultor de Energia Solar",
+      "segmento_cliente": "energia_solar_fotovoltaica",
       "arquivo": "02_personas/persona_roberto.json"
     },
     {
       "avatar_id": "luisa",
       "nome": "Luisa",
-      "archetype": "Especialista em Origem e Sabor",
-      "segmento_cliente": "industria_alimenticia",
+      "archetype": "Mentora Educacional",
+      "segmento_cliente": "universidade_privada",
       "arquivo": "02_personas/persona_luisa.json"
     },
     {
       "avatar_id": "lais",
-      "nome": "Lais",
-      "archetype": "Vendedora Persuasiva de Concessionária",
-      "segmento_cliente": "concessionaria_veiculos",
+      "nome": "Laís",
+      "archetype": "Orientadora Acadêmica — Medicina",
+      "segmento_cliente": "orientacao_medica",
       "arquivo": "02_personas/persona_lais.json"
     },
     {
       "avatar_id": "paula",
       "nome": "Paula",
-      "archetype": "Assistente Ágil de Operações Comerciais",
-      "segmento_cliente": "ecommerce_atacado",
+      "archetype": "Atendente Odontológica",
+      "segmento_cliente": "clinica_odontologica",
       "arquivo": "02_personas/persona_paula.json"
     },
     {
