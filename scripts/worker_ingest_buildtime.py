@@ -680,6 +680,11 @@ def inherit_knowledge(client, source_avatar: str, target_avatar: str):
             batch_metas = all_docs.get('metadatas', [None] * len(batch_docs))[i:i+batch_size]
             batch_ids = [f"{target_avatar}_{doc_id.split('_')[-1]}" for doc_id in all_docs['ids'][i:i+batch_size]]
             batch_embs = all_docs.get('embeddings', None)
+            add_kwargs = {
+                'ids': batch_ids,
+                'documents': batch_docs,
+                'metadatas': batch_metas,
+            }
             # Verificação segura de array numpy / lista sem ambiguidade booleana
             is_valid_embs = False
             if batch_embs is not None:

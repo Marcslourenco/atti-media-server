@@ -391,11 +391,13 @@ async def avatar_speak(request: SpeakRequest):
         prev_role = prev_persona.get("role", prev_persona.get("archetype", "")) if prev_persona else ""
         if avatar_id == "sofia":
             qualificacao = f", {prev_role}" if prev_role else ""
-            response_text = f"Oi! Percebi que você se interessou pelo {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
+            fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
+            artigo = "a" if request.previous_avatar.lower() in fem else "o"
+            response_text = f"Oi! Percebi que você se interessou pel{artigo} {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
 
     # 1. GREETING BYPASS EXPLÍCITO: Se request.is_greeting for True ou for saudação óbvia, usa o texto exato ou saudação oficial sem RAG
     saudacoes = ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "oi!", "olá!", "e aí", "eai", "tudo bem?", "hey", "hello", "sofia", "rafael", "clara", "lucas", "amanda", "fernanda", "marina", "roberto", "luisa", "lais", "paula", "bruno", "giovana", "marcos", "carol", "bruno_giovana", "marcos_carol"]
-    if request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower:
+    if (request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower) and not (request.previous_avatar and request.previous_avatar != avatar_id):
         if request.is_greeting and text and text not in saudacoes:
             response_text = text
         elif avatar_id == "sofia":

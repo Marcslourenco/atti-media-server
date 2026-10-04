@@ -11,11 +11,10 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 LLM_MODELS_FALLBACK = [
     "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
     "liquid/lfm-2.5-2.6b:free",
-    "nvidia/nemotron-nano-9b-v2:free",
     "google/gemma-4-26b-a4b-it:free",
     "google/gemma-4-31b-it:free",
 ]
-_rate_limit_cache = {}  # {model: timestamp_do_429}
+_rate_limit_cache = {}  # {model: timestamp_do_429_or_upstream_failure}
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 SAFE_FALLBACK = "Desculpe, não consegui elaborar uma boa resposta agora. Pode reformular a pergunta?"
@@ -46,19 +45,22 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         f"{sys_prompt}\n\n"
         f"{identity}\n\n"
         "REGRAS DE RESPOSTA:\n"
-        "- Responda em português brasileiro, tom natural e falado (a resposta será convertida em voz).\n"
+        "- Responda no idioma do usuário: português brasileiro por padrão; se o usuário escrever em inglês ou espanhol, responda no mesmo idioma, mantendo tom natural e falado.\n"
+        "- Se o contexto indicar a página atual (context_url/element_id), use essa informação para responder onde o visitante está.\n"
+        "- Quando fizer sentido, finalize com um encaminhamento comercial curto (oferecer especialista, solução ou demonstração), sem insistir.\n"
         "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
         "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
         "diga brevemente que não tem essa informação e ofereça ajuda com as soluções da plataforma.\n"
         "- Nunca repita o formato 'Q:' / 'A:' do contexto. Nunca cite fontes ou documentos.\n"
         "- Termine SEMPRE com pontuação final (. ! ou ?). Nunca termine no meio de uma frase.\n"
-        "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n\n"
+        "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
+        "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n\n"
         f"CONTEXTO:\n{context}"
     )
 
     for model in LLM_MODELS_FALLBACK:
         cached_at = _rate_limit_cache.get(model)
-        if cached_at is not None and time.time() - cached_at < 60:
+        if cached_at is not None and time.time() - cached_at < 90:
             logger.info(f"⏭️ Pulando {model} (rate limit ativo)")
             continue
         if cached_at is not None:
@@ -89,22 +91,36 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     json=payload,
                 )
             if resp.status_code == 200:
+                body_lower = resp.text.lower()
                 data = resp.json()
                 choices = data.get("choices") or []
                 message = choices[0].get("message", {}) if choices else {}
                 content = (message.get("content") or "").strip()
+                if not content and ("resourceexhausted" in body_lower or '"code":502' in body_lower or '"code": 502' in body_lower):
+                    _rate_limit_cache[model] = time.time()
+                    logger.warning(f"⚠️ {model} HTTP 200 com upstream ResourceExhausted/502; cache por 90s")
+                    continue
                 if not content:
                     content = (message.get("reasoning") or "").strip()
                 if not content:
                     logger.warning(f"⚠️ {model} HTTP 200 sem conteúdo útil: {resp.text[:300]}")
                     continue
+                lower_content = content.lower()
+                reasoning_markers = [
+                    "i need to respond", "i need to check", "looking at the context",
+                    "according to the instructions", "they want to know",
+                    "this is a straightforward",
+                ]
+                if lower_content.startswith("the user") or any(marker in lower_content for marker in reasoning_markers):
+                    logger.warning(f"⚠️ {model} retornou reasoning em inglês; conteúdo descartado")
+                    continue
                 logger.info(f"⏱️ {model} latência {time.time() - start:.1f}s")
                 logger.info(f"✅ LLM respondeu via {model}: {len(content)} chars")
                 return content
             else:
-                if resp.status_code == 429:
+                if resp.status_code in (429, 502):
                     _rate_limit_cache[model] = time.time()
-                    logger.warning(f"⚠️ {model} HTTP 429; rate limit em cache por 60s")
+                    logger.warning(f"⚠️ {model} HTTP {resp.status_code}; rate limit/upstream failure em cache por 90s")
                 else:
                     logger.warning(f"⚠️ {model} HTTP {resp.status_code}, tentando próximo...")
                 continue
@@ -122,7 +138,13 @@ def finalize_for_tts(text: Optional[str]) -> str:
 
     text = text.strip()
 
-    if any(marker in text.lower() for marker in ["here's a thinking", "thinking process", "analyze user"]):
+    reasoning_markers = [
+        "here's a thinking", "thinking process", "analyze user",
+        "i need to respond", "i need to check", "looking at the context",
+        "according to the instructions", "they want to know",
+        "this is a straightforward",
+    ]
+    if text.lower().startswith("the user") or any(marker in text.lower() for marker in reasoning_markers):
         lines = text.split('\n')
         clean_lines = []
         for line in lines:
@@ -145,8 +167,8 @@ def finalize_for_tts(text: Optional[str]) -> str:
         else:
             return SAFE_FALLBACK
 
-    if len(text) > 300:
-        truncated = text[:300]
+    if len(text) > 280:
+        truncated = text[:280]
         last_punct = max(truncated.rfind('.'), truncated.rfind('!'), truncated.rfind('?'))
         if last_punct > 5:
             text = truncated[:last_punct + 1]
