@@ -57,8 +57,17 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
 
     roster = getattr(persona_loader, "platform_roster", "") if persona_loader else ""
     roster_rule = f"\nAVATARES DA PLATAFORMA: {roster}\n" if roster else ""
+    sofia_business_rules = ""
+    if avatar_id.lower() == "sofia":
+        sofia_business_rules = (
+            "\nREGRAS COMERCIAIS DA SOFIA:\n"
+            "- A integração de envio automático de catálogo ou PDF por WhatsApp ainda está em implementação.\n"
+            "- NUNCA diga que vai enviar um catálogo ou PDF automaticamente agora.\n"
+            "- Ofereça encaminhar o visitante para um contato humano ou orientar o uso do QR Code disponível.\n"
+            "- Não invente preços, descontos, prazos ou condições; explique que a proposta depende do segmento e encaminhe para atendimento humano.\n"
+        )
     system = (
-        f"{sys_prompt}{roster_rule}\n"
+        f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
         f"{identity}\n\n"
         "REGRAS DE RESPOSTA:\n"
         "- Responda no idioma do usuário: português brasileiro por padrão; se o usuário escrever em inglês ou espanhol, responda no mesmo idioma, mantendo tom natural e falado.\n"
@@ -124,11 +133,11 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                 lower_content = content.lower()
                 reasoning_markers = [
                     "here's a thinking", "thinking process", "analyze user",
-                    "i need to respond", "i need to check", "looking at the context",
-                    "according to the instructions", "they want to know",
-                    "this is a straightforward",
+                    "the user is", "the user wants", "i need to respond",
+                    "i need to check", "looking at the context", "according to",
+                    "they want to know", "this is a straightforward",
                 ]
-                if lower_content.startswith("the user") or any(marker in lower_content for marker in reasoning_markers):
+                if lower_content.startswith(("the user", "thinking process", "according to")) or any(marker in lower_content for marker in reasoning_markers):
                     salvaged = _salvage_portuguese_tail(content)
                     if salvaged:
                         logger.warning(f"⚠️ {model} tinha reasoning; segmento pt-BR preservado ({len(salvaged)} chars)")
@@ -162,11 +171,11 @@ def finalize_for_tts(text: Optional[str]) -> str:
 
     reasoning_markers = [
         "here's a thinking", "thinking process", "analyze user",
-        "i need to respond", "i need to check", "looking at the context",
-        "according to the instructions", "they want to know",
-        "this is a straightforward",
+        "the user is", "the user wants", "i need to respond",
+        "i need to check", "looking at the context", "according to",
+        "they want to know", "this is a straightforward",
     ]
-    if text.lower().startswith("the user") or any(marker in text.lower() for marker in reasoning_markers):
+    if text.lower().startswith(("the user", "thinking process", "according to")) or any(marker in text.lower() for marker in reasoning_markers):
         lines = text.split('\n')
         clean_lines = []
         for line in lines:

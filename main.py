@@ -15,6 +15,7 @@ from contextlib import asynccontextmanager
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 LAST_AVATAR_BY_SESSION = {}  # session_key -> (avatar_id, timestamp)
+FEMININE_AVATAR_IDS = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
 
 BACKEND_VERSION = "7.1.0"
 
@@ -409,15 +410,14 @@ async def avatar_speak(request: SpeakRequest):
         prev_nome = prev_persona.get("nome", transition_avatar) if prev_persona else transition_avatar
         prev_role = prev_persona.get("role", prev_persona.get("archetype", "")) if prev_persona else ""
         qualificacao = f", {prev_role}" if prev_role else ""
-        fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
-        artigo = "a" if transition_avatar.lower() in fem else "o"
+        artigo = "a" if transition_avatar.lower() in FEMININE_AVATAR_IDS else "o"
         response_text = f"Oi! Percebi que você se interessou pel{artigo} {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
     # 1. GREETING BYPASS EXPLÍCITO: Se request.is_greeting for True ou for saudação óbvia, usa o texto exato ou saudação oficial sem RAG
     saudacoes = ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "oi!", "olá!", "e aí", "eai", "tudo bem?", "hey", "hello", "sofia", "rafael", "clara", "lucas", "amanda", "fernanda", "marina", "roberto", "luisa", "lais", "paula", "bruno", "giovana", "marcos", "carol", "bruno_giovana", "marcos_carol"]
     if (request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower) and not response_text:
         if request.is_greeting and text and text not in saudacoes:
             response_text = text
-        elif avatar_id == "sofia":
+        elif avatar_id.lower() == "sofia":
             response_text = "Oi! Sou a Sofia, sua anfitriã aqui na plataforma. Estou pronta para te apresentar nossos humanos digitais e tirar qualquer dúvida. Vamos conversar?"
         else:
             persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
@@ -425,8 +425,7 @@ async def avatar_speak(request: SpeakRequest):
                 response_text = persona_obj["dialogues"]["aberturas_variadas"][0]
             else:
                 p_nome = persona_obj.get('nome', 'avatar') if persona_obj else 'avatar'
-                fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
-                artigo = "a" if avatar_id.lower() in fem else "o"
+                artigo = "a" if avatar_id.lower() in FEMININE_AVATAR_IDS else "o"
                 response_text = f"Olá! Sou {artigo} {p_nome}. Como posso ajudar?"
 
     # 2. Perguntas reais: RAG -> LLM -> TTS. Nunca retorna fragmento cru do RAG.
@@ -456,8 +455,7 @@ async def avatar_speak(request: SpeakRequest):
     if not response_text:
         persona_obj = persona_loader.get_persona(avatar_id) if 'persona_loader' in globals() and persona_loader else None
         nome_av = persona_obj.get("nome", avatar_id) if persona_obj else avatar_id
-        fem = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
-        artigo = "a" if avatar_id.lower() in fem else "o"
+        artigo = "a" if avatar_id.lower() in FEMININE_AVATAR_IDS else "o"
         inst = persona_obj.get("institutional_block", {}) if persona_obj else {}
         identidade = inst.get("identidade", {}) if isinstance(inst, dict) else {}
         plat = identidade.get("plataforma", "Humanos Digitais")
