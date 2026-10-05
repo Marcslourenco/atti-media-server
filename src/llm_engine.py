@@ -10,14 +10,28 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 
 LLM_MODELS_FALLBACK = [
     "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "dots-studio/dots-3-note-preview:free",
     "liquid/lfm-2.5-2.6b:free",
     "google/gemma-4-26b-a4b-it:free",
     "google/gemma-4-31b-it:free",
+    "cohere/north-mini-code:free",
 ]
 _rate_limit_cache = {}  # {model: timestamp_do_429_or_upstream_failure}
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 SAFE_FALLBACK = "Desculpe, não consegui elaborar uma boa resposta agora. Pode reformular a pergunta?"
+
+def _salvage_portuguese_tail(text: str) -> Optional[str]:
+    """Preserva a resposta em português após um preâmbulo de CoT."""
+    starters = ("olá", "ola", "oi", "sou ", "eu ", "posso ", "um humano", "uma pessoa")
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    for index, line in enumerate(lines):
+        lower = line.lower()
+        if any(char in lower for char in "ãõçáéíóúâêôà") or lower.startswith(starters):
+            candidate = " ".join(lines[index:]).strip()
+            if len(candidate) >= 40:
+                return candidate
+    return None
 
 async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=None) -> Optional[str]:
     if not OPENROUTER_API_KEY:
@@ -41,8 +55,10 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         f"NUNCA se descreva em 3ª pessoa (\"{nome} é...\"). Use o gênero correto ({artigo} {nome})."
     )
 
+    roster = getattr(persona_loader, "platform_roster", "") if persona_loader else ""
+    roster_rule = f"\nAVATARES DA PLATAFORMA: {roster}\n" if roster else ""
     system = (
-        f"{sys_prompt}\n\n"
+        f"{sys_prompt}{roster_rule}\n"
         f"{identity}\n\n"
         "REGRAS DE RESPOSTA:\n"
         "- Responda no idioma do usuário: português brasileiro por padrão; se o usuário escrever em inglês ou espanhol, responda no mesmo idioma, mantendo tom natural e falado.\n"
@@ -107,13 +123,19 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     continue
                 lower_content = content.lower()
                 reasoning_markers = [
+                    "here's a thinking", "thinking process", "analyze user",
                     "i need to respond", "i need to check", "looking at the context",
                     "according to the instructions", "they want to know",
                     "this is a straightforward",
                 ]
                 if lower_content.startswith("the user") or any(marker in lower_content for marker in reasoning_markers):
-                    logger.warning(f"⚠️ {model} retornou reasoning em inglês; conteúdo descartado")
-                    continue
+                    salvaged = _salvage_portuguese_tail(content)
+                    if salvaged:
+                        logger.warning(f"⚠️ {model} tinha reasoning; segmento pt-BR preservado ({len(salvaged)} chars)")
+                        content = salvaged
+                    else:
+                        logger.warning(f"⚠️ {model} retornou reasoning em inglês; conteúdo descartado")
+                        continue
                 logger.info(f"⏱️ {model} latência {time.time() - start:.1f}s")
                 logger.info(f"✅ LLM respondeu via {model}: {len(content)} chars")
                 return content

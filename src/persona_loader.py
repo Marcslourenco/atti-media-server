@@ -15,6 +15,12 @@ class PersonaLoader:
     garantindo robustez e carregamento completo.
     """
     
+    ALIAS = {
+        "bruno": "bruno_giovana",
+        "giovana": "bruno_giovana",
+        "marcos": "marcos_carol",
+        "carol": "marcos_carol",
+    }
     MANIFEST_PATHS = [
         "assets/personas_manifest.json",
         "knowledge/personas_manifest.json",
@@ -39,6 +45,7 @@ class PersonaLoader:
         self.dialogues: Dict[str, Dict[str, Any]] = {}
         self.institutional_block: Dict[str, Any] = {}
         self.schema: Dict[str, Any] = {}
+        self.platform_roster: str = ""
         
         self.manifest_path = self._find_asset("personas_manifest.json")
         self._load_schema()
@@ -102,6 +109,10 @@ class PersonaLoader:
                 manifest = json.load(f)
                 
             avatares_list = manifest.get("avatares", [])
+            self.platform_roster = "; ".join(
+                f"{entry.get('nome', entry.get('avatar_id', 'Avatar'))} ({entry.get('archetype', 'assistente')})"
+                for entry in avatares_list
+            )
             logger.info(f"📋 Manifesto lido: {len(avatares_list)} avatares listados no manifesto.")
             
             validados_count = 0
@@ -178,14 +189,21 @@ Termos Estritamente Banidos da Fala: {banidas}
         if brand_bias:
             bias_text = f"\n[BRAND LOYALTY & BIAS]\nRegra: {brand_bias.get('regra', '')}\nFrases de Defesa: {json.dumps(brand_bias.get('frases_defesa', []), ensure_ascii=False)}\n"
             
-        full_prompt = f"{inst_block_text}\n{bias_text}\n[PROMPT ESPECÍFICO DA PERSONA]\n{template}"
+        roster_text = f"\nAVATARES DA PLATAFORMA: {self.platform_roster}\n" if self.platform_roster else ""
+        full_prompt = (
+            f"{inst_block_text}{roster_text}\n{bias_text}\n[PROMPT ESPECÍFICO DA PERSONA]\n{template}\n"
+            "- NUNCA incorpore, cite ou fale como outros avatares; você é somente a persona acima.\n"
+            "- Se perguntarem quais idiomas você fala: responda português, inglês e espanhol.\n"
+            "- Quando fizer sentido, termine com um convite comercial curto, sem insistir."
+        )
         return full_prompt
         
     def get_persona(self, avatar_id: str) -> Optional[Dict[str, Any]]:
-        return self.personas.get(avatar_id)
-        
+        canonical_id = self.ALIAS.get((avatar_id or "").lower(), avatar_id)
+        return self.personas.get(canonical_id)
+
     def get_system_prompt(self, avatar_id: str) -> str:
-        p = self.personas.get(avatar_id)
+        p = self.get_persona(avatar_id)
         if p and "compiled_system_prompt" in p:
             return p["compiled_system_prompt"]
         return f"Você é o avatar {avatar_id} da Humanos Digitais."
