@@ -24,9 +24,18 @@ SAFE_FALLBACK = "Desculpe, não consegui elaborar uma boa resposta agora. Pode r
 def _salvage_portuguese_tail(text: str) -> Optional[str]:
     """Preserva a resposta em português após um preâmbulo de CoT."""
     starters = ("olá", "ola", "oi", "sou ", "eu ", "posso ", "um humano", "uma pessoa")
+    reasoning_prefixes = (
+        "the user", "thinking process", "here's a thinking", "according to", "analyze user",
+        "o usuário está perguntando", "o usuário está", "o usuário quer", "o usuário mencionou",
+        "hmm, o usuário", "preciso responder", "preciso verificar", "preciso checar",
+        "olhando o contexto", "vou confirmar", "vamos analisar", "deixa eu verificar",
+        "a pergunta é sobre", "a pergunta do usuário", "o visitante está", "o visitante quer",
+    )
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     for index, line in enumerate(lines):
         lower = line.lower()
+        if lower.startswith(reasoning_prefixes):
+            continue
         if any(char in lower for char in "ãõçáéíóúâêôà") or lower.startswith(starters):
             candidate = " ".join(lines[index:]).strip()
             if len(candidate) >= 40:
@@ -52,7 +61,8 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
     artigo = "a" if avatar_id.lower() in fem else "o"
     identity = (
         f"IDENTIDADE: Você É {nome}. Fale SEMPRE em 1ª pessoa (\"Eu sou {artigo}...\", \"Eu posso...\"). "
-        f"NUNCA se descreva em 3ª pessoa (\"{nome} é...\"). Use o gênero correto ({artigo} {nome})."
+        f"NUNCA se descreva em 3ª pessoa (\"{nome} é...\"). Use o gênero correto ({artigo} {nome}). "
+        f"Seu gênero é {artigo} {nome}. Sempre use o artigo correto ao se referir a si mesmo."
     )
 
     roster = getattr(persona_loader, "platform_roster", "") if persona_loader else ""
@@ -62,22 +72,23 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         sofia_business_rules = (
             "\nREGRAS COMERCIAIS DA SOFIA:\n"
             "- A integração de envio automático de catálogo ou PDF por WhatsApp ainda está em implementação.\n"
-            "- NUNCA diga que vai enviar um catálogo ou PDF automaticamente agora.\n"
-            "- Ofereça encaminhar o visitante para um contato humano ou orientar o uso do QR Code disponível.\n"
-            "- Não invente preços, descontos, prazos ou condições; explique que a proposta depende do segmento e encaminhe para atendimento humano.\n"
+            "- NUNCA prometa enviar catálogo, PDF ou arquivo automaticamente.\n"
+            "- Se o usuário pedir envio por WhatsApp, diga: \"A integração de envio automático ainda está em implementação. Posso te encaminhar para um contato humano ou você pode usar o QR Code na tela.\"\n"
+            "- Não invente preços, descontos, prazos ou condições específicas.\n"
+            "- Se perguntarem sobre preços, informe: Starter R$497, Profissional R$997, Business R$1.997 e Enterprise sob consulta, e ofereça falar com um especialista.\n"
         )
     system = (
         f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
         f"{identity}\n\n"
         "REGRAS DE RESPOSTA:\n"
-        "- Responda no idioma do usuário: português brasileiro por padrão; se o usuário escrever em inglês ou espanhol, responda no mesmo idioma, mantendo tom natural e falado.\n"
+        "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, responda SOMENTE em espanhol; se escrever em português, responda SOMENTE em português brasileiro. Nunca misture idiomas na mesma resposta.\n"
         "- Se o contexto indicar a página atual (context_url/element_id), use essa informação para responder onde o visitante está.\n"
-        "- Quando fizer sentido, finalize com um encaminhamento comercial curto (oferecer especialista, solução ou demonstração), sem insistir.\n"
+        "- REGRA DE ENGAJAMENTO: sempre que apropriado, finalize com uma pergunta curta de continuação, como \"Quer saber mais sobre isso?\" ou \"Posso te mostrar como funciona?\". Quando fizer sentido comercial, sugira um próximo passo sutil, sem insistir. Mantenha tom caloroso e humano.\n"
         "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
         "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
         "diga brevemente que não tem essa informação e ofereça ajuda com as soluções da plataforma.\n"
         "- Nunca repita o formato 'Q:' / 'A:' do contexto. Nunca cite fontes ou documentos.\n"
-        "- Termine SEMPRE com pontuação final (. ! ou ?). Nunca termine no meio de uma frase.\n"
+        "- Termine SEMPRE com pontuação final (. ! ou ?). Termine sempre com frase completa. Nunca corte no meio de uma palavra ou frase.\n"
         "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
         "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n\n"
         f"CONTEXTO:\n{context}"
@@ -99,7 +110,7 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     {"role": "system", "content": system},
                     {"role": "user", "content": user_text},
                 ],
-                "max_tokens": 150,
+                "max_tokens": 280,
                 "temperature": 0.4,
             }
             if "-reasoning" in model:
@@ -136,6 +147,12 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     "the user is", "the user wants", "i need to respond",
                     "i need to check", "looking at the context", "according to",
                     "they want to know", "this is a straightforward",
+                    "o usuário está perguntando", "o usuário está", "o usuário quer",
+                    "o usuário mencionou", "hmm, o usuário", "preciso responder",
+                    "preciso verificar", "preciso checar", "olhando o contexto",
+                    "vou confirmar", "vamos analisar", "deixa eu verificar",
+                    "a pergunta é sobre", "a pergunta do usuário", "o visitante está",
+                    "o visitante quer",
                 ]
                 if lower_content.startswith(("the user", "thinking process", "according to")) or any(marker in lower_content for marker in reasoning_markers):
                     salvaged = _salvage_portuguese_tail(content)
@@ -174,6 +191,12 @@ def finalize_for_tts(text: Optional[str]) -> str:
         "the user is", "the user wants", "i need to respond",
         "i need to check", "looking at the context", "according to",
         "they want to know", "this is a straightforward",
+        "o usuário está perguntando", "o usuário está", "o usuário quer",
+        "o usuário mencionou", "hmm, o usuário", "preciso responder",
+        "preciso verificar", "preciso checar", "olhando o contexto",
+        "vou confirmar", "vamos analisar", "deixa eu verificar",
+        "a pergunta é sobre", "a pergunta do usuário", "o visitante está",
+        "o visitante quer",
     ]
     if text.lower().startswith(("the user", "thinking process", "according to")) or any(marker in text.lower() for marker in reasoning_markers):
         lines = text.split('\n')
@@ -186,7 +209,12 @@ def finalize_for_tts(text: Optional[str]) -> str:
             if any(skip in lower_l for skip in [
                 "here's", "thinking", "analyze", "constraints", "context",
                 "user input", "determine", "role:", "assistant", "step ",
-                "wait,", "but looking", "the company name"
+                "wait,", "but looking", "the company name", "the user is", "the user wants",
+                "according to", "o usuário está perguntando", "o usuário está", "o usuário quer",
+                "o usuário mencionou", "hmm, o usuário", "preciso responder", "preciso verificar",
+                "preciso checar", "olhando o contexto", "vou confirmar", "vamos analisar",
+                "deixa eu verificar", "a pergunta é sobre", "a pergunta do usuário",
+                "o visitante está", "o visitante quer"
             ]):
                 continue
             if ls.startswith(("1.", "2.", "3.", "4.", "5.", "-", "*", "#")):
@@ -199,16 +227,15 @@ def finalize_for_tts(text: Optional[str]) -> str:
             return SAFE_FALLBACK
 
     if len(text) > 280:
-        truncated = text[:280]
-        last_punct = max(truncated.rfind('.'), truncated.rfind('!'), truncated.rfind('?'))
-        if last_punct > 5:
-            text = truncated[:last_punct + 1]
+        truncated = text[:280].rstrip()
+        recent = truncated[-100:]
+        recent_punct = max(recent.rfind('.'), recent.rfind('!'), recent.rfind('?'))
+        if recent_punct >= 0:
+            absolute_punct = len(truncated) - len(recent) + recent_punct
+            text = truncated[:absolute_punct + 1]
         else:
             last_space = truncated.rfind(' ')
-            if last_space > 50:
-                text = truncated[:last_space] + "."
-            else:
-                text = truncated + "."
+            text = (truncated[:last_space] if last_space > 0 else truncated).rstrip() + "."
 
     if text and text[-1] not in ['.', '!', '?']:
         text += "."

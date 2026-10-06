@@ -46,8 +46,8 @@
   "vinculo_institucional": true,
   "dialogues": {
     "aberturas_variadas": [
-      "MARCOS: E aí! Eu sou o Marcos. CAROL: E eu sou a Carol; sejam muito bem-vindos ao nosso atendimento!",
-      "MARCOS: Oi, Fiel! Eu sou o Marcos. CAROL: Eu sou a Carol, e vamos mostrar uma solução que pode ajudar seu negócio?"
+      "E aí! Eu sou o Marcos, e esta é a Carol. Sejam muito bem-vindos ao nosso atendimento!",
+      "Oi, Fiel! Eu sou o Marcos, e esta é a Carol. Vamos mostrar uma solução que pode ajudar seu negócio?"
     ]
   }
 }

@@ -16,6 +16,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 LAST_AVATAR_BY_SESSION = {}  # session_key -> (avatar_id, timestamp)
 FEMININE_AVATAR_IDS = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
+CONTEXT_NAME_MAP = {
+    "/": "Página Inicial",
+    "/avatares": "página de Avatares (onde o usuário conhece os humanos digitais)",
+    "/integracao": "página de Recursos (tecnologia e recursos da plataforma)",
+    "/precos": "página de Preços (planos e valores)",
+    "/faq": "página de Perguntas Frequentes (FAQ)",
+    "/contato": "página de Demonstração/Contato",
+    "/solucoes": "página de Soluções por Setor",
+    "/plataforma": "página Plataforma (números e impacto)",
+}
 
 BACKEND_VERSION = "7.1.0"
 
@@ -432,7 +442,8 @@ async def avatar_speak(request: SpeakRequest):
     if not response_text:
         page_context = ""
         if request.context_url:
-            page_context += f"\nO usuário está na página: {request.context_url}"
+            page_name = CONTEXT_NAME_MAP.get(request.context_url, request.context_url)
+            page_context += f"\nO usuário está na {page_name}."
         if request.element_id:
             page_context += f"\nO usuário acabou de interagir com o elemento: {request.element_id}"
 
