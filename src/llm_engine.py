@@ -83,6 +83,8 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         "REGRAS DE RESPOSTA:\n"
         "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, responda SOMENTE em espanhol; se escrever em português, responda SOMENTE em português brasileiro. Nunca misture idiomas na mesma resposta.\n"
         "- Se o contexto indicar a página atual (context_url/element_id), use essa informação para responder onde o visitante está.\n"
+        "REGRA DE FLUIDEZ: Você já se apresentou no início da conversa. Nas respostas seguintes, NUNCA repita seu nome, cargo ou segmento, a menos que o usuário pergunte explicitamente 'quem é você'. Responda diretamente à pergunta de forma natural, sem se reapresentar.\n"
+        "- REGRA DE IMPARCIALIDADE (LUCAS): NUNCA cite marcas específicas de veículos (ex: Toyota, Honda, Fiat, Chevrolet). Fale apenas sobre categorias (SUV, Sedan, Hatch) e características genéricas. Se perguntarem de uma marca, diga: 'Posso te ajudar a comparar as categorias e características, mas não cito marcas específicas aqui. Quer ver as opções de SUV?'\n" if avatar_id.lower() == "lucas" else ""
         "- REGRA DE ENGAJAMENTO: sempre que apropriado, finalize com uma pergunta curta de continuação, como \"Quer saber mais sobre isso?\" ou \"Posso te mostrar como funciona?\". Quando fizer sentido comercial, sugira um próximo passo sutil, sem insistir. Mantenha tom caloroso e humano.\n"
         "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
         "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
@@ -180,11 +182,32 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
     return None
 
 
+def _is_majoritariamente_portugues(text: str) -> bool:
+    words = [w.lower() for w in __import__("re").findall(r"[A-Za-zÀ-ÿ]+", text)]
+    if not words:
+        return False
+    pt_words = {
+        "a", "à", "ao", "aos", "as", "com", "como", "da", "das", "de", "do", "dos",
+        "e", "em", "é", "eu", "foi", "isso", "na", "nas", "não", "no", "nos", "o",
+        "os", "para", "por", "que", "se", "ser", "sua", "suas", "também", "um", "uma",
+        "você", "vocês", "sobre", "posso", "podemos", "está", "são", "mais", "ou"
+    }
+    recognized = sum(1 for word in words if word in pt_words or any(ch in word for ch in "áàâãéêíóôõúç"))
+    return recognized / len(words) >= 0.5
+
+
 def finalize_for_tts(text: Optional[str]) -> str:
     if not text:
         return SAFE_FALLBACK
 
     text = text.strip()
+    brutal_reasoning_markers = (
+        "the user is", "i need to", "thinking process", "according to the", "looking at the context"
+    )
+    lower_text = text.lower()
+    if any(marker in lower_text for marker in brutal_reasoning_markers) and not _is_majoritariamente_portugues(text):
+        logger.warning("⚠️ reasoning leak em inglês detectado; resposta inteira descartada")
+        return SAFE_FALLBACK
 
     reasoning_markers = [
         "here's a thinking", "thinking process", "analyze user",

@@ -459,6 +459,12 @@ async def avatar_speak(request: SpeakRequest):
                 logger.error(f"Erro RAG no avatar_speak: {e}")
 
         context = "\n\n".join(part for part in [context, rag_context] if part)
+        if avatar_id in ["bruno", "giovana"]:
+            falante = "Bruno" if avatar_id == "bruno" else "Giovana"
+            context += f"\n\nINSTRUÇÃO DE IDENTIDADE: O usuário está falando especificamente com {falante}. Responda APENAS como {falante}, em 1ª pessoa ('Eu sou {falante}...'). Não fale como o(a) parceiro(a) agora."
+        if avatar_id in ["marcos", "carol"]:
+            falante = "Marcos" if avatar_id == "marcos" else "Carol"
+            context += f"\n\nINSTRUÇÃO DE IDENTIDADE: O usuário está falando especificamente com {falante}. Responda APENAS como {falante}, em 1ª pessoa. Não fale como o(a) parceiro(a) agora."
         llm_answer = await call_llm(avatar_id, text, context, persona_loader)
         response_text = finalize_for_tts(llm_answer) if llm_answer else None
 
