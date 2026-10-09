@@ -42,6 +42,53 @@ def _salvage_portuguese_tail(text: str) -> Optional[str]:
                 return candidate
     return None
 
+def _build_system_prompt(
+    avatar_id: str,
+    sys_prompt: str,
+    roster_rule: str,
+    sofia_business_rules: str,
+    identity: str,
+    context: str,
+) -> str:
+    """Monta o prompt completo sem ternários dentro de concatenações."""
+    lucas_imparcialidade = (
+        "- REGRA DE IMPARCIALIDADE (LUCAS): NUNCA cite marcas específicas de veículos "
+        "(ex: Toyota, Honda, Fiat, Chevrolet). Fale apenas sobre categorias (SUV, Sedan, Hatch) "
+        "e características genéricas. Se perguntarem de uma marca, diga: 'Posso te ajudar a "
+        "comparar as categorias e características, mas não cito marcas específicas aqui. "
+        "Quer ver as opções de SUV?'\n"
+        if avatar_id.lower() == "lucas" else ""
+    )
+    return (
+        f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
+        f"{identity}\n\n"
+        "REGRAS DE RESPOSTA:\n"
+        "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. "
+        "Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, "
+        "responda SOMENTE em espanhol; se escrever em português, responda SOMENTE em português brasileiro. "
+        "Nunca misture idiomas na mesma resposta.\n"
+        "- Se o contexto indicar a página atual (context_url/element_id), use essa informação "
+        "para responder onde o visitante está.\n"
+        "REGRA DE FLUIDEZ: Você já se apresentou no início da conversa. Nas respostas seguintes, "
+        "NUNCA repita seu nome, cargo ou segmento, a menos que o usuário pergunte explicitamente "
+        "'quem é você'. Responda diretamente à pergunta de forma natural, sem se reapresentar.\n"
+        f"{lucas_imparcialidade}"
+        "- REGRA DE ENGAJAMENTO: sempre que apropriado, finalize com uma pergunta curta de continuação, "
+        "como \"Quer saber mais sobre isso?\" ou \"Posso te mostrar como funciona?\". "
+        "Quando fizer sentido comercial, sugira um próximo passo sutil, sem insistir. "
+        "Mantenha tom caloroso e humano.\n"
+        "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
+        "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
+        "diga brevemente que não tem essa informação e ofereça ajuda com as soluções da plataforma.\n"
+        "- Nunca repita o formato 'Q:' / 'A:' do contexto. Nunca cite fontes ou documentos.\n"
+        "- Termine SEMPRE com pontuação final (. ! ou ?). Termine sempre com frase completa. "
+        "Nunca corte no meio de uma palavra ou frase.\n"
+        "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
+        "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n\n"
+        f"CONTEXTO:\n{context}"
+    )
+
+
 async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=None) -> Optional[str]:
     if not OPENROUTER_API_KEY:
         logger.error(f"❌ LLM pulado para {avatar_id}: OPENROUTER_API_KEY ausente")
@@ -77,24 +124,7 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
             "- Não invente preços, descontos, prazos ou condições específicas.\n"
             "- Se perguntarem sobre preços, informe: Starter R$497, Profissional R$997, Business R$1.997 e Enterprise sob consulta, e ofereça falar com um especialista.\n"
         )
-    system = (
-        f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
-        f"{identity}\n\n"
-        "REGRAS DE RESPOSTA:\n"
-        "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, responda SOMENTE em espanhol; se escrever em português, responda SOMENTE em português brasileiro. Nunca misture idiomas na mesma resposta.\n"
-        "- Se o contexto indicar a página atual (context_url/element_id), use essa informação para responder onde o visitante está.\n"
-        "REGRA DE FLUIDEZ: Você já se apresentou no início da conversa. Nas respostas seguintes, NUNCA repita seu nome, cargo ou segmento, a menos que o usuário pergunte explicitamente 'quem é você'. Responda diretamente à pergunta de forma natural, sem se reapresentar.\n"
-        "- REGRA DE IMPARCIALIDADE (LUCAS): NUNCA cite marcas específicas de veículos (ex: Toyota, Honda, Fiat, Chevrolet). Fale apenas sobre categorias (SUV, Sedan, Hatch) e características genéricas. Se perguntarem de uma marca, diga: 'Posso te ajudar a comparar as categorias e características, mas não cito marcas específicas aqui. Quer ver as opções de SUV?'\n" if avatar_id.lower() == "lucas" else ""
-        "- REGRA DE ENGAJAMENTO: sempre que apropriado, finalize com uma pergunta curta de continuação, como \"Quer saber mais sobre isso?\" ou \"Posso te mostrar como funciona?\". Quando fizer sentido comercial, sugira um próximo passo sutil, sem insistir. Mantenha tom caloroso e humano.\n"
-        "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
-        "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
-        "diga brevemente que não tem essa informação e ofereça ajuda com as soluções da plataforma.\n"
-        "- Nunca repita o formato 'Q:' / 'A:' do contexto. Nunca cite fontes ou documentos.\n"
-        "- Termine SEMPRE com pontuação final (. ! ou ?). Termine sempre com frase completa. Nunca corte no meio de uma palavra ou frase.\n"
-        "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
-        "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n\n"
-        f"CONTEXTO:\n{context}"
-    )
+    system = _build_system_prompt(avatar_id, sys_prompt, roster_rule, sofia_business_rules, identity, context)
 
     for model in LLM_MODELS_FALLBACK:
         cached_at = _rate_limit_cache.get(model)

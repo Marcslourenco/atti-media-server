@@ -338,57 +338,57 @@ class VisemeSyncEngine:
         
         logger.info(f"Voz selecionada para {avatar_id} ({language}): {voice}")
         
-        try:
-            # Gerar áudio com Edge-TTS (usando io.BytesIO como no commit dc2395a)
-            buf = io.BytesIO()
-            communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
-            
-            async for chunk in communicate.stream():
-                if chunk["type"] == "audio":
-                    buf.write(chunk["data"])
-            
-            audio_data = buf.getvalue()
-            
-            if not audio_data:
-                logger.warning(f"Edge-TTS não retornou áudio para: {text[:50]}")
-                return {"audio": None, "visemes": []}
-            
-            audio_b64 = base64.b64encode(audio_data).decode("utf-8")
-            
-            # Gerar visemes simulados (baseado no texto)
-            visemes = []
-            duration_per_char = 100  # ms por caractere
-            
-            for i, char in enumerate(text):
-                # Mapeamento simples: vogais = "A", consoantes = "closed"
-                if char.lower() in "aeiouáéíóú":
-                    viseme = "A"
-                elif char.lower() in "ãõ":
-                    viseme = "O"
-                elif char.lower() in "bcpfmv":
-                    viseme = "M"
-                elif char.lower() in "dtnls":
-                    viseme = "L"
-                elif char.lower() in "kg":
-                    viseme = "K"
-                else:
-                    viseme = "closed"
-                
-                visemes.append({
-                    "time_ms": i * duration_per_char,
-                    "viseme": viseme
-                })
-            
-            logger.info(f"Áudio gerado: {len(audio_data)} bytes, {len(visemes)} visemes")
-            
-            return {
-                "audio": audio_b64,
-                "visemes": visemes
-            }
-        
-        except Exception as e:
-            logger.error(f"Erro ao sintetizar áudio: {e}", exc_info=True)
-            return {
-                "audio": None,
-                "visemes": []
-            }
+        audio_data = None
+        last_error = None
+        for attempt in range(1, 4):
+            try:
+                # Criar um Communicate novo em cada tentativa para recuperar falhas WebSocket/500.
+                buf = io.BytesIO()
+                communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+                async for chunk in communicate.stream():
+                    if chunk["type"] == "audio":
+                        buf.write(chunk["data"])
+                audio_data = buf.getvalue()
+                if not audio_data:
+                    raise RuntimeError("Edge-TTS não retornou áudio")
+                break
+            except Exception as exc:
+                last_error = exc
+                if attempt >= 3:
+                    logger.error(f"Erro ao sintetizar áudio após 3 tentativas: {exc}", exc_info=True)
+                    return {"audio": None, "visemes": []}
+                logger.warning(f"⚠️ TTS tentativa {attempt} falhou; tentando novamente...")
+                await __import__("asyncio").sleep(0.5 * attempt)
+
+        audio_b64 = base64.b64encode(audio_data).decode("utf-8")
+
+        # Gerar visemes simulados (baseado no texto)
+        visemes = []
+        duration_per_char = 100  # ms por caractere
+
+        for i, char in enumerate(text):
+            # Mapeamento simples: vogais = "A", consoantes = "closed"
+            if char.lower() in "aeiouáéíóú":
+                viseme = "A"
+            elif char.lower() in "ãõ":
+                viseme = "O"
+            elif char.lower() in "bcpfmv":
+                viseme = "M"
+            elif char.lower() in "dtnls":
+                viseme = "L"
+            elif char.lower() in "kg":
+                viseme = "K"
+            else:
+                viseme = "closed"
+
+            visemes.append({
+                "time_ms": i * duration_per_char,
+                "viseme": viseme
+            })
+
+        logger.info(f"Áudio gerado: {len(audio_data)} bytes, {len(visemes)} visemes")
+
+        return {
+            "audio": audio_b64,
+            "visemes": visemes
+        }
