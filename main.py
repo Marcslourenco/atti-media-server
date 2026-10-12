@@ -395,6 +395,13 @@ async def avatar_speak(request: SpeakRequest):
     text_lower = text.lower()
     
     response_text = None
+    page_context = ""
+    if request.context_url:
+        page_name = CONTEXT_NAME_MAP.get(request.context_url, request.context_url)
+        page_context += f"\nCONTEXTO DE NAVEGAÇÃO: O usuário está atualmente na {page_name}."
+    if request.element_id:
+        page_context += f"\nO usuário acabou de interagir com o elemento: {request.element_id}"
+    logger.info(f"CONTEXTO DE NAVEGAÇÃO: {page_context.strip() or 'Página Inicial'}")
     session_key = request.session_id or "__global__"
     now = time.time()
     recent_avatar = LAST_AVATAR_BY_SESSION.get(session_key)
@@ -440,13 +447,6 @@ async def avatar_speak(request: SpeakRequest):
 
     # 2. Perguntas reais: RAG -> LLM -> TTS. Nunca retorna fragmento cru do RAG.
     if not response_text:
-        page_context = ""
-        if request.context_url:
-            page_name = CONTEXT_NAME_MAP.get(request.context_url, request.context_url)
-            page_context += f"\nO usuário está na {page_name}."
-        if request.element_id:
-            page_context += f"\nO usuário acabou de interagir com o elemento: {request.element_id}"
-
         context = page_context.strip()
         rag_context = ""
         if rag_engine:

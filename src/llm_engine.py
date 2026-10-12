@@ -1,4 +1,5 @@
 import os
+import re
 import logging
 import httpx
 import time
@@ -49,6 +50,7 @@ def _build_system_prompt(
     sofia_business_rules: str,
     identity: str,
     context: str,
+    persona_loader=None,
 ) -> str:
     """Monta o prompt completo sem ternários dentro de concatenações."""
     lucas_imparcialidade = (
@@ -59,6 +61,15 @@ def _build_system_prompt(
         "Quer ver as opções de SUV?'\n"
         if avatar_id.lower() == "lucas" else ""
     )
+    roster_block = ""
+    sofia_knowledge_rule = ""
+    if avatar_id.lower() == "sofia" and persona_loader and hasattr(persona_loader, "platform_roster"):
+        roster_block = f"\n\n{persona_loader.platform_roster}\n"
+        sofia_knowledge_rule = (
+            "REGRA DE CONHECIMENTO: Use a LISTA DE HUMANOS DIGITAIS acima para responder "
+            "sobre quem são os avatares e seus segmentos. NUNCA invente segmentos. "
+            "Se perguntarem de um avatar, cite o segmento exato da lista.\n"
+        )
     return (
         f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
         f"{identity}\n\n"
@@ -84,7 +95,9 @@ def _build_system_prompt(
         "- Termine SEMPRE com pontuação final (. ! ou ?). Termine sempre com frase completa. "
         "Nunca corte no meio de uma palavra ou frase.\n"
         "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
-        "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n\n"
+        "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n"
+        f"{sofia_knowledge_rule}"
+        f"{roster_block}"
         f"CONTEXTO:\n{context}"
     )
 
@@ -124,7 +137,9 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
             "- Não invente preços, descontos, prazos ou condições específicas.\n"
             "- Se perguntarem sobre preços, informe: Starter R$497, Profissional R$997, Business R$1.997 e Enterprise sob consulta, e ofereça falar com um especialista.\n"
         )
-    system = _build_system_prompt(avatar_id, sys_prompt, roster_rule, sofia_business_rules, identity, context)
+    system = _build_system_prompt(
+        avatar_id, sys_prompt, roster_rule, sofia_business_rules, identity, context, persona_loader
+    )
 
     for model in LLM_MODELS_FALLBACK:
         cached_at = _rate_limit_cache.get(model)
@@ -231,6 +246,11 @@ def finalize_for_tts(text: Optional[str]) -> str:
         return SAFE_FALLBACK
 
     text = text.strip()
+    cot_patterns = r"(?i)(the user is|the user wants|thinking process|according to the|looking at the context|i need to respond|let me check|o usuário está|preciso responder)"
+    if re.search(cot_patterns, text):
+        salvaged = _salvage_portuguese_tail(text)
+        return salvaged if salvaged else SAFE_FALLBACK
+
     brutal_reasoning_markers = (
         "the user is", "i need to", "thinking process", "according to the", "looking at the context"
     )

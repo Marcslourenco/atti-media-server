@@ -52,6 +52,7 @@ class PersonaLoader:
         self._load_institutional_block()
         self._load_dialogues()
         self._load_manifest_and_personas()
+        self.platform_roster = self.get_platform_roster()
         
     def _find_asset(self, filename: str) -> Optional[Path]:
         candidates = []
@@ -109,10 +110,7 @@ class PersonaLoader:
                 manifest = json.load(f)
                 
             avatares_list = manifest.get("avatares", [])
-            self.platform_roster = "; ".join(
-                f"{entry.get('nome', entry.get('avatar_id', 'Avatar'))} ({entry.get('archetype', 'assistente')})"
-                for entry in avatares_list
-            )
+            self.platform_roster = self.get_platform_roster(manifest)
             logger.info(f"📋 Manifesto lido: {len(avatares_list)} avatares listados no manifesto.")
             
             validados_count = 0
@@ -166,6 +164,41 @@ class PersonaLoader:
         except Exception as e:
             logger.error(f"❌ Erro crítico ao ler personas_manifest.json: {e}", exc_info=True)
             
+    def get_platform_roster(self, manifest: Optional[Dict[str, Any]] = None) -> str:
+        """Retorna o roster humano diretamente do personas_manifest.json."""
+        if manifest is None:
+            if not self.manifest_path or not self.manifest_path.exists():
+                return "LISTA DE HUMANOS DIGITAIS DISPONÍVEIS:"
+            try:
+                with open(self.manifest_path, "r", encoding="utf-8") as f:
+                    manifest = json.load(f)
+            except Exception as exc:
+                logger.error(f"❌ Erro ao ler manifesto para roster: {exc}")
+                return "LISTA DE HUMANOS DIGITAIS DISPONÍVEIS:"
+
+        lines = ["LISTA DE HUMANOS DIGITAIS DISPONÍVEIS:"]
+        display_roles = {
+            "sofia": "Anfitriã da Plataforma",
+            "rafael": "Especialista Tributário",
+            "clara": "Consultora Hospitalar",
+            "lucas": "Consultor Automotivo",
+            "amanda": "Recepcionista de Hotel",
+            "fernanda": "Atendente Municipal",
+            "marina": "Guia de Shopping",
+            "roberto": "Energia Solar",
+            "luisa": "Mentora Educacional",
+            "lais": "Medicina",
+            "paula": "Odontologia",
+            "bruno_giovana": "São Paulo FC",
+            "marcos_carol": "Corinthians",
+        }
+        for entry in manifest.get("avatares", []):
+            avatar_id = entry.get("avatar_id", "")
+            nome = entry.get("nome") or avatar_id or "Avatar"
+            role = display_roles.get(avatar_id, entry.get("archetype") or entry.get("segmento_cliente", "assistente"))
+            lines.append(f"- {nome} ({role})")
+        return "\n".join(lines)
+
     def _compile_system_prompt(self, persona: Dict[str, Any]) -> str:
         avatar_id = persona.get("avatar_id", "assistente")
         template = persona.get("system_prompt_template", "")
