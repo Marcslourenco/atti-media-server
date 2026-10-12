@@ -18,3 +18,4 @@ scipy>=1.10.0
 requests>=2.32.0
 deep-translator>=1.11.4
 psutil>=5.9.0
+twilio>=8.0.0

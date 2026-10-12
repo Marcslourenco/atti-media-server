@@ -73,6 +73,13 @@ def _build_system_prompt(
     return (
         f"{sys_prompt}{roster_rule}{sofia_business_rules}\n"
         f"{identity}\n\n"
+        "DADOS DE CONTATO DA EQUIPE (OBRIGATÓRIO):\n"
+        "- Quando o visitante solicitar contato, telefone, WhatsApp, e-mail ou informações de alguém da equipe, responda EXATAMENTE com esta informação:\n"
+        "  Gestor de Negócios: Marcos\n"
+        "  WhatsApp: 14 98112-3802\n"
+        "  Frase sugerida: 'Vou te encaminhar o contato do nosso gestor de negócios, o Marcos! O WhatsApp dele é 14 98112-3802. Ele vai te dar todo o suporte necessário. Posso ajudar com mais alguma coisa?'\n"
+        "- NUNCA invente outros contatos, telefones ou e-mails.\n"
+        "- Se o visitante fornecer o PRÓPRIO WhatsApp, agradeça e diga que o Marcos entrará em contato em breve.\n\n"
         "REGRAS DE RESPOSTA:\n"
         "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. "
         "Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, "
@@ -88,7 +95,8 @@ def _build_system_prompt(
         "como \"Quer saber mais sobre isso?\" ou \"Posso te mostrar como funciona?\". "
         "Quando fizer sentido comercial, sugira um próximo passo sutil, sem insistir. "
         "Mantenha tom caloroso e humano.\n"
-        "- Máximo de 2 frases curtas. Nunca ultrapasse 280 caracteres.\n"
+        "- Se a pergunta for simples (nome, contexto, idioma), responda em 1 frase. Se for complexa (listas, comparações), responda em até 3 frases curtas com marcadores. NUNCA deixe uma frase incompleta.\n"
+        "- O limite de tamanho será ajustado conforme a complexidade da pergunta.\n"
         "- Use APENAS o contexto abaixo como fonte factual. Se o contexto não responder, "
         "diga brevemente que não tem essa informação e ofereça ajuda com as soluções da plataforma.\n"
         "- Nunca repita o formato 'Q:' / 'A:' do contexto. Nunca cite fontes ou documentos.\n"
@@ -141,6 +149,9 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
         avatar_id, sys_prompt, roster_rule, sofia_business_rules, identity, context, persona_loader
     )
 
+    complexity = _classify_question_complexity(user_text)
+    max_tokens, _ = _complexity_limits(complexity)
+
     for model in LLM_MODELS_FALLBACK:
         cached_at = _rate_limit_cache.get(model)
         if cached_at is not None and time.time() - cached_at < 90:
@@ -157,7 +168,7 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     {"role": "system", "content": system},
                     {"role": "user", "content": user_text},
                 ],
-                "max_tokens": 280,
+                "max_tokens": max_tokens,
                 "temperature": 0.4,
             }
             if "-reasoning" in model:
@@ -227,6 +238,29 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
     return None
 
 
+def _classify_question_complexity(user_text: str) -> str:
+    """Classifica a pergunta como simples, media ou complexa."""
+    text = (user_text or "").lower()
+    complex_markers = (
+        "5 motivos", "5 razões", "5 vantagens", "liste", "enumere",
+        "explique detalhadamente", "me dê 5", "me dê 3",
+        "quais são todos", "compare"
+    )
+    if any(marker in text for marker in complex_markers):
+        return "complexa"
+    simple_markers = (
+        "qual seu nome", "quem é você", "que página", "onde estou",
+        "você fala", "do you speak", "hablas", "qual o preço", "quanto custa"
+    )
+    if any(marker in text for marker in simple_markers):
+        return "simples"
+    return "media"
+
+
+def _complexity_limits(complexity: str):
+    return {"simples": (80, 150), "media": (180, 280), "complexa": (350, 520)}.get(complexity, (180, 280))
+
+
 def _is_majoritariamente_portugues(text: str) -> bool:
     words = [w.lower() for w in __import__("re").findall(r"[A-Za-zÀ-ÿ]+", text)]
     if not words:
@@ -241,7 +275,7 @@ def _is_majoritariamente_portugues(text: str) -> bool:
     return recognized / len(words) >= 0.5
 
 
-def finalize_for_tts(text: Optional[str]) -> str:
+def finalize_for_tts(text: Optional[str], complexity: str = "media") -> str:
     if not text:
         return SAFE_FALLBACK
 
@@ -299,8 +333,9 @@ def finalize_for_tts(text: Optional[str]) -> str:
         else:
             return SAFE_FALLBACK
 
-    if len(text) > 280:
-        truncated = text[:280].rstrip()
+    _, max_chars = _complexity_limits(complexity)
+    if len(text) > max_chars:
+        truncated = text[:max_chars].rstrip()
         recent = truncated[-100:]
         recent_punct = max(recent.rfind('.'), recent.rfind('!'), recent.rfind('?'))
         if recent_punct >= 0:

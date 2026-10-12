@@ -2,7 +2,7 @@ import asyncio
 import os
 import re
 import logging
-from src.llm_engine import call_llm, finalize_for_tts
+from src.llm_engine import call_llm, finalize_for_tts, _classify_question_complexity
 from src.persona_loader import PersonaLoader
 from pathlib import Path
 from typing import Optional
@@ -11,10 +11,15 @@ from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
+from src.whatsapp_service import whatsapp_service
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
 LAST_AVATAR_BY_SESSION = {}  # session_key -> (avatar_id, timestamp)
+CONVERSATION_MEMORY = {}  # session_id -> {history, last_access}
+MEMORY_MAX_ITEMS = 10
+MEMORY_TTL_SECONDS = 1800
+request_counter = 0
 FEMININE_AVATAR_IDS = {"sofia", "clara", "amanda", "fernanda", "marina", "luisa", "lais", "paula", "giovana", "carol"}
 CONTEXT_NAME_MAP = {
     "/": "Página Inicial",
@@ -132,6 +137,26 @@ def sanitize_for_tts(text: str) -> str:
     text = re.sub(r'\?{2,}', '?', text)
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
+
+
+def _get_session_memory(session_id: str) -> list:
+    now = time.time()
+    entry = CONVERSATION_MEMORY.get(session_id)
+    if entry is None:
+        return []
+    if now - entry["last_access"] > MEMORY_TTL_SECONDS:
+        del CONVERSATION_MEMORY[session_id]
+        return []
+    entry["last_access"] = now
+    return entry["history"]
+
+
+def _save_to_memory(session_id: str, user_text: str, response_text: str):
+    now = time.time()
+    entry = CONVERSATION_MEMORY.setdefault(session_id, {"history": [], "last_access": now})
+    entry["last_access"] = now
+    entry["history"].append({"user": user_text[:200], "avatar": response_text[:200], "timestamp": now})
+    entry["history"] = entry["history"][-MEMORY_MAX_ITEMS:]
 
 
 class EventType(str, Enum):
@@ -386,8 +411,35 @@ import uuid
 import time
 import json
 
+class WhatsAppRequest(BaseModel):
+    numero: str
+    mensagem: str = ""
+    media_url: str = ""
+    visitante_nome: str = ""
+
+
+@app.post("/api/whatsapp/send")
+async def send_whatsapp(request: WhatsAppRequest):
+    msg = request.mensagem or (
+        f"Olá {request.visitante_nome or ''}! Aqui é da equipe Humanos Digitais. "
+        "Obrigado pelo seu interesse! Qualquer dúvida, estou à disposição."
+    )
+    if request.media_url:
+        result = whatsapp_service.enviar_midia(request.numero, msg, request.media_url)
+    else:
+        result = whatsapp_service.enviar_mensagem(request.numero, msg)
+    return {**result, "whatsapp_sent": bool(result.get("success"))}
+
+
 @app.post("/api/avatar/speak")
 async def avatar_speak(request: SpeakRequest):
+    global request_counter
+    request_counter += 1
+    if request_counter % 100 == 0:
+        now_cleanup = time.time()
+        expired = [key for key, value in CONVERSATION_MEMORY.items() if now_cleanup - value["last_access"] > MEMORY_TTL_SECONDS]
+        for key in expired:
+            del CONVERSATION_MEMORY[key]
     # REMOVIDO O BLOQUEIO 503: Se a ingestão estiver rodando, o backend serve via fallback ou _old sem deixar o site mudo por 15 min.
     request_id = str(uuid.uuid4())[:8]
     avatar_id = request.avatar_id
@@ -395,6 +447,7 @@ async def avatar_speak(request: SpeakRequest):
     text_lower = text.lower()
     
     response_text = None
+    whatsapp_sent = False
     page_context = ""
     if request.context_url:
         page_name = CONTEXT_NAME_MAP.get(request.context_url, request.context_url)
@@ -465,8 +518,33 @@ async def avatar_speak(request: SpeakRequest):
         if avatar_id in ["marcos", "carol"]:
             falante = "Marcos" if avatar_id == "marcos" else "Carol"
             context += f"\n\nINSTRUÇÃO DE IDENTIDADE: O usuário está falando especificamente com {falante}. Responda APENAS como {falante}, em 1ª pessoa. Não fale como o(a) parceiro(a) agora."
+
+        memory = _get_session_memory(session_key)
+        if memory:
+            memory_block = "\n\nHISTÓRICO RECENTE DA CONVERSA (últimas interações):\n"
+            for item in memory[-3:]:
+                memory_block += f"- Visitante: {item['user']}\n- Você: {item['avatar']}\n"
+            context += memory_block
+
+        whatsapp_pattern = r"(?:\+?55)?\s?\(?\d{2}\)?\s?9?\d{4}[-\s]?\d{4}"
+        found_numbers = re.findall(whatsapp_pattern, text)
+        if found_numbers:
+            numero_visitante = found_numbers[0]
+            welcome_msg = (
+                "Olá! Aqui é da equipe Humanos Digitais. Recebemos seu contato pelo nosso site! "
+                "Nosso gestor de negócios, Marcos, entrará em contato em breve. "
+                "Enquanto isso, fique à vontade para explorar nossa plataforma."
+            )
+            whatsapp_result = whatsapp_service.enviar_mensagem(numero_visitante, welcome_msg)
+            whatsapp_sent = bool(whatsapp_result.get("success"))
+            if whatsapp_sent:
+                context += f"\n\n[SISTEMA: O visitante forneceu o WhatsApp {numero_visitante}. Uma mensagem de boas-vindas JÁ FOI ENVIADA automaticamente. Informe que ele receberá o contato do Marcos.]"
+            else:
+                context += "\n\n[SISTEMA: O visitante forneceu um WhatsApp, mas o envio automático está indisponível. Não diga que a mensagem foi enviada.]"
+
         llm_answer = await call_llm(avatar_id, text, context, persona_loader)
-        response_text = finalize_for_tts(llm_answer) if llm_answer else None
+        complexity = _classify_question_complexity(text)
+        response_text = finalize_for_tts(llm_answer, complexity) if llm_answer else None
 
     # 3. Fallback Dinâmico Final
     if not response_text:
@@ -484,6 +562,7 @@ async def avatar_speak(request: SpeakRequest):
         )
             
     sanitized = sanitize_for_tts(response_text)
+    _save_to_memory(session_key, text, sanitized)
     audio_data = None
     visemes = []
     if viseme_sync:
@@ -501,5 +580,6 @@ async def avatar_speak(request: SpeakRequest):
         "audio_data": audio_data,
         "visemes": visemes,
         "avatar_id": avatar_id,
-        "request_id": request_id
+        "request_id": request_id,
+        "whatsapp_sent": whatsapp_sent
     }
