@@ -454,7 +454,7 @@ async def avatar_speak(request: SpeakRequest):
         page_context += f"\nCONTEXTO DE NAVEGAÇÃO: O usuário está atualmente na {page_name}."
     if request.element_id:
         page_context += f"\nO usuário acabou de interagir com o elemento: {request.element_id}"
-    logger.info(f"CONTEXTO DE NAVEGAÇÃO: {page_context.strip() or 'Página Inicial'}")
+    logger.info(page_context.strip() or "CONTEXTO DE NAVEGAÇÃO: Página Inicial")
     session_key = request.session_id or "__global__"
     now = time.time()
     recent_avatar = LAST_AVATAR_BY_SESSION.get(session_key)

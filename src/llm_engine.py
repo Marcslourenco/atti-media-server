@@ -39,7 +39,7 @@ def _salvage_portuguese_tail(text: str) -> Optional[str]:
             continue
         if any(char in lower for char in "ãõçáéíóúâêôà") or lower.startswith(starters):
             candidate = " ".join(lines[index:]).strip()
-            if len(candidate) >= 40:
+            if len(candidate) >= 20:
                 return candidate
     return None
 
@@ -200,19 +200,25 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
                     logger.warning(f"⚠️ {model} HTTP 200 sem conteúdo útil: {resp.text[:300]}")
                     continue
                 lower_content = content.lower()
-                reasoning_markers = [
+                english_markers = (
                     "here's a thinking", "thinking process", "analyze user",
                     "the user is", "the user wants", "i need to respond",
                     "i need to check", "looking at the context", "according to",
                     "they want to know", "this is a straightforward",
+                )
+                pt_start_markers = (
                     "o usuário está perguntando", "o usuário está", "o usuário quer",
                     "o usuário mencionou", "hmm, o usuário", "preciso responder",
                     "preciso verificar", "preciso checar", "olhando o contexto",
                     "vou confirmar", "vamos analisar", "deixa eu verificar",
                     "a pergunta é sobre", "a pergunta do usuário", "o visitante está",
                     "o visitante quer",
-                ]
-                if lower_content.startswith(("the user", "thinking process", "according to")) or any(marker in lower_content for marker in reasoning_markers):
+                )
+                if (
+                    lower_content.startswith(("the user", "thinking process", "according to"))
+                    or any(marker in lower_content for marker in english_markers)
+                    or any(lower_content.startswith(marker) for marker in pt_start_markers)
+                ):
                     salvaged = _salvage_portuguese_tail(content)
                     if salvaged:
                         logger.warning(f"⚠️ {model} tinha reasoning; segmento pt-BR preservado ({len(salvaged)} chars)")
@@ -293,19 +299,26 @@ def finalize_for_tts(text: Optional[str], complexity: str = "media") -> str:
         logger.warning("⚠️ reasoning leak em inglês detectado; resposta inteira descartada")
         return SAFE_FALLBACK
 
-    reasoning_markers = [
+    english_markers = (
         "here's a thinking", "thinking process", "analyze user",
         "the user is", "the user wants", "i need to respond",
         "i need to check", "looking at the context", "according to",
         "they want to know", "this is a straightforward",
+    )
+    pt_start_markers = (
         "o usuário está perguntando", "o usuário está", "o usuário quer",
         "o usuário mencionou", "hmm, o usuário", "preciso responder",
         "preciso verificar", "preciso checar", "olhando o contexto",
         "vou confirmar", "vamos analisar", "deixa eu verificar",
         "a pergunta é sobre", "a pergunta do usuário", "o visitante está",
         "o visitante quer",
-    ]
-    if text.lower().startswith(("the user", "thinking process", "according to")) or any(marker in text.lower() for marker in reasoning_markers):
+    )
+    lower_text = text.lower()
+    if (
+        lower_text.startswith(("the user", "thinking process", "according to"))
+        or any(marker in lower_text for marker in english_markers)
+        or any(lower_text.startswith(marker) for marker in pt_start_markers)
+    ):
         lines = text.split('\n')
         clean_lines = []
         for line in lines:
