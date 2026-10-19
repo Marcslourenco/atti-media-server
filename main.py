@@ -7,11 +7,12 @@ from src.persona_loader import PersonaLoader
 from pathlib import Path
 from typing import Optional
 from enum import Enum
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Response, Query
+from fastapi.responses import PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
-from src.whatsapp_service import whatsapp_service
+from src.whatsapp_service import whatsapp_service, meta_whatsapp_service
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
@@ -412,23 +413,105 @@ import time
 import json
 
 class WhatsAppRequest(BaseModel):
-    numero: str
-    mensagem: str = ""
+    phone_number: str = ""
+    message: str = ""
     media_url: str = ""
     visitante_nome: str = ""
+    # Compatibilidade com o contrato anterior do frontend.
+    numero: str = ""
+    mensagem: str = ""
+
+
+def _whatsapp_phone(request: WhatsAppRequest) -> str:
+    return request.phone_number or request.numero
+
+
+def _whatsapp_message(request: WhatsAppRequest) -> str:
+    return request.message or request.mensagem or (
+        f"Olá {request.visitante_nome or ''}! Aqui é da equipe Humanos Digitais. "
+        "Obrigado pelo seu interesse! Qualquer dúvida, estou à disposição."
+    )
+
+
+@app.get("/api/whatsapp/webhook")
+async def whatsapp_webhook_verify(
+    hub_mode: Optional[str] = Query(None, alias="hub.mode"),
+    hub_verify_token: Optional[str] = Query(None, alias="hub.verify_token"),
+    hub_challenge: Optional[str] = Query(None, alias="hub.challenge"),
+):
+    expected_token = os.environ.get("WHATSAPP_VERIFY_TOKEN", "")
+    if hub_mode == "subscribe" and expected_token and hub_verify_token == expected_token:
+        return PlainTextResponse(hub_challenge or "", status_code=200)
+    return Response(status_code=403)
+
+
+async def process_whatsapp_message(from_number: str, text_body: str):
+    numero = meta_whatsapp_service.normalizar_numero(from_number)
+    texto = (text_body or "").strip()
+    if not numero or not texto:
+        return
+    logger.info("Meta WhatsApp mensagem recebida de %s", numero)
+    if texto.lower() in {"oi", "olá", "ola", "hello", "hi"}:
+        welcome = "Olá! Sou a Sofia da Humanos Digitais. Aqui está nosso catálogo digital:"
+        await asyncio.to_thread(meta_whatsapp_service.send_message, numero, welcome)
+        pdf_url = os.environ.get("CATALOG_PDF_URL", "").strip()
+        if pdf_url:
+            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, welcome, pdf_url)
+        else:
+            await asyncio.to_thread(
+                meta_whatsapp_service.send_message,
+                numero,
+                "Acesse nosso catálogo digital em https://humanosdigitais.com.br",
+            )
+        return
+    resposta = await call_llm("sofia", texto, "Conversa via WhatsApp", persona_loader)
+    resposta_final = finalize_for_tts(resposta) if resposta else "Posso te ajudar com informações sobre a Humanos Digitais."
+    await asyncio.to_thread(meta_whatsapp_service.send_message, numero, resposta_final)
+
+
+async def _process_meta_webhook_payload(payload: dict):
+    try:
+        for entry in payload.get("entry", []):
+            for change in entry.get("changes", []):
+                value = change.get("value", {}) or {}
+                for status in value.get("statuses", []) or []:
+                    logger.info("Meta WhatsApp status: %s", status.get("status"))
+                messages = value.get("messages", []) or []
+                if not messages:
+                    continue
+                message = messages[0]
+                if message.get("type") == "text":
+                    await process_whatsapp_message(
+                        message.get("from", ""),
+                        (message.get("text") or {}).get("body", ""),
+                    )
+    except Exception:
+        logger.exception("Erro ao processar webhook Meta WhatsApp")
+
+
+@app.post("/api/whatsapp/webhook")
+async def whatsapp_webhook(payload: dict):
+    asyncio.create_task(_process_meta_webhook_payload(payload))
+    return Response(status_code=200)
 
 
 @app.post("/api/whatsapp/send")
 async def send_whatsapp(request: WhatsAppRequest):
-    msg = request.mensagem or (
-        f"Olá {request.visitante_nome or ''}! Aqui é da equipe Humanos Digitais. "
-        "Obrigado pelo seu interesse! Qualquer dúvida, estou à disposição."
-    )
-    if request.media_url:
-        result = whatsapp_service.enviar_midia(request.numero, msg, request.media_url)
-    else:
-        result = whatsapp_service.enviar_mensagem(request.numero, msg)
-    return {**result, "whatsapp_sent": bool(result.get("success"))}
+    numero = _whatsapp_phone(request)
+    msg = _whatsapp_message(request)
+    logger.info("Tentativa de envio Meta WhatsApp para %s", numero)
+    result = await asyncio.to_thread(meta_whatsapp_service.send_message, numero, msg, request.media_url or None)
+    if result.get("success"):
+        return {"success": True, "method": "direct", "whatsapp_sent": True}
+    error = result.get("error")
+    if error in {"recipient_not_allowed", "rate_limited"} or "Recipient not in allowed list" in str(result.get("detail", "")):
+        return {
+            "success": False,
+            "whatsapp_sent": False,
+            "requires_user_initiated": True,
+            "instructions": "Para receber o catálogo, envie 'oi' para o número +55 14 3625-1830 no WhatsApp. Assim que você enviar, eu te respondo automaticamente com o catálogo completo!",
+        }
+    return {**result, "success": False, "whatsapp_sent": False}
 
 
 @app.post("/api/avatar/speak")
