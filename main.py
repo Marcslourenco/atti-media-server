@@ -475,7 +475,14 @@ async def _process_meta_webhook_payload(payload: dict):
             for change in entry.get("changes", []):
                 value = change.get("value", {}) or {}
                 for status in value.get("statuses", []) or []:
-                    logger.info("Meta WhatsApp status: %s", status.get("status"))
+                    logger.info(
+                        "Meta WhatsApp status: %s | wamid=%s | recipient=%s | errors=%s | conversation=%s",
+                        status.get("status"),
+                        status.get("id"),
+                        status.get("recipient_id"),
+                        status.get("errors"),
+                        status.get("conversation"),
+                    )
                 messages = value.get("messages", []) or []
                 if not messages:
                     continue
