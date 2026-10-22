@@ -70,6 +70,50 @@ class MetaWhatsAppService:
         self.phone_number_id = META_PHONE_NUMBER_ID
         self.graph_version = META_GRAPH_VERSION
 
+    def send_document(self, phone_number: str, document_url: str, caption: str, filename: str) -> dict:
+        """Send a public PDF document through Meta Cloud API without dispatching in tests."""
+        numero = self.normalizar_numero(phone_number)
+        timestamp = datetime.now(timezone.utc).isoformat()
+        logger.info("Meta WhatsApp catálogo: numero=%s timestamp=%s", numero, timestamp)
+        if not self.token or not self.phone_number_id:
+            logger.error("Meta WhatsApp não configurado: token ou phone number id ausente")
+            return {"success": False, "error": "meta_not_configured"}
+        if not numero:
+            return {"success": False, "error": "invalid_phone_number"}
+        payload = {
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "document",
+            "document": {"link": document_url, "caption": caption, "filename": filename},
+        }
+        request = urllib.request.Request(
+            self._endpoint(),
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=15) as response:
+                body = json.loads(response.read().decode("utf-8"))
+            message_id = body.get("messages", [{}])[0].get("id")
+            logger.info("Meta WhatsApp catálogo enviado: numero=%s message_id=%s", numero, message_id)
+            return {"success": True, "message_id": message_id, "id": message_id, "response": body}
+        except urllib.error.HTTPError as exc:
+            raw = exc.read().decode("utf-8", errors="replace")
+            lower = raw.lower()
+            if "recipient not in allowed list" in lower or "131030" in lower:
+                error = "recipient_not_allowed"
+            elif "rate limit" in lower or "too many requests" in lower or exc.code == 429:
+                error = "rate_limited"
+            else:
+                error = "unknown"
+            logger.error("Meta WhatsApp catálogo falha: numero=%s status=%s error=%s", numero, exc.code, error)
+            return {"success": False, "error": error, "detail": raw, "status_code": exc.code}
+        except Exception as exc:
+            logger.error("Meta WhatsApp catálogo exceção: numero=%s error=%s", numero, exc)
+            return {"success": False, "error": "unknown", "detail": str(exc)}
+
+
     def normalizar_numero(self, numero: str) -> str:
         digits = re.sub(r"\D", "", str(numero or ""))
         if digits.startswith("55"):

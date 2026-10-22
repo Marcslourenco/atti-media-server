@@ -451,12 +451,19 @@ async def process_whatsapp_message(from_number: str, text_body: str):
     if not numero or not texto:
         return
     logger.info("Meta WhatsApp mensagem recebida de %s", numero)
-    if texto.lower() in {"oi", "olá", "ola", "hello", "hi"}:
+    texto_lower = texto.lower()
+    if any(keyword in texto_lower for keyword in CATALOG_KEYWORDS):
+        result = await send_catalog_for_phone(numero, "default")
+        if result.get("success"):
+            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, "Enviamos o catálogo para você! Confira seu WhatsApp.")
+        else:
+            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, "Não consegui enviar o catálogo agora. Tente novamente em instantes.")
+        return
+    if texto_lower in {"oi", "olá", "ola", "hello", "hi"}:
         welcome = "Olá! Sou a Sofia da Humanos Digitais. Aqui está nosso catálogo digital:"
         await asyncio.to_thread(meta_whatsapp_service.send_message, numero, welcome)
-        pdf_url = os.environ.get("CATALOG_PDF_URL", "").strip()
-        if pdf_url:
-            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, welcome, pdf_url)
+        if get_catalog_url("default"):
+            await send_catalog_for_phone(numero, "default")
         else:
             await asyncio.to_thread(
                 meta_whatsapp_service.send_message,
@@ -500,6 +507,69 @@ async def _process_meta_webhook_payload(payload: dict):
 async def whatsapp_webhook(payload: dict):
     asyncio.create_task(_process_meta_webhook_payload(payload))
     return Response(status_code=200)
+
+
+CATALOG_KEYWORDS = ["catalogo", "catálogo", "preço", "preços", "tabela", "valores", "orçamento"]
+CATALOG_CAPTION = "Olá! Aqui está o Catálogo Comercial da Humanos Digitais."
+CATALOG_FILENAME = "Catalogo_Humanos_Digitais_2026.pdf"
+
+
+class CatalogRequest(BaseModel):
+    phone_number: str
+    tenant_id: str = "default"
+
+
+def get_catalog_url(tenant_id: str = "default") -> Optional[str]:
+    """Resolve the public catalog URL.
+
+    The default tenant uses CATALOG_PDF_URL. Other tenants look for a versioned
+    PDF under app/assets/tenants/{tenant_id}/documents/catalogs and can expose
+    it through CATALOG_PUBLIC_BASE_URL in a future CDN/static deployment.
+    """
+    tenant = (tenant_id or "default").strip() or "default"
+    if tenant == "default":
+        return os.environ.get("CATALOG_PDF_URL", "").strip() or None
+    catalog_dir = Path(__file__).resolve().parent / "app" / "assets" / "tenants" / tenant / "documents" / "catalogs"
+    files = sorted(catalog_dir.glob("*.pdf"), key=lambda path: path.name, reverse=True)
+    if not files:
+        return None
+    base_url = os.environ.get("CATALOG_PUBLIC_BASE_URL", "").strip().rstrip("/")
+    if not base_url:
+        return None
+    relative = f"tenants/{tenant}/documents/catalogs/{files[0].name}"
+    return f"{base_url}/{relative}"
+
+
+async def send_catalog_for_phone(phone_number: str, tenant_id: str = "default") -> dict:
+    catalog_url = get_catalog_url(tenant_id)
+    if not catalog_url:
+        logger.error("Falha ao enviar catálogo: CATALOG_PDF_URL not configured")
+        return {"success": False, "error": "CATALOG_PDF_URL not configured"}
+    logger.info("Tentativa de envio de catálogo para %s", phone_number)
+    result = await asyncio.to_thread(
+        meta_whatsapp_service.send_document,
+        phone_number,
+        catalog_url,
+        CATALOG_CAPTION,
+        CATALOG_FILENAME,
+    )
+    if result.get("success"):
+        message_id = result.get("message_id") or result.get("id")
+        logger.info("Catálogo enviado com sucesso (message_id: %s)", message_id)
+        return {"success": True, "message_id": message_id}
+    detail = result.get("detail") or result.get("error") or "unknown"
+    logger.error("Falha ao enviar catálogo: %s", detail)
+    return {**result, "success": False, "error": detail}
+
+
+@app.post("/api/whatsapp/send-catalog")
+async def send_catalog(request: CatalogRequest):
+    result = await send_catalog_for_phone(request.phone_number, request.tenant_id)
+    if not result.get("success"):
+        if result.get("error") == "CATALOG_PDF_URL not configured":
+            raise HTTPException(status_code=500, detail="CATALOG_PDF_URL not configured")
+        raise HTTPException(status_code=502, detail=result.get("error", "Falha ao enviar catálogo"))
+    return {"success": True, "message_id": result.get("message_id")}
 
 
 @app.post("/api/whatsapp/send")
