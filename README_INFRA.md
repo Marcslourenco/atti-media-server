@@ -216,3 +216,14 @@ Configure `DATABASE_URL` no `.env` (exemplo no `.env.example`).
 - Clusterização/Kubernetes
 - Storage para artefatos (S3/MinIO) + cache de URL em vez de bytes
 
+
+## 12) Heartbeat anti-sleep gratuito
+
+Para manter a instância ativa em hospedagens com suspensão por inatividade, crie um monitor HTTP gratuito no [UptimeRobot](https://uptimerobot.com/):
+
+1. Crie um monitor do tipo **HTTP(s)**.
+2. Use a URL pública `https://SEU-DOMINIO/health`.
+3. Configure o intervalo de **10 minutos**.
+4. Considere o monitor saudável quando retornar HTTP 200.
+
+O endpoint `/health` não dispara envio de WhatsApp, não altera o estado do RAG e retorna o status de prontidão da aplicação.

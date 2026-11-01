@@ -126,4 +126,21 @@ async def test_webhook_catalog_keyword_sends_confirmation(monkeypatch):
     await main.process_whatsapp_message("5514981123802", "catalogo")
 
     assert calls[0] == ("catalog", "5514981123802", "default")
-    assert calls[1][0:3] == ("message", "5514981123802", "Enviamos o catálogo para você! Confira seu WhatsApp.")
+    assert calls[1][0:3] == ("message", "5514981123802", main.CATALOG_SENT_MESSAGE)
+
+
+@pytest.mark.asyncio
+async def test_webhook_greeting_does_not_send_catalog_automatically(monkeypatch):
+    calls = []
+
+    def fake_message(phone, text, pdf_url=None):
+        calls.append((phone, text, pdf_url))
+        return {"success": True}
+
+    async def fail_catalog(*args, **kwargs):
+        raise AssertionError("catalogo não deve ser enviado automaticamente no oi")
+
+    monkeypatch.setattr(main, "send_catalog_for_phone", fail_catalog)
+    monkeypatch.setattr(main.meta_whatsapp_service, "send_message", fake_message)
+    await main.process_whatsapp_message("5514981123802", "oi")
+    assert "CATALOGO" in calls[0][1]

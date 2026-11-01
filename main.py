@@ -7,12 +7,13 @@ from src.persona_loader import PersonaLoader
 from pathlib import Path
 from typing import Optional
 from enum import Enum
-from fastapi import FastAPI, HTTPException, Response, Query
+from fastapi import FastAPI, HTTPException, Response, Query, Request
 from fastapi.responses import PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 from src.whatsapp_service import whatsapp_service, meta_whatsapp_service
+from src.leads_engine import LeadsEngine
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("humanos-digitais-tts-rag-llm")
@@ -33,7 +34,9 @@ CONTEXT_NAME_MAP = {
     "/plataforma": "página Plataforma (números e impacto)",
 }
 
-BACKEND_VERSION = "7.1.0"
+BACKEND_VERSION = "7.2.0"
+
+leads_engine = LeadsEngine()
 
 try:
     from src.feature_catalog import INSTITUTIONAL_BLOCK
@@ -227,19 +230,35 @@ RAG_READY = False
 def is_rag_ready() -> bool:
     return os.path.exists("/tmp/ingestion_complete")
 
+async def _preview_cleanup_loop():
+    while True:
+        try:
+            removed = await asyncio.to_thread(leads_engine.cleanup_expired_previews)
+            if removed:
+                logger.info("🧹 Previews expirados removidos: %s", removed)
+        except Exception:
+            logger.exception("Falha na limpeza de previews expirados")
+        await asyncio.sleep(3600)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Iniciando humanos-digitais-tts-rag-llm v{BACKEND_VERSION}")
     global RAG_READY
     RAG_READY = False
+    cleanup_task = asyncio.create_task(_preview_cleanup_loop())
     try:
         if os.path.exists("/tmp/ingestion_complete"):
             os.remove("/tmp/ingestion_complete")
             logger.info("🧹 Flag antiga /tmp/ingestion_complete removida no startup.")
     except Exception as e:
         logger.warning(f"⚠️ Erro ao limpar flag antiga: {e}")
-    yield
-    logger.info("Desligando servidor")
+    try:
+        yield
+    finally:
+        cleanup_task.cancel()
+        await asyncio.gather(cleanup_task, return_exceptions=True)
+        logger.info("Desligando servidor")
 
 app = FastAPI(
     title="Humanos Digitais API",
@@ -445,31 +464,47 @@ async def whatsapp_webhook_verify(
     return Response(status_code=403)
 
 
+CATALOG_REQUEST_MESSAGE = "Olá! Aqui é a Sofia 👋 Para receber nosso catálogo, me envie a palavra 'CATALOGO' aqui no WhatsApp."
+CATALOG_SENT_MESSAGE = "Olá! Aqui é a Sofia, da Humanos Digitais. 🤖 Estou te enviando nosso catálogo digital! 📖 Qualquer dúvida, é só me chamar por aqui. 😊"
+
+
+def _notify_new_lead(lead: dict) -> None:
+    gestor = os.environ.get("MARCOS_PHONE_NUMBER", "").strip()
+    if not gestor:
+        return
+    message = f"Novo lead Humanos Digitais: {lead.get('phone_number')} | origem={lead.get('source')} | tenant={lead.get('tenant_id')}"
+    try:
+        meta_whatsapp_service.send_message(gestor, message)
+    except Exception:
+        logger.exception("Falha ao notificar Marcos sobre novo lead")
+
+
+async def _capture_whatsapp_lead(numero: str) -> None:
+    try:
+        result = await asyncio.to_thread(leads_engine.capture_lead, numero, tenant_id="default", source="whatsapp")
+        if result.get("created"):
+            await asyncio.to_thread(_notify_new_lead, result["lead"])
+    except Exception:
+        logger.exception("Falha ao capturar lead WhatsApp %s", numero)
+
+
 async def process_whatsapp_message(from_number: str, text_body: str):
     numero = meta_whatsapp_service.normalizar_numero(from_number)
     texto = (text_body or "").strip()
     if not numero or not texto:
         return
     logger.info("Meta WhatsApp mensagem recebida de %s", numero)
+    await _capture_whatsapp_lead(numero)
     texto_lower = texto.lower()
     if any(keyword in texto_lower for keyword in CATALOG_KEYWORDS):
         result = await send_catalog_for_phone(numero, "default")
         if result.get("success"):
-            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, "Enviamos o catálogo para você! Confira seu WhatsApp.")
+            await asyncio.to_thread(meta_whatsapp_service.send_message, numero, CATALOG_SENT_MESSAGE)
         else:
             await asyncio.to_thread(meta_whatsapp_service.send_message, numero, "Não consegui enviar o catálogo agora. Tente novamente em instantes.")
         return
     if texto_lower in {"oi", "olá", "ola", "hello", "hi"}:
-        welcome = "Olá! Sou a Sofia da Humanos Digitais. Aqui está nosso catálogo digital:"
-        await asyncio.to_thread(meta_whatsapp_service.send_message, numero, welcome)
-        if get_catalog_url("default"):
-            await send_catalog_for_phone(numero, "default")
-        else:
-            await asyncio.to_thread(
-                meta_whatsapp_service.send_message,
-                numero,
-                "Acesse nosso catálogo digital em https://humanosdigitais.com.br",
-            )
+        await asyncio.to_thread(meta_whatsapp_service.send_message, numero, CATALOG_REQUEST_MESSAGE)
         return
     resposta = await call_llm("sofia", texto, "Conversa via WhatsApp", persona_loader)
     resposta_final = finalize_for_tts(resposta) if resposta else "Posso te ajudar com informações sobre a Humanos Digitais."
@@ -575,7 +610,8 @@ async def send_catalog(request: CatalogRequest):
 @app.post("/api/whatsapp/send")
 async def send_whatsapp(request: WhatsAppRequest):
     numero = _whatsapp_phone(request)
-    msg = _whatsapp_message(request)
+    raw_msg = _whatsapp_message(request)
+    msg = CATALOG_REQUEST_MESSAGE if ("catálogo" in raw_msg.lower() or "catalogo" in raw_msg.lower()) and not request.media_url else raw_msg
     logger.info("Tentativa de envio Meta WhatsApp para %s", numero)
     result = await asyncio.to_thread(meta_whatsapp_service.send_message, numero, msg, request.media_url or None)
     if result.get("success"):
@@ -589,6 +625,127 @@ async def send_whatsapp(request: WhatsAppRequest):
             "instructions": "Para receber o catálogo, envie 'oi' para o número +55 14 3625-1830 no WhatsApp. Assim que você enviar, eu te respondo automaticamente com o catálogo completo!",
         }
     return {**result, "success": False, "whatsapp_sent": False}
+
+
+class LeadCaptureRequest(BaseModel):
+    phone_number: str
+    name: str = ""
+    email: str = ""
+    tenant_id: str = "default"
+    source: str = "website"
+    metadata: dict = Field(default_factory=dict)
+
+
+def _geo_from_ip(ip: str) -> dict:
+    # Enriquecimento opcional: falha silenciosa para não bloquear captura.
+    if not ip or ip in {"127.0.0.1", "::1"} or os.environ.get("DISABLE_GEOLOOKUP", "") == "1":
+        return {}
+    try:
+        import urllib.request
+        with urllib.request.urlopen(f"https://ipapi.co/{ip}/json/", timeout=2) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        return {"city": payload.get("city", ""), "state": payload.get("region", ""), "country": payload.get("country_name", "")}
+    except Exception:
+        logger.info("Geolocalização indisponível para IP informado")
+        return {}
+
+
+@app.post("/api/leads/capture")
+async def capture_lead(request: LeadCaptureRequest, http_request: Request):
+    geo = await asyncio.to_thread(_geo_from_ip, http_request.client.host if http_request.client else "")
+    try:
+        result = await asyncio.to_thread(leads_engine.capture_lead, request.phone_number, request.name, request.email, request.tenant_id, request.source, request.metadata, geo)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    if result.get("created"):
+        await asyncio.to_thread(_notify_new_lead, result["lead"])
+    return result
+
+
+@app.get("/api/leads")
+async def list_leads(limit: int = 100, offset: int = 0):
+    return {"success": True, "leads": await asyncio.to_thread(leads_engine.list_leads, limit, offset)}
+
+
+@app.get("/api/leads/export")
+async def export_leads(format: str = "csv"):
+    if format.lower() != "csv":
+        raise HTTPException(status_code=400, detail="format suportado: csv")
+    csv_data = await asyncio.to_thread(leads_engine.export_csv)
+    return Response(content=csv_data, media_type="text/csv", headers={"Content-Disposition": "attachment; filename=leads.csv"})
+
+
+class PreviewCreateRequest(BaseModel):
+    tenant_id: str = "default"
+    knowledge_text: str = ""
+    faqs: list[dict] = Field(default_factory=list)
+    pdf_text: str = ""
+    phone_number: str = ""
+    name: str = ""
+    email: str = ""
+
+
+class PreviewChatRequest(BaseModel):
+    message: str
+    session_id: str = ""
+    avatar_id: str = "sofia"
+
+
+class PreviewConvertRequest(BaseModel):
+    phone_number: str
+    name: str = ""
+    email: str = ""
+
+
+def _preview_context(request: PreviewCreateRequest) -> str:
+    faq_text = "\n".join(f"Pergunta: {item.get('question', '')}\nResposta: {item.get('answer', '')}" for item in request.faqs)
+    return "\n".join(part for part in [request.knowledge_text, request.pdf_text, faq_text] if part).strip()
+
+
+@app.post("/api/preview/create")
+async def create_preview(request: PreviewCreateRequest):
+    lead_id = None
+    if request.phone_number:
+        try:
+            lead = await asyncio.to_thread(leads_engine.capture_lead, request.phone_number, request.name, request.email, request.tenant_id, "preview")
+            lead_id = lead["lead"]["id"]
+            if lead.get("created"):
+                await asyncio.to_thread(_notify_new_lead, lead["lead"])
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+    preview = await asyncio.to_thread(leads_engine.create_preview, request.tenant_id, _preview_context(request), lead_id)
+    preview["collection_name"] = preview["tenant_id"] + "_" + preview["id"]
+    return {"success": True, "preview": preview}
+
+
+@app.post("/api/preview/{preview_id}/chat")
+async def preview_chat(preview_id: str, request: PreviewChatRequest):
+    preview = await asyncio.to_thread(leads_engine.get_preview, preview_id)
+    if not preview or preview["status"] != "active" or preview["expires_at"] <= LeadsEngine.now():
+        raise HTTPException(status_code=410, detail="preview_expired")
+    if preview["message_count"] >= 20:
+        raise HTTPException(status_code=429, detail="preview_message_limit_reached")
+    count = await asyncio.to_thread(leads_engine.increment_preview_messages, preview_id)
+    context = f"Preview personalizado (coleção isolada {preview_id}):\n{preview['knowledge_text'][:120000]}"
+    answer = await call_llm(request.avatar_id or "sofia", request.message, context, persona_loader)
+    answer = finalize_for_tts(answer) if answer else "Desculpe, não consegui responder agora. Pode reformular?"
+    if request.session_id:
+        await asyncio.to_thread(leads_engine.add_conversation, preview.get("lead_id"), request.session_id, "in", request.message, request.avatar_id)
+        await asyncio.to_thread(leads_engine.add_conversation, preview.get("lead_id"), request.session_id, "out", answer, request.avatar_id)
+    return {"success": True, "preview_id": preview_id, "message_count": count, "response": answer, "expires_at": preview["expires_at"]}
+
+
+@app.post("/api/preview/{preview_id}/convert")
+async def convert_preview(preview_id: str, request: PreviewConvertRequest):
+    try:
+        result = await asyncio.to_thread(leads_engine.convert_preview, preview_id, request.phone_number, request.name, request.email)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="preview_not_found")
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    if result.get("lead"):
+        await asyncio.to_thread(_notify_new_lead, result["lead"])
+    return {"success": True, **result}
 
 
 @app.post("/api/avatar/speak")
