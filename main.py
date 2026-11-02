@@ -2,7 +2,7 @@ import asyncio
 import os
 import re
 import logging
-from src.llm_engine import call_llm, finalize_for_tts, _classify_question_complexity
+from src.llm_engine import call_llm, finalize_for_tts, _classify_question_complexity, detect_language
 from src.persona_loader import PersonaLoader
 from pathlib import Path
 from typing import Optional
@@ -59,7 +59,7 @@ try:
 except Exception as e:
     logger.warning(f"⚠️ Erro ao carregar phonetic_rules.json: {e}")
 
-def sanitize_for_tts(text: str) -> str:
+def sanitize_for_tts(text: str, language: str = "pt-BR") -> str:
     """Remove símbolos markdown/especiais e aplica regras de phonetic_rules.json em ordem de prioridade."""
     if not text:
         return ""
@@ -139,6 +139,9 @@ def sanitize_for_tts(text: str) -> str:
     text = re.sub(r'\.{2,}', '. ', text)
     text = re.sub(r'!{2,}', '!', text)
     text = re.sub(r'\?{2,}', '?', text)
+    if (language or "").lower().startswith("es"):
+        # No espanhol, o Edge-TTS pode soletrar o conectivo isolado “Y”.
+        text = re.sub(r"\bY\b(?=\s+[a-záéíóúüñ])", "", text, flags=re.IGNORECASE)
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
@@ -611,7 +614,30 @@ async def send_catalog(request: CatalogRequest):
 async def send_whatsapp(request: WhatsAppRequest):
     numero = _whatsapp_phone(request)
     raw_msg = _whatsapp_message(request)
-    msg = CATALOG_REQUEST_MESSAGE if ("catálogo" in raw_msg.lower() or "catalogo" in raw_msg.lower()) and not request.media_url else raw_msg
+    texto_lower = raw_msg.lower()
+    is_catalog_request = any(keyword in texto_lower for keyword in CATALOG_KEYWORDS) and not request.media_url
+    if is_catalog_request:
+        logger.info("Catálogo solicitado por %s, enviando PDF...", numero)
+        catalog_result = await send_catalog_for_phone(numero, "default")
+        if catalog_result.get("success"):
+            return {
+                "success": True,
+                "method": "catalog_document",
+                "whatsapp_sent": True,
+                "message_id": catalog_result.get("message_id"),
+            }
+        error = catalog_result.get("error", "Falha ao enviar catálogo")
+        if error == "CATALOG_PDF_URL not configured":
+            raise HTTPException(status_code=500, detail=error)
+        if error == "recipient_not_allowed" or "Recipient not in allowed list" in str(catalog_result.get("detail", "")):
+            return {
+                "success": False,
+                "whatsapp_sent": False,
+                "requires_user_initiated": True,
+                "instructions": "Para receber o catálogo, envie 'oi' para o número +55 14 3625-1830 no WhatsApp.",
+            }
+        return {**catalog_result, "success": False, "whatsapp_sent": False}
+    msg = raw_msg
     logger.info("Tentativa de envio Meta WhatsApp para %s", numero)
     result = await asyncio.to_thread(meta_whatsapp_service.send_message, numero, msg, request.media_url or None)
     if result.get("success"):
@@ -797,8 +823,17 @@ async def avatar_speak(request: SpeakRequest):
         prev_nome = prev_persona.get("nome", transition_avatar) if prev_persona else transition_avatar
         prev_role = prev_persona.get("role", prev_persona.get("archetype", "")) if prev_persona else ""
         qualificacao = f", {prev_role}" if prev_role else ""
-        artigo = "a" if transition_avatar.lower() in FEMININE_AVATAR_IDS else "o"
-        response_text = f"Oi! Percebi que você se interessou pel{artigo} {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
+        transition_key = transition_avatar.lower()
+        if transition_key in {"marcos", "marcos_carol", "carol"}:
+            if transition_key == "carol":
+                descricao = "a nossa avatar corintiana especializada em atendimento comercial"
+                response_text = f"Oi! A Carol é {descricao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
+            else:
+                descricao = "o nosso avatar corintiano especializado em atendimento comercial"
+                response_text = f"Oi! O Marcos é {descricao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
+        else:
+            artigo = "a" if transition_key in FEMININE_AVATAR_IDS else "o"
+            response_text = f"Oi! Percebi que você se interessou pel{artigo} {prev_nome}{qualificacao}. Se precisar de mais informações ou quiser conhecer outros especialistas, estou aqui."
     # 1. GREETING BYPASS EXPLÍCITO: Se request.is_greeting for True ou for saudação óbvia, usa o texto exato ou saudação oficial sem RAG
     saudacoes = ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "oi!", "olá!", "e aí", "eai", "tudo bem?", "hey", "hello", "sofia", "rafael", "clara", "lucas", "amanda", "fernanda", "marina", "roberto", "luisa", "lais", "paula", "bruno", "giovana", "marcos", "carol", "bruno_giovana", "marcos_carol"]
     if (request.is_greeting or text_lower in saudacoes or text == "" or "sou a sofia" in text_lower or "anfitriã" in text_lower) and not response_text:
@@ -878,13 +913,18 @@ async def avatar_speak(request: SpeakRequest):
             f"nossas soluções em {site}."
         )
             
-    sanitized = sanitize_for_tts(response_text)
+    spoken_language = request.language or "pt-BR"
+    if text:
+        inferred_language = detect_language(text)
+        if inferred_language in {"es", "en"}:
+            spoken_language = inferred_language
+    sanitized = sanitize_for_tts(response_text, spoken_language)
     _save_to_memory(session_key, text, sanitized)
     audio_data = None
     visemes = []
     if viseme_sync:
         try:
-            res = await viseme_sync.synthesize_with_visemes(sanitized, avatar_id, request.language or "pt-BR")
+            res = await viseme_sync.synthesize_with_visemes(sanitized, avatar_id, spoken_language)
             if res:
                 audio_data = res.get("audio")
                 visemes = res.get("visemes", [])

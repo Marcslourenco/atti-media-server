@@ -22,6 +22,23 @@ _rate_limit_cache = {}  # {model: timestamp_do_429_or_upstream_failure}
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 SAFE_FALLBACK = "Desculpe, não consegui elaborar uma boa resposta agora. Pode reformular a pergunta?"
 
+
+def detect_language(text: str) -> str:
+    """Detecta pt/es/en para manter resposta e voz no idioma da pergunta.
+
+    Mantemos uma heurística local para não adicionar uma dependência obrigatória
+    ao runtime: marcadores inequívocos vencem o fallback para português.
+    """
+    normalized = re.sub(r"[^a-záéíóúüñç\s]", " ", (text or "").lower())
+    words = set(normalized.split())
+    spanish = {"hola", "qué", "que", "cómo", "como", "dónde", "donde", "quiero", "puedes", "puede", "tienes", "gusta", "maradona", "también", "español", "precios", "gracias"}
+    english = {"the", "what", "how", "where", "which", "can", "could", "do", "does", "you", "your", "price", "thanks"}
+    if len(words & spanish) >= 1 and not (words & {"você", "vocês", "português"}):
+        return "es"
+    if len(words & english) >= 2 and not any(ch in normalized for ch in "ãõçáéíóúâêô"):
+        return "en"
+    return "pt-BR"
+
 def _salvage_portuguese_tail(text: str) -> Optional[str]:
     """Preserva a resposta em português após um preâmbulo de CoT."""
     starters = ("olá", "ola", "oi", "sou ", "eu ", "posso ", "um humano", "uma pessoa")
@@ -81,10 +98,9 @@ def _build_system_prompt(
         "- NUNCA invente outros contatos, telefones ou e-mails.\n"
         "- Se o visitante fornecer o PRÓPRIO WhatsApp, agradeça e diga que o Marcos entrará em contato em breve.\n\n"
         "REGRAS DE RESPOSTA:\n"
-        "REGRA DE IDIOMA (OBRIGATÓRIA): detecte o idioma da mensagem do usuário. "
-        "Se escrever em inglês, responda SOMENTE em inglês; se escrever em espanhol, "
-        "responda SOMENTE em espanhol; se escrever em português, responda SOMENTE em português brasileiro. "
-        "Nunca misture idiomas na mesma resposta.\n"
+        "REGRA DE IDIOMA (OBRIGATÓRIA): use sempre o idioma real da PERGUNTA do usuário. Se escrever em inglês, responda SOMENTE em inglês; "
+        "se escrever em espanhol, responda SOMENTE em espanhol fluente, sem misturar português; "
+        "se escrever em português, responda SOMENTE em português brasileiro. Nunca misture idiomas na mesma resposta.\n"
         "- Se o contexto indicar a página atual (context_url/element_id), use essa informação "
         "para responder onde o visitante está.\n"
         "REGRA DE FLUIDEZ: Você já se apresentou no início da conversa. Nas respostas seguintes, "
@@ -104,6 +120,7 @@ def _build_system_prompt(
         "Nunca corte no meio de uma palavra ou frase.\n"
         "- NUNCA inclua explicações internas, raciocínio ou 'thinking process'.\n"
         "- NUNCA narre raciocínio, instruções internas ou análise da pergunta; responda DIRETAMENTE ao usuário.\n"
+        "- FATOS ESPORTIVOS: Maradona nunca jogou no Corinthians. Nunca associe jogadores famosos a times incorretos; se não houver contexto factual, diga que não tem certeza.\n"
         f"{sofia_knowledge_rule}"
         f"{roster_block}"
         f"CONTEXTO:\n{context}"
@@ -145,8 +162,13 @@ async def call_llm(avatar_id: str, user_text: str, context: str, persona_loader=
             "- Não invente preços, descontos, prazos ou condições específicas.\n"
             "- Se perguntarem sobre preços, informe: Starter R$497, Profissional R$997, Business R$1.997 e Enterprise sob consulta, e ofereça falar com um especialista.\n"
         )
+    detected_language = detect_language(user_text)
     system = _build_system_prompt(
         avatar_id, sys_prompt, roster_rule, sofia_business_rules, identity, context, persona_loader
+    )
+    system += (
+        f"\nIDIOMA DA PERGUNTA: {detected_language}. Responda integralmente nesse idioma, "
+        "sem alternar para português no meio e sem iniciar frases em outro idioma."
     )
 
     complexity = _classify_question_complexity(user_text)
